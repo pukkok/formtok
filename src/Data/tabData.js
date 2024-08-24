@@ -1,0 +1,1 @@
+export default tabDatas = ['대시보드', '설문지 제작', '설문지 관리', '질문 관리']
