@@ -1,0 +1,43 @@
+.create-survey{
+    max-width: 1240px;
+    margin: 60px auto;
+}
+
+.editor-box{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 20px;
+}
+
+.editor-box .card-box{
+
+}
+
+.editor-box .card{
+    padding: 20px;
+    border: solid 1px #d7d7d7;
+    background-color: #fff;
+    border-radius: 12px;
+    min-height: 200px;
+    margin-bottom: 20px;
+}
+
+.card input{
+    width: 100%;
+    padding: 5px 0;
+}
+
+.card input.page-title{
+    font-size: 24px;
+}
+
+
+.editor-box .remote-control{
+    position: sticky;
+    top: 0;
+    border: solid 1px #d7d7d7;
+    background-color: #fff;
+    border-radius: 12px;
+    height: 800px;
+}

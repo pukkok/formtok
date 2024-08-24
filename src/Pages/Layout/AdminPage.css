@@ -13,6 +13,7 @@
     grid-area: s;
     background-color: #414141;
     color: #fff;
+    position: relative;
 }
 
 .side-bar .tabs{
@@ -31,6 +32,8 @@
 
 .tabs{
     width: 250px;
+    position: fixed;
+    top: 0;
 }
 
 .open-tab{
@@ -41,6 +44,7 @@
     align-items: center;
 }
 .open-tab::after{
+    position: fixed;
     content: '';
     width: 5px;
     height: 20px;

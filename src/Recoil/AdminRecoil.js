@@ -20,8 +20,14 @@ const activeTabAtom = atom({
     default: ''
 })
 
+const pagesAtom = atom({
+    key: 'pages',
+    default : []
+})
+
 export {
     gridAtom, isSideOpenAtom,
-    tabsAtom, activeTabAtom
+    tabsAtom, activeTabAtom,
+    pagesAtom
 
 }
