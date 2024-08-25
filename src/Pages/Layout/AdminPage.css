@@ -4,7 +4,7 @@
     's h'
     's v';
     grid-template-rows: 40px 1fr;
-    min-height: 100vh;
+    height: 100vh;
     transition: .5s;
 }
 
@@ -15,27 +15,18 @@
     color: #fff;
     position: relative;
 }
-
 .side-bar .tabs{
     padding: 10px 20px;
+    width: 250px;
 }
-
 .side-bar .top{
     display: flex;
     align-items: center;
     height: 50px;
 }
-
 .side-bar .top button{
     margin-left: auto;
 }
-
-.tabs{
-    width: 250px;
-    position: fixed;
-    top: 0;
-}
-
 .open-tab{
     width: 100%;
     height: 100%;
@@ -56,7 +47,6 @@
 /* 헤더 */
 .admin-page .header{
     grid-area: h;
-    /* box-shadow: 0px 0px 2px #7d7d7d; */
     display: flex;
     background-color: #fff;
 }
@@ -72,8 +62,8 @@
 .admin-page .viewer{
     grid-area: v;
     background-color: #f1f1f1;
+    overflow: scroll;
 }
-
 .logo {
     font-family: "Nanum Pen Script", cursive;
     font-size: 30px;

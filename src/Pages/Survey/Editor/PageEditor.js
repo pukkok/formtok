@@ -3,11 +3,24 @@ import { useRecoilState } from "recoil";
 import { pagesAtom } from "../../../Recoil/AdminRecoil";
 import ContentEditable from "react-contenteditable";
 
-function PageEditor() {
+function PageEditor({pageIdx}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
+
+    const [pageCnt, setPageCnt] = useState('1 / 1')
+    useEffect(() => {
+        let count = 0
+        let length = 0
+        pages.forEach((page, idx) => {
+            if(page.type === 'page'){
+                length++
+                if(idx <= pageIdx) count ++
+            }
+        })
+        setPageCnt(`${count} / ${length}`)
+    }, [pages])
+
     const [html, setHtml] = useState('')
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
-
     const pageDescRef = useRef(null)
 
     const applyStyle = (style) => {
@@ -49,7 +62,6 @@ function PageEditor() {
 
     const selectHandler = () => {
         const selection = window.getSelection()
-        console.log(selection)
     }
 
     const changeHandler = (e) => {
@@ -57,33 +69,42 @@ function PageEditor() {
         setHtml(value)
         // value가 없을때 placeholder 상태
         setIsPlaceholderVisible(value === "")
-
-        
     }
+    
+    useEffect(()=>{
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if(idx === pageIdx){
+                    page = {...page, data: {...page.data, desc : html}}
+                }
+                return page
+            })
+        })
+    },[html])
 
     return (
-        <div className="card">
-        <div>1/1 페이지</div>
-        <input className="page-title" placeholder="페이지 제목" />
-        <div className="content-editor-wrapper">
-            {isPlaceholderVisible && (
-            <p className="content-placeholder">
-                페이지 설명
-            </p>
-            )}
-            <ContentEditable
-            ref={pageDescRef}
-            className="content-editor"
-            html={html}
-            tagName="p"
-            onChange={changeHandler}
-            onSelect={selectHandler}
-            />
-        </div>
-        <button onClick={()=>applyStyle('bold')}>굵게</button>
-        <p>||</p>
-        <button onClick={()=>applyStyle('italic')}>기울이기</button>
-        </div>
+        <>
+            <div> {pageCnt} 페이지</div>
+            <input className="page-title" placeholder="페이지 제목"/>
+            <div className="content-editor-wrapper">
+                {isPlaceholderVisible && (
+                <p className="content-placeholder">
+                    페이지 설명
+                </p>
+                )}
+                <ContentEditable
+                ref={pageDescRef}
+                className="content-editor"
+                html={html}
+                tagName="p"
+                onChange={changeHandler}
+                onSelect={selectHandler}
+                />
+            </div>
+            <button onClick={()=>applyStyle('bold')}>굵게</button>
+            <p>||</p>
+            <button onClick={()=>applyStyle('italic')}>기울이기</button>
+        </>
     )
 }
 

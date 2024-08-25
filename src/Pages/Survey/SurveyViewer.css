@@ -7,14 +7,12 @@
     width: 100%;
     display: grid;
     grid-template-columns: 7fr 3fr;
-    gap: 20px;
+    gap: 30px;
 }
 
-.editor-box .card-box{
-
-}
-
+/* 카드 */
 .editor-box .card{
+    box-sizing: border-box;
     padding: 20px;
     border: solid 1px #d7d7d7;
     background-color: #fff;
@@ -22,7 +20,9 @@
     min-height: 200px;
     margin-bottom: 20px;
 }
-
+.editor-box .card.active{
+    border: solid 3px var(--purple);
+}
 .card input{
     width: 100%;
     padding: 5px 0;
@@ -40,20 +40,45 @@
 .card .content-placeholder{
     position: absolute;
     top: 10px;
+    padding: 5px 0;
     color: #aaa;
+    pointer-events: none;
 }
 
 .card .content-editor{
     outline: none;
     border-bottom: 1px solid #cecece;
     min-height: 20px;
+    padding: 5px 0;
 }
 
+.card .content-placeholder:focus,
+.card .content-editor:focus,
+.card input:focus{
+    border-bottom: 2px solid var(--purple);
+}
+
+/* 리모컨 */
 .editor-box .remote-control{
+    padding: 10px 20px;
     position: sticky;
-    top: 0;
+    top: 20px;
     border: solid 1px #d7d7d7;
     background-color: #fff;
     border-radius: 12px;
     height: 800px;
+}
+
+.remote-control .btns{
+    display: flex;
+    justify-content: space-around;
+}
+
+.remote-control .btns button{
+    border: solid 1px var(--purple);
+    padding: 5px 10px;
+}
+.remote-control .btns button:hover{
+    background-color: var(--purple);
+    color: #fff;
 }

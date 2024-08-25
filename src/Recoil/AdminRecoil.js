@@ -22,7 +22,7 @@ const activeTabAtom = atom({
 
 const pagesAtom = atom({
     key: 'pages',
-    default : []
+    default : [{type: 'page', data: {}}, {type: 'quiz', data: {}}]
 })
 
 export {
