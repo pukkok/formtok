@@ -32,6 +32,22 @@
     font-size: 24px;
 }
 
+.card .content-editor-wrapper{
+    position: relative;
+    padding: 10px 0;
+}
+
+.card .content-placeholder{
+    position: absolute;
+    top: 10px;
+    color: #aaa;
+}
+
+.card .content-editor{
+    outline: none;
+    border-bottom: 1px solid #cecece;
+    min-height: 20px;
+}
 
 .editor-box .remote-control{
     position: sticky;
