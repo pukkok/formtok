@@ -1,7 +1,7 @@
 import TableEditor from './Editor/TableEditor'
-import MultipleChoice from './Editor/MultipleChoice'
+import QuestionEditor from './Editor/QuestionEditor'
 import PageEditor from './Editor/PageEditor'
 import RemoteControl from './Editor/RemoteControl'
 import './SurveyViewer.css'
 
-export { TableEditor, MultipleChoice, PageEditor, RemoteControl }
+export { TableEditor, QuestionEditor, PageEditor, RemoteControl }

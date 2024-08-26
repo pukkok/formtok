@@ -7,25 +7,35 @@
     width: 100%;
     display: grid;
     grid-template-columns: 7fr 3fr;
-    gap: 30px;
+    gap: 20px;
 }
 
 /* 카드 */
 .editor-box .card{
     box-sizing: border-box;
-    padding: 20px;
-    border: solid 1px #d7d7d7;
+    border: solid 2px #d7d7d7;
+    
     background-color: #fff;
     border-radius: 12px;
     min-height: 200px;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 .editor-box .card.active{
-    border: solid 3px var(--purple);
+    border: solid 2px var(--purple);
 }
+
+.card h4{
+    background-color: var(--purple);
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
 .card input{
     width: 100%;
-    padding: 5px 0;
+    padding-bottom: 5px;
 }
 
 .card input.page-title{
@@ -34,13 +44,12 @@
 
 .card .content-editor-wrapper{
     position: relative;
-    padding: 10px 0;
+    margin: 10px 0;
 }
 
 .card .content-placeholder{
     position: absolute;
-    top: 10px;
-    padding: 5px 0;
+    padding-bottom: 5px;
     color: #aaa;
     pointer-events: none;
 }
@@ -49,7 +58,7 @@
     outline: none;
     border-bottom: 1px solid #cecece;
     min-height: 20px;
-    padding: 5px 0;
+    padding-bottom: 5px;
 }
 
 .card .content-placeholder:focus,
@@ -69,16 +78,37 @@
     height: 800px;
 }
 
-.remote-control .btns{
+.remote-control .q-tab{
+    /* border: solid 1px red; */
+}
+
+.q-tab .h-summary{
+    border: solid 1px #d7d7d7;
+    padding: 10px;
+}
+.q-tab .h-summary:not(:nth-of-type(1)){
+    margin-top: 20px;
+}
+.q-tab .q-summary{
+    border: solid 1px #d7d7d7;
+    padding: 10px;
+}
+.q-tab .h-summary.active,
+.q-tab .q-summary.active{
+    border: solid 2px var(--purple)
+}
+
+
+.remote-control .q-btns{
     display: flex;
     justify-content: space-around;
 }
 
-.remote-control .btns button{
+.remote-control .q-btns button{
     border: solid 1px var(--purple);
     padding: 5px 10px;
 }
-.remote-control .btns button:hover{
+.remote-control .q-btns button:hover{
     background-color: var(--purple);
     color: #fff;
 }

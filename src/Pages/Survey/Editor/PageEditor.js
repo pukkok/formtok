@@ -1,25 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { pagesAtom } from "../../../Recoil/AdminRecoil";
+import { pageCntAtom, pagesAtom } from "../../../Recoil/AdminRecoil";
 import ContentEditable from "react-contenteditable";
 
 function PageEditor({pageIdx}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
 
-    const [pageCnt, setPageCnt] = useState('1 / 1')
+    const [pageCnt, setPageCnt] = useState('1/1')
     useEffect(() => {
-        let count = 0
-        let length = 0
-        pages.forEach((page, idx) => {
-            if(page.type === 'page'){
-                length++
-                if(idx <= pageIdx) count ++
-            }
-        })
-        setPageCnt(`${count} / ${length}`)
+        setPageCnt(`${pageIdx+1}/${pages.length}`)
     }, [pages])
 
-    const [html, setHtml] = useState('')
+    const [title, setTitle] = useState('') // page title
+    const [html, setHtml] = useState('') // page description
+
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
     const pageDescRef = useRef(null)
 
@@ -60,52 +54,62 @@ function PageEditor({pageIdx}) {
         }
     }
 
+    const changeTitle = (e) => {
+        setTitle(e.target.value)
+    }
+
     const selectHandler = () => {
         const selection = window.getSelection()
     }
 
-    const changeHandler = (e) => {
+    const changeDescription = (e) => {
         const {value} = e.target
         setHtml(value)
         // value가 없을때 placeholder 상태
         setIsPlaceholderVisible(value === "")
     }
-    
+
     useEffect(()=>{
         setPages(prevPages => {
             return prevPages.map((page, idx) => {
                 if(idx === pageIdx){
-                    page = {...page, data: {...page.data, desc : html}}
+                    page = {...page, header: {
+                        ...page.header, 
+                        title: title,
+                        description : html
+                    }}
                 }
                 return page
             })
         })
-    },[html])
+    },[title, html])
 
     return (
         <>
-            <div> {pageCnt} 페이지</div>
-            <input className="page-title" placeholder="페이지 제목"/>
-            <div className="content-editor-wrapper">
-                {isPlaceholderVisible && (
-                <p className="content-placeholder">
-                    페이지 설명
-                </p>
-                )}
-                <ContentEditable
-                ref={pageDescRef}
-                className="content-editor"
-                html={html}
-                tagName="p"
-                onChange={changeHandler}
-                onSelect={selectHandler}
-                />
+            <h4 className="pd-box">{pageCnt} 페이지</h4>
+            <div className="pd-box">
+                <input className="page-title" placeholder="페이지 제목" onChange={changeTitle}/>
+                <div className="content-editor-wrapper">
+                    {isPlaceholderVisible && (
+                    <p className="content-placeholder">
+                        페이지 설명
+                    </p>
+                    )}
+                    <ContentEditable
+                    ref={pageDescRef}
+                    className="content-editor"
+                    html={html}
+                    tagName="p"
+                    onChange={changeDescription}
+                    onSelect={selectHandler}
+                    />
+                </div>
+                <button onClick={()=>applyStyle('bold')}>굵게</button>
+                 /
+                <button onClick={()=>applyStyle('italic')}>기울이기</button>
             </div>
-            <button onClick={()=>applyStyle('bold')}>굵게</button>
-            <p>||</p>
-            <button onClick={()=>applyStyle('italic')}>기울이기</button>
         </>
     )
 }
 
-export default PageEditor;
+export default PageEditor

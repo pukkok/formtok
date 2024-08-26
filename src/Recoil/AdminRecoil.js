@@ -22,12 +22,19 @@ const activeTabAtom = atom({
 
 const pagesAtom = atom({
     key: 'pages',
-    default : [{type: 'page', data: {}}, {type: 'quiz', data: {}}]
+    default : [{
+        header: {title: '', description : ''}, 
+        questions: [
+            {type: 'multiple', q: '', a: []}
+        ]}]
+})
+const activeCardAtom = atom({
+    key: 'activeCard',
+    default : 'h-0'
 })
 
 export {
     gridAtom, isSideOpenAtom,
     tabsAtom, activeTabAtom,
-    pagesAtom
-
+    pagesAtom, activeCardAtom
 }
