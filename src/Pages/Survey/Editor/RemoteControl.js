@@ -33,14 +33,13 @@ function QuestionTab () {
             <div className="summary-wrapper">
                 {pages.map((page, idx) => {
                     const {header : {title}, questions } = page
-                    return <React.Fragment key={idx}>
-                        <div
-                        onClick={()=>setActiveCard(`h-${idx}`)}
+                    return <div key={idx} className="summary-card">
+                        <div onClick={()=>setActiveCard(`h-${idx}`)}
                         className={classNames('h-summary',
                         {active : `h-${idx}` === activeCard})}
                         >
-                            <p>{idx+1}/{pages.length} 페이지</p>
-                            {title ? title : '페이지 제목'}
+                            <h4>{idx+1}/{pages.length} 페이지</h4>
+                            {title ? <p>{title}</p> : <p className="placeholder">페이지 제목</p>}
                         </div>
                         {questions.map((question, idx2)=> {
                             const {type, q, a} = question
@@ -49,9 +48,9 @@ function QuestionTab () {
                             className={classNames('q-summary', 
                             {active : `q-${idx}-${idx2}` === activeCard})}
                             key={idx2}
-                            >{idx2}</div>
+                            >문항{idx2+1}</div>
                         })}
-                    </React.Fragment> 
+                    </div> 
                 })}
             </div>
             <div className="q-btns">
@@ -63,10 +62,17 @@ function QuestionTab () {
 }
 
 function RemoteControl () {
+    const [activeBtn, setActiveBtn] = useState()
+
+    const btns = ['전체 문항', '설문 설정']
+
     return <div className="remote-control">
         <nav>
-            <button>전체 문항</button>
-            <button>설문 설정</button>
+            {btns.map((btn, idx) => {
+                return <button key={btn+idx}
+                className={classNames({active : activeBtn === idx})}
+                onClick={()=>setActiveBtn(idx)}>{btn}</button>
+            })}
         </nav>
         <QuestionTab/>
     </div>

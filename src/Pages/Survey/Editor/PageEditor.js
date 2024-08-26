@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { pageCntAtom, pagesAtom } from "../../../Recoil/AdminRecoil";
+import { pagesAtom } from "../../../Recoil/AdminRecoil";
 import ContentEditable from "react-contenteditable";
 
 function PageEditor({pageIdx}) {
@@ -9,7 +9,7 @@ function PageEditor({pageIdx}) {
     const [pageCnt, setPageCnt] = useState('1/1')
     useEffect(() => {
         setPageCnt(`${pageIdx+1}/${pages.length}`)
-    }, [pages])
+    }, [pages, pageIdx])
 
     const [title, setTitle] = useState('') // page title
     const [html, setHtml] = useState('') // page description
@@ -22,6 +22,7 @@ function PageEditor({pageIdx}) {
         switch (style) {
             case 'bold' : tag = 'b'; break;
             case 'italic' : tag = 'i'; break;
+            default : tag = ''
         }
 
         const selection = window.getSelection()
@@ -59,7 +60,7 @@ function PageEditor({pageIdx}) {
     }
 
     const selectHandler = () => {
-        const selection = window.getSelection()
+        // const selection = window.getSelection()
     }
 
     const changeDescription = (e) => {
@@ -82,7 +83,7 @@ function PageEditor({pageIdx}) {
                 return page
             })
         })
-    },[title, html])
+    },[title, html, pageIdx, setPages])
 
     return (
         <>

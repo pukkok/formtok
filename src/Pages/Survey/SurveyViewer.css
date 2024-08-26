@@ -69,7 +69,7 @@
 
 /* 리모컨 */
 .editor-box .remote-control{
-    padding: 10px 20px;
+    padding: 15px 20px;
     position: sticky;
     top: 20px;
     border: solid 1px #d7d7d7;
@@ -78,27 +78,85 @@
     height: 800px;
 }
 
-.remote-control .q-tab{
-    /* border: solid 1px red; */
+/* 리모컨 상단 버튼 */
+.remote-control nav{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.remote-control nav button{
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+}
+.remote-control nav button.active{
+    color: var(--purple);
+    border-bottom: 2px solid var(--purple);
 }
 
-.q-tab .h-summary{
+/* 전체 문항 탭 */
+.q-tab .summary-wrapper{
     border: solid 1px #d7d7d7;
+    border-radius: 12px;
     padding: 10px;
+    cursor: pointer;
+    user-select: none;
 }
-.q-tab .h-summary:not(:nth-of-type(1)){
-    margin-top: 20px;
+.q-tab .summary-card{
+    margin-bottom: 20px;
 }
+.q-tab .summary-card > div{
+    border: solid 2px transparent;
+    border-radius: 12px;
+}
+.q-tab .summary-card h4{
+    font-size: 14px;
+    color: var(--purple);
+    margin-bottom: 15px;
+    text-align: center;
+    position: relative;
+    top: -15px;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 10px;
+    background-color: #fff;
+}
+
+.q-tab .summary-card p.placeholder{
+    color: #aaa;
+}
+.q-tab .h-summary{
+    padding: 5px 10px;
+}
+.q-tab .summary-card:not(:first-child) .h-summary {
+    margin-top: 40px;
+}
+
+.q-tab .h-summary p{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 .q-tab .q-summary{
-    border: solid 1px #d7d7d7;
+    margin-top: 5px;
     padding: 10px;
 }
 .q-tab .h-summary.active,
-.q-tab .q-summary.active{
-    border: solid 2px var(--purple)
+.q-tab .h-summary:hover{
+    border: solid 2px var(--purple);
 }
-
-
+.q-tab .q-summary:hover,
+.q-tab .q-summary.active{
+    border: solid 2px var(--purple);
+    background-color: var(--purple);
+    color: #fff;
+    font-weight: bold;
+}
+.q-tab .h-summary:hover,
+.q-tab .q-summary:hover{
+    opacity: 0.8;
+}
 .remote-control .q-btns{
     display: flex;
     justify-content: space-around;
