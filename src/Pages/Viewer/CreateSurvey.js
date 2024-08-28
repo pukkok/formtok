@@ -42,7 +42,11 @@ function CreateSurvey () {
                             </div>
                         })}
                         <div>
-                            답변 후
+                            <p>답변 후</p>
+                            {pages.map((page, idx) => {
+                                const { title } = page.header
+                                return <div key={idx}>{idx+1}페이지({title? title : '제목 없음'})로 이동</div>
+                            })}
                         </div>
                     </React.Fragment>
                     )

@@ -7,10 +7,9 @@ function ViewRouter () {
 
     return <div className="viewer">
         <Routes>
-            <Route path="/" element={<SurveyMangager/>}>
-            </Route>
-            <Route path="survey" >
-                <Route path="create*" element={<CreateSurvey/>}></Route>
+            <Route path="/" element={<SurveyMangager/>}/>
+            <Route path="survey">
+                <Route path="create/*" element={<CreateSurvey/>}></Route>
             </Route>
         </Routes>
     </div>
