@@ -1,12 +1,11 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { isSideOpenAtom } from "../../Recoil/AdminRecoil";
+import { useNavigate } from "react-router-dom";
 
 function SideBar () {
     
-    function Logo () {
-        return <span className="logo">&SURVEY</span>
-    }
+    
 
     const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
 
@@ -32,3 +31,8 @@ function SideBar () {
     </div>
 }
 export default SideBar
+
+function Logo () {
+    const naviate = useNavigate()
+    return <span className="logo" onClick={()=>naviate('/')}>PK&SURVEY</span>
+}

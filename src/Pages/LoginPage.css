@@ -1,0 +1,203 @@
+.login-page{
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.login-wrapper{
+    position: relative;
+    margin: 0 auto;
+    height: 100vh;
+    width: 1000px;
+}
+.login-wrapper .back .material-symbols-outlined{
+    color: var(--deep-purple);
+    font-size: 28px;
+}
+.login-wrapper .back:hover{
+    transition: .2s;
+    scale: 1.1;
+}
+
+.big-form{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    min-width: 600px;
+    width: 60%;
+    height: 80vh;
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid var(--purple);
+    z-index: 1;
+}
+.big-form.right{
+    left: 40%;
+    visibility: hidden;
+}
+
+
+.big-form h2{
+    padding-top: 120px;
+    padding-bottom: 80px;
+    color: var(--purple);
+}
+.big-form input{
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 10px;
+    margin-bottom: 20px;
+}
+.big-form .btns{
+    margin-top: 40px;
+    display: flex;
+}
+.big-form .btns button:nth-child(1):hover{
+    font-weight: bold;
+}
+.big-form .btns button.round-btn{
+    margin-left: auto;
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: solid 3px transparent;
+    color: #fff;
+    background-color: var(--purple);
+    font-weight: bold;
+}
+.big-form .btns button.round-btn:hover{
+    border: solid 3px var(--purple);
+    background-color: #fff;
+    color: var(--purple);
+}
+
+.switch-small-box{
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.switch-small-box .small-form{
+    color: #aaa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    width: 400px;
+    height: 50%;
+}
+
+.switch-small-box .small-form button{
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: solid 2px #aaa;
+}
+.switch-small-box .small-form button:hover{
+    border: solid 2px var(--purple);
+    color: #000;
+    font-weight: bold;
+}
+
+.big-form.hide{
+    animation: hide-big-form .3s ease-in forwards;
+}
+.big-form.right.hide{
+    animation: hide-big-form-right .3s ease-in forwards;
+}
+.big-form.active{
+    
+    animation: show-big-form .3s ease-in forwards;
+}
+.big-form.right.active{
+    animation: show-big-form-right .3s ease-in forwards;
+}
+.switch-small-box .small-form.hide{
+    animation: hide-small-form .5s forwards;
+}
+.switch-small-box .small-form.active{
+    animation: show-small-form .5s forwards;
+}
+
+@keyframes hide-big-form {
+    0%{
+        opacity: 1;
+        margin-left: 0;
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        margin-left: 10px;
+        visibility: hidden;
+    }
+}
+@keyframes show-big-form {
+    0%{
+        opacity: 0;
+        margin-left: 10px;
+        visibility: hidden;
+    }
+    100%{
+        opacity: 1;
+        margin-left: 0;
+        visibility: visible;
+    }
+}
+@keyframes hide-big-form-right {
+    0%{
+        opacity: 1;
+        margin-left: 0;
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        margin-left: -10px;
+        visibility: hidden;
+    }
+}
+@keyframes show-big-form-right {
+    0%{
+        opacity: 0;
+        margin-left: -10px;
+        visibility: hidden;
+    }
+    100%{
+        opacity: 1;
+        margin-left: 0;
+        visibility: visible;
+    }
+}
+
+@keyframes hide-small-form {
+    0%{
+        opacity: 1;
+        margin-top: 0px;
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        margin-top: 15px;
+        visibility: hidden;
+    }
+}
+@keyframes show-small-form {
+    0%{
+        opacity: 0;
+        margin-top: 15px;
+        visibility: hidden;
+    }
+    100%{
+        opacity: 1;
+        margin-top: 0;
+        visibility: visible;
+    }
+}

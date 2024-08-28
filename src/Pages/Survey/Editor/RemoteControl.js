@@ -62,7 +62,7 @@ function QuestionTab () {
 }
 
 function RemoteControl () {
-    const [activeBtn, setActiveBtn] = useState()
+    const [activeBtn, setActiveBtn] = useState(0)
 
     const btns = ['전체 문항', '설문 설정']
 
@@ -74,7 +74,7 @@ function RemoteControl () {
                 onClick={()=>setActiveBtn(idx)}>{btn}</button>
             })}
         </nav>
-        <QuestionTab/>
+        {activeBtn === 0 && <QuestionTab/>}
     </div>
 }
 

@@ -1,4 +1,4 @@
-.admin-page{
+.main-page{
     display: grid;
     grid-template-areas: 
     's h'
@@ -9,7 +9,7 @@
 }
 
 /* 사이드바 */
-.admin-page .side-bar{
+.main-page .side-bar{
     grid-area: s;
     background-color: #414141;
     color: #fff;
@@ -45,21 +45,21 @@
 }
 
 /* 헤더 */
-.admin-page .header{
+.main-page .header{
     grid-area: h;
     display: flex;
     background-color: #fff;
 }
-.admin-page .header button{
+.main-page .header button{
     padding: 10px 20px;
 }
-.admin-page .header button.active{
+.main-page .header button.active{
     background-color: #f1f1f1;
 }
 
 
 /* 뷰어 */
-.admin-page .viewer{
+.main-page .viewer{
     grid-area: v;
     background-color: #f1f1f1;
     overflow: scroll;

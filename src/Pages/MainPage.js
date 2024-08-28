@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
-import { SideBar, Header, Viewer } from "./index";
+import SideBar from './Layout/SideBar'
+import Header from './Layout/Header'
+import ViewRouter from './Layout/ViewRouter'
+import './Layout/MainPage.css'
+
 import { useRecoilState, useRecoilValue } from "recoil";
 import { gridAtom, isSideOpenAtom } from "../Recoil/AdminRecoil";
+import LoginPage from "./LoginPage";
 
-function AdminPage() {
+function MainPage() {
 
     const [grid, setGrid] = useRecoilState(gridAtom)
 
@@ -17,11 +22,11 @@ function AdminPage() {
         isSideOpen ? setGrid(250) : setGrid(20)
     }, [isSideOpen])
 
-    return <section className="admin-page" style={adminStyle}>
+    return <section className="main-page" style={adminStyle}>
         <SideBar/>
-        <Viewer/>
         <Header/>
+        <ViewRouter/>
     </section>
 }
 
-export default AdminPage
+export default MainPage

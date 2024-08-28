@@ -9,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
   --purple : #7E37ED;
+  --deep-purple : #601dcd;
   --deepbg : #32323D;
   --lightbg : #393944;
 }
@@ -22,9 +23,16 @@ ul li{
   list-style: none;
 }
 
+a{
+  all: unset;
+}
+
 input{
   all: unset;
   border-bottom: 1px solid #cecece;
+}
+input::placeholder{
+  color: #aaa;
 }
 
 h4{

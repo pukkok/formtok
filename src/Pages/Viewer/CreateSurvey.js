@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { QuestionEditor, PageEditor, RemoteControl, TableEditor } from ".";
+import { QuestionEditor, PageEditor, RemoteControl, TableEditor } from "../Survey";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeCardAtom, pagesAtom } from "../../Recoil/AdminRecoil";
 import classNames from "classnames";
