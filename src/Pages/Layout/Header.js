@@ -20,8 +20,10 @@ function Header () {
             className={classNames({active : activeTab === tab})}
             >{tab}</div>
         })}
-        <button onClick={()=>navigate('/user/login')}>로그인</button>
-        <button onClick={()=>navigate('/user/login')}>회원가입</button>
+        <div className="btns">
+            <button onClick={()=>navigate('/user/login')}>로그인</button>
+            <button onClick={()=>navigate('/user/login')}>회원가입</button>
+        </div>
     </div>
 }
 

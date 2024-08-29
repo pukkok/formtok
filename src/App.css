@@ -12,10 +12,13 @@
   --deep-purple : #601dcd;
   --deepbg : #32323D;
   --lightbg : #393944;
+  --light-grey : #DEDAE3;
+  --deep-grey : #c1c1c1;
 }
 
 button{
   all: unset;
+  box-sizing: border-box;
   cursor: pointer;
 }
 

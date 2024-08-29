@@ -24,7 +24,6 @@ function SideBar () {
                 <li><button>설문지 제작</button></li>
                 <li><button>대시보드</button></li>
                 <li><button>문항 관리</button></li>
-                <li><button>설문지 제작</button></li>
             </ul>
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
