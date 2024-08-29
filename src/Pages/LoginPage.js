@@ -6,11 +6,19 @@ import { useNavigate } from "react-router-dom";
 
 function LoginPage () {
 
-    const [inputs, setInputs] = useState({userId: '', password: ''})
+    const [loginInputs, setLoginInputs] = useState({userId: '', password: ''})
+    const [joinInputs, setJoinInputs] = useState(
+        {name: '', userId: '', email: '', phone: '', password: '', confirmPassword : ''}
+    )
+
+    const typingLogin = (e) => {
+        const {name, value} = e.target
+        setLoginInputs({...loginInputs, [name] : value})
+    }
 
     const login = async (e) => {
         e.preventDefault()
-        const {userId, password} = inputs
+        const {userId, password} = loginInputs
         const {data} = await axios.post(`/user/login`, {
             userId, password
         })
@@ -22,11 +30,23 @@ function LoginPage () {
         }
     }
 
-    const typing = (e) => {
+    const typingJoin = (e) => {
         const {name, value} = e.target
-        setInputs({...inputs, [name] : value})
+        setJoinInputs({...joinInputs, [name] : value})
     }
 
+    const join = async (e) => {
+        e.preventDefault()
+        const {name, userId, email, phone, password, confirmPassword} = joinInputs
+        const {data} = await axios.post(`/user/join`, {
+            name, userId, email, phone, password, confirmPassword
+        })
+        if(data.code === 200){
+            console.log(data.msg)
+        }else{
+            console.log(data)
+        }
+    }
 
     const [activeForm, setActiveForm] = useState('')
     const changeForm = (form) => {
@@ -42,18 +62,22 @@ function LoginPage () {
                 {active: activeForm === 'login'},
                 {hide : activeForm === 'join'})}>
                 <button className="back" onClick={()=>navigate('/')}>
-                <span class="material-symbols-outlined">home</span>
+                <span className="material-symbols-outlined">home</span>
                 </button>
                 <h2>로그인</h2>
                 <input name="userId" placeholder="ID"
                 type="text"
-                onChange={typing} value={inputs.userId}/>
+                onChange={typingLogin} value={loginInputs.userId}/>
                 <input 
                 name="password" placeholder="PASSWORD" 
                 type="password"
-                onChange={typing} value={inputs.password}/>
+                onChange={typingLogin} value={loginInputs.password}/>
                 <div className="btns">
+                    <div>
+                    <button>아이디 찾기</button>
+                    <span> | </span>
                     <button>비밀번호 찾기</button>
+                    </div>
                     <button className="round-btn" onClick={login}>로그인</button>
                 </div>
             </div>
@@ -61,31 +85,34 @@ function LoginPage () {
                 {active: activeForm === 'join'},
                 {hide: activeForm ==='login'})}>
                 <button className="back" onClick={()=>navigate('/')}>
-                <span class="material-symbols-outlined">home</span>
+                <span className="material-symbols-outlined">home</span>
                 </button>
                 <h2>회원가입</h2>
+                <input name="name" placeholder="NAME"
+                type="text"
+                onChange={typingJoin} value={joinInputs.name}/>
                 <input name="userId" placeholder="ID"
                 type="text"
-                onChange={typing} value={inputs.userId}/>
+                onChange={typingJoin} value={joinInputs.userId}/>
                 <input 
                 name="email" placeholder="EMAIL" 
                 type="text"
-                onChange={typing} value={inputs.password}/>
+                onChange={typingJoin} value={joinInputs.email}/>
                 <input 
                 name="phone" placeholder="PHONE" 
                 type="text"
-                onChange={typing} value={inputs.password}/>
+                onChange={typingJoin} value={joinInputs.phone}/>
                 <input 
                 name="password" placeholder="PASSWORD" 
                 type="password"
-                onChange={typing} value={inputs.password}/>
+                onChange={typingJoin} value={joinInputs.password}/>
                 <input 
                 name="confirmPassword" placeholder="CONFIRM PASSWORD" 
                 type="password"
-                onChange={typing} value={inputs.password}/>
+                onChange={typingJoin} value={joinInputs.confirmPassword}/>
 
                 <div className="btns">
-                    <button className="round-btn" onClick={login}>로그인</button>
+                    <button className="round-btn" onClick={join}>회원가입</button>
                 </div>
             </div>
             <div className="switch-small-box">

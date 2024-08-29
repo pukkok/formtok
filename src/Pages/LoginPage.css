@@ -55,8 +55,9 @@
 .big-form .btns{
     margin-top: 40px;
     display: flex;
+    align-items: center;
 }
-.big-form .btns button:nth-child(1):hover{
+.big-form .btns button:hover{
     font-weight: bold;
 }
 .big-form .btns button.round-btn{
