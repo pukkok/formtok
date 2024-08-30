@@ -1,7 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ContentEditable from "react-contenteditable";
+import { useRecoilState } from "recoil";
+import { pagesAtom } from "../../../Recoil/AdminRecoil";
 
-function QuestionEditor ({type = '장문형'}) {
+function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
+    const [pages, setPages] = useRecoilState(pagesAtom)
+
     const [title, setTitle] = useState('') // page title
     const [html, setHtml] = useState('') // page description
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
@@ -16,14 +20,33 @@ function QuestionEditor ({type = '장문형'}) {
         setIsPlaceholderVisible(value === "")
     }
 
+    
     const [typeSummary, setTypeSummary] = useState('객관식')
     const changeSummary = (e) => {
         setTypeSummary(e.target.innerText)
     }
 
+    // useEffect(() => {
+    //     setPages(prevPages => {
+    //         return prevPages.map((page, idx) => {
+    //             if(idx === pageIdx){
+    //                 page.questions = page.questions.map((question, idx2) => {
+    
+    //                 })
+    //             }
+    //             return page
+    //         })
+    //     })
+
+    // },[title, html, pageIdx])
+
     return <>
         <div className="pd-box">
-            <input className="question-title" placeholder="질문" onChange={changeTitle}/>
+            <input className="question-title" 
+            placeholder="질문" onChange={changeTitle}
+            value={title}
+            />
+
             <div className="content-editor-wrapper">
                 {isPlaceholderVisible && (
                 <p className="content-placeholder">
@@ -36,7 +59,10 @@ function QuestionEditor ({type = '장문형'}) {
                 tagName="p"
                 onChange={changeDescription}
                 />
-                {type === '장문형' && <TextAnswer style={'long'}/>}
+                {typeSummary === '서술형' && <TextAnswer style={'long'}/>}
+                {typeSummary === '단답형' && <TextAnswer style={'short'}/>}
+                {typeSummary === '날짜/시간' && <DateAnser/>}
+                
             </div>
 
             <details>
@@ -49,6 +75,11 @@ function QuestionEditor ({type = '장문형'}) {
                 <button onClick={changeSummary}>표형</button>
                 <button onClick={changeSummary}>점수 선택형</button>
             </details>
+
+            <div>
+                <button>필수</button>
+                {typeSummary === '객관식' && <button>다중 선택</button>}
+            </div>
         </div>
         
     </>
@@ -65,4 +96,11 @@ function TextAnswer ({style = 'long'}) {
 function MultipleAnswer () {
 
     return <input/>
+}
+
+function DateAnser () {
+    return <>
+        <input type="date"/>
+        <input type="time"/>
+    </>
 }

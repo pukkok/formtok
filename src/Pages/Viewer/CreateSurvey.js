@@ -38,7 +38,7 @@ function CreateSurvey () {
                             {active : `q-${idx}-${idx2}` === activeCard})}
                             onClick={()=>moveCard(idx, idx2)}
                             key={idx2}>
-                                <QuestionEditor />
+                                <QuestionEditor pageIdx={idx} questionIdx={idx2} />
                             </div>
                         })}
                         <div>

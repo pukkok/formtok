@@ -6,7 +6,6 @@ import classNames from "classnames";
 function QuestionTab () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-    const didmountRef = useRef(false)
 
     const addQuestion = () => {
         let pageCnt = activeCard.split('-')[1]
@@ -26,6 +25,30 @@ function QuestionTab () {
     const addPage = () => {
         setPages([...pages, {header: {title: '', description :''}, questions: []}])
         setActiveCard(`h-${pages.length}`)
+    }
+
+    const dragItem = useRef()
+    const dragOverItem = useRef()
+    const [itemA, setItemA] = useState(null)
+    const [itemB, setItemB] = useState(null)
+
+    const dragStartHandler = (e, idx, idx2) => {
+        // const img = new Image()
+        // img.src= ''
+        // e.dataTransfer.setDragImage(img, 0, 0)
+
+        dragItem.current = {pageIdx: idx, quizIdx: idx2}
+        setItemA({pageIdx: idx, quizIdx: idx2})
+    }
+
+    const dragEnterHandler = (idx, idx2) => {
+        dragOverItem.current = {pageIdx: idx, quizIdx: idx2}
+        if(itemA) setItemB({...itemA})
+    }
+
+    const drop = () => {
+        const copyListItems = [...pages]
+        console.log(copyListItems[dragItem.current.pageIdx])
     }
 
     return(
@@ -48,6 +71,11 @@ function QuestionTab () {
                             className={classNames('q-summary', 
                             {active : `q-${idx}-${idx2}` === activeCard})}
                             key={idx2}
+                            draggable={true}
+                            onDragStart={e => dragStartHandler(e, idx, idx2)}
+                            onDragEnter={() => dragEnterHandler(idx)}
+                            onDragOver={e => e.preventDefault()}
+                            onDragEnd={drop}
                             >문항{idx2+1}</div>
                         })}
                     </div> 
