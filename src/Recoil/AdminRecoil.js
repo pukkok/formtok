@@ -25,7 +25,7 @@ const pagesAtom = atom({
     default : [{
         header: {title: '', description : ''}, 
         questions: [
-            {type: 'multiple', q: '', a: []}
+            {type: 'multiple', q: '', d: '', a: []}
         ]}]
 })
 const activeCardAtom = atom({

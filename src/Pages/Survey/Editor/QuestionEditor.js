@@ -13,6 +13,22 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
         setTitle(e.target.value)
     }
 
+
+    useEffect(() => {
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if(idx === pageIdx){
+                    let changeQ = page.questions.map((question, idx2) => {
+                        if(idx2 === questionIdx) question = {...question, q : title}
+                        return question
+                    })
+                    page = {...page, questions : changeQ}
+                }
+                return page
+            })
+        })
+    },[title])
+
     const changeDescription = (e) => {
         const {value} = e.target
         setHtml(value)
