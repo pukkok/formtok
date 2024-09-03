@@ -1,4 +1,20 @@
+import dayjs from "dayjs";
 import { atom } from "recoil";
+
+function randomKey(){
+    let newKey = ''
+    function getRandomNumber () {
+        return parseInt(5 + Math.random() * 5)
+    }
+    const x = 'abcdefghijklmnopqrstuvwxyz'.split('')
+    const now = dayjs().format('YYYY-MM-DDTHH:mm:ss')
+    let r = getRandomNumber()
+    for(let i=0; i<r; i++){
+        newKey += x[parseInt(Math.random()*x.length)]
+    }
+    newKey += now
+    return newKey
+}
 
 const gridAtom  = atom({
     key: 'amdin-grid',
@@ -23,9 +39,9 @@ const activeTabAtom = atom({
 const pagesAtom = atom({
     key: 'pages',
     default : [{
-        header: {title: '', description : ''}, 
+        header: {id: 'P'+randomKey(), title: '', description : ''}, 
         questions: [
-            {type: 'multiple', q: '', d: '', a: []}
+            {id: randomKey(), type: 'multiple', q: '', d: '', a: []}
         ]}]
 })
 const activeCardAtom = atom({
@@ -34,6 +50,7 @@ const activeCardAtom = atom({
 })
 
 export {
+    randomKey,
     gridAtom, isSideOpenAtom,
     tabsAtom, activeTabAtom,
     pagesAtom, activeCardAtom

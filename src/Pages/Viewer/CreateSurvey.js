@@ -21,9 +21,9 @@ function CreateSurvey () {
         <div className="editor-box">
             <div className="card-box" >
                 {pages.map((page, idx) => {
-                    const {header, questions} = page
+                    const {header : {id}, questions} = page
                     return (
-                    <React.Fragment key={idx}>
+                    <React.Fragment key={id}>
                         <div 
                         className={classNames("card", 
                         {active : `h-${idx}` === activeCard})}
@@ -37,7 +37,7 @@ function CreateSurvey () {
                             className={classNames("card", 
                             {active : `q-${idx}-${idx2}` === activeCard})}
                             onClick={()=>moveCard(idx, idx2)}
-                            key={idx2}>
+                            key={question.id}>
                                 <QuestionEditor pageIdx={idx} questionIdx={idx2} />
                             </div>
                         })}
