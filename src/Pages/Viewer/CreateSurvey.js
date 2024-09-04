@@ -21,10 +21,10 @@ function CreateSurvey () {
         <div className="editor-box">
             <div className="card-box" >
                 {pages.map((page, idx) => {
-                    const {header : {id}, questions} = page
+                    const {id, questions} = page
                     return (
                     <React.Fragment key={id}>
-                        <div 
+                        <div
                         className={classNames("card", 
                         {active : `h-${idx}` === activeCard})}
                         onClick={()=>setActiveCard(`h-${idx}`)}
@@ -44,7 +44,7 @@ function CreateSurvey () {
                         <div>
                             <p>답변 후</p>
                             {pages.map((page, idx) => {
-                                const { title } = page.header
+                                const { title } = page
                                 return <div key={idx}>{idx+1}페이지({title? title : '제목 없음'})로 이동</div>
                             })}
                         </div>

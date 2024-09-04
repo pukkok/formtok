@@ -38,11 +38,16 @@ const activeTabAtom = atom({
 
 const pagesAtom = atom({
     key: 'pages',
-    default : [{
-        header: {id: 'P'+randomKey(), title: '', description : ''}, 
+    default : [
+        {
+        id: 'P'+randomKey(), 
+        title: '', 
+        description : '',
         questions: [
             {id: randomKey(), type: 'multiple', q: '', d: '', a: []}
-        ]}]
+        ]
+    }
+    ]
 })
 const activeCardAtom = atom({
     key: 'activeCard',

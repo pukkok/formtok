@@ -1,24 +1,31 @@
-import React, { useEffect, useRef, useState } from "react"
-import { useRecoilState } from "recoil"
+import React, { useState, useRef, useEffect } from "react"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { activeCardAtom, pagesAtom, randomKey } from "../../../Recoil/AdminRecoil"
 import classNames from "classnames"
+import DropArea from "../../../Component/DropArea"
 
 function QuestionTab() {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-    const cardBoxRef = useRef(null)
+    const dragItem = useRef()
+    const cloneElement = useRef(null)
+    
+    const [isOpenQEdit, setIsOpenQEdit] = useState(false)
+    const [editPos, setEditPos] = useState({x:0, y:0})
+    const [selectQ, setSelectQ] = useState({pi:0, qi:0})
+    const showModal = (e, pi, qi) => {
+        e.preventDefault()
+        setIsOpenQEdit(true)
+        setEditPos({x:e.clientX, y: e.clientY})
+        setSelectQ({pi, qi})
+    }
 
-    useEffect(() => {
-        cardBoxRef.current.addEventListener('click', (e) => { })
-        cardBoxRef.current.addEventListener('contextmenu', e => {
-            e.preventDefault()
-            console.log(e.target)
-            console.log(e.offsetX, e.offsetY)
-        })
-    }, [])
+    const hideEditor = (e) => {
+        setIsOpenQEdit(false)
+    }
 
     const addQuestion = () => {
-        let id = randomKey() // 고유한 ID 생성
+        let id = randomKey()
         let pageCnt = activeCard.split('-')[1]
         let length
 
@@ -40,55 +47,84 @@ function QuestionTab() {
     }
 
     const addPage = () => {
-        const id = 'Q'+randomKey() // 페이지용 고유 ID 생성
-        setPages([...pages, { header: {id, title: '', description: '' }, questions: [] }])
+        const id = 'Q' + randomKey()
+        setPages([...pages, { id, title: '', description: '', questions: [] }])
         setActiveCard(`h-${pages.length}`)
     }
 
-    const dragItem = useRef()
-    const dragOverItem = useRef()
-    const [itemA, setItemA] = useState(null)
-    const [itemB, setItemB] = useState(null)
-
     const dragStartHandler = (e, idx, idx2) => {
-        // const img = new Image()
-        // img.src = ''
-        // e.dataTransfer.setDragImage(img, 0, 0)
-
         dragItem.current = { pageIdx: idx, quizIdx: idx2 }
-        setItemA({ pageIdx: idx, quizIdx: idx2 })
+
+        const style = window.getComputedStyle(e.target)
+        
+        const dragNode = e.target.cloneNode(true)
+
+        dragNode.className = 'dragging-image q-summary'
+        dragNode.style.backgroundColor = '#601dcd'
+        dragNode.style.color = style.color
+        dragNode.style.width = style.width
+        dragNode.style.borderRadius = style.borderRadius
+        dragNode.style.position = "absolute"
+        dragNode.style.pointerEvents = "none" // 드래그 중에 클릭을 방지
+        dragNode.style.transform = 'translate(-30%, -50%)'
+        document.body.appendChild(dragNode)
+
+        cloneElement.current = dragNode
+
+        // 고스트 이미지를 숨기기 위해 빈 이미지를 사용
+        const img = new Image()
+        img.src = ''
+        e.dataTransfer.setDragImage(img, 0, 0)
+        e.dataTransfer.effectAllowed = "move"
+        setTimeout(() => {
+            e.target.style.display = "none" // 드래그 시작 시 원래 요소 숨기기
+        }, 0)
+        updateDragNodePosition(e)
     }
 
-    const dragEnterHandler = (idx, idx2) => {
-        dragOverItem.current = { pageIdx: idx, quizIdx: idx2 }
-        if (itemA) setItemB({ ...dragOverItem.current })
+    const dragHandler = (e) => {
+        // 드래그 중에 노드 위치 업데이트
+        updateDragNodePosition(e)
     }
 
-    const drop = () => {
+    const dragEndHandler = (e) => {
+        // 드래그가 끝나면 생성한 커스텀 이미지 삭제
+        if (cloneElement.current) {
+            cloneElement.current.remove()
+            cloneElement.current = null
+        }
+        e.target.style.display = "block";
+    }
+
+    const updateDragNodePosition = (e) => {
+        if (cloneElement.current) {
+            cloneElement.current.style.top = `${e.clientY}px`
+            cloneElement.current.style.left = `${e.clientX}px`
+        }
+    }
+
+    const drop = (pageIdx, questionIdx) => {
         const copyListItems = [...pages]
         const { pageIdx: p1, quizIdx: q1 } = dragItem.current
-        const { pageIdx: p2, quizIdx: q2 } = dragOverItem.current
+        const p2 = pageIdx
+        const q2 = questionIdx
         const dragItemContent = copyListItems[p1].questions[q1]
 
         let newPages
         if (p1 !== p2) {
-            // 다른 페이지로 드래그 앤 드롭
             newPages = copyListItems.map((page, idx) => {
                 if (p1 === idx) {
-                    // p1 페이지에서 질문 제거
                     const filterQ = page.questions.filter((_, idx2) => q1 !== idx2)
                     return { ...page, questions: filterQ }
                 }
                 if (p2 === idx) {
-                    // p2 페이지에 질문 추가
-                    const updatedQuestions = [...page.questions] // questions 배열을 복사
+                    const updatedQuestions = [...page.questions]
                     updatedQuestions.splice(q2, 0, dragItemContent)
                     return { ...page, questions: updatedQuestions }
                 }
                 return page
             })
         } else {
-            // 같은 페이지 내에서 드래그 앤 드롭
             const updatedQuestions = [...copyListItems[p1].questions]
             updatedQuestions.splice(q1, 1)
             updatedQuestions.splice(q2, 0, dragItemContent)
@@ -103,15 +139,18 @@ function QuestionTab() {
 
         setActiveCard(`q-${p2}-${q2}`)
         dragItem.current = null
-        dragOverItem.current = null
+        if (cloneElement.current) {
+            cloneElement.current.remove()
+            cloneElement.current = null
+        }
         setPages(newPages)
     }
 
     return (
-        <div className="q-tab">
-            <div className="summary-wrapper" ref={cardBoxRef}>
+        <div className="q-tab" onClick={hideEditor}>
+            <div className="summary-wrapper">
                 {pages.map((page, idx) => {
-                    const { header: { id, title }, questions } = page
+                    const { id, title, questions } = page
                     return (
                         <div key={id} className="summary-card">
                             <div
@@ -121,33 +160,80 @@ function QuestionTab() {
                                 <h4>{idx + 1}/{pages.length} 페이지</h4>
                                 {title ? <p>{title}</p> : <p className="placeholder">페이지 제목</p>}
                             </div>
+                            <DropArea onDrop={() => drop(idx, 0)} />
                             {questions.map((question, idx2) => {
                                 const { id, q } = question
                                 return (
-                                    <div
-                                        onClick={() => setActiveCard(`q-${idx}-${idx2}`)}
-                                        className={classNames('q-summary', { active: `q-${idx}-${idx2}` === activeCard })}
-                                        key={id}
-                                        draggable={true}
-                                        onDragStart={e => dragStartHandler(e, idx, idx2)}
-                                        onDragEnter={() => dragEnterHandler(idx, idx2)}
-                                        onDragOver={e => e.preventDefault()}
-                                        onDragEnd={drop}
-                                    >
-                                        {q ? q : `${idx2 + 1}번 문항`}
-                                    </div>
+                                    <React.Fragment key={id}>
+                                        <div
+                                            onClick={() => setActiveCard(`q-${idx}-${idx2}`)}
+                                            onContextMenu={(e)=>showModal(e, idx, idx2)}
+                                            className={classNames('q-summary', { active: `q-${idx}-${idx2}` === activeCard })}
+                                            draggable={true}
+                                            onDrag={dragHandler}
+                                            onDragStart={e => dragStartHandler(e, idx, idx2)}
+                                            onDragEnd={dragEndHandler} // 드래그 종료 이벤트 핸들러
+                                        >
+                                            {q ? q : `${idx2 + 1}번 문항`}
+                                        </div>
+                                        <DropArea onDrop={() => drop(idx, idx2 + 1)}/>
+                                    </React.Fragment>
                                 )
                             })}
                         </div>
                     )
                 })}
             </div>
+            <EditQuestion isOpenQEdit={isOpenQEdit} pos={editPos} selectQ={selectQ}/>
             <div className="q-btns">
                 <button onClick={addQuestion}>문항 추가</button>
                 <button onClick={addPage}>페이지 추가</button>
             </div>
         </div>
     )
+}
+
+function EditQuestion ({ isOpenQEdit, pos = {x:0, y:0}, selectQ = { pi:0, qi:0 } }) {
+    const setPages = useSetRecoilState(pagesAtom)
+
+    // 질문 복사하기
+    const copyQ = () => {
+        const {pi, qi} = selectQ
+        const id = randomKey()
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi){
+                    let [addQuestions] = page.questions.filter((_, idx) => qi === idx)
+                    addQuestions = {...addQuestions, id, q: addQuestions.q ? addQuestions.q+'(사본)' : addQuestions.q}
+                    const updatedQuestions = [...page.questions]
+                    updatedQuestions.splice(qi+1, 0, addQuestions)
+                    return page = {...page, questions : updatedQuestions}
+                }
+                return page
+            })
+        })
+    }
+
+    // 질문 삭제하기
+    const deleteQ = () => {
+        const {pi, qi} = selectQ
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi){
+                    const updatedQuestions = page.questions.filter((_, idx) => qi !== idx)
+                    return page = {...page, questions : updatedQuestions}
+                }
+                return page
+            })
+        })
+    }
+
+    return <div 
+    className={classNames({on: isOpenQEdit}, "modify-option")}
+    style={{left: pos.x+'px', top: pos.y+'px'}}>
+        <button onClick={copyQ}>복사</button>
+        <button onClick={deleteQ}>삭제</button>
+    </div>
 }
 
 function RemoteControl() {

@@ -217,6 +217,8 @@
     border-bottom: 2px solid var(--purple);
 }
 
+
+
 /* 리모컨 */
 .editor-box .remote-control{
     padding: 15px 20px;
@@ -229,6 +231,9 @@
 }
 
 /* 리모컨 상단 버튼 */
+.remote-control{
+    width: 400px;
+}
 .remote-control nav{
     display: flex;
     gap: 10px;
@@ -246,6 +251,8 @@
 
 /* 전체 문항 탭 */
 .q-tab .summary-wrapper{
+    max-height: 500px;
+    overflow: scroll;
     border: solid 1px #d7d7d7;
     border-radius: 12px;
     padding: 10px;
@@ -285,30 +292,52 @@
 .q-tab .h-summary p{
     font-weight: bold;
     margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.q-tab .q-summary{
+.q-summary{
     border: solid 2px transparent;
     border-radius: 12px;
-    margin-top: 5px;
     padding: 10px;
+    display: flex;
+    align-items: center;
 }
-.q-tab .h-summary.active,
-.q-tab .h-summary:hover{
+.q-summary span{
+    box-sizing: border-box;
+    margin-left: auto;
+    font-size: 18px;
+    color: var(--light-grey);
+    cursor: pointer;
+    padding: 5px;
+}
+.q-summary span:hover{
+    background-color: var(--light-grey);
+    color: #000;
+    border-radius: 50%;
+}
+.h-summary.active,
+.h-summary:hover{
     border: solid 2px var(--purple);
     border-radius: 12px;
 }
-.q-tab .q-summary:hover,
-.q-tab .q-summary.active{
+.q-summary:hover,
+.q-summary.active,
+.q-summary:active{
     border: solid 2px var(--purple);
     background-color: var(--purple);
     color: #fff;
     font-weight: bold;
 }
-.q-tab .h-summary:hover,
-.q-tab .q-summary:hover{
-    opacity: 0.8;
+.dragging-image {
+    background-color: #f0f0f0;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: grab;
 }
+
 .remote-control .q-btns{
     display: flex;
     justify-content: space-around;
@@ -321,4 +350,24 @@
 .remote-control .q-btns button:hover{
     background-color: var(--purple);
     color: #fff;
+}
+
+.modify-option{
+    position: fixed;
+    left: 0;
+    top: 0;
+    border: solid 1px red;
+    width: 70px;
+    background-color: #fff;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+.modify-option.on{
+    opacity: 1;
+}
+.modify-option button{
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border: solid 1px blue;
 }

@@ -6,20 +6,13 @@ import { pagesAtom } from "../../../Recoil/AdminRecoil";
 function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
 
-    const [title, setTitle] = useState('') // page title
-    const [html, setHtml] = useState('') // page description
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
     const changeTitle = (e) => {
-        setTitle(e.target.value)
-    }
-
-
-    useEffect(() => {
         setPages(prevPages => {
             return prevPages.map((page, idx) => {
                 if(idx === pageIdx){
                     let changeQ = page.questions.map((question, idx2) => {
-                        if(idx2 === questionIdx) question = {...question, q : title}
+                        if(idx2 === questionIdx) question = {...question, q : e.target.value}
                         return question
                     })
                     page = {...page, questions : changeQ}
@@ -27,13 +20,23 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
                 return page
             })
         })
-    },[title])
+    }
 
     const changeDescription = (e) => {
-        const {value} = e.target
-        setHtml(value)
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if(idx === pageIdx){
+                    let changeQ = page.questions.map((question, idx2) => {
+                        if(idx2 === questionIdx) question = {...question, d : e.target.value}
+                        return question
+                    })
+                    page = {...page, questions : changeQ}
+                }
+                return page
+            })
+        })
         // value가 없을때 placeholder 상태
-        setIsPlaceholderVisible(value === "")
+        setIsPlaceholderVisible(e.target.value === "")
     }
 
     
@@ -42,25 +45,11 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
         setTypeSummary(e.target.innerText)
     }
 
-    // useEffect(() => {
-    //     setPages(prevPages => {
-    //         return prevPages.map((page, idx) => {
-    //             if(idx === pageIdx){
-    //                 page.questions = page.questions.map((question, idx2) => {
-    
-    //                 })
-    //             }
-    //             return page
-    //         })
-    //     })
-
-    // },[title, html, pageIdx])
-
     return <>
         <div className="pd-box">
             <input className="question-title" 
             placeholder="질문" onChange={changeTitle}
-            value={title}
+            value={pages[pageIdx].questions[questionIdx].q}
             />
 
             <div className="content-editor-wrapper">
@@ -71,7 +60,7 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
                 )}
                 <ContentEditable
                 className="content-editor"
-                html={html}
+                html={pages[pageIdx].questions[questionIdx].d}
                 tagName="p"
                 onChange={changeDescription}
                 />
