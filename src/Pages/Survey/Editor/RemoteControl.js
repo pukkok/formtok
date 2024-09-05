@@ -9,11 +9,6 @@ function QuestionTab() {
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const dragItem = useRef()
     const cloneElement = useRef(null)
-    
-    const showModal = (e, pi, qi) => {
-        setActiveCard(`q-${pi}-${qi}`)
-        e.preventDefault()
-    }
 
     const addQuestion = () => {
         let id = randomKey()

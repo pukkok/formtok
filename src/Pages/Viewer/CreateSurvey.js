@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { QuestionEditor, PageEditor, RemoteControl, TableEditor } from "../Survey";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeCardAtom, pagesAtom } from "../../Recoil/AdminRecoil";

@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
 import ContentEditable from "react-contenteditable";
 import { useRecoilState } from "recoil";
-import { pagesAtom } from "../../../Recoil/AdminRecoil";
+import { pagesAtom, randomKey } from "../../../Recoil/AdminRecoil";
+import classNames from "classnames";
+import AddAnswer from "../../../Component/AddAnswer";
 
 function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
@@ -46,9 +48,17 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
         setIsPlaceholderVisible(e.target.value === "")
     }
 
-    const [typeSummary, setTypeSummary] = useState('객관식')
-    const changeSummary = (e) => {
-        setTypeSummary(e.target.innerText)
+    const [Qtype, setQtype] = useState('객관식')
+    const changeType = (e) => {
+        setQtype(e.target.innerText)
+        setIsOpenTypeList(false)
+    }
+
+    const [isOpenTypeList, setIsOpenTypeList] = useState(false)
+    const [isRequire, setIsRequire] = useState(false)
+
+    const requireCheck = () => {
+        setIsRequire(!isRequire)
     }
 
     return <>
@@ -70,26 +80,28 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
                 tagName="p"
                 onChange={changeDescription}
                 />
-                {typeSummary === '서술형' && <TextAnswer style={'long'}/>}
-                {typeSummary === '단답형' && <TextAnswer style={'short'}/>}
-                {typeSummary === '날짜/시간' && <DateAnser/>}
-                
             </div>
-
-            <details>
-                <summary>{typeSummary}</summary>
-                <button onClick={changeSummary}>서술형</button>
-                <button onClick={changeSummary}>단답형</button>
-                <button onClick={changeSummary}>객관식</button>
-                <button onClick={changeSummary}>드롭다운</button>
-                <button onClick={changeSummary}>날짜/시간</button>
-                <button onClick={changeSummary}>표형</button>
-                <button onClick={changeSummary}>점수 선택형</button>
-            </details>
-
-            <div>
-                <button>필수</button>
-                {typeSummary === '객관식' && <button>다중 선택</button>}
+            <QuestionStyle style={Qtype}/>
+            <div className="add-option-wrapper">
+                <div className="list-box">
+                    <button 
+                    className={classNames("list-open-btn", {open : isOpenTypeList})}
+                    onClick={()=>{setIsOpenTypeList(!isOpenTypeList)}}>{Qtype}</button>
+                    <ul className={classNames({open: isOpenTypeList})}>
+                        <li><button onClick={changeType}>서술형</button></li>
+                        <li><button onClick={changeType}>단답형</button></li>
+                        <li><button onClick={changeType}>객관식</button></li>
+                        <li><button onClick={changeType}>드롭다운</button></li>
+                        <li><button onClick={changeType}>날짜/시간</button></li>
+                        <li><button onClick={changeType}>표형</button></li>
+                        <li><button onClick={changeType}>점수 선택형</button></li>
+                    </ul>
+                </div>
+                {Qtype === '객관식' && <button 
+                onClick={requireCheck}
+                className={classNames("ox-btn", {o: isRequire})}>질문 다중 선택</button>}
+                <button className={classNames("ox-btn", {o: isRequire})}>답변 필수</button>
+                <button className={classNames("ox-btn", {o: isRequire})}>답변 별 페이지 이동</button>
             </div>
         </div>
         
@@ -98,20 +110,40 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
 
 export default QuestionEditor
 
-function TextAnswer ({style = 'long'}) {
-    const text = style === 'long' ? '장문형' : '단답형'
+function QuestionStyle ({style = '객관식'}){
+    const [answers, setAnswers] = useState([{id: 'A'+randomKey(), type: 'text'}])
+    const [extra, setExtra] = useState(false)
+    const addInput = () => {
+        const id = 'A'+randomKey()
+        setAnswers(prev => [...prev, {id, type: 'text'}])
+    }
 
-    return <input className={style} placeholder={text} disabled={true}/>
-}
-
-function MultipleAnswer () {
-
-    return <input/>
-}
-
-function DateAnser () {
     return <>
-        <input type="date"/>
-        <input type="time"/>
+        {style === '객관식' && 
+        <div className="multiple">
+            {answers.map((answer, idx) => {
+                const {id, type} = answer
+                return <AddAnswer key={id} type={type} placeholder={'옵션'+(idx+1)}/>
+            })}
+            {extra && <AddAnswer defaultValue={'기타'} disabled={true} handleClick={()=>setExtra(false)}/>}
+            <div className="add-btns">
+                <button className="add-answer-btn" onClick={addInput}>항목 추가</button>
+                {!extra && <>
+                    또는
+                    <button className="add-extra-btn"onClick={()=>setExtra(true)}>'기타' 추가</button>
+                </>}
+            </div>
+        </div>
+        }
+        {style === '장문형'}
+        {style === '단답형' && 
+            <input placeholder={'단답형'} disabled={true}/>
+        }
+        {style === '날짜/시간' &&
+        <>
+            <input type="date"/>
+            <input type="time"/>
+        </>
+        }
     </>
 }

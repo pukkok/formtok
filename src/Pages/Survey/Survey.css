@@ -165,29 +165,29 @@
     border-radius: 12px;
     min-height: 200px;
     margin-bottom: 20px;
-    overflow: hidden;
+}
+.card .pd-box{
+    border-radius: 8px 8px 0 0;
 }
 .editor-box .card.active{
     border: solid 2px var(--purple);
 }
-
+/* 페이지 타이틀 */
 .card h4{
     background-color: var(--purple);
     color: #fff;
     font-weight: bold;
     margin-bottom: 10px;
 }
-
 .card input{
     width: 100%;
     padding-bottom: 5px;
 }
-
 .card input.page-title{
     font-size: 24px;
 }
-
 .card input.question-title{
+    padding-top: 10px;
     font-size: 20px;
 }
 
@@ -216,6 +216,111 @@
     border-bottom: 2px solid var(--purple);
 }
 
+.add-option-wrapper{
+    border-top: 1px solid black;
+    margin-top: 60px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.list-box{
+    margin-right: auto;
+    position: relative;
+}
+
+.add-option-wrapper .list-open-btn{
+    border: solid 1px var(--light-grey);
+    border-radius: 12px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+.add-option-wrapper .list-open-btn:hover{
+    border: solid 1px var(--purple);
+}
+.add-option-wrapper .list-open-btn.open{
+    border: solid 1px var(--deep-purple);
+}
+.add-option-wrapper ul{
+    display: none;
+    position: absolute;
+    top: 50px;
+    border: solid 1px var(--deep-purple);
+    border-radius: 12px;
+    background-color: #fff;
+    width: 200px;
+    padding: 10px;
+}
+.add-option-wrapper ul.open{
+    display: block;
+    z-index: 10;
+}
+.add-option-wrapper ul li{
+    padding: 5px 20px 5px 0px;
+    background-color: #fff;
+}
+.add-option-wrapper ul li:hover{
+    background-color: #ddd;
+}
+.add-option-wrapper ul li button{
+    width: 100%;
+}
+.add-option-wrapper .ox-btn{
+    position: relative;
+    font-weight: bold;
+}
+.add-option-wrapper .ox-btn::after{
+    content: 'X';
+    color: red;
+    font-size: 28px;
+    opacity: .3;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+}
+.add-option-wrapper .ox-btn.o::after{
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: solid 3px green;
+}
+
+/* 옵션박스 나중에 수정할것 */
+.option-box:nth-child(1){
+    margin-top: 15px;
+}
+.option-box{
+    display: flex;
+    margin-top: 5px;
+}
+
+.add-btns{
+    margin-top: 10px;
+}
+.add-btns button{
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+.add-answer-btn{
+    background-color: #0020c2;
+    border: solid 1px #0020c2;
+    color: #fff;
+    margin-right: 10px;
+}
+.add-extra-btn{
+    border: solid 1px #0020c2;
+    margin-left: 10px;
+}
 
 
 /* 리모컨 */
@@ -229,7 +334,6 @@
     height: 80vh;
     width: 400px;
 }
-
 /* 리모컨 상단 버튼 */
 .remote-control nav{
     height: 30px;
@@ -246,8 +350,7 @@
     color: var(--purple);
     border-bottom: 2px solid var(--purple);
 }
-
-/* 전체 문항 탭 */
+/* 리모컨 전체 문항 탭 요약*/
 .q-tab{
     height: 100%;  
 }
@@ -276,7 +379,6 @@
     padding: 0 10px;
     background-color: #fff;
 }
-
 .q-tab .summary-card p.placeholder{
     color: #aaa;
 }
@@ -288,7 +390,6 @@
 .q-tab .summary-card:not(:first-child) .h-summary {
     margin-top: 40px;
 }
-
 .q-tab .h-summary p{
     font-weight: bold;
     margin-bottom: 5px;
@@ -296,13 +397,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
 .q-summary{
     border: solid 2px transparent;
     border-radius: 12px;
     padding: 8px;
     display: flex;
     align-items: center;
+    position: relative;
 }
 .q-summary p{
     max-width: 80%;
@@ -332,6 +433,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    user-select: none;
 }
 .remote-control .q-btns button{
     border-radius: 8px;
@@ -345,9 +447,10 @@
 .remote-control .q-btns button:disabled{
     color: var(--deep-grey);
 }
+
 .modify-wrapper{
     position: absolute;
-    right: 10%;
+    right: 5%;
     z-index: 10;
 }
 
@@ -371,7 +474,7 @@
 
 .modify-option{
     position: absolute;
-    right: 30px;
+    right: 0px;
     top: 0;
     width: 70px;
     background-color: #fff;
