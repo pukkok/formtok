@@ -178,7 +178,6 @@
     margin-bottom: 10px;
 }
 
-
 .card input{
     width: 100%;
     padding-bottom: 5px;
@@ -227,17 +226,16 @@
     border: solid 1px #d7d7d7;
     background-color: #fff;
     border-radius: 12px;
-    height: 800px;
+    height: 80vh;
+    width: 400px;
 }
 
 /* 리모컨 상단 버튼 */
-.remote-control{
-    width: 400px;
-}
 .remote-control nav{
+    height: 30px;
     display: flex;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .remote-control nav button{
     padding-bottom: 5px;
@@ -250,8 +248,11 @@
 }
 
 /* 전체 문항 탭 */
+.q-tab{
+    height: 100%;  
+}
 .q-tab .summary-wrapper{
-    max-height: 500px;
+    height: calc(100% - 100px);
     overflow: scroll;
     border: solid 1px #d7d7d7;
     border-radius: 12px;
@@ -260,9 +261,8 @@
     user-select: none;
 }
 .q-tab .summary-card{
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
-
 .q-tab .summary-card h4{
     font-size: 14px;
     color: var(--purple);
@@ -300,23 +300,17 @@
 .q-summary{
     border: solid 2px transparent;
     border-radius: 12px;
-    padding: 10px;
+    padding: 8px;
     display: flex;
     align-items: center;
 }
-.q-summary span{
-    box-sizing: border-box;
-    margin-left: auto;
-    font-size: 18px;
-    color: var(--light-grey);
-    cursor: pointer;
-    padding: 5px;
+.q-summary p{
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-.q-summary span:hover{
-    background-color: var(--light-grey);
-    color: #000;
-    border-radius: 50%;
-}
+
 .h-summary.active,
 .h-summary:hover{
     border: solid 2px var(--purple);
@@ -330,20 +324,17 @@
     color: #fff;
     font-weight: bold;
 }
-.dragging-image {
-    background-color: #f0f0f0;
-    border: 1px solid #333;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: grab;
-}
 
+/* 리모컨 하단 버튼 */
 .remote-control .q-btns{
+    margin-top: 10px;
+    height: 50px;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: space-between;
 }
-
 .remote-control .q-btns button{
+    border-radius: 8px;
     border: solid 1px var(--purple);
     padding: 5px 10px;
 }
@@ -351,23 +342,62 @@
     background-color: var(--purple);
     color: #fff;
 }
+.remote-control .q-btns button:disabled{
+    color: var(--deep-grey);
+}
+.modify-wrapper{
+    position: absolute;
+    right: 10%;
+    z-index: 10;
+}
+
+.modify-wrapper span{
+    display: none;
+    box-sizing: border-box;
+    margin-left: auto;
+    font-size: 18px;
+    color: var(--light-grey);
+    cursor: pointer;
+}
+.q-summary.active .modify-wrapper span{
+    display: block;
+}
+.modify-wrapper span:hover{
+    /* background-color: var(--light-grey); */
+    background-color: #fff;
+    color: #000;
+    border-radius: 50%;
+}
 
 .modify-option{
-    position: fixed;
-    left: 0;
+    position: absolute;
+    right: 30px;
     top: 0;
-    border: solid 1px red;
     width: 70px;
     background-color: #fff;
-    opacity: 0;
-    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 0;
+    transition: .2s;
+    color: #000;
+    font-size: 14px;
+    box-shadow: 2px 2px 2px #ddd;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    
 }
 .modify-option.on{
-    opacity: 1;
+    height: 100px;
+    padding: 5px;
 }
 .modify-option button{
     width: 100%;
     text-align: center;
-    padding: 10px;
-    border: solid 1px blue;
+}
+.modify-option button:nth-child(2){
+    color: #e8291b;
+}
+.modify-option button:hover{
+    background-color: #ddd;
+    border-radius: 8px;
 }

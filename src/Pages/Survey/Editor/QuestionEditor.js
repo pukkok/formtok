@@ -7,6 +7,13 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
 
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
+
+    useEffect(() => {
+        if(pages[pageIdx].questions[questionIdx].d){
+            setIsPlaceholderVisible(false)
+        }
+    },[pages[pageIdx].questions[questionIdx].d])
+
     const changeTitle = (e) => {
         setPages(prevPages => {
             return prevPages.map((page, idx) => {
@@ -39,7 +46,6 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
         setIsPlaceholderVisible(e.target.value === "")
     }
 
-    
     const [typeSummary, setTypeSummary] = useState('객관식')
     const changeSummary = (e) => {
         setTypeSummary(e.target.innerText)

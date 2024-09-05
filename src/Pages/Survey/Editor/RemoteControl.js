@@ -10,18 +10,9 @@ function QuestionTab() {
     const dragItem = useRef()
     const cloneElement = useRef(null)
     
-    const [isOpenQEdit, setIsOpenQEdit] = useState(false)
-    const [editPos, setEditPos] = useState({x:0, y:0})
-    const [selectQ, setSelectQ] = useState({pi:0, qi:0})
     const showModal = (e, pi, qi) => {
+        setActiveCard(`q-${pi}-${qi}`)
         e.preventDefault()
-        setIsOpenQEdit(true)
-        setEditPos({x:e.clientX, y: e.clientY})
-        setSelectQ({pi, qi})
-    }
-
-    const hideEditor = (e) => {
-        setIsOpenQEdit(false)
     }
 
     const addQuestion = () => {
@@ -64,7 +55,7 @@ function QuestionTab() {
         dragNode.style.color = style.color
         dragNode.style.width = style.width
         dragNode.style.borderRadius = style.borderRadius
-        dragNode.style.position = "absolute"
+        dragNode.style.position = "fixed"
         dragNode.style.pointerEvents = "none" // 드래그 중에 클릭을 방지
         dragNode.style.transform = 'translate(-30%, -50%)'
         document.body.appendChild(dragNode)
@@ -85,15 +76,16 @@ function QuestionTab() {
     const dragHandler = (e) => {
         // 드래그 중에 노드 위치 업데이트
         updateDragNodePosition(e)
+        setActiveCard('')
     }
 
-    const dragEndHandler = (e) => {
+    const dragEndHandler = (e, idx, idx2) => {
         // 드래그가 끝나면 생성한 커스텀 이미지 삭제
         if (cloneElement.current) {
             cloneElement.current.remove()
             cloneElement.current = null
         }
-        e.target.style.display = "block";
+        e.target.style.display = "flex"
     }
 
     const updateDragNodePosition = (e) => {
@@ -136,7 +128,6 @@ function QuestionTab() {
                 return page
             })
         }
-
         setActiveCard(`q-${p2}-${q2}`)
         dragItem.current = null
         if (cloneElement.current) {
@@ -147,7 +138,7 @@ function QuestionTab() {
     }
 
     return (
-        <div className="q-tab" onClick={hideEditor}>
+        <div className="q-tab">
             <div className="summary-wrapper">
                 {pages.map((page, idx) => {
                     const { id, title, questions } = page
@@ -167,14 +158,16 @@ function QuestionTab() {
                                     <React.Fragment key={id}>
                                         <div
                                             onClick={() => setActiveCard(`q-${idx}-${idx2}`)}
-                                            onContextMenu={(e)=>showModal(e, idx, idx2)}
                                             className={classNames('q-summary', { active: `q-${idx}-${idx2}` === activeCard })}
                                             draggable={true}
                                             onDrag={dragHandler}
                                             onDragStart={e => dragStartHandler(e, idx, idx2)}
-                                            onDragEnd={dragEndHandler} // 드래그 종료 이벤트 핸들러
+                                            onDragEnd={e => dragEndHandler(e, idx, idx2)} // 드래그 종료 이벤트 핸들러
                                         >
-                                            {q ? q : `${idx2 + 1}번 문항`}
+                                            <p>{q ? q : `${idx2 + 1}번 문항`}</p>
+                                            {`q-${idx}-${idx2}` === activeCard &&
+                                            <EditQuestion selectQ={{pi: idx, qi: idx2}}/>
+                                            }
                                         </div>
                                         <DropArea onDrop={() => drop(idx, idx2 + 1)}/>
                                     </React.Fragment>
@@ -184,16 +177,20 @@ function QuestionTab() {
                     )
                 })}
             </div>
-            <EditQuestion isOpenQEdit={isOpenQEdit} pos={editPos} selectQ={selectQ}/>
             <div className="q-btns">
-                <button onClick={addQuestion}>문항 추가</button>
-                <button onClick={addPage}>페이지 추가</button>
+                <button onClick={addQuestion}
+                disabled={activeCard === ''}
+                >문항 추가</button>
+                <button onClick={addPage}
+                disabled={activeCard === ''}
+                >페이지 추가</button>
             </div>
         </div>
     )
 }
 
-function EditQuestion ({ isOpenQEdit, pos = {x:0, y:0}, selectQ = { pi:0, qi:0 } }) {
+function EditQuestion ({ selectQ = { pi:0, qi:0 } }) {
+    const [isOpenQEdit, setIsOpenEdit] = useState(false)
     const setPages = useSetRecoilState(pagesAtom)
 
     // 질문 복사하기
@@ -204,7 +201,11 @@ function EditQuestion ({ isOpenQEdit, pos = {x:0, y:0}, selectQ = { pi:0, qi:0 }
             return pages.map((page, idx) => {
                 if(idx === pi){
                     let [addQuestions] = page.questions.filter((_, idx) => qi === idx)
-                    addQuestions = {...addQuestions, id, q: addQuestions.q ? addQuestions.q+'(사본)' : addQuestions.q}
+                    addQuestions = {...addQuestions, 
+                        id, 
+                        q: addQuestions.q ? addQuestions.q+'(사본)' : addQuestions.q,
+                        d: addQuestions.d
+                    }
                     const updatedQuestions = [...page.questions]
                     updatedQuestions.splice(qi+1, 0, addQuestions)
                     return page = {...page, questions : updatedQuestions}
@@ -228,11 +229,17 @@ function EditQuestion ({ isOpenQEdit, pos = {x:0, y:0}, selectQ = { pi:0, qi:0 }
         })
     }
 
-    return <div 
+    return <div className="modify-wrapper">
+    <span className="material-symbols-outlined"
+    onClick={() => setIsOpenEdit(!isOpenQEdit)}
+    >more_vert</span>
+    <div onClick={() => setIsOpenEdit(false)}
     className={classNames({on: isOpenQEdit}, "modify-option")}
-    style={{left: pos.x+'px', top: pos.y+'px'}}>
+    >
         <button onClick={copyQ}>복사</button>
         <button onClick={deleteQ}>삭제</button>
+        <button >닫기</button>
+    </div>
     </div>
 }
 
