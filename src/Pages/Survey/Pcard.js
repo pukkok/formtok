@@ -1,59 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { pagesAtom } from "../../../Recoil/AdminRecoil";
+import { pagesAtom } from "../../recoils/surveyAtoms";
 import ContentEditable from "react-contenteditable";
+import usePageActions from "../../hooks/usePageActions";
 
-function PageEditor({pageIdx}) {
+function Pcard({pi}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
 
     const [pageCnt, setPageCnt] = useState('1/1')
     useEffect(() => {
-        setPageCnt(`${pageIdx+1}/${pages.length}`)
-    }, [pages, pageIdx])
+        setPageCnt(`${pi+1}/${pages.length}`)
+    }, [pages, pi])
 
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
     const pageDescRef = useRef(null)
 
-    // 페이지 타이틀 변경하기
-    const changeTitle = (e) => { 
-        setPages(prevPages => {
-            return prevPages.map((page, idx) => {
-                if(idx === pageIdx){
-                    page = {...page,
-                        title: e.target.value,
-                    }
-                }
-                return page
-            })
-        })
-    }
 
-    // 페이지 디스크립션 변경하기
-    const changeDescription = (e) => {
-        setPages(prevPages => {
-            return prevPages.map((page, idx) => {
-                if(idx === pageIdx){
-                    page = {...page,
-                        description : e.target.value
-                    }
-                }
-                return page
-            })
-        })
+    const {changePTitle, changePDescription} = usePageActions()
+    const changePDescriptionAction = (e, pi) => {
+        changePDescription(e, pi)
         // value가 없을때 placeholder 상태
         setIsPlaceholderVisible(e.target.value === "")
-    }
-
-    const selectHandler = () => {
-        // const selection = window.getSelection()
-    }
+    } 
     
     return (
         <>
             <h4 className="pd-box">{pageCnt} 페이지</h4>
             <div className="pd-box">
                 <input className="page-title" 
-                placeholder="페이지 제목" onChange={changeTitle}/>
+                placeholder="페이지 제목" onChange={e=>changePTitle(e, pi)}/>
                 <div className="content-editor-wrapper">
                     {isPlaceholderVisible && (
                     <p className="content-placeholder">
@@ -63,10 +38,9 @@ function PageEditor({pageIdx}) {
                     <ContentEditable
                     ref={pageDescRef}
                     className="content-editor"
-                    html={pages[pageIdx].description}
+                    html={pages[pi].description}
                     tagName="p"
-                    onChange={changeDescription}
-                    onSelect={selectHandler}
+                    onChange={e=>changePDescriptionAction(e, pi)}
                     />
                 </div>
                 {/* <button onClick={()=>applyStyle('bold')}>굵게</button>
@@ -77,7 +51,7 @@ function PageEditor({pageIdx}) {
     )
 }
 
-export default PageEditor
+export default Pcard
 
 // const applyStyle = (style) => {
 //     let tag

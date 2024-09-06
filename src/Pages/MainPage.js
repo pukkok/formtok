@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import SideBar from './Layout/SideBar'
-import Header from './Layout/Header'
-import ViewRouter from './Layout/ViewRouter'
-import './Layout/MainPage.css'
+import SideBar from './Main/SideBar'
+import Header from './Main/Header'
+import ViewRouter from './Main/ViewRouter'
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { gridAtom, isSideOpenAtom } from "../Recoil/AdminRecoil";
-import LoginPage from "./LoginPage";
+import { gridAtom, isSideOpenAtom } from "../recoils/surveyAtoms";
 
 function MainPage() {
 

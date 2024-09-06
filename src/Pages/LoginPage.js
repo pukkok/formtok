@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import './LoginPage.css'
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
+import { LoginForms, JoinForms } from "../constants/loginForms";
 
 function LoginPage () {
 
@@ -10,15 +10,15 @@ function LoginPage () {
     const [joinInputs, setJoinInputs] = useState(
         {name: '', userId: '', email: '', phone: '', password: '', confirmPassword : ''}
     )
-
+    
     const typingLogin = (e) => {
         const {name, value} = e.target
         setLoginInputs({...loginInputs, [name] : value})
     }
 
-    const login = async (e) => {
+    const login = async (e, form) => {
         e.preventDefault()
-        const {userId, password} = loginInputs
+        const {userId, password} = form
         const {data} = await axios.post(`/user/login`, {
             userId, password
         })
@@ -56,7 +56,6 @@ function LoginPage () {
     const navigate = useNavigate()
 
     return <section className="login-page">
-        
         <div className="login-wrapper">
             <div className={classNames("big-form show", 
                 {active: activeForm === 'login'},
@@ -65,20 +64,20 @@ function LoginPage () {
                 <span className="material-symbols-outlined">home</span>
                 </button>
                 <h2>로그인</h2>
-                <input name="userId" placeholder="ID"
-                type="text"
-                onChange={typingLogin} value={loginInputs.userId}/>
-                <input 
-                name="password" placeholder="PASSWORD" 
-                type="password"
-                onChange={typingLogin} value={loginInputs.password}/>
+                {LoginForms.map(form => {
+                    const {name, placeholder, type} = form
+                    return <input key={name} name={name}  
+                    type={type} placeholder={placeholder}
+                    onChange={typingLogin} value={loginInputs[name]}
+                    />
+                })}
                 <div className="btns">
                     <div>
                     <button>아이디 찾기</button>
                     <span> | </span>
                     <button>비밀번호 찾기</button>
                     </div>
-                    <button className="round-btn" onClick={login}>로그인</button>
+                    <button className="round-btn" onClick={e=>login(e, loginInputs)}>로그인</button>
                 </div>
             </div>
             <div className={classNames("big-form right show",
@@ -88,29 +87,13 @@ function LoginPage () {
                 <span className="material-symbols-outlined">home</span>
                 </button>
                 <h2>회원가입</h2>
-                <input name="name" placeholder="NAME"
-                type="text"
-                onChange={typingJoin} value={joinInputs.name}/>
-                <input name="userId" placeholder="ID"
-                type="text"
-                onChange={typingJoin} value={joinInputs.userId}/>
-                <input 
-                name="email" placeholder="EMAIL" 
-                type="text"
-                onChange={typingJoin} value={joinInputs.email}/>
-                <input 
-                name="phone" placeholder="PHONE" 
-                type="text"
-                onChange={typingJoin} value={joinInputs.phone}/>
-                <input 
-                name="password" placeholder="PASSWORD" 
-                type="password"
-                onChange={typingJoin} value={joinInputs.password}/>
-                <input 
-                name="confirmPassword" placeholder="CONFIRM PASSWORD" 
-                type="password"
-                onChange={typingJoin} value={joinInputs.confirmPassword}/>
-
+                {JoinForms.map(form => {
+                    const {name, placeholder, type} = form
+                    return <input key={name} name={name}
+                    placeholder={placeholder} type={type}
+                    onChange={typingJoin} value={joinInputs[name]}
+                    />
+                })}
                 <div className="btns">
                     <button className="round-btn" onClick={join}>회원가입</button>
                 </div>

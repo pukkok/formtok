@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { QuestionEditor, PageEditor, RemoteControl, TableEditor } from "../Survey";
+import Qcard from "../Survey/Qcard";
+import Pcard from "../Survey/Pcard";
+import RemoteControl from "../Survey/RemoteControl";
+import TableEditor from '../Survey/TableEditor'
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeCardAtom, pagesAtom } from "../../Recoil/AdminRecoil";
+import { activeCardAtom, pagesAtom } from "../../recoils/surveyAtoms";
 import classNames from "classnames";
 
 function CreateSurvey () {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-
-    const moveCard = (idx, idx2) => {
-        setActiveCard(`q-${idx}-${idx2}`)
-    }
 
     useEffect(() => {
         const activeTag = document.querySelector(`.active`)
@@ -29,7 +28,7 @@ function CreateSurvey () {
                         {active : `P-${idx}` === activeCard})}
                         onClick={()=>setActiveCard(`P-${idx}`)}
                         >
-                            <PageEditor pageIdx={idx}/>
+                            <Pcard pi={idx}/>
                         </div>
 
                         {questions.map((question, idx2) => {
@@ -38,7 +37,7 @@ function CreateSurvey () {
                             {active : `Q-${idx}-${idx2}` === activeCard})}
                             onClick={()=>setActiveCard(`Q-${idx}-${idx2}`)}
                             key={question.id}>
-                                <QuestionEditor pi={idx} qi={idx2} />
+                                <Qcard pi={idx} qi={idx2} />
                             </div>
                         })}
                         <div className="page-move">

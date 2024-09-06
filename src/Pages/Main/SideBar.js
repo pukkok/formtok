@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { isSideOpenAtom } from "../../Recoil/AdminRecoil";
+import { isSideOpenAtom } from "../../recoils/surveyAtoms";
 import { useNavigate } from "react-router-dom";
 
 function SideBar () {

@@ -7,7 +7,7 @@ function SurveyManager () {
     const naviate = useNavigate()
 
     const [light, setLight] = useState('green')
-    
+
     const modalRef = useRef(null)
 
     const openModal = () => {
@@ -15,6 +15,7 @@ function SurveyManager () {
     }
     const goToCreate = () => {
         let url = ''
+        
         surveyTitle === '' ? url = '제목없는 설문지' : url = surveyTitle
         naviate(`/survey/create/${url}`)
     }

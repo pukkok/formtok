@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeTabAtom, tabsAtom } from "../../Recoil/AdminRecoil";
+import { activeTabAtom, tabsAtom } from "../../recoils/surveyAtoms";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 

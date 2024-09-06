@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import { useRecoilState } from "recoil"
-import { activeCardAtom, pagesAtom } from "../../../Recoil/AdminRecoil"
+import { activeCardAtom, pagesAtom } from "../../recoils/surveyAtoms"
 
 import classNames from "classnames"
-import DropArea from "../../../Component/DropArea"
-import usePageActions from "../../../CustomHook/usePageActions"
-import useOutsideClick from "../../../CustomHook/useOutsideClick"
+import DropArea from "../../components/DropArea"
+import usePageActions from "../../hooks/usePageActions"
+import useOutsideClick from "../../hooks/useOutsideClick"
 
 function QuestionTab() {
     const [pages, setPages] = useRecoilState(pagesAtom)
@@ -185,7 +185,7 @@ function EditQuestion ({ selectQ = { pi:0, qi:0 } }) {
                 <button onClick={() => setIsOpenQEdit(false)}>닫기</button>
             </div>
         </div>
-    );
+    )
 }
 
 function RemoteControl() {

@@ -1,9 +1,44 @@
 import { useRecoilState } from "recoil"
-import { activeCardAtom, pagesAtom, randomKey } from "../Recoil/AdminRecoil"
+import { activeCardAtom, pagesAtom, randomKey } from "../recoils/surveyAtoms"
 
 function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
+
+    // 페이지 타이틀 변경하기
+    const changePTitle = (e, pi) => { 
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if(idx === pi){
+                    page = {...page,
+                        title: e.target.value,
+                    }
+                }
+                return page
+            })
+        })
+    }
+
+    // 페이지 디스크립션 변경하기
+    const changePDescription = (e, pi) => {
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if(idx === pi){
+                    page = {...page,
+                        description : e.target.value
+                    }
+                }
+                return page
+            })
+        })
+    }
+
+    // 페이지 추가하기
+    const addPage = () => {
+        const id = 'P' + randomKey()
+        setPages([...pages, { id, title: '', description: '', questions: [] }])
+        setActiveCard(`P-${pages.length}`)
+    }
 
     // 질문 추가하기
     const addQuestion = () => {
@@ -30,13 +65,6 @@ function usePageActions () {
         setActiveCard(`Q-${pageCnt}-${length}`)
     }
 
-    // 페이지 추가하기
-    const addPage = () => {
-        const id = 'P' + randomKey()
-        setPages([...pages, { id, title: '', description: '', questions: [] }])
-        setActiveCard(`P-${pages.length}`)
-    }
-
     // 질문 제목 바꾸기
     const changeQTitle = (e, pi, qi) => {
         setPages(pages => {
@@ -52,7 +80,6 @@ function usePageActions () {
             })
         })
     }
-
     // 질문 설명 바꾸기
     const changeQDescription = (e, pi, qi) => {
         setPages(pages => {
@@ -85,7 +112,6 @@ function usePageActions () {
             })
         })
     }
-
     // 질문 복사하기
     const copyQ = (pi, qi) => {
         const id = randomKey()
@@ -106,7 +132,6 @@ function usePageActions () {
             })
         })
     }
-
     // 질문 삭제하기
     const deleteQ = (pi, qi) => {
         setPages(pages => {
@@ -121,6 +146,7 @@ function usePageActions () {
     }
 
     return { 
+        changePTitle, changePDescription,
         addQuestion, addPage, 
         changeQTitle, changeQDescription, changeQType,
         copyQ, deleteQ
