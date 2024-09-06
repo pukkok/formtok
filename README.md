@@ -1,6 +1,6 @@
 # 설문조사 앱
 
-https://github.io/pukkok/survey
+https://pukkok.github.io/survey
 
 필요사항
 1. 표지 제작
