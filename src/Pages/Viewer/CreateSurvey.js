@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Qcard from "../Survey/Qcard";
 import Pcard from "../Survey/Pcard";
-import RemoteControl from "../Survey/RemoteControl";
+import SurveyNav from "../Survey/SurveyNav";
 import TableEditor from '../Survey/TableEditor'
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeCardAtom, pagesAtom } from "../../recoils/surveyAtoms";
@@ -56,7 +56,7 @@ function CreateSurvey () {
                     )
                 })}
             </div>
-            <RemoteControl/>
+            <SurveyNav/>
         </div>
         
         <TableEditor/>

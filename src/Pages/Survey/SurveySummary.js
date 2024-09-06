@@ -1,13 +1,12 @@
-import React, { useState, useRef } from "react"
+import React, { useRef } from "react"
 import { useRecoilState } from "recoil"
-import { activeCardAtom, pagesAtom } from "../../recoils/surveyAtoms"
-
 import classNames from "classnames"
+import { activeCardAtom, pagesAtom } from "../../recoils/surveyAtoms"
 import DropArea from "../../components/DropArea"
 import usePageActions from "../../hooks/usePageActions"
-import useOutsideClick from "../../hooks/useOutsideClick"
+import QmoreVert from "./QmoreVert"
 
-function QuestionTab() {
+function SurveySummary() {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const dragItem = useRef()
@@ -140,7 +139,7 @@ function QuestionTab() {
                                         >
                                             <p>{q ? q : `${idx2 + 1}번 문항`}</p>
                                             {`Q-${idx}-${idx2}` === activeCard &&
-                                            <EditQuestion selectQ={{pi: idx, qi: idx2}}/>
+                                            <QmoreVert pi={idx} qi={idx2}/>
                                             }
                                         </div>
                                         <DropArea onDrop={() => drop(idx, idx2 + 1)}/>
@@ -163,51 +162,4 @@ function QuestionTab() {
     )
 }
 
-function EditQuestion ({ selectQ = { pi:0, qi:0 } }) {
-    const { isOpen: isOpenQEdit, setIsOpen: setIsOpenQEdit, ref: dropdownRef } = useOutsideClick(false)
-    const { pi, qi } = selectQ;
-    const { copyQ, deleteQ } = usePageActions()
-
-    return (
-        <div className="modify-wrapper" ref={dropdownRef}>
-            <span
-                className="material-symbols-outlined"
-                onClick={() => setIsOpenQEdit(!isOpenQEdit)}
-            >
-                more_vert
-            </span>
-            <div 
-                onClick={() => setIsOpenQEdit(false)}
-                className={classNames({ on: isOpenQEdit }, "modify-option")}
-            >
-                <button onClick={() => copyQ(pi, qi)}>복사</button>
-                <button onClick={() => deleteQ(pi, qi)}>삭제</button>
-                <button onClick={() => setIsOpenQEdit(false)}>닫기</button>
-            </div>
-        </div>
-    )
-}
-
-function RemoteControl() {
-    const [activeBtn, setActiveBtn] = useState(0)
-    const btns = ['전체 문항', '설문 설정']
-
-    return (
-        <div className="remote-control">
-            <nav>
-                {btns.map((btn, idx) => (
-                    <button
-                        key={btn + idx}
-                        className={classNames({ active: activeBtn === idx })}
-                        onClick={() => setActiveBtn(idx)}
-                    >
-                        {btn}
-                    </button>
-                ))}
-            </nav>
-            {activeBtn === 0 && <QuestionTab />}
-        </div>
-    )
-}
-
-export default RemoteControl
+export default SurveySummary

@@ -56,7 +56,7 @@ const pagesAtom = atom({
 })
 const activeCardAtom = atom({
     key: 'activeCard',
-    default : 'h-0'
+    default : 'P-0'
 })
 
 export {

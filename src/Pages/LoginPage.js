@@ -19,6 +19,7 @@ function LoginPage () {
     const login = async (e, form) => {
         e.preventDefault()
         const {userId, password} = form
+        
         const {data} = await axios.post(`/user/login`, {
             userId, password
         })

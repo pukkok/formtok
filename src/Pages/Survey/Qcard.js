@@ -1,12 +1,12 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { useRecoilState } from "recoil";
-import { pagesAtom, randomKey } from "../../recoils/surveyAtoms";
+import { pagesAtom } from "../../recoils/surveyAtoms";
 import classNames from "classnames";
-import AddAnswer from "../../components/AddAnswer";
 import usePageActions from "../../hooks/usePageActions";
 import questionForms from "../../constants/questionForms";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import Qform from "./Qform";
 
 function Qcard ({pi, qi}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
@@ -63,7 +63,7 @@ function Qcard ({pi, qi}) {
                 onChange={e=>changeQDescriptionAction(e, pi, qi)}
                 />
             </div>
-            <QuestionForm pi={pi} qi={qi}/>
+            <Qform pi={pi} qi={qi}/>
             <div className="add-option-wrapper">
                 <div className="list-box" ref={dropdownRef}>
                     <button 
@@ -73,9 +73,9 @@ function Qcard ({pi, qi}) {
                         {pages[pi].questions[qi].type}</button>
                     <ul className={classNames({open: isOpenTypeList})}>
                         {questionForms.map(qs => {
-                            return <li key={qs.style}>
+                            return <li key={qs.form}>
                                 <span className="material-symbols-outlined">{qs.icon}</span>
-                                <button onClick={()=>changeQTypeAction(pi, qi, qs.style, qs.icon)}>{qs.style}</button>
+                                <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.icon)}>{qs.form}</button>
                             </li>
                         })}
                     </ul>
@@ -91,45 +91,3 @@ function Qcard ({pi, qi}) {
 }
 
 export default Qcard
-
-function QuestionForm ({pi, qi}){
-    const [pages, setPages] = useRecoilState(pagesAtom)
-    const style = pages[pi].questions[qi].type || '객관식'
-    const [answers, setAnswers] = useState([{id: 'A'+randomKey(), type: 'text'}])
-    const [extra, setExtra] = useState(false)
-    const addInput = () => {
-        const id = 'A'+randomKey()
-        setAnswers(prev => [...prev, {id, type: 'text'}])
-    }
-
-    return <>
-        {style === '객관식' && 
-        <div className="multiple">
-            {answers.map((answer, idx) => {
-                const {id, type} = answer
-                return <AddAnswer key={id} type={type} placeholder={'옵션'+(idx+1)}/>
-            })}
-            {extra && <AddAnswer defaultValue={'기타'} disabled={true} handleClick={()=>setExtra(false)}/>}
-            <div className="add-btns">
-                <button className="add-answer-btn" onClick={addInput}>항목 추가</button>
-                {!extra && <>
-                    또는
-                    <button className="add-extra-btn"onClick={()=>setExtra(true)}>'기타' 추가</button>
-                </>}
-            </div>
-        </div>
-        }
-        {style === '서술형' &&
-            <p className="long-text">서술형</p>
-        }
-        {style === '단답형' && 
-            <p className="short-text">단답형</p>
-        }
-        {style === '날짜' &&
-            <input type="date"/>
-        }
-        {style === '시간' &&
-            <input type="time"/>
-        }
-    </>
-}
