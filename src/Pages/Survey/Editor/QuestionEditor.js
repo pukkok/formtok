@@ -1,60 +1,40 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import ContentEditable from "react-contenteditable";
 import { useRecoilState } from "recoil";
 import { pagesAtom, randomKey } from "../../../Recoil/AdminRecoil";
 import classNames from "classnames";
 import AddAnswer from "../../../Component/AddAnswer";
+import usePageActions from "../../../CustomHook/usePageActions";
+import { questionStyles } from "../../../Data/questionDatas";
+import useOutsideClick from "../../../CustomHook/useOutsideClick";
 
-function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
+
+
+function QuestionEditor ({pi, qi}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
-
     const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
-
+    // 맨처음 
     useEffect(() => {
-        if(pages[pageIdx].questions[questionIdx].d){
+        if(pages[pi].questions[qi].d){
             setIsPlaceholderVisible(false)
         }
-    },[pages[pageIdx].questions[questionIdx].d])
+    },[pages[pi].questions[qi].d])
 
-    const changeTitle = (e) => {
-        setPages(prevPages => {
-            return prevPages.map((page, idx) => {
-                if(idx === pageIdx){
-                    let changeQ = page.questions.map((question, idx2) => {
-                        if(idx2 === questionIdx) question = {...question, q : e.target.value}
-                        return question
-                    })
-                    page = {...page, questions : changeQ}
-                }
-                return page
-            })
-        })
-    }
+    const {isOpen : isOpenTypeList, setIsOpen : setIsOpenTypeList, ref: dropdownRef} = useOutsideClick()
 
-    const changeDescription = (e) => {
-        setPages(prevPages => {
-            return prevPages.map((page, idx) => {
-                if(idx === pageIdx){
-                    let changeQ = page.questions.map((question, idx2) => {
-                        if(idx2 === questionIdx) question = {...question, d : e.target.value}
-                        return question
-                    })
-                    page = {...page, questions : changeQ}
-                }
-                return page
-            })
-        })
+    const {changeQTitle, changeQDescription, changeQType} = usePageActions()
+    
+    const changeQDescriptionAction = (e, pi, qi) => {
+        changeQDescription(e, pi, qi)
         // value가 없을때 placeholder 상태
         setIsPlaceholderVisible(e.target.value === "")
     }
 
-    const [Qtype, setQtype] = useState('객관식')
-    const changeType = (e) => {
-        setQtype(e.target.innerText)
+    const changeQTypeAction = (pi, qi, style) => {
+        changeQType(pi, qi, style)
         setIsOpenTypeList(false)
     }
 
-    const [isOpenTypeList, setIsOpenTypeList] = useState(false)
     const [isRequire, setIsRequire] = useState(false)
 
     const requireCheck = () => {
@@ -64,8 +44,8 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
     return <>
         <div className="pd-box">
             <input className="question-title" 
-            placeholder="질문" onChange={changeTitle}
-            value={pages[pageIdx].questions[questionIdx].q}
+            placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
+            value={pages[pi].questions[qi].q}
             />
 
             <div className="content-editor-wrapper">
@@ -76,41 +56,41 @@ function QuestionEditor ({pageIdx, questionIdx, type = '장문형'}) {
                 )}
                 <ContentEditable
                 className="content-editor"
-                html={pages[pageIdx].questions[questionIdx].d}
+                html={pages[pi].questions[qi].d}
                 tagName="p"
-                onChange={changeDescription}
+                onChange={e=>changeQDescriptionAction(e, pi, qi)}
                 />
             </div>
-            <QuestionStyle style={Qtype}/>
+            <QuestionStyle pi={pi} qi={qi}/>
             <div className="add-option-wrapper">
-                <div className="list-box">
+                <div className="list-box" ref={dropdownRef}>
                     <button 
-                    className={classNames("list-open-btn", {open : isOpenTypeList})}
-                    onClick={()=>{setIsOpenTypeList(!isOpenTypeList)}}>{Qtype}</button>
+                    className={classNames("list-open-btn", "drop-down-btn", {open : isOpenTypeList})}
+                    onClick={()=>{setIsOpenTypeList(!isOpenTypeList)}}>{pages[pi].questions[qi].type}</button>
                     <ul className={classNames({open: isOpenTypeList})}>
-                        <li><button onClick={changeType}>서술형</button></li>
-                        <li><button onClick={changeType}>단답형</button></li>
-                        <li><button onClick={changeType}>객관식</button></li>
-                        <li><button onClick={changeType}>드롭다운</button></li>
-                        <li><button onClick={changeType}>날짜/시간</button></li>
-                        <li><button onClick={changeType}>표형</button></li>
-                        <li><button onClick={changeType}>점수 선택형</button></li>
+                        {questionStyles.map(qs => {
+                            return <li key={qs.style}>
+                                <span className="material-symbols-outlined">{qs.icon}</span>
+                                <button onClick={()=>changeQTypeAction(pi, qi, qs.style)}>{qs.style}</button>
+                            </li>
+                        })}
                     </ul>
                 </div>
-                {Qtype === '객관식' && <button 
+                {pages[pi].questions[qi].type === '객관식' && <button 
                 onClick={requireCheck}
                 className={classNames("ox-btn", {o: isRequire})}>질문 다중 선택</button>}
                 <button className={classNames("ox-btn", {o: isRequire})}>답변 필수</button>
                 <button className={classNames("ox-btn", {o: isRequire})}>답변 별 페이지 이동</button>
             </div>
         </div>
-        
     </>
 }
 
 export default QuestionEditor
 
-function QuestionStyle ({style = '객관식'}){
+function QuestionStyle ({pi, qi}){
+    const [pages, setPages] = useRecoilState(pagesAtom)
+    const style = pages[pi].questions[qi].type || '객관식'
     const [answers, setAnswers] = useState([{id: 'A'+randomKey(), type: 'text'}])
     const [extra, setExtra] = useState(false)
     const addInput = () => {
@@ -135,9 +115,11 @@ function QuestionStyle ({style = '객관식'}){
             </div>
         </div>
         }
-        {style === '장문형'}
+        {style === '서술형' &&
+            <p className="long-text">서술형</p>
+        }
         {style === '단답형' && 
-            <input placeholder={'단답형'} disabled={true}/>
+            <p className="short-text">단답형</p>
         }
         {style === '날짜/시간' &&
         <>

@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from "react"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { activeCardAtom, pagesAtom, randomKey } from "../../../Recoil/AdminRecoil"
+import { useRecoilState } from "recoil"
+import { activeCardAtom, pagesAtom } from "../../../Recoil/AdminRecoil"
+
 import classNames from "classnames"
 import DropArea from "../../../Component/DropArea"
+import usePageActions from "../../../CustomHook/usePageActions"
+import useOutsideClick from "../../../CustomHook/useOutsideClick"
 
 function QuestionTab() {
     const [pages, setPages] = useRecoilState(pagesAtom)
@@ -10,33 +13,7 @@ function QuestionTab() {
     const dragItem = useRef()
     const cloneElement = useRef(null)
 
-    const addQuestion = () => {
-        let id = randomKey()
-        let pageCnt = activeCard.split('-')[1]
-        let length
-
-        setPages(prev => {
-            return prev.map((page, idx) => {
-                if (+pageCnt === idx) {
-                    length = page.questions.length
-                    page = {
-                        ...page, questions: [...page.questions,
-                        { id, type: 'multiple', q: '', d: '', a: [] }
-                        ]
-                    }
-                }
-                return page
-            })
-        })
-
-        setActiveCard(`q-${pageCnt}-${length}`)
-    }
-
-    const addPage = () => {
-        const id = 'Q' + randomKey()
-        setPages([...pages, { id, title: '', description: '', questions: [] }])
-        setActiveCard(`h-${pages.length}`)
-    }
+    const {addQuestion, addPage} = usePageActions()
 
     const dragStartHandler = (e, idx, idx2) => {
         dragItem.current = { pageIdx: idx, quizIdx: idx2 }
@@ -80,7 +57,9 @@ function QuestionTab() {
             cloneElement.current.remove()
             cloneElement.current = null
         }
-        e.target.style.display = "flex"
+        setTimeout(() => {
+            e.target.style.display = "flex"
+        }, 0)
     }
 
     const updateDragNodePosition = (e) => {
@@ -123,7 +102,7 @@ function QuestionTab() {
                 return page
             })
         }
-        setActiveCard(`q-${p2}-${q2}`)
+        setActiveCard(`Q-${p2}-${q2}`)
         dragItem.current = null
         if (cloneElement.current) {
             cloneElement.current.remove()
@@ -140,8 +119,8 @@ function QuestionTab() {
                     return (
                         <div key={id} className="summary-card">
                             <div
-                                onClick={() => setActiveCard(`h-${idx}`)}
-                                className={classNames('h-summary', { active: `h-${idx}` === activeCard })}
+                                onClick={() => setActiveCard(`P-${idx}`)}
+                                className={classNames('h-summary', { active: `P-${idx}` === activeCard })}
                             >
                                 <h4>{idx + 1}/{pages.length} 페이지</h4>
                                 {title ? <p>{title}</p> : <p className="placeholder">페이지 제목</p>}
@@ -152,15 +131,15 @@ function QuestionTab() {
                                 return (
                                     <React.Fragment key={id}>
                                         <div
-                                            onClick={() => setActiveCard(`q-${idx}-${idx2}`)}
-                                            className={classNames('q-summary', { active: `q-${idx}-${idx2}` === activeCard })}
+                                            onClick={() => setActiveCard(`Q-${idx}-${idx2}`)}
+                                            className={classNames('q-summary', { active: `Q-${idx}-${idx2}` === activeCard })}
                                             draggable={true}
                                             onDrag={dragHandler}
                                             onDragStart={e => dragStartHandler(e, idx, idx2)}
                                             onDragEnd={e => dragEndHandler(e, idx, idx2)} // 드래그 종료 이벤트 핸들러
                                         >
                                             <p>{q ? q : `${idx2 + 1}번 문항`}</p>
-                                            {`q-${idx}-${idx2}` === activeCard &&
+                                            {`Q-${idx}-${idx2}` === activeCard &&
                                             <EditQuestion selectQ={{pi: idx, qi: idx2}}/>
                                             }
                                         </div>
@@ -185,57 +164,28 @@ function QuestionTab() {
 }
 
 function EditQuestion ({ selectQ = { pi:0, qi:0 } }) {
-    const [isOpenQEdit, setIsOpenEdit] = useState(false)
-    const setPages = useSetRecoilState(pagesAtom)
+    const { isOpen: isOpenQEdit, setIsOpen: setIsOpenQEdit, ref: dropdownRef } = useOutsideClick(false)
+    const { pi, qi } = selectQ;
+    const { copyQ, deleteQ } = usePageActions()
 
-    // 질문 복사하기
-    const copyQ = () => {
-        const {pi, qi} = selectQ
-        const id = randomKey()
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if(idx === pi){
-                    let [addQuestions] = page.questions.filter((_, idx) => qi === idx)
-                    addQuestions = {...addQuestions, 
-                        id, 
-                        q: addQuestions.q ? addQuestions.q+'(사본)' : addQuestions.q,
-                        d: addQuestions.d
-                    }
-                    const updatedQuestions = [...page.questions]
-                    updatedQuestions.splice(qi+1, 0, addQuestions)
-                    return page = {...page, questions : updatedQuestions}
-                }
-                return page
-            })
-        })
-    }
-
-    // 질문 삭제하기
-    const deleteQ = () => {
-        const {pi, qi} = selectQ
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if(idx === pi){
-                    const updatedQuestions = page.questions.filter((_, idx) => qi !== idx)
-                    return page = {...page, questions : updatedQuestions}
-                }
-                return page
-            })
-        })
-    }
-
-    return <div className="modify-wrapper">
-    <span className="material-symbols-outlined"
-    onClick={() => setIsOpenEdit(!isOpenQEdit)}
-    >more_vert</span>
-    <div onClick={() => setIsOpenEdit(false)}
-    className={classNames({on: isOpenQEdit}, "modify-option")}
-    >
-        <button onClick={copyQ}>복사</button>
-        <button onClick={deleteQ}>삭제</button>
-        <button >닫기</button>
-    </div>
-    </div>
+    return (
+        <div className="modify-wrapper" ref={dropdownRef}>
+            <span
+                className="material-symbols-outlined"
+                onClick={() => setIsOpenQEdit(!isOpenQEdit)}
+            >
+                more_vert
+            </span>
+            <div 
+                onClick={() => setIsOpenQEdit(false)}
+                className={classNames({ on: isOpenQEdit }, "modify-option")}
+            >
+                <button onClick={() => copyQ(pi, qi)}>복사</button>
+                <button onClick={() => deleteQ(pi, qi)}>삭제</button>
+                <button onClick={() => setIsOpenQEdit(false)}>닫기</button>
+            </div>
+        </div>
+    );
 }
 
 function RemoteControl() {

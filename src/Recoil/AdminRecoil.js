@@ -45,7 +45,7 @@ const pagesAtom = atom({
         description : '',
         questions: [
             {id: randomKey(), 
-                type: 'multiple', 
+                type: '객관식', 
                 q: '', d: '', a: [],
                 required : false,
                 next : null

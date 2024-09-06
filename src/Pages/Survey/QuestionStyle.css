@@ -1,0 +1,39 @@
+/* 옵션박스 나중에 수정할것 */
+.option-box:nth-child(1){
+    margin-top: 15px;
+}
+.option-box{
+    display: flex;
+    margin-top: 5px;
+}
+
+.add-btns{
+    margin-top: 10px;
+}
+.add-btns button{
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+.add-answer-btn{
+    background-color: #0020c2;
+    border: solid 1px #0020c2;
+    color: #fff;
+    margin-right: 10px;
+}
+.add-extra-btn{
+    border: solid 1px #0020c2;
+    margin-left: 10px;
+}
+
+.long-text{
+    margin-top: 15px;
+    width: 80%;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted var(--deep-grey);
+}
+.short-text{
+    margin-top: 15px;
+    width: 40%;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted var(--deep-grey);
+}

@@ -26,8 +26,8 @@ function CreateSurvey () {
                     <React.Fragment key={id}>
                         <div
                         className={classNames("card", 
-                        {active : `h-${idx}` === activeCard})}
-                        onClick={()=>setActiveCard(`h-${idx}`)}
+                        {active : `P-${idx}` === activeCard})}
+                        onClick={()=>setActiveCard(`P-${idx}`)}
                         >
                             <PageEditor pageIdx={idx}/>
                         </div>
@@ -35,18 +35,23 @@ function CreateSurvey () {
                         {questions.map((question, idx2) => {
                             return <div
                             className={classNames("card", 
-                            {active : `q-${idx}-${idx2}` === activeCard})}
-                            onClick={()=>moveCard(idx, idx2)}
+                            {active : `Q-${idx}-${idx2}` === activeCard})}
+                            onClick={()=>setActiveCard(`Q-${idx}-${idx2}`)}
                             key={question.id}>
-                                <QuestionEditor pageIdx={idx} questionIdx={idx2} />
+                                <QuestionEditor pi={idx} qi={idx2} />
                             </div>
                         })}
-                        <div>
+                        <div className="page-move">
                             <p>답변 후</p>
-                            {pages.map((page, idx) => {
-                                const { title } = page
-                                return <div key={idx}>{idx+1}페이지({title? title : '제목 없음'})로 이동</div>
-                            })}
+                            <button className="drop-down-btn">다음페이지로 이동</button>
+                            <div className="next">
+                                <button onClick={()=>{}}>다음페이지로 이동</button>
+                                {pages.map((page, idx) => {
+                                    const { title } = page
+                                    return <div key={idx}>{idx+1}페이지({title ? title : '제목 없음'})로 이동</div>
+                                })}
+                                <button onClick={()=>{}}>설문지 제출</button>
+                            </div>
                         </div>
                     </React.Fragment>
                     )
