@@ -9,6 +9,7 @@
     "axios": "^1.7.5",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "gh-pages": "^6.1.1",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-contenteditable": "^3.3.7",
@@ -23,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy" : "npm run build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "homepage": "https://pukkok.github.io/survey",
