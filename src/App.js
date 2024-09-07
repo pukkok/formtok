@@ -11,7 +11,8 @@ function App() {
       <Routes>
         <Route path='/*' element={<MainPage/>}/>
         <Route path='user'>
-          <Route path='login' element={<LoginPage/>}></Route>
+          <Route path='login' element={<LoginPage/>}/>
+          <Route path='join' element={<LoginPage selectedForm='join'/>}/>
         </Route>
       </Routes>
     </div>

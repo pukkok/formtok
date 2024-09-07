@@ -1,10 +1,10 @@
 import React from "react";
 
-function AddAnswer({type, handleClick, placeholder, defaultValue, disabled}){
+function AddAnswer({type, inputChange, buttonClick, placeholder, defaultValue, value, disabled}){
 
     return <div className="option-box">
-        <input type={type} placeholder={placeholder} defaultValue={defaultValue} disabled={disabled}/>
-        <button onClick={handleClick}>
+        <input type={type} placeholder={placeholder} onChange={inputChange} defaultValue={defaultValue} value={value} disabled={disabled}/>
+        <button onClick={buttonClick}>
             <span className="material-symbols-outlined">close</span>
         </button>
     </div>

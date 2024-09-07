@@ -1,68 +1,55 @@
-import axios from "axios";
 import React, { useState } from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { LoginForms, JoinForms } from "../constants/loginForms";
+import useAxios from "../hooks/useAxtios";
+import { Icon } from "../components/Icons";
 
-function LoginPage () {
-
+function LoginPage ({selectedForm = ''}) {
+    const navigate = useNavigate()
     const [loginInputs, setLoginInputs] = useState({userId: '', password: ''})
     const [joinInputs, setJoinInputs] = useState(
         {name: '', userId: '', email: '', phone: '', password: '', confirmPassword : ''}
     )
-    
+
+    const { login, join } = useAxios()
+    // 타이핑 입력
     const typingLogin = (e) => {
         const {name, value} = e.target
         setLoginInputs({...loginInputs, [name] : value})
     }
-
-    const login = async (e, form) => {
-        e.preventDefault()
-        const {userId, password} = form
-        
-        const {data} = await axios.post(`/user/login`, {
-            userId, password
-        })
-        if(data.code === 200){
-            console.log('로그인 완료')
-            console.log(data.data)
-        }else{
-            console.log(data.msg)
-        }
-    }
-
     const typingJoin = (e) => {
         const {name, value} = e.target
         setJoinInputs({...joinInputs, [name] : value})
     }
-
-    const join = async (e) => {
-        e.preventDefault()
-        const {name, userId, email, phone, password, confirmPassword} = joinInputs
-        const {data} = await axios.post(`/user/join`, {
-            name, userId, email, phone, password, confirmPassword
-        })
-        if(data.code === 200){
-            console.log(data.msg)
-        }else{
-            console.log(data)
-        }
+    //마우스 클릭
+    const loginAction = async () => {
+        const result = await login(loginInputs)
+        console.log(result)
+    }
+    const joinAction = async () => {
+        const result = await join(joinInputs)
+        console.log(result)
+    }
+    //엔터 클릭
+    const loginEnterClick = (e) => {
+        if(e.key === 'Enter') loginAction(loginInputs)
+    }
+    const joinEnterClick = (e) => {
+        if(e.key === 'Enter') joinAction(joinInputs)
     }
 
-    const [activeForm, setActiveForm] = useState('')
-    const changeForm = (form) => {
-        setActiveForm(form)
-    }
-
-    const navigate = useNavigate()
-
+    const [activeForm, setActiveForm] = useState(selectedForm)
+    
     return <section className="login-page">
         <div className="login-wrapper">
             <div className={classNames("big-form show", 
                 {active: activeForm === 'login'},
-                {hide : activeForm === 'join'})}>
-                <button className="back" onClick={()=>navigate('/')}>
-                <span className="material-symbols-outlined">home</span>
+                {hide : activeForm === 'join'})}
+                onKeyDown={loginEnterClick}
+                >
+                <button className="home" onClick={()=>navigate('/')}>
+                <Icon code={'home'}/>
                 </button>
                 <h2>로그인</h2>
                 {LoginForms.map(form => {
@@ -78,14 +65,16 @@ function LoginPage () {
                     <span> | </span>
                     <button>비밀번호 찾기</button>
                     </div>
-                    <button className="round-btn" onClick={e=>login(e, loginInputs)}>로그인</button>
+                    <button className="round-btn" onClick={loginAction}>로그인</button>
                 </div>
             </div>
             <div className={classNames("big-form right show",
                 {active: activeForm === 'join'},
-                {hide: activeForm ==='login'})}>
-                <button className="back" onClick={()=>navigate('/')}>
-                <span className="material-symbols-outlined">home</span>
+                {hide: activeForm ==='login'})}
+                onKeyDown={joinEnterClick}
+                >
+                <button className="home" onClick={()=>navigate('/')}>
+                <Icon code={'home'}/>
                 </button>
                 <h2>회원가입</h2>
                 {JoinForms.map(form => {
@@ -96,7 +85,7 @@ function LoginPage () {
                     />
                 })}
                 <div className="btns">
-                    <button className="round-btn" onClick={join}>회원가입</button>
+                    <button className="round-btn" onClick={joinAction}>회원가입</button>
                 </div>
             </div>
             <div className="switch-small-box">
@@ -104,13 +93,13 @@ function LoginPage () {
                     {active: activeForm==='join'},
                     {hide: activeForm==='login'})}>
                     <p>이미 회원이신가요?</p>
-                    <button onClick={()=>changeForm('login')}>로그인</button>
+                    <button onClick={()=>setActiveForm('login')}>로그인</button>
                 </div>
                 <div className={classNames("small-form",
                     {active: activeForm === 'login'},
                     {hide: activeForm==='join'})}>
                     <p>아직 회원이 아니신가요?</p>
-                    <button onClick={()=>changeForm('join')}>회원가입</button>
+                    <button onClick={()=>setActiveForm('join')}>회원가입</button>
                 </div>
             </div>
         </div>

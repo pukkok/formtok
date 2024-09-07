@@ -6,8 +6,8 @@ const useOutsideClick = (initialState) => {
     const ref = useRef(null)
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (ref.current && !ref.current.contains(event.target)) {
+        const handleClickOutside = (e) => {
+            if (ref.current && !ref.current.contains(e.target)) {
                 setIsOpen(false)  // 외부 클릭 시 메뉴 닫기
             }
         }

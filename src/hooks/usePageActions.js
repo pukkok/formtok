@@ -42,7 +42,7 @@ function usePageActions () {
 
     // 질문 추가하기
     const addQuestion = () => {
-        let id = randomKey()
+        let id = 'Q' + randomKey()
         let pageCnt = activeCard.split('-')[1]
         let length
 
@@ -54,7 +54,10 @@ function usePageActions () {
                         ...page,
                         questions: [
                             ...page.questions,
-                            { id, type: '객관식', q: '', d: '', a: [], required: false, next: null }
+                            { 
+                                id, type: '객관식', q: '', d: '', 
+                                options: [], hasExtraOption:false, required: false, next: null 
+                            }
                         ]
                     }
                 }
@@ -114,7 +117,7 @@ function usePageActions () {
     }
     // 질문 복사하기
     const copyQ = (pi, qi) => {
-        const id = randomKey()
+        const id = 'Q' + randomKey()
         setPages(pages => {
             return pages.map((page, idx) => {
                 if(idx === pi){
@@ -144,11 +147,78 @@ function usePageActions () {
             })
         })
     }
+    // 옵션 추가하기
+    const addOption = (pi, qi) => {
+        const id = 'O' + randomKey()
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if (idx === pi) {
+                    const updatedQuestions = page.questions.map((question, idx2) => {
+                        if (idx2 === qi) {
+                            const updatedOptions = [
+                                ...question.options,
+                                { id, query: '' } // 문항 옵션 추가
+                            ]
+                            return { ...question, options: updatedOptions }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        })
+    }
+    // 옵션 설정하기
+    const chnageOption = (e, pi, qi, oi) => {
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if (idx === pi) {
+                    const updatedQuestions = page.questions.map((question, idx2) => {
+                        if (idx2 === qi) {
+                            const updatedOptions = question.options.map((option, idx3) => {
+                                if(idx3 === oi){
+                                    return option = {...option, query : e.target.value }
+                                }
+                                return option
+                            })
+                            return { ...question, options: updatedOptions }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        })
+    }
+
+    const deleteOption = () => {
+
+    }
+
+    /** '기타' 항목 추가/제거 */ 
+    const toggleEXtraOption = (pi, qi, has) => {
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if (idx === pi) {
+                    const updatedQuestions = page.questions.map((question, idx2) => {
+                        if (idx2 === qi) {
+                            return { ...question, hasExtraOption : has }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        })
+    }
 
     return { 
         changePTitle, changePDescription,
-        addQuestion, addPage, 
-        changeQTitle, changeQDescription, changeQType,
+        addQuestion, addPage, addOption, toggleEXtraOption,
+        changeQTitle, changeQDescription, changeQType, chnageOption,
         copyQ, deleteQ
     }
 }

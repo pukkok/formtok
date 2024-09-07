@@ -1,31 +1,29 @@
-import React, { useState } from "react"
+import React from "react"
 import { useRecoilState } from "recoil"
-import { pagesAtom, randomKey } from "../../recoils/surveyAtoms"
+import { pagesAtom } from "../../recoils/surveyAtoms"
 import AddAnswer from '../../components/AddAnswer'
+import usePageActions from "../../hooks/usePageActions"
 
 function Qform ({pi, qi}){
     const [pages, setPages] = useRecoilState(pagesAtom)
     const style = pages[pi].questions[qi].type || '객관식'
-    const [answers, setAnswers] = useState([{id: 'A'+randomKey(), type: 'text'}])
-    const [extra, setExtra] = useState(false)
-    const addInput = () => {
-        const id = 'A'+randomKey()
-        setAnswers(prev => [...prev, {id, type: 'text'}])
-    }
+    
+    const { addOption, toggleEXtraOption, chnageOption } = usePageActions()
 
     return <>
         {style === '객관식' && 
         <div className="multiple">
-            {answers.map((answer, idx) => {
-                const {id, type} = answer
-                return <AddAnswer key={id} type={type} placeholder={'옵션'+(idx+1)}/>
+            {pages[pi].questions[qi].options.map((answer, idx3) => {
+                const {id, query} = answer
+                return <AddAnswer key={id} inputChange={(e)=>chnageOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={query}/>
             })}
-            {extra && <AddAnswer defaultValue={'기타'} disabled={true} handleClick={()=>setExtra(false)}/>}
+            {pages[pi].questions[qi].hasExtraOption && 
+            <AddAnswer defaultValue={'기타'} disabled={true} buttonClick={()=>toggleEXtraOption(pi, qi, false)}/>}
             <div className="add-btns">
-                <button className="add-answer-btn" onClick={addInput}>항목 추가</button>
-                {!extra && <>
+                <button className="add-answer-btn" onClick={()=>addOption(pi, qi)}>항목 추가</button>
+                {!pages[pi].questions[qi].hasExtraOption && <>
                     또는
-                    <button className="add-extra-btn"onClick={()=>setExtra(true)}>'기타' 추가</button>
+                    <button className="add-extra-btn"onClick={()=>toggleEXtraOption(pi, qi, true)}>'기타' 추가</button>
                 </>}
             </div>
         </div>

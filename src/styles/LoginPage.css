@@ -10,11 +10,11 @@
     height: 100vh;
     width: 1000px;
 }
-.login-wrapper .back .material-symbols-outlined{
+.login-wrapper .home .material-symbols-outlined{
     color: var(--deep-purple);
     font-size: 28px;
 }
-.login-wrapper .back:hover{
+.login-wrapper .home:hover{
     transition: .2s;
     scale: 1.1;
 }

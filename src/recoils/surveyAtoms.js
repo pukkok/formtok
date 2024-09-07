@@ -44,9 +44,11 @@ const pagesAtom = atom({
         title: '', 
         description : '',
         questions: [
-            {id: randomKey(), 
+            {id: 'Q'+randomKey(), 
                 type: '객관식', 
-                q: '', d: '', a: [],
+                q: '', d: '', 
+                options: [{id : 'O'+randomKey(), query: ''}],
+                hasExtraOption: false,
                 required : false,
                 next : null
             }

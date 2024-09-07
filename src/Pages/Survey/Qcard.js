@@ -7,6 +7,7 @@ import usePageActions from "../../hooks/usePageActions";
 import questionForms from "../../constants/questionForms";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import Qform from "./Qform";
+import { Icon } from "../../components/Icons";
 
 function Qcard ({pi, qi}) {
     const [pages, setPages] = useRecoilState(pagesAtom)
@@ -65,17 +66,19 @@ function Qcard ({pi, qi}) {
             </div>
             <Qform pi={pi} qi={qi}/>
             <div className="add-option-wrapper">
-                <div className="list-box" ref={dropdownRef}>
+                <div className="drop-down-wrapper" ref={dropdownRef}>
                     <button 
-                    className={classNames("list-open-btn", "drop-down-btn", {open : isOpenTypeList})}
+                    className={classNames("drop-down-btn", {open : isOpenTypeList})}
                     onClick={()=>{setIsOpenTypeList(!isOpenTypeList)}}>
-                        <span className="material-symbols-outlined">{typeIcon}</span>
+                        <Icon code={typeIcon}/>
                         {pages[pi].questions[qi].type}</button>
                     <ul className={classNames({open: isOpenTypeList})}>
                         {questionForms.map(qs => {
                             return <li key={qs.form}>
-                                <span className="material-symbols-outlined">{qs.icon}</span>
-                                <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.icon)}>{qs.form}</button>
+                                <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.icon)}>
+                                <Icon code={qs.code}/>    
+                                {qs.form}
+                                </button>
                             </li>
                         })}
                     </ul>

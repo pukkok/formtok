@@ -22,7 +22,7 @@ function Header () {
         })}
         <div className="btns">
             <button onClick={()=>navigate('/user/login')}>로그인</button>
-            <button onClick={()=>navigate('/user/login')}>회원가입</button>
+            <button onClick={()=>navigate('/user/join')}>회원가입</button>
         </div>
     </div>
 }

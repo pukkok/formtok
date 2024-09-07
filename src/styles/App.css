@@ -52,8 +52,24 @@ img{
   padding: 10px 20px;
 }
 
-.drop-down-btn{
+
+
+.drop-down-wrapper{
+  margin-right: auto;
+  position: relative;
+}
+.drop-down-wrapper .drop-down-btn{
+  border: solid 1px var(--light-grey);
+  background-color: #fff;
+  border-radius: 12px;
+  min-width: 200px;
   display: flex;
+  gap: 5px;
+  align-items: center;
+  box-sizing: border-box;
+  height: 45px;
+  padding: 10px 20px;
+  font-weight: bold;
 }
 /* 구글 Materal Icons 코드로 사용하는 방법 */
 .drop-down-btn::after{
@@ -69,3 +85,40 @@ img{
 .drop-down-btn.open::after{
   rotate: 180deg;
 }
+.drop-down-wrapper .drop-down-btn:hover{
+  border: solid 1px var(--purple);
+}
+.drop-down-wrapper .drop-down-btn.open{
+  border: solid 1px var(--deep-purple);
+}
+.drop-down-wrapper ul{
+  display: none;
+  position: absolute;
+  top: 50px;
+  border: solid 1px var(--deep-purple);
+  border-radius: 12px;
+  background-color: #fff;
+  width: 100%;
+  padding: 10px;
+}
+.drop-down-wrapper ul.open{
+  display: block;
+  z-index: 10;
+}
+.drop-down-wrapper ul li{
+  box-sizing: border-box;
+  width: 100%;
+
+}
+.drop-down-wrapper ul li:hover{
+  background-color: #ddd;
+}
+.drop-down-wrapper ul li button{
+  padding: 5px 20px 5px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
