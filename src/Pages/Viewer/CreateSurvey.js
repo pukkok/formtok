@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Qcard from "../Survey/Qcard";
 import Pcard from "../Survey/Pcard";
 import SurveyNav from "../Survey/SurveyNav";

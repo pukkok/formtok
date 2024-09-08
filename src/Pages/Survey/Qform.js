@@ -8,14 +8,18 @@ function Qform ({pi, qi}){
     const [pages, setPages] = useRecoilState(pagesAtom)
     const style = pages[pi].questions[qi].type || '객관식'
     
-    const { addOption, toggleEXtraOption, chnageOption } = usePageActions()
+    const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()
 
     return <>
         {style === '객관식' && 
         <div className="multiple">
             {pages[pi].questions[qi].options.map((answer, idx3) => {
                 const {id, query} = answer
-                return <AddAnswer key={id} inputChange={(e)=>chnageOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={query}/>
+                return <AddAnswer key={id} 
+                inputChange={(e)=>changeOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={query} 
+                buttonClick={()=>deleteOption(pi, qi, idx3)}
+                isNotUseBtn={idx3===0}
+                />
             })}
             {pages[pi].questions[qi].hasExtraOption && 
             <AddAnswer defaultValue={'기타'} disabled={true} buttonClick={()=>toggleEXtraOption(pi, qi, false)}/>}
