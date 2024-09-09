@@ -5,6 +5,48 @@ function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
 
+    // 페이지 위치변경
+    const changePLocation = (dragPi, dropPi) => {
+        let newPages = [...pages]
+        const [removedPage] = newPages.splice(dragPi, 1)
+        newPages.splice(dropPi, 0, removedPage)
+        setActiveCard(`P-${dropPi}`)
+        setPages(newPages)
+    }
+    // 질문 위치 변경
+    const changeQLocation = (p1, q1, p2, q2) => {
+        let newPages = [...pages]
+        const dragQ = newPages[p1].questions[q1]
+
+        if(p1 !== p2){ // 다른페이지로 넘어갈 때
+            newPages = newPages.map((page, idx) => {
+                if (p1 === idx) {
+                    const filterQ = page.questions.filter((_, idx2) => q1 !== idx2)
+                    return { ...page, questions: filterQ }
+                }
+                if (p2 === idx) {
+                    const updatedQuestions = [...page.questions]
+                    updatedQuestions.splice(q2, 0, dragQ)
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        }else{ // 같은 페이지일때
+            const updatedQuestions = [...newPages[p1].questions]
+            updatedQuestions.splice(q1, 1)
+            updatedQuestions.splice(q2, 0, dragQ)
+
+            newPages = newPages.map((page, idx) => {
+                if (p1 === idx) {
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        }
+        setActiveCard(`Q-${p2}-${q2}`)   
+        setPages(newPages)
+    }
+
     // 페이지 타이틀 변경하기
     const changePTitle = (e, pi) => { 
         setPages(prevPages => {
@@ -233,6 +275,7 @@ function usePageActions () {
     }
 
     return { 
+        changePLocation, changeQLocation,
         changePTitle, changePDescription,
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,

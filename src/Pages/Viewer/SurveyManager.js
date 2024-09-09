@@ -1,13 +1,19 @@
-import classNames from "classnames";
-import React, { useRef, useState } from "react";
+// import classNames from "classnames";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, SearchIcon } from "../../components/Icons";
+import { randomUrl } from "../../recoils/surveyAtoms";
 
 function SurveyManager () {
     const [surveyTitle, setSurveyTitle] = useState('')
     const naviate = useNavigate()
 
-    const [light, setLight] = useState('green')
+    // const [light, setLight] = useState('green')
+
+    useEffect(() => {
+        let a = randomUrl()
+        console.log('url=', a)
+    },[])
 
     const modalRef = useRef(null)
 
@@ -19,9 +25,7 @@ function SurveyManager () {
     }
 
     const goToCreate = () => {
-        let url = ''
-        
-        surveyTitle === '' ? url = '제목없는 설문지' : url = surveyTitle
+        let url = randomUrl()
         naviate(`/survey/create/${url}`)
     }
     const enterClick = (e) => {
@@ -54,11 +58,11 @@ function SurveyManager () {
                     <div className="rectangle">
                         <div className="form-box" onClick={(e) => console.log('바깥 버튼')}>
                             <div className="form-status">
-                                <span className={classNames("light", light)}></span>
+                                {/* <span className={classNames("light", light)}></span> */}
                                 <button onClick={(e) => {
                                     e.stopPropagation()
                                     console.log('안쪽버튼')}}>
-                                    <img src={`${origin}/icons/three-dot-icon-black.png`}/>
+                                    <img src={`${origin}/icons/three-dot-icon-black.png`} alt=""/>
                                 </button>
                             </div>
                             <h4>2024학년도 진로결정 및 취업지원을 위한 재학생 실태조사</h4>

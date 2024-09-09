@@ -5,20 +5,20 @@ import classNames from "classnames"
 
 // more-vertical
 function QmoreVert({ pi, qi }) {
-    const { isOpen: isOpenQEdit, setIsOpen: setIsOpenQEdit, ref: dropdownRef } = useOutsideClick(false)
+    const { isOpen, setIsOpen, ref } = useOutsideClick(false)
     const { copyQ, deleteQ } = usePageActions()
 
     return (
-        <div className="modify-wrapper" ref={dropdownRef}>
+        <div className="modify-wrapper" ref={ref}>
             <span
                 className="material-symbols-outlined"
-                onClick={() => setIsOpenQEdit(!isOpenQEdit)}
+                onClick={() => setIsOpen(!isOpen)}
             >
                 more_vert
             </span>
             <div 
-                onClick={() => setIsOpenQEdit(false)}
-                className={classNames({ on: isOpenQEdit }, "modify-option")}
+                onClick={() => setIsOpen(false)}
+                className={classNames({ on: isOpen }, "modify-option")}
             >
                 <button onClick={() => copyQ(pi, qi)}>복사</button>
                 <button onClick={() => deleteQ(pi, qi)}>삭제</button>

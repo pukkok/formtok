@@ -7,7 +7,7 @@ function SurveyNav() {
     const btns = ['전체 문항', '설문 설정']
 
     return (
-        <div className="remote-control">
+        <div className="survey-nav">
             <nav>
                 {btns.map((btn, idx) => (
                     <button

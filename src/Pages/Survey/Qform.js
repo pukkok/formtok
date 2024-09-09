@@ -1,11 +1,11 @@
 import React from "react"
-import { useRecoilState } from "recoil"
+import { useRecoilValue } from "recoil"
 import { pagesAtom } from "../../recoils/surveyAtoms"
 import AddAnswer from '../../components/AddAnswer'
 import usePageActions from "../../hooks/usePageActions"
 
 function Qform ({pi, qi}){
-    const [pages, setPages] = useRecoilState(pagesAtom)
+    const pages = useRecoilValue(pagesAtom)
     const style = pages[pi].questions[qi].type || '객관식'
     
     const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()

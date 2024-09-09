@@ -1,0 +1,97 @@
+/* 카드 */
+.card{
+    box-sizing: border-box;
+    border: solid 2px #d7d7d7;
+    background-color: #fff;
+    border-radius: 12px;
+    min-height: 180px;
+    margin-bottom: 10px;
+}
+.card.ending-field{
+    min-height: 120px;
+}
+.card .pd{
+    border-radius: 8px 8px 0 0;
+    padding: 10px 20px;
+}
+.card.active{
+    border: solid 2px var(--purple);
+}
+
+/* 페이지네이션 */
+.card h4{
+    background-color: var(--purple);
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+/* 디폴트 */
+.card input{
+    width: 100%;
+    padding-bottom: 5px;
+}
+/* 타이틀 타입 */
+.card input.title-A{
+    font-size: 22px;
+}
+.card input.title-B{
+    padding-top: 5px;
+    font-size: 18px;
+}
+
+/* 디스크립션 */
+.card .content-editor-wrapper{
+    position: relative;
+    margin: 10px 0;
+}
+.card .content-placeholder{
+    position: absolute;
+    padding-bottom: 5px;
+    color: #aaa;
+    pointer-events: none;
+}
+.card .content-editor{
+    outline: none;
+    border-bottom: 1px solid #cecece;
+    min-height: 20px;
+    padding-bottom: 5px;
+}
+.card .content-placeholder:focus,
+.card .content-editor:focus,
+.card input:focus{
+    border-bottom: 2px solid var(--purple);
+}
+
+/* 질문 하단부분 추가 옵션 */
+.add-option-wrapper{
+    border-top: 1px solid black;
+    margin-top: 60px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+.add-option-wrapper .ox-btn{
+    position: relative;
+    font-weight: bold;
+}
+.add-option-wrapper .ox-btn::after{
+    content: 'X';
+    color: red;
+    font-size: 28px;
+    opacity: .3;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+}
+.add-option-wrapper .ox-btn.o::after{
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: solid 3px green;
+}
+

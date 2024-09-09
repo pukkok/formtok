@@ -1,53 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { pagesAtom } from "../../recoils/surveyAtoms";
-import ContentEditable from "react-contenteditable";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { pagesAtom, activeCardAtom } from "../../recoils/surveyAtoms";
 import usePageActions from "../../hooks/usePageActions";
+import DescriptionInput from "../../components/DescriptionInput";
+import classNames from "classnames";
 
 function Pcard({pi}) {
-    const [pages, setPages] = useRecoilState(pagesAtom)
+    const pages = useRecoilValue(pagesAtom)
+    const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
 
     const [pageCnt, setPageCnt] = useState('1/1')
     useEffect(() => {
         setPageCnt(`${pi+1}/${pages.length}`)
     }, [pages, pi])
 
-    const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
-    const pageDescRef = useRef(null)
-
-
     const {changePTitle, changePDescription} = usePageActions()
-    const changePDescriptionAction = (e, pi) => {
-        changePDescription(e, pi)
-        // value가 없을때 placeholder 상태
-        setIsPlaceholderVisible(e.target.value === "")
-    } 
     
     return (
-        <>
-            <h4 className="pd-box">{pageCnt} 페이지</h4>
-            <div className="pd-box">
-                <input className="page-title" 
+        <div className={classNames("card", 
+            {active : `P-${pi}` === activeCard})}
+            onClick={()=>setActiveCard(`P-${pi}`)}>
+            
+            <h4 className="pd">{pageCnt} 페이지</h4>
+            <div className="pd">
+                <input className="title-A" 
                 placeholder="페이지 제목" onChange={e=>changePTitle(e, pi)}/>
-                <div className="content-editor-wrapper">
-                    {isPlaceholderVisible && (
-                    <p className="content-placeholder">
-                        페이지 설명
-                    </p>
-                    )}
-                    <ContentEditable
-                    ref={pageDescRef}
-                    className="content-editor"
-                    html={pages[pi].description}
-                    tagName="p"
-                    onChange={e=>changePDescriptionAction(e, pi)}
-                    />
-                </div>
-                {/* <button onClick={()=>applyStyle('bold')}>굵게</button>
-                 /
-                <button onClick={()=>applyStyle('italic')}>기울이기</button> */}
+                <DescriptionInput 
+                value={pages[pi].description}
+                placeholder={'페이지 설명'}
+                changeHandler={e=>changePDescription(e, pi)}/>
             </div>
-        </>
+        </div>
     )
 }
 

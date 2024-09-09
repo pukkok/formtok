@@ -2,104 +2,11 @@
     width: 1240px;
     margin: 60px auto;
 }
-
 .editor-box{
     width: 100%;
     display: grid;
     grid-template-columns: 7fr 3fr;
     gap: 20px;
-}
-
-/* 카드 */
-.editor-box .card{
-    box-sizing: border-box;
-    border: solid 2px #d7d7d7;
-    
-    background-color: #fff;
-    border-radius: 12px;
-    min-height: 200px;
-    margin-bottom: 10px;
-}
-.card .pd-box{
-    border-radius: 8px 8px 0 0;
-}
-.editor-box .card.active{
-    border: solid 2px var(--purple);
-}
-/* 페이지 타이틀 */
-.card h4{
-    background-color: var(--purple);
-    color: #fff;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.card input{
-    width: 100%;
-    padding-bottom: 5px;
-}
-.card input.page-title{
-    font-size: 24px;
-}
-.card input.question-title{
-    padding-top: 10px;
-    font-size: 20px;
-}
-
-.card .content-editor-wrapper{
-    position: relative;
-    margin: 10px 0;
-}
-
-.card .content-placeholder{
-    position: absolute;
-    padding-bottom: 5px;
-    color: #aaa;
-    pointer-events: none;
-}
-
-.card .content-editor{
-    outline: none;
-    border-bottom: 1px solid #cecece;
-    min-height: 20px;
-    padding-bottom: 5px;
-}
-
-.card .content-placeholder:focus,
-.card .content-editor:focus,
-.card input:focus{
-    border-bottom: 2px solid var(--purple);
-}
-
-.add-option-wrapper{
-    border-top: 1px solid black;
-    margin-top: 60px;
-    padding-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 20px;
-}
-.add-option-wrapper .ox-btn{
-    position: relative;
-    font-weight: bold;
-}
-.add-option-wrapper .ox-btn::after{
-    content: 'X';
-    color: red;
-    font-size: 28px;
-    opacity: .3;
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 0;
-    transform: translate(-50%, -50%);
-}
-.add-option-wrapper .ox-btn.o::after{
-    content: '';
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: solid 3px green;
 }
 
 .page-move{
@@ -109,15 +16,18 @@
     gap: 20px;
     margin-bottom: 30px;
 }
+.page-move p{
+    font-weight: bold;
+}
 
 .page-move .drop-down-wrapper .drop-down-btn{
-    min-width: 250px;
+    min-width: 300px;
 }
 
 
 /* 리모컨 */
-.editor-box .remote-control{
-    padding: 15px 20px;
+.editor-box .survey-nav{
+    padding: 15px 0;
     position: sticky;
     top: 20px;
     border: solid 1px #d7d7d7;
@@ -127,18 +37,19 @@
     width: 400px;
 }
 /* 리모컨 상단 버튼 */
-.remote-control nav{
+.survey-nav nav{
+    padding: 0 20px;
     height: 30px;
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
 }
-.remote-control nav button{
+.survey-nav nav button{
     padding-bottom: 5px;
     border-bottom: 2px solid transparent;
     font-weight: bold;
 }
-.remote-control nav button.active{
+.survey-nav nav button.active{
     color: var(--purple);
     border-bottom: 2px solid var(--purple);
 }
@@ -146,21 +57,89 @@
 .q-tab{
     height: 100%;
 }
-.q-tab .summary-wrapper{
+.summary-scroll{
     height: calc(100% - 100px);
     overflow: scroll;
-    border: solid 1px #d7d7d7;
-    border-radius: 12px;
-    padding: 10px;
     cursor: pointer;
     user-select: none;
+    border-top-right-radius: 12px;
 }
-.q-tab .summary-card{
+.summary-wrapper{
+    min-height: 100%;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 0 20px;
+    border: solid 1px #f1f1f1;
+}
+
+.summary-card{
     margin-top: 10px;
     background-color: #fff;
-    height: fit-content;
 }
-.q-tab .summary-card h4{
+/* 페이지 제목 없을 때 */
+.summary-card p.placeholder{
+    color: #aaa;
+}
+/* 페이지 요약 */
+.p-summary{
+    padding: 5px 10px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--purple);
+}
+
+.p-summary .title-box{
+    display: flex;
+}
+/* 질문 접기 버튼 */
+.p-summary .title-box button{
+    margin-left: auto;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.p-summary .title-box button:hover{
+    border-radius: 8px;
+    background-color: var(--purple);
+    color: #fff;
+}
+.p-summary.fold .title-box button:hover{
+    background-color: var(--fold-red);
+}
+.p-summary .title-box button:disabled{
+    color: var(--deep-grey);
+    background-color: #fff;
+}
+
+.p-summary.active,
+.p-summary:hover{
+    border: solid 2px var(--purple);
+    border-radius: 12px;
+}
+.p-summary.fold{
+    border-top: 2px solid var(--fold-red);
+}
+.p-summary.fold h4{
+    color: var(--fold-red);
+}
+.p-summary.active.fold,
+.p-summary.fold:hover{
+    border: 2px solid var(--fold-red);
+    border-radius: 12px;
+}
+/* 드래깅 상태일때 */
+.p-summary.dragging{
+    border: none;
+}
+.p-summary.active .title-box button{
+    display: flex;
+}
+.p-summary.active.fold .title-box button{
+    rotate: 180deg;
+}
+
+/* 페이지네이션 */
+.p-summary h4,
+.e-summary h4{
     font-size: 14px;
     color: var(--purple);
     text-align: center;
@@ -172,83 +151,110 @@
     padding: 0 10px;
     background-color: #fff;
 }
-.q-tab .summary-card p.placeholder{
-    color: #aaa;
-}
-.q-tab .p-summary{
-    padding: 5px 10px;
-    border: 2px solid transparent;
-    border-top: 2px solid var(--purple);
-}
-.q-tab .summary-card:not(:first-child) .p-summary {
-    margin-top: 40px;
-}
-.q-tab .p-summary p{
+.p-summary p{
     font-weight: bold;
     margin-bottom: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+
+.question-box{
+    box-sizing: content-box;
+    padding: 5px 0;
+    display: block;
+}
+.question-box.fold{
+    display: none;
+}
 .q-summary{
+    padding-left: 10px;
+    margin: 5px 0;
+    height: 40px;
     border-radius: 12px;
-    padding: 10px;
     display: flex;
     align-items: center;
     position: relative;
-    transition: padding .2s;
-    margin: 10px 0;
 }
-.q-empty{
-    height: 1px;
-}
+
+/* 질문 요약 */
 .q-summary p{
     max-width: 80%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.p-summary.dragging{
-    border: none;
-    color: #fff;
-}
-.p-summary.active,
-.p-summary:hover{
-    border: solid 2px var(--purple);
-    border-radius: 12px;
-}
+
 .q-summary:hover,
-.q-summary.active{
+.q-summary.active,
+.q-summary:active{
     background-color: var(--purple);
     color: #fff;
     font-weight: bold;
 }
 
+/* 질문이 없을때 */
+.q-empty{
+    height: 1px;
+}
+
+.e-summary{
+    margin-top: 20px;
+    padding: 5px 10px;
+    border: solid 2px var(--light-grey);
+    border-radius: 12px;
+}
+.e-summary h4{
+    color: var(--light-grey);
+}
+.e-summary.active,
+.e-summary:hover{
+    border: solid 2px var(--purple);
+}
+.e-summary.active h4,
+.e-summary:hover h4{
+    color: var(--purple);
+}
+
+.e-summary p{
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
+
 /* 리모컨 하단 버튼 */
-.remote-control .q-btns{
-    margin-top: 10px;
+.survey-nav .q-btns{
+    margin: 10px 20px 0 20px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     user-select: none;
 }
-.remote-control .q-btns button{
+.survey-nav .q-btns button{
     border-radius: 8px;
     border: solid 1px var(--purple);
     padding: 5px 10px;
 }
-.remote-control .q-btns button:hover{
+.survey-nav .q-btns button:hover{
     background-color: var(--purple);
     color: #fff;
 }
-.remote-control .q-btns button:disabled{
+.survey-nav .q-btns button:disabled{
     color: var(--deep-grey);
 }
 
+
+
+/* 점3개 버튼 */
 .modify-wrapper{
     position: absolute;
-    right: 5%;
+    right: 4%;
     z-index: 10;
 }
 
@@ -261,15 +267,17 @@
     cursor: pointer;
 }
 .q-summary.active .modify-wrapper span{
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
 }
 .modify-wrapper span:hover{
-    /* background-color: var(--light-grey); */
-    background-color: #fff;
-    color: #000;
-    border-radius: 50%;
+    background-color: #fbfbfb;
+    color: #2f2f2f;
+    border-radius: 8px;
 }
-
 .modify-option{
     position: absolute;
     right: 0px;
@@ -285,7 +293,7 @@
     box-shadow: 2px 2px 2px #ddd;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
-    
+    z-index: 10;
 }
 .modify-option.on{
     height: 80px;
@@ -300,5 +308,9 @@
 }
 .modify-option button:hover{
     background-color: #ddd;
+    border-radius: 8px;
+}
+.modify-option button:nth-child(2):hover{
+    background-color: #ffb6b6;
     border-radius: 8px;
 }
