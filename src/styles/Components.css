@@ -1,0 +1,152 @@
+/* 유저버튼 UserButton */
+.user-button{
+    /* border: solid 3px var(--purple); */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 40px;
+    cursor: pointer;
+}
+.user-button p{
+    color: #777;
+    font-weight: 700;
+}
+
+.user-button span{
+    color: #777;
+    font-weight: 300;
+    margin-left: auto;
+    font-size: 32px;
+}
+
+/* 토글 버튼 */
+.toggle-button{
+    position: relative;
+    border: solid 1px var(--light-grey);
+    background-color: var(--light-grey);
+    width: 40px;
+    height: 24px;
+    border-radius: 40px;
+}
+.toggle-button.on{
+    border: solid 1px var(--deep-purple);
+    background-color: var(--deep-purple);
+}
+.toggle-button span{
+    position: absolute;
+    top: 50%;
+    left: calc(25% + 1px);
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: calc(100% - 2px);
+    background-color: #fff;
+    border-radius: 50%;
+    transition: .3s;
+}
+.toggle-button.on span{
+    left: calc(75% - 1px);
+}
+
+
+/* 드롭다운 DropDown */
+.drop-down-wrapper{
+    position: relative;
+}
+.drop-down-wrapper .drop-down-btn{
+    border: solid 1px var(--light-grey);
+    background-color: #fff;
+    border-radius: 12px;
+    min-width: 200px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+/* 구글 Materal Icons 코드로 사용하는 방법 */
+.drop-down-btn::after{
+    content: '\e5c5'; /* 유니코드 */
+    font-family: 'Material Icons'; /* 폰트 설정 */
+    display: inline-block;
+    font-size: 24px;
+    vertical-align: middle; /* 정렬 */
+    transition: .2s;
+    margin-left: auto;
+}
+
+.drop-down-btn.open::after{
+    rotate: 180deg;
+}
+.drop-down-wrapper .drop-down-btn:hover{
+    border: solid 1px var(--purple);
+}
+.drop-down-wrapper .drop-down-btn.open{
+    border: solid 1px var(--deep-purple);
+}
+.drop-down-wrapper ul{
+    display: none;
+    position: absolute;
+    top: 50px;
+    border: solid 1px var(--deep-purple);
+    border-radius: 12px;
+    background-color: #fff;
+    width: 100%;
+    padding: 10px 5px;
+}
+.drop-down-wrapper ul.open{
+    display: block;
+    z-index: 10;
+}
+.drop-down-wrapper ul li{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 5px;
+}
+.drop-down-wrapper ul li:hover{
+    background-color: #e1e1e1;
+    border-radius: 12px;
+}
+.drop-down-wrapper ul li button{
+    padding: 5px 20px 5px 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* 주소 박스 FindAddress */
+.post-box{
+    border: solid 1px red;
+    width: 600px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.postcode{
+    flex: 1;
+    max-width: 100px;
+    color: #601DCD;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none;
+}
+
+.post-box button{
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: var(--purple);
+    color: #fff;
+}
+.post-box button:hover{
+    background-color: var(--deep-purple);
+}
+
+.post-box input{
+    padding: 5px 10px;
+    font-weight: bold;
+}

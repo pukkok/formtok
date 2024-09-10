@@ -10,15 +10,15 @@ function Qform ({pi, qi}){
     
     const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()
 
-    return <>
-        {style === '객관식' && 
+    return <div className="qform">
+        {style === '객관식' &&
         <div className="multiple">
             {pages[pi].questions[qi].options.map((answer, idx3) => {
                 const {id, query} = answer
                 return <AddAnswer key={id} 
                 inputChange={(e)=>changeOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={query} 
                 buttonClick={()=>deleteOption(pi, qi, idx3)}
-                isNotUseBtn={idx3===0}
+                isNotUseBtn={pages[pi].questions[qi].options.length===1 && idx3===0}
                 />
             })}
             {pages[pi].questions[qi].hasExtraOption && 
@@ -36,15 +36,15 @@ function Qform ({pi, qi}){
             <p className="long-text">서술형</p>
         }
         {style === '단답형' && 
-            <p className="short-text">단답형</p>
+            <input className="short-text" placeholder="단답형" disabled={true}/>
         }
         {style === '날짜' &&
-            <input type="date"/>
+            <input className="" type="date" disabled={true}/>
         }
         {style === '시간' &&
-            <input type="time"/>
+            <input className="" type="time" disabled={true}/>
         }
-    </>
+    </div>
 }
 
 export default Qform

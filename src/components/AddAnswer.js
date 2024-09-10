@@ -4,7 +4,9 @@ function AddAnswer({type, inputChange, buttonClick, placeholder, defaultValue, v
 
     return <div className="option-box">
         <input type={type} placeholder={placeholder} onChange={inputChange} defaultValue={defaultValue} value={value} disabled={disabled}/>
-        <button onClick={buttonClick} style={{display: isNotUseBtn ? 'none' : 'block'}}>
+        <button 
+        tabIndex={-1}
+        onClick={buttonClick} style={{display: isNotUseBtn ? 'none' : 'block'}}>
             <span className="material-symbols-outlined">close</span>
         </button>
     </div>

@@ -2,6 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  --normal-weight : 400;
+  --bold-weight: 700;
+  --bolder-weight: 800;
+  --light-weight: 300;
+
+  --light-purple : #d3c6e7;
   --purple : #7E37ED;
   --deep-purple : #601dcd;
   --deepbg : #32323D;
@@ -10,6 +16,8 @@
   --deep-grey : #c1c1c1;
   --fold-red : #c30928;
 }
+
+body{ font-family: 'NanumSquare', sans-serif }
 
 button{
   all: unset;
@@ -27,7 +35,8 @@ a{
 
 input{
   all: unset;
-  border-bottom: 1px solid #cecece;
+  border-bottom: 1px solid transparent;
+  padding-left: 2px;
 }
 input::placeholder{
   color: #aaa;
@@ -49,71 +58,5 @@ img{
 
 
 
-.drop-down-wrapper{
-  margin-right: auto;
-  position: relative;
-}
-.drop-down-wrapper .drop-down-btn{
-  border: solid 1px var(--light-grey);
-  background-color: #fff;
-  border-radius: 12px;
-  min-width: 200px;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  box-sizing: border-box;
-  height: 45px;
-  padding: 10px 20px;
-  font-weight: bold;
-}
-/* 구글 Materal Icons 코드로 사용하는 방법 */
-.drop-down-btn::after{
-  content: '\e5c5'; /* 유니코드 */
-  font-family: 'Material Icons'; /* 폰트 설정 */
-  display: inline-block;
-  font-size: 24px; 
-  vertical-align: middle; /* 정렬 */
-  transition: .2s;
-  margin-left: auto;
-}
 
-.drop-down-btn.open::after{
-  rotate: 180deg;
-}
-.drop-down-wrapper .drop-down-btn:hover{
-  border: solid 1px var(--purple);
-}
-.drop-down-wrapper .drop-down-btn.open{
-  border: solid 1px var(--deep-purple);
-}
-.drop-down-wrapper ul{
-  display: none;
-  position: absolute;
-  top: 50px;
-  border: solid 1px var(--deep-purple);
-  border-radius: 12px;
-  background-color: #fff;
-  width: 100%;
-  padding: 10px;
-}
-.drop-down-wrapper ul.open{
-  display: block;
-  z-index: 10;
-}
-.drop-down-wrapper ul li{
-  box-sizing: border-box;
-  width: 100%;
-
-}
-.drop-down-wrapper ul li:hover{
-  background-color: #ddd;
-}
-.drop-down-wrapper ul li button{
-  padding: 5px 20px 5px 0px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 5px;
-}
 

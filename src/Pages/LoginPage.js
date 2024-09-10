@@ -5,7 +5,7 @@ import { LoginForms, JoinForms } from "../constants/loginForms";
 import useAxios from "../hooks/useAxtios";
 import { Icon } from "../components/Icons";
 
-function LoginPage ({selectedForm = ''}) {
+function LoginPage () {
     const navigate = useNavigate()
     const [loginInputs, setLoginInputs] = useState({userId: '', password: ''})
     const [joinInputs, setJoinInputs] = useState(
@@ -24,8 +24,9 @@ function LoginPage ({selectedForm = ''}) {
     }
     //마우스 클릭
     const loginAction = async () => {
-        const result = await login(loginInputs)
-        console.log(result)
+        const {userId, password} = loginInputs
+        const result = await login(userId, password)
+        if(result) navigate('/')
     }
     const joinAction = async () => {
         const result = await join(joinInputs)
@@ -33,13 +34,13 @@ function LoginPage ({selectedForm = ''}) {
     }
     //엔터 클릭
     const loginEnterClick = (e) => {
-        if(e.key === 'Enter') loginAction(loginInputs)
+        if(e.key === 'Enter') loginAction()
     }
     const joinEnterClick = (e) => {
-        if(e.key === 'Enter') joinAction(joinInputs)
+        if(e.key === 'Enter') joinAction()
     }
 
-    const [activeForm, setActiveForm] = useState(selectedForm)
+    const [activeForm, setActiveForm] = useState('')
     
     return <section className="login-page">
         <div className="login-wrapper">

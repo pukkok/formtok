@@ -1,3 +1,7 @@
+.qform{
+    margin-bottom: 20px;
+}
+
 /* 옵션박스 나중에 수정할것 */
 .option-box:nth-child(1){
     margin-top: 15px;
@@ -5,23 +9,33 @@
 .option-box{
     display: flex;
     margin-top: 5px;
+    align-items: center;
 }
-
+.option-box input{
+    min-width: 300px;
+    width: 100%;
+}
+.option-box input:hover{
+    border-bottom: 1px solid #cecece;
+}
+.option-box button{
+    margin-left: auto;
+}
 .add-btns{
     margin-top: 10px;
 }
 .add-btns button{
     padding: 5px 10px;
     border-radius: 12px;
+    font-weight: 500;
 }
 .add-answer-btn{
-    background-color: #0020c2;
-    border: solid 1px #0020c2;
+    background-color: var(--purple);
     color: #fff;
     margin-right: 10px;
 }
 .add-extra-btn{
-    border: solid 1px #0020c2;
+    background-color: #f3f3f3;
     margin-left: 10px;
 }
 

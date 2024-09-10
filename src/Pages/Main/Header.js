@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { activeTabAtom, tabsAtom } from "../../recoils/surveyAtoms";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
+import UserButton from "../../components/UserButton";
 
 function Header () {
 
@@ -21,8 +22,8 @@ function Header () {
             >{tab}</div>
         })}
         <div className="btns">
-            <button onClick={()=>navigate('/user/login')}>로그인</button>
-            <button onClick={()=>navigate('/user/join')}>회원가입</button>
+            <UserButton onClick={()=>navigate('/user/login')}/>
+            {/* <button onClick={()=>navigate('/user/login')}>로그인</button> */}
         </div>
     </div>
 }

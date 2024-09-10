@@ -6,7 +6,7 @@ function DescriptionInput ({value, placeholder, changeHandler}) {
     return <div className="content-editor-wrapper">
     {!value && <p className="content-placeholder">{placeholder}</p>}
     <ContentEditable 
-    className="content-editor" 
+    className="content-editor"
     tagName="p"
     html={value}
     onChange={changeHandler}/>

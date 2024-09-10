@@ -4,10 +4,13 @@ axios.defaults.baseURL = process.env.REACT_APP_RESTAPI_URL
 const useAxios = () => {
     const login = async (userId, password) => {
         try {
-            const { data } = await axios.post(`/user/login`, { userId, password })
+            const { data } = await axios.post("/user/login", { userId, password })
             if (data.code === 200) {
-                console.log('로그인 완료', data.data)
-                return data.data // 로그인 성공 시 사용자 데이터 반환
+                const {name, email, userId, token} = data.data
+                console.log(`${name} 로그인`)
+                localStorage.setItem("token", token)
+                localStorage.setItem('userInfo', JSON.stringify({name, email, userId}))
+                return data.data
             } else {
                 console.log(data.msg)
             }

@@ -14,6 +14,7 @@ function Ecard () {
     {active : `end` === activeCard})}
     onClick={()=>setActiveCard(`end`)}>
 
+        <h4 className="pd">엔딩 메세지</h4>
         <div className="pd">
             <input className="title-B" 
             placeholder="응답해 주셔서 감사합니다." onChange={e=>setEndingMent(ment => ment = {...ment, title : e.target.value})}/>

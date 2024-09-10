@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import classNames from "classnames"
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { activeCardAtom, endingMentAtom, pagesAtom } from "../../recoils/surveyAtoms"
 import QmoreVert from "./QmoreVert"
 import usePageActions from "../../hooks/usePageActions"
@@ -11,7 +11,8 @@ function SurveySummary() {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const endingMent = useRecoilValue(endingMentAtom)
-    const { addQuestion, addPage, changePLocation, changeQLocation } = usePageActions()
+    // const { copyQ, deleteQ } = usePageActions()
+    const { addQuestion, addPage, changePLocation, changeQLocation, copyQ, deleteQ } = usePageActions()
     const [foldQuestions, setFoldQuestions] = useState([])
     const toggleFoldQ = (id) => {
         foldQuestions.includes(id) ?
@@ -117,7 +118,10 @@ function SurveySummary() {
                                                 <p>{question.q || `${idx2 + 1}번 문항`}</p>
                                                 {`Q-${idx}-${idx2}` === activeCard && 
                                                 // <Icon code={'content_copy'}/>
-                                                <QmoreVert pi={idx} qi={idx2} />
+                                                <QmoreVert >
+                                                    <button onClick={() => copyQ(idx, idx2)}>복사</button>
+                                                    <button onClick={() => deleteQ(idx, idx2)}>삭제</button>
+                                                </QmoreVert>
                                                 }
                                             </div>
                                         )}

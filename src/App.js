@@ -4,8 +4,6 @@ import MainPage from './Pages/MainPage'
 import './styles/index.css';
 import FindAddress from './components/FindAddress'
 
-const {kakao} = window // 카카오 맵 사용
-
 function App() {
   return (
     <div className="App">
@@ -15,7 +13,6 @@ function App() {
         <Route path='test' element={<FindAddress/>}/>
         <Route path='user'>
           <Route path='login' element={<LoginPage/>}/>
-          <Route path='join' element={<LoginPage selectedForm='join'/>}/>
         </Route>
       </Routes>
     </div>

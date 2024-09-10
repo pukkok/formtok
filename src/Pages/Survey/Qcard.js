@@ -8,6 +8,8 @@ import Qform from "./Qform";
 import { Icon } from "../../components/Icons";
 import DropDown from "../../components/DropDown";
 import DescriptionInput from "../../components/DescriptionInput";
+import ToggleButton from "../../components/ToggleButton";
+import QmoreVert from './QmoreVert'
 
 function Qcard ({pi, qi}) {
     const pages = useRecoilValue(pagesAtom)
@@ -20,28 +22,26 @@ function Qcard ({pi, qi}) {
         changeQType(pi, qi, style)
         setTypeIcon(icon)
     }
-
+    const [isUsedOptipn, setisUsedOptions] = useState({
+        detail: false, require: false, next: false, multiSelect: false, 
+    })
+    
     const [isRequire, setIsRequire] = useState(false)
     const requireCheck = () => {
         setIsRequire(!isRequire)
     }
 
+    const usedCheck = (toggle) => {
+        // 설명 추가를 끄면 설명도 지워버리도록 구현하기
+        setisUsedOptions({...isUsedOptipn, [toggle] : !isUsedOptipn[toggle]})
+    }
+
     return <div className={classNames("card", 
         {active : `Q-${pi}-${qi}` === activeCard})}
         onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}>
-        <div className="pd">
-            <input className="title-B" 
-            placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
-            value={pages[pi].questions[qi].q}
-            />
-            <DescriptionInput 
-            value={pages[pi].questions[qi].d} 
-            placeholder={'질문 설명'}
-            changeHandler={e=>changeQDescription(e, pi, qi)}/>
 
-            <Qform pi={pi} qi={qi}/>
+            <div className="add-option-wrapper pd">
 
-            <div className="add-option-wrapper">
                 <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>}>
                 {questionForms.map(qs => {
                     return <li key={qs.form}>
@@ -50,13 +50,31 @@ function Qcard ({pi, qi}) {
                         </button>
                     </li>
                 })}
-                </DropDown>
-                {pages[pi].questions[qi].type === '객관식' && <button 
-                onClick={requireCheck}
-                className={classNames("ox-btn", {o: isRequire})}>질문 다중 선택</button>}
-                <button className={classNames("ox-btn", {o: isRequire})}>답변 필수</button>
-                <button className={classNames("ox-btn", {o: isRequire})}>답변 별 페이지 이동</button>
+                </DropDown>    
+
+                <div className={'toggle-option'}>
+                    <p>필수</p>
+                    <ToggleButton onClick={()=>usedCheck('require')} isOn={isUsedOptipn.require}/></div>
+
+                <QmoreVert autoClose={false}>
+                    <p>설명 추가 <ToggleButton onClick={()=>usedCheck('detail')} isOn={isUsedOptipn.detail}/></p>
+                    <p>답변별 페이지 이동<ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
+                    <p>복수 선택 <ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
+                </QmoreVert>
             </div>
+
+
+        <div className="pd">
+            <input className="title-B" 
+            placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
+            value={pages[pi].questions[qi].q}
+            />
+            {isUsedOptipn.detail && <DescriptionInput 
+            value={pages[pi].questions[qi].d} 
+            placeholder={'질문 설명'}
+            changeHandler={e=>changeQDescription(e, pi, qi)}/>}
+
+            <Qform pi={pi} qi={qi}/>
         </div>
     </div>
 }
