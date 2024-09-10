@@ -9,7 +9,7 @@ import { Icon } from "../../components/Icons";
 import DropDown from "../../components/DropDown";
 import DescriptionInput from "../../components/DescriptionInput";
 import ToggleButton from "../../components/ToggleButton";
-import QmoreVert from './QmoreVert'
+import MoreVert from '../../components/MoreVert'
 
 function Qcard ({pi, qi}) {
     const pages = useRecoilValue(pagesAtom)
@@ -23,7 +23,7 @@ function Qcard ({pi, qi}) {
         setTypeIcon(icon)
     }
     const [isUsedOptipn, setisUsedOptions] = useState({
-        detail: false, require: false, next: false, multiSelect: false, 
+        detail: false, essential: false, next: false, multiSelect: false, 
     })
     
     const [isRequire, setIsRequire] = useState(false)
@@ -54,21 +54,22 @@ function Qcard ({pi, qi}) {
 
                 <div className={'toggle-option'}>
                     <p>필수</p>
-                    <ToggleButton onClick={()=>usedCheck('require')} isOn={isUsedOptipn.require}/></div>
+                    <ToggleButton onClick={()=>usedCheck('essential')} isOn={isUsedOptipn.essential}/></div>
 
-                <QmoreVert autoClose={false}>
+                <MoreVert autoClose={false}>
                     <p>설명 추가 <ToggleButton onClick={()=>usedCheck('detail')} isOn={isUsedOptipn.detail}/></p>
                     <p>답변별 페이지 이동<ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
                     <p>복수 선택 <ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
-                </QmoreVert>
+                </MoreVert>
             </div>
 
-
         <div className="pd">
-            <input className="title-B" 
-            placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
-            value={pages[pi].questions[qi].q}
-            />
+            <div className={classNames({essential : isUsedOptipn.essential})}>
+                <input className={"title-B"}
+                placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
+                value={pages[pi].questions[qi].q}
+                />
+            </div>
             {isUsedOptipn.detail && <DescriptionInput 
             value={pages[pi].questions[qi].d} 
             placeholder={'질문 설명'}

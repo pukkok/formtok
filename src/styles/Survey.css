@@ -24,7 +24,6 @@
     min-width: 300px;
 }
 
-
 /* 리모컨 */
 .editor-box .survey-nav{
     padding: 15px 0;
@@ -82,32 +81,9 @@
 }
 /* 페이지 요약 */
 .p-summary{
-    padding: 5px 10px;
+    padding: 5px 8px;
     border: 2px solid transparent;
     border-top: 2px solid var(--purple);
-}
-
-.p-summary .title-box{
-    display: flex;
-}
-/* 질문 접기 버튼 */
-.p-summary .title-box button{
-    margin-left: auto;
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-.p-summary .title-box button:hover{
-    border-radius: 8px;
-    background-color: var(--purple);
-    color: #fff;
-}
-.p-summary.fold .title-box button:hover{
-    background-color: var(--fold-red);
-}
-.p-summary .title-box button:disabled{
-    color: var(--deep-grey);
-    background-color: #fff;
 }
 
 .p-summary.active,
@@ -129,12 +105,6 @@
 /* 드래깅 상태일때 */
 .p-summary.dragging{
     border: none;
-}
-.p-summary.active .title-box button{
-    display: flex;
-}
-.p-summary.active.fold .title-box button{
-    rotate: 180deg;
 }
 
 /* 페이지네이션 */
@@ -158,7 +128,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
 
 .question-box{
     box-sizing: content-box;
@@ -223,9 +192,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
-
-
 
 /* 리모컨 하단 버튼 */
 .survey-nav .q-btns{

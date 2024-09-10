@@ -34,7 +34,7 @@
 .card input.title-B{
     border-bottom: 1px solid transparent;
     width: 100%;
-    padding-bottom: 5px;
+    padding-bottom: 3px;
 }
 .card input.title-A:hover,
 .card input.title-B:hover{
@@ -48,17 +48,30 @@
     padding-top: 5px;
     font-size: 18px;
 }
+/* 필수 질문 */
+.essential{
+    position: relative;
+}
+.essential::before{
+    content: '*';
+    color: red;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 /* 디스크립션 */
 .card .content-editor-wrapper{
     position: relative;
     margin: 10px 0;
 }
-.card .content-editor-wrapper p{
-    padding-left: 2px;
+.content-editor-wrapper > div{
+    line-height: 1.5;
 }
 .card .content-placeholder{
     position: absolute;
+    padding-left: 2px;
     padding-bottom: 5px;
     color: #aaa;
     pointer-events: none;
@@ -66,8 +79,9 @@
 .card .content-editor{
     outline: none;
     border-bottom: 1px solid transparent;
-    min-height: 20px;
+    padding-left: 2px;
     padding-bottom: 5px;
+    vertical-align: top;  /* 텍스트 수직 정렬 */
 }
 
 .card .content-editor:hover{
@@ -77,7 +91,7 @@
 .card .content-placeholder:focus,
 .card .content-editor:focus,
 .card input:focus{
-    border-bottom: 2px solid var(--purple);
+    border-bottom: 2px solid var(--purple) !important;
 }
 
 /* 질문 하단부분 추가 옵션 */
@@ -86,7 +100,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 5px;
     position: relative;
 }

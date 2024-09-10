@@ -4,10 +4,9 @@ import ContentEditable from "react-contenteditable";
 function DescriptionInput ({value, placeholder, changeHandler}) {
 
     return <div className="content-editor-wrapper">
-    {!value && <p className="content-placeholder">{placeholder}</p>}
+    {!value && <div className="content-placeholder">{placeholder}</div>}
     <ContentEditable 
     className="content-editor"
-    tagName="p"
     html={value}
     onChange={changeHandler}/>
 </div>

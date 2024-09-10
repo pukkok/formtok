@@ -158,6 +158,29 @@ function usePageActions () {
             })
         })
     }
+
+    const copyP = (pi) => {
+        const id = 'P' + randomKey()
+        let copyPages = [...pages]
+        let copyPage = {...copyPages[pi], id, 
+            title: copyPages[pi].title ? copyPages[pi].title+'(사본)' : ''}
+        copyPage = {...copyPage, 
+            questions: copyPage.questions.map(question => {
+            const id = 'Q' + randomKey()
+            return question = {...question, id}
+        })}
+        copyPages.splice(pi+1, 0, copyPage)
+        setPages(copyPages)
+    }
+
+    const deleteP = (pi) => {
+        setPages(pages=> {
+            return pages.filter((_, idx) => {
+                return idx !== pi
+            })
+        })
+    }
+
     // 질문 복사하기
     const copyQ = (pi, qi) => {
         const id = 'Q' + randomKey()
@@ -279,7 +302,7 @@ function usePageActions () {
         changePTitle, changePDescription,
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,
-        copyQ, deleteQ, deleteOption
+        copyP, deleteP, copyQ, deleteQ, deleteOption
     }
 }
 

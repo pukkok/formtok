@@ -25,6 +25,8 @@ function Header () {
             <UserButton onClick={()=>navigate('/user/login')}/>
             {/* <button onClick={()=>navigate('/user/login')}>로그인</button> */}
         </div>
+        <button>미리보기</button>
+        <button>임시저장</button>
     </div>
 }
 

@@ -28,45 +28,77 @@
     border-radius: 12px;
     overflow: hidden;
     height: 0;
-    transition: .2s;
+    transition: .1s;
     color: #000;
     font-size: 14px;
     box-shadow: 2px 2px 2px #ddd;
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     z-index: 10;
 }
-.q-summary .more-vert-wrapper{
-    margin-left: auto;
-    margin-right: 10px;
+.modify-option > *{
+    flex: 1;
 }
-.q-summary .modify-option{
+.q-tab .more-vert-wrapper{
+    margin-left: auto;
+}
+.q-tab .modify-option{
     width: 70px;
+}
+.q-tab .modify-option button{
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+}
+.q-tab .modify-option button:disabled{
+    color: #aaa;
+}
+.q-tab .modify-option button.remove{
+    color: #e8291b;
+}
+.q-tab .modify-option button.remove:disabled{
+    color: #ffb6b6;
+}
+.q-tab .modify-option button:hover{
+    background-color: #ddd;
+    border-radius: 8px;
+}
+.q-tab .modify-option button.remove:hover{
+    background-color: #ffb6b6;
+    border-radius: 8px;
+}
+.q-tab .modify-option button:disabled:hover{
+    background-color: #eee;
+}
+/* 타이틀 morevert */
+.p-summary .title-box{
+    display: flex;
+    position: relative;
+}
+.p-summary .more-vert-wrapper > button > span:hover{
+    background-color: var(--purple);
+    color: #fff;
+    border-radius: 8px;
+}
+.p-summary.fold .more-vert-wrapper > button > span:hover{
+    background-color: var(--fold-red);
+}
+.title-box .modify-option.on{
+    height: 120px;
+    padding: 5px;
+}
+/* 질문 morevert */
+.q-summary .more-vert-wrapper{
+    margin-right: 10px;
 }
 .q-summary .modify-option.on{
     height: 80px;
     padding: 5px;
 }
-.q-summary .modify-option button{
-    width: 100%;
-    text-align: center;
-}
-.q-summary .modify-option button:nth-child(2){
-    color: #e8291b;
-}
-.q-summary .modify-option button:hover{
-    background-color: #ddd;
-    border-radius: 8px;
-}
-.q-summary .modify-option button:nth-child(2):hover{
-    background-color: #ffb6b6;
-    border-radius: 8px;
-}
-
+/* q-card */
 .add-option-wrapper .modify-option{
     width: 200px;
     display: flex;
-    flex-direction: column;
     transition: none;
 }
 .add-option-wrapper .modify-option.on{
@@ -75,7 +107,6 @@
     box-shadow: 0px 1px 4px 0px var(--deep-grey);
 }
 .add-option-wrapper .modify-option p{
-    flex: 1;
     padding: 0 5px;
     display: flex;
     align-items: center;

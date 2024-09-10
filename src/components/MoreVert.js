@@ -1,10 +1,10 @@
 import React from "react"
-import useOutsideClick from "../../hooks/useOutsideClick"
+import useOutsideClick from "../hooks/useOutsideClick"
 import classNames from "classnames"
-import { Icon } from "../../components/Icons"
+import { Icon } from "./Icons"
 
 // more-vertical
-function QmoreVert({ children, autoClose=true }) {
+function MoreVert({ children, autoClose=true }) {
     const { isOpen, setIsOpen, ref } = useOutsideClick(false)
 
     return (
@@ -21,4 +21,4 @@ function QmoreVert({ children, autoClose=true }) {
     )
 }
 
-export default QmoreVert
+export default MoreVert

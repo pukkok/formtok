@@ -39,10 +39,10 @@ function Qform ({pi, qi}){
             <input className="short-text" placeholder="단답형" disabled={true}/>
         }
         {style === '날짜' &&
-            <input className="" type="date" disabled={true}/>
+            <input className="short-text" type="date" disabled={true}/>
         }
         {style === '시간' &&
-            <input className="" type="time" disabled={true}/>
+            <input className="short-text" type="time" disabled={true}/>
         }
     </div>
 }

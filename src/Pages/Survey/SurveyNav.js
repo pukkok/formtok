@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import classNames from "classnames"
 import SurveySummary from "./SurveySummary"
+import SurveyOption from "./SurveyOption"
 
 function SurveyNav() {
     const [activeBtn, setActiveBtn] = useState(0)
@@ -20,6 +21,7 @@ function SurveyNav() {
                 ))}
             </nav>
             {activeBtn === 0 && <SurveySummary />}
+            {activeBtn === 1 && <SurveyOption />}
         </div>
     )
 }

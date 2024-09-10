@@ -3,16 +3,16 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import classNames from "classnames"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { activeCardAtom, endingMentAtom, pagesAtom } from "../../recoils/surveyAtoms"
-import QmoreVert from "./QmoreVert"
+import MoreVert from "../../components/MoreVert"
 import usePageActions from "../../hooks/usePageActions"
-import { Icon } from "../../components/Icons"
 
 function SurveySummary() {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     // const { copyQ, deleteQ } = usePageActions()
-    const { addQuestion, addPage, changePLocation, changeQLocation, copyQ, deleteQ } = usePageActions()
+    const { addQuestion, addPage, changePLocation, changeQLocation, 
+        copyP, copyQ, deleteP, deleteQ } = usePageActions()
     const [foldQuestions, setFoldQuestions] = useState([])
     const toggleFoldQ = (id) => {
         foldQuestions.includes(id) ?
@@ -87,10 +87,15 @@ function SurveySummary() {
                                 <h4>{idx + 1}/{pages.length} 페이지</h4>
                                 <div className="title-box">
                                 {page.title ? <p>{page.title}</p> : <p className="placeholder">페이지 제목</p>}
-                                    <button onClick={() => toggleFoldQ(page.id)}
-                                    title={page.title ? "질문상자 펼치기" : "질문상자 접기"}
-                                    disabled={page.questions.length === 0}
-                                    ><Icon code={'keyboard_arrow_up'}/></button>
+                                    {`P-${idx}` === activeCard &&
+                                    <MoreVert>
+                                        <button onClick={() => toggleFoldQ(page.id)} 
+                                        disabled={page.questions.length === 0}>{foldQuestions.includes(page.id) ? '펼치기' : '접기'}</button>
+                                        <button onClick={() => copyP(idx)}>복사</button>
+                                        <button className="remove" 
+                                        disabled={pages.length<=1}
+                                        onClick={() => deleteP(idx)}>삭제</button>
+                                    </MoreVert>}
                                 </div>
                             </div>
 
@@ -117,12 +122,10 @@ function SurveySummary() {
                                             >
                                                 <p>{question.q || `${idx2 + 1}번 문항`}</p>
                                                 {`Q-${idx}-${idx2}` === activeCard && 
-                                                // <Icon code={'content_copy'}/>
-                                                <QmoreVert >
+                                                <MoreVert >
                                                     <button onClick={() => copyQ(idx, idx2)}>복사</button>
-                                                    <button onClick={() => deleteQ(idx, idx2)}>삭제</button>
-                                                </QmoreVert>
-                                                }
+                                                    <button className="remove" onClick={() => deleteQ(idx, idx2)}>삭제</button>
+                                                </MoreVert>}
                                             </div>
                                         )}
                                         </Draggable>
