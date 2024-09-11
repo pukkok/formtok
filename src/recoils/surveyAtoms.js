@@ -50,6 +50,10 @@ const activeTabAtom = atom({
     default: ''
 })
 
+const urlAtom = atom({
+    key: 'url',
+    default: ''
+})
 
 const pagesAtom = atom({
     key: 'pages',
@@ -62,12 +66,13 @@ const pagesAtom = atom({
             {id: 'Q'+randomKey(), 
                 type: '객관식', 
                 q: '', d: '', 
-                options: [{id : 'O'+randomKey(), query: ''}],
+                options: [{id : 'O'+randomKey(), answer: ''}],
                 hasExtraOption: false,
-                required : false,
+                essentail : false,
                 next : null
             }
-        ]
+        ],
+        next : null
         }
     ]
 })
@@ -95,7 +100,7 @@ const activeCardAtom = atom({
 
 export {
     randomKey, randomUrl,
-    gridAtom, isSideOpenAtom,
+    gridAtom, isSideOpenAtom, urlAtom,
     tabsAtom, activeTabAtom, activeCardAtom,
     pagesAtom, endingMentAtom, surveyPeriodAtom, 
 }

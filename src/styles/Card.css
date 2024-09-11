@@ -30,8 +30,8 @@
     background-color: var(--purple);
 }
 /* 디폴트 */
-.card input.title-A,
-.card input.title-B{
+.card .title-A,
+.card .title-B{
     border-bottom: 1px solid transparent;
     width: 100%;
     padding-bottom: 3px;
@@ -41,10 +41,10 @@
     border-bottom: 1px solid #cecece;
 }
 /* 타이틀 타입 */
-.card input.title-A{
+.card .title-A{
     font-size: 22px;
 }
-.card input.title-B{
+.card .title-B{
     padding-top: 5px;
     font-size: 18px;
 }
@@ -78,14 +78,14 @@
 }
 .card .content-editor{
     outline: none;
-    border-bottom: 1px solid transparent;
     padding-left: 2px;
     padding-bottom: 5px;
-    vertical-align: top;  /* 텍스트 수직 정렬 */
 }
-
 .card .content-editor:hover{
     border-bottom: 1px solid #cecece;
+}
+.card .content-editor-wrapper.on .content-editor{
+    border-bottom: 2px solid var(--purple);
 }
 
 .card .content-placeholder:focus,

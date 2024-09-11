@@ -11,7 +11,6 @@
     color: #777;
     font-weight: 700;
 }
-
 .user-button span{
     color: #777;
     font-weight: 300;
@@ -45,6 +44,27 @@
 }
 .toggle-button.on span{
     left: calc(75% - 1px);
+}
+
+.radio-button{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #777;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.radio-button.select{
+    border: 2px solid #601DCD;
+}
+
+.radio-button.select span{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #601DCD;
+    background-color: #601DCD;
 }
 
 

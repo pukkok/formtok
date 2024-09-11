@@ -10,7 +10,6 @@ function SurveySummary() {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const endingMent = useRecoilValue(endingMentAtom)
-    // const { copyQ, deleteQ } = usePageActions()
     const { addQuestion, addPage, changePLocation, changeQLocation, 
         copyP, copyQ, deleteP, deleteQ } = usePageActions()
     const [foldQuestions, setFoldQuestions] = useState([])
@@ -19,7 +18,6 @@ function SurveySummary() {
         setFoldQuestions(prev=> prev.filter(q => q !== id)) :
         setFoldQuestions([...foldQuestions, id])
     }
-
 
     // 드롭 가능한 영역의 스타일
     const getCardStyle = (isDragging, draggableStyle) => ({

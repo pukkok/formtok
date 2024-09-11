@@ -62,12 +62,12 @@ function usePageActions () {
     }
 
     // 페이지 디스크립션 변경하기
-    const changePDescription = (e, pi) => {
+    const changePDescription = (html, pi) => {
         setPages(prevPages => {
             return prevPages.map((page, idx) => {
                 if(idx === pi){
                     page = {...page,
-                        description : e.target.value
+                        description : html
                     }
                 }
                 return page
@@ -99,7 +99,7 @@ function usePageActions () {
                             ...page.questions,
                             { 
                                 id, type: '객관식', q: '', d: '', 
-                                options: [{id:id2, query:''}], hasExtraOption:false, required: false, next: null 
+                                options: [{id:id2, answer:''}], hasExtraOption:false, required: false, next: null 
                             }
                         ]
                     }
@@ -165,8 +165,8 @@ function usePageActions () {
         let copyPage = {...copyPages[pi], id, 
             title: copyPages[pi].title ? copyPages[pi].title+'(사본)' : ''}
         copyPage = {...copyPage, 
-            questions: copyPage.questions.map(question => {
-            const id = 'Q' + randomKey()
+            questions: copyPage.questions.map((question, idx) => {
+            const id = 'Q' + randomKey() + idx
             return question = {...question, id}
         })}
         copyPages.splice(pi+1, 0, copyPage)
@@ -223,7 +223,7 @@ function usePageActions () {
                         if (idx2 === qi) {
                             const updateOptions = [
                                 ...question.options,
-                                { id, query: '' } // 문항 옵션 추가
+                                { id, answer: '' } // 문항 옵션 추가
                             ]
                             return { ...question, options: updateOptions }
                         }
@@ -244,7 +244,7 @@ function usePageActions () {
                         if (idx2 === qi) {
                             const updateOptions = question.options.map((option, idx3) => {
                                 if(idx3 === oi){
-                                    return option = {...option, query : e.target.value }
+                                    return option = {...option, answer : e.target.value }
                                 }
                                 return option
                             })
@@ -258,7 +258,7 @@ function usePageActions () {
             })
         })
     }
-
+    /** 옵션삭제 page, question, option 인덱스 */
     const deleteOption = (pi, qi, oi) => {
         setPages(prevPages => {
             return prevPages.map((page, idx) => {
@@ -296,13 +296,25 @@ function usePageActions () {
             })
         })
     }
+    /** 현재페이지가 끝나면 어디로 갈껀가요? */
+    const whereIsNextPage = (pi, nextPageIdx) => {
+        setPages(pages=> {
+            return pages.map((page, idx)=>{
+                if(idx === pi){
+                    return {...page, next: nextPageIdx}
+                }
+                return page
+            })
+        })
+    }
 
     return { 
         changePLocation, changeQLocation,
         changePTitle, changePDescription,
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,
-        copyP, deleteP, copyQ, deleteQ, deleteOption
+        copyP, deleteP, copyQ, deleteQ, deleteOption,
+        whereIsNextPage
     }
 }
 

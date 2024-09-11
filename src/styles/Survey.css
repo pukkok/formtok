@@ -214,3 +214,18 @@
 .survey-nav .q-btns button:disabled{
     color: var(--deep-grey);
 }
+
+
+.survey-form{
+    width: 700px;
+    margin: 30px auto;
+}
+
+.survey-form .form-card .multiple{
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+

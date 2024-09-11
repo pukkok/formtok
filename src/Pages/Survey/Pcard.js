@@ -24,11 +24,13 @@ function Pcard({pi}) {
             <h4 className="pd">{pageCnt} 페이지</h4>
             <div className="pd">
                 <input className="title-A" 
-                placeholder="페이지 제목" onChange={e=>changePTitle(e, pi)}/>
+                placeholder="페이지 제목" onChange={e=>changePTitle(e, pi)} value={pages[pi].title}/>
                 <DescriptionInput 
                 value={pages[pi].description}
+                pi={pi}
                 placeholder={'페이지 설명'}
-                changeHandler={e=>changePDescription(e, pi)}/>
+                // changeHandler={changePDescription(pi)}
+                />
             </div>
         </div>
     )

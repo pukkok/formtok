@@ -2,11 +2,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, SearchIcon } from "../../components/Icons";
-import { randomUrl } from "../../recoils/surveyAtoms";
+import { randomUrl, urlAtom } from "../../recoils/surveyAtoms";
+import { useSetRecoilState } from "recoil";
 
 function SurveyManager () {
     const [surveyTitle, setSurveyTitle] = useState('')
     const naviate = useNavigate()
+    const setUrl = useSetRecoilState(urlAtom)
 
     // const [light, setLight] = useState('green')
 
@@ -26,6 +28,7 @@ function SurveyManager () {
 
     const goToCreate = () => {
         let url = randomUrl()
+        setUrl(url)
         naviate(`/survey/create/${url}`)
     }
     const enterClick = (e) => {

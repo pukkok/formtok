@@ -11,12 +11,12 @@ function Qform ({pi, qi}){
     const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()
 
     return <div className="qform">
-        {style === '객관식' &&
+        {(style === '객관식' || style === '드롭다운' || style === '체크박스') &&
         <div className="multiple">
-            {pages[pi].questions[qi].options.map((answer, idx3) => {
-                const {id, query} = answer
+            {pages[pi].questions[qi].options.map((option, idx3) => {
+                const {id, answer} = option
                 return <AddAnswer key={id} 
-                inputChange={(e)=>changeOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={query} 
+                inputChange={(e)=>changeOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={answer} 
                 buttonClick={()=>deleteOption(pi, qi, idx3)}
                 isNotUseBtn={pages[pi].questions[qi].options.length===1 && idx3===0}
                 />
@@ -27,7 +27,7 @@ function Qform ({pi, qi}){
                 <button className="add-answer-btn" onClick={()=>addOption(pi, qi)}>항목 추가</button>
                 {!pages[pi].questions[qi].hasExtraOption && <>
                     또는
-                    <button className="add-extra-btn"onClick={()=>toggleEXtraOption(pi, qi, true)}>'기타' 추가</button>
+                <button className="add-extra-btn"onClick={()=>toggleEXtraOption(pi, qi, true)}>'기타' 추가</button>
                 </>}
             </div>
         </div>

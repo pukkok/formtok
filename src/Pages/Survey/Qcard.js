@@ -37,7 +37,7 @@ function Qcard ({pi, qi}) {
     }
 
     return <div className={classNames("card", 
-        {active : `Q-${pi}-${qi}` === activeCard})}
+        {active : `Q-${pi}-${qi}` === activeCard})} 
         onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}>
 
             <div className="add-option-wrapper pd">
@@ -45,7 +45,7 @@ function Qcard ({pi, qi}) {
                 <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>}>
                 {questionForms.map(qs => {
                     return <li key={qs.form}>
-                        <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.icon)}>
+                        <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.code)}>
                         <Icon code={qs.code}/>{qs.form}
                         </button>
                     </li>
@@ -71,7 +71,7 @@ function Qcard ({pi, qi}) {
                 />
             </div>
             {isUsedOptipn.detail && <DescriptionInput 
-            value={pages[pi].questions[qi].d} 
+            value={pages[pi].questions[qi].d}
             placeholder={'질문 설명'}
             changeHandler={e=>changeQDescription(e, pi, qi)}/>}
 
