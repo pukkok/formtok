@@ -1,8 +1,9 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { activeCardAtom, endingMentAtom } from "../../recoils/surveyAtoms";
-import DescriptionInput from "../../components/DescriptionInput";
+import DescriptionEditor from "../../components/DescriptionEditor";
 import classNames from "classnames";
+import StyledCard from "../../styles/StyledCard";
 
 function Ecard () {
 
@@ -10,6 +11,7 @@ function Ecard () {
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
 
     return (
+        <StyledCard>
     <div className={classNames("card ending-field", 
     {active : `end` === activeCard})}
     onClick={()=>setActiveCard(`end`)}>
@@ -18,14 +20,15 @@ function Ecard () {
         <div className="pd">
             <input className="title-B" 
             placeholder="응답해 주셔서 감사합니다." onChange={e=>setEndingMent(ment => ment = {...ment, title : e.target.value})}/>
-            <DescriptionInput
+            <DescriptionEditor
             value={endingMent.description}
             placeholder={'추가 설명'}
-            changeHandler={e => setEndingMent(ment => ment = {...ment, description : e.target.value})}
+            // changeHandler={e => setEndingMent(ment => ment = {...ment, description : e.target.value})}
             />
         </div>
 
     </div>
+    </StyledCard>
     )
     
 }

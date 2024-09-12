@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { pagesAtom, activeCardAtom } from "../../recoils/surveyAtoms";
 import usePageActions from "../../hooks/usePageActions";
-import DescriptionInput from "../../components/DescriptionInput";
+import DescriptionEditor from "../../components/DescriptionEditor";
 import classNames from "classnames";
+import StyledCard from "../../styles/StyledCard";
 
 function Pcard({pi}) {
     const pages = useRecoilValue(pagesAtom)
@@ -17,6 +18,7 @@ function Pcard({pi}) {
     const {changePTitle, changePDescription} = usePageActions()
     
     return (
+        <StyledCard>
         <div className={classNames("card", 
             {active : `P-${pi}` === activeCard})}
             onClick={()=>setActiveCard(`P-${pi}`)}>
@@ -25,14 +27,16 @@ function Pcard({pi}) {
             <div className="pd">
                 <input className="title-A" 
                 placeholder="페이지 제목" onChange={e=>changePTitle(e, pi)} value={pages[pi].title}/>
-                <DescriptionInput 
+                <DescriptionEditor 
                 value={pages[pi].description}
                 pi={pi}
                 placeholder={'페이지 설명'}
+                handleChange={changePDescription}
                 // changeHandler={changePDescription(pi)}
                 />
             </div>
         </div>
+        </StyledCard>
     )
 }
 

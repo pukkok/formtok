@@ -1,10 +1,10 @@
 import { useRecoilState } from "recoil"
-import { activeCardAtom, pagesAtom, randomKey } from "../recoils/surveyAtoms"
+import { activeCardAtom, endingMentAtom, pagesAtom, randomKey } from "../recoils/surveyAtoms"
 
 function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-
+    const [endingMent, setEndingMent] = useRecoilState(endingMentAtom)
     // 페이지 위치변경
     const changePLocation = (dragPi, dropPi) => {
         let newPages = [...pages]
@@ -54,20 +54,6 @@ function usePageActions () {
                 if(idx === pi){
                     page = {...page,
                         title: e.target.value,
-                    }
-                }
-                return page
-            })
-        })
-    }
-
-    // 페이지 디스크립션 변경하기
-    const changePDescription = (html, pi) => {
-        setPages(prevPages => {
-            return prevPages.map((page, idx) => {
-                if(idx === pi){
-                    page = {...page,
-                        description : html
                     }
                 }
                 return page
@@ -126,13 +112,28 @@ function usePageActions () {
             })
         })
     }
+
+    // 페이지 디스크립션 변경하기
+    const changePDescription = (html, pi) => {
+        setPages(prevPages => {
+            return prevPages.map((page, idx) => {
+                if(idx === pi){
+                    page = {...page,
+                        description : html
+                    }
+                }
+                return page
+            })
+        })
+    }
+
     // 질문 설명 바꾸기
-    const changeQDescription = (e, pi, qi) => {
+    const changeQDescription = (html, pi, qi) => {
         setPages(pages => {
             return pages.map((page, idx) => {
                 if (idx === pi) {
                     const updateQuestions = page.questions.map((question, idx2) => {
-                        if (idx2 === qi) question = { ...question, d: e.target.value }
+                        if (idx2 === qi) question = { ...question, d: html }
                         return question
                     })
                     page = { ...page, questions: updateQuestions }
@@ -307,6 +308,12 @@ function usePageActions () {
             })
         })
     }
+
+    const changeEndingTitle = (e, ) => {
+
+    }
+
+
 
     return { 
         changePLocation, changeQLocation,
