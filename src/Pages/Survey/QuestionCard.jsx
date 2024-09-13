@@ -4,7 +4,7 @@ import { activeCardAtom, pagesAtom } from "../../recoils/surveyAtoms";
 import classNames from "classnames";
 import usePageActions from "../../hooks/usePageActions";
 import questionForms from "../../constants/questionForms";
-import Qform from "./Qform";
+import QuestionForm from "./QuestionForm";
 import { Icon } from "../../components/Icons";
 import DropDown from "../../components/DropDown";
 import DescriptionEditor from "../../components/CKEditor/DescriptionEditor";
@@ -12,7 +12,7 @@ import ToggleButton from "../../components/ToggleButton";
 import MoreVert from '../../components/MoreVert'
 import {QuestionOptionsWrapper, SurveyCard} from "./StyledSurveyCard";
 
-function Qcard ({pi, qi}) {
+function QuestionCard ({pi, qi}) {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const {changeQTitle, changeQDescription, changeQType} = usePageActions()
@@ -80,11 +80,11 @@ function Qcard ({pi, qi}) {
                 pi={pi} qi={qi}
                 handleChange={changeQDescription}/>}
     
-                <Qform pi={pi} qi={qi}/>
+                <QuestionForm pi={pi} qi={qi}/>
             </div>
         </SurveyCard>
     )
         
 }
 
-export default Qcard
+export default QuestionCard

@@ -4,7 +4,7 @@ import { pagesAtom } from "../../recoils/surveyAtoms"
 import AddAnswer from '../../components/AddAnswer'
 import usePageActions from "../../hooks/usePageActions"
 
-function Qform ({pi, qi}){
+function QuestionForm ({pi, qi}){
     const pages = useRecoilValue(pagesAtom)
     const style = pages[pi].questions[qi].type || '객관식'
     
@@ -47,4 +47,4 @@ function Qform ({pi, qi}){
     </div>
 }
 
-export default Qform
+export default QuestionForm

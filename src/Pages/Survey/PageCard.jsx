@@ -6,7 +6,7 @@ import DescriptionEditor from "../../components/CKEditor/DescriptionEditor";
 import classNames from "classnames";
 import {SurveyCard} from "./StyledSurveyCard";
 
-function Pcard({pi}) {
+function PageCard({pi}) {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
 
@@ -39,4 +39,4 @@ function Pcard({pi}) {
     )
 }
 
-export default Pcard
+export default PageCard

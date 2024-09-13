@@ -5,8 +5,11 @@ import { Icon } from "./Icons"
 import styled from "styled-components"
 
 const StyledMoreVertWrapper = styled.div`
-    .more-vert-wrapper{
+    &.more-vert-wrapper{
         z-index: 10;
+        position: relative;
+        display: flex;
+        align-items: center;
 
         & > button{
             display: flex;
@@ -22,7 +25,7 @@ const StyledMoreVertWrapper = styled.div`
                 font-size: 18px;
 
                 &:hover{
-                    background-color: #cecece;
+                    background-color: #f1f1f1;
                     color: #2f2f2f;
                     border-radius: 8px;
                 }
@@ -38,7 +41,7 @@ const StyledMoreVertWrapper = styled.div`
             overflow: hidden;
             height: 0;
             transition: .1s;
-            color: #000;
+            color: #111;
             font-size: 14px;
             box-shadow: 2px 2px 2px #ddd;
             display: flex;
@@ -63,7 +66,7 @@ function MoreVert({ children, autoClose=true }) {
             </button>
             
             <div onClick={() => autoClose && setIsOpen(false)}
-            className={classNames({ on: isOpen }, 'options', "modify-option")}>
+            className={classNames({ on: isOpen }, 'options')}>
                 {children}
             </div>
         </StyledMoreVertWrapper>

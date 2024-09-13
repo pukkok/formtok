@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import CreateSurvey from "../Viewer/CreateSurvey";
+import CreateSurvey from "../CreateSurveyViewer/CreateSurvey";
 import SurveyMangager from "../Viewer/SurveyManager";
-import SurveyForm from "../Viewer/SurveyForm";
+import SurveyForm from "../SurveyFormViewer/SurveyForm";
 import NotFoundPage from '../Viewer/NotFoundPage';
 import { ViewerWrapper } from "./StyledMainPage";
 

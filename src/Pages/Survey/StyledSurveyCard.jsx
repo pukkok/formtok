@@ -56,11 +56,11 @@ const StyledCard = styled.div`
         }
     }
 
-    .active{
+    &.active{
         border: solid 2px var(--purple);
     }
 
-    .ending-field{
+    &.ending-field{
         min-height: 120px;
     }
 `
@@ -84,6 +84,30 @@ const StyledQuestionOptionsWrapper = styled.div`
 
     .drop-down-wrapper{
         margin-right: auto;
+    }
+
+    .more-vert-wrapper .options{
+        &.on{
+            width: 200px;
+            transition: none;
+            top: -14px;
+            right: 0;
+
+            height: 120px;
+            padding: 5px;
+            box-shadow: 0px 1px 4px 0px var(--deep-grey);
+        }
+
+        p{
+            padding: 0 5px;
+            display: flex;
+            align-items: center;
+        
+            button{
+                margin-left: auto;
+                height: 24px;
+            }
+        }
     }
 `
 

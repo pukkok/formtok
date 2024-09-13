@@ -4,35 +4,24 @@ import { endingMentAtom, pagesAtom } from "../../recoils/surveyAtoms";
 import RadioButton from "../../components/RadioButton";
 import {SurveyCard} from "../Survey/StyledSurveyCard";
 import DescriptionEditor from '../../components/CKEditor/DescriptionEditor'
-
+import {SurveyFormWrapper} from './StyledSurveyForm'
 
 function SurveyForm() {
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
 
     const pageDescriptionRef = useRef(null)
-    const endingDescriptionRef = useRef(null)
     
     const [select, setSelect] = useState(null)
     const [currentIdx, setCurrentIdx] = useState(0)
 
-
-
-
-    useEffect(() => {
-        pageDescriptionRef.current.innerHTML = pages[currentIdx].description || ''
-    },[pages, pageDescriptionRef, currentIdx])
-
-    // useEffect(() => {
-    //     endingDescriptionRef.current.innerHTML = endingMent.description || ''
-    // },[endingDescriptionRef, endingMent])
-
-    return <section className="survey-form">
-        <SurveyCard className="card active">
+    return <SurveyFormWrapper>
+        {pages[currentIdx] && <>
+        <SurveyCard className="card active form-card">
             <h4 className="pd">{`${(currentIdx+1)}/${pages.length} 페이지`}</h4>
             <div className="pd">
                 <p className="title-A">{pages[currentIdx].title || '제목 없는 페이지'}</p>
-                <p ref={pageDescriptionRef}></p>
+                {/* <p ref={pageDescriptionRef}></p> */}
             </div>
         </SurveyCard>
 
@@ -52,15 +41,29 @@ function SurveyForm() {
                         </>}
                     </div>)
                 })}
+
+                {type === '단답형' &&
+                <input placeholder="답변 입력"/>
+                }
                 </div>
             </SurveyCard>
         })}
 
-        {currentIdx === pages.length -1 && <SurveyCard className="card">
-            {endingMent.title}
+        {currentIdx !== pages.length - 1 ?
+            pages[currentIdx].next ? 
+            <button onClick={()=>setCurrentIdx(pages[currentIdx].next)}>이동할페이지</button> : 
+            <button onClick={()=>setCurrentIdx(prev=> prev+=1)}>다음페이지</button>
+            : <button onClick={()=>setCurrentIdx(prev=> prev+=1)}>설문지 제출</button>
+        }
+
+        </>}
+        {currentIdx === pages.length && 
+        <SurveyCard className="card active">
+            <h4>설문 종료</h4>
+                {endingMent.title || '얍'}
             <DescriptionEditor value={endingMent.description} isReadOnly={true}></DescriptionEditor>
         </SurveyCard>}
-    </section>
+    </SurveyFormWrapper>
 }
 
 export default SurveyForm

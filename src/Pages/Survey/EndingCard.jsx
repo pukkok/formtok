@@ -6,7 +6,7 @@ import classNames from "classnames";
 import {SurveyCard} from "./StyledSurveyCard";
 import usePageActions from "../../hooks/usePageActions";
 
-function Ecard () {
+function EndingCard () {
 
     const endingMent = useRecoilValue(endingMentAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
@@ -21,8 +21,10 @@ function Ecard () {
         <h4>엔딩 메세지</h4>
         <div>
             <input className="title-B"
+            value={endingMent.title}
             placeholder="응답해 주셔서 감사합니다." 
-            onChange={e=>changeEndingTitle(e)}/>
+            onChange={e=>changeEndingTitle(e)}
+            />
             
             <DescriptionEditor
             value={endingMent.description}
@@ -36,4 +38,4 @@ function Ecard () {
     
 }
 
-export default Ecard
+export default EndingCard
