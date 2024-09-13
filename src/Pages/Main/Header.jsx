@@ -4,6 +4,8 @@ import { activeTabAtom, tabsAtom, urlAtom } from "../../recoils/surveyAtoms";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import UserButton from "../../components/UserButton";
+import { HeaderWrapper } from "./StyledMainPage";
+
 
 function Header () {
     const url = useRecoilValue(urlAtom)
@@ -12,7 +14,7 @@ function Header () {
     
     const navigate = useNavigate()
 
-    return <div className="header">
+    return <HeaderWrapper>
         {tabs.length > 0 && 
         tabs.map(tab => {
             return <div 
@@ -28,7 +30,7 @@ function Header () {
             {/* <button onClick={()=>navigate('/user/login')}>로그인</button> */}
         </div>
         
-    </div>
+    </HeaderWrapper>
 }
 
 export default Header

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import SideBar from './Main/SideBar'
-import Header from './Main/Header'
-import ViewRouter from './Main/ViewRouter'
-
+import SideBar from './SideBar'
+import Header from './Header'
+import ViewRouter from './ViewRouter'
+import { MainPageWrapper } from "./StyledMainPage";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { gridAtom, isSideOpenAtom } from "../recoils/surveyAtoms";
+import { gridAtom, isSideOpenAtom } from "../../recoils/surveyAtoms";
 
 function MainPage() {
 
@@ -18,13 +18,15 @@ function MainPage() {
 
     useEffect(() => {
         isSideOpen ? setGrid(250) : setGrid(20)
-    }, [isSideOpen])
+    }, [isSideOpen, setGrid])
 
-    return <section className="main-page" style={adminStyle}>
+    return (
+    <MainPageWrapper style={adminStyle}>
         <SideBar/>
         <Header/>
         <ViewRouter/>
-    </section>
+    </MainPageWrapper>
+    )
 }
 
 export default MainPage

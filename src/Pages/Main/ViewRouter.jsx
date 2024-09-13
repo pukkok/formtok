@@ -4,10 +4,11 @@ import CreateSurvey from "../Viewer/CreateSurvey";
 import SurveyMangager from "../Viewer/SurveyManager";
 import SurveyForm from "../Viewer/SurveyForm";
 import NotFoundPage from '../Viewer/NotFoundPage';
+import { ViewerWrapper } from "./StyledMainPage";
 
 function ViewRouter () {
-
-    return <div className="viewer">
+    return (
+    <ViewerWrapper>
         <Routes>
             <Route path="/" element={<SurveyMangager/>}/>
             <Route path="survey">
@@ -16,6 +17,7 @@ function ViewRouter () {
             </Route>
             <Route exact path='*' element={<NotFoundPage />}/>
         </Routes>
-    </div>
+    </ViewerWrapper>
+    )
 }
 export default ViewRouter

@@ -1,12 +1,12 @@
 /* 점3개 버튼 */
-.more-vert-wrapper{
+/* .more-vert-wrapper{
     z-index: 10;
-}
-.more-vert-wrapper > button{
+} */
+/* .more-vert-wrapper > button{
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 .more-vert-wrapper > button > span{
     display: flex;
     justify-content: center;

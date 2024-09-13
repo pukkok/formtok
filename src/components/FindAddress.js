@@ -32,7 +32,7 @@ function FindAddress() {
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var addr = '' // 주소 변수
-                var extraAddr = '' // 참고항목 변수
+                // var extraAddr = '' // 참고항목 변수
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -45,13 +45,13 @@ function FindAddress() {
                 if(data.userSelectedType === 'R'){
                     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                     // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName)
-                    }
+                    // if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    //     extraAddr += data.bname
+                    // }
+                    // // 건물명이 있고, 공동주택일 경우 추가한다.
+                    // if(data.buildingName !== '' && data.apartment === 'Y'){
+                    //     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName)
+                    // }
                 
                 } else {
                     // document.getElementById("sample3_extraAddress").value = ''

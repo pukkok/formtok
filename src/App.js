@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import LoginPage from './Pages/LoginPage';
-import MainPage from './Pages/MainPage'
+import LoginPage from './Pages/Login/LoginPage';
+import MainPage from './Pages/Main/MainPage'
 import './styles/index.css';
 import FindAddress from './components/FindAddress'
 

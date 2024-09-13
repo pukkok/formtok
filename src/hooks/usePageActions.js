@@ -1,10 +1,10 @@
-import { useRecoilState } from "recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { activeCardAtom, endingMentAtom, pagesAtom, randomKey } from "../recoils/surveyAtoms"
 
 function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-    const [endingMent, setEndingMent] = useRecoilState(endingMentAtom)
+    const setEndingMent = useSetRecoilState(endingMentAtom)
     // 페이지 위치변경
     const changePLocation = (dragPi, dropPi) => {
         let newPages = [...pages]
@@ -309,11 +309,14 @@ function usePageActions () {
         })
     }
 
-    const changeEndingTitle = (e, ) => {
-
+    // 엔딩 부분
+    const changeEndingTitle = (e) => {
+        setEndingMent(ment => ment = {...ment, title : e.target.value})
     }
 
-
+    const changeEndingDescription = (html) => {
+        setEndingMent(ment => ment = {...ment, description : html})
+    }
 
     return { 
         changePLocation, changeQLocation,
@@ -321,7 +324,8 @@ function usePageActions () {
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,
         copyP, deleteP, copyQ, deleteQ, deleteOption,
-        whereIsNextPage
+        whereIsNextPage,
+        changeEndingTitle, changeEndingDescription
     }
 }
 

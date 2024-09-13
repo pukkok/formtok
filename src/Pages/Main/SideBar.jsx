@@ -2,10 +2,9 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { isSideOpenAtom } from "../../recoils/surveyAtoms";
 import { useNavigate } from "react-router-dom";
+import { SideBarWrapper, Logo } from "./StyledMainPage";
 
 function SideBar () {
-    
-    
 
     const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
 
@@ -13,7 +12,7 @@ function SideBar () {
         setIsSideOpen(prev => !prev)
     }
 
-    return <div className="side-bar">
+    return <SideBarWrapper>
         {isSideOpen ? 
         <div className="tabs">
             <div className="top">
@@ -27,11 +26,7 @@ function SideBar () {
             </ul>
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
-    </div>
+    </SideBarWrapper>
 }
 export default SideBar
 
-function Logo () {
-    const naviate = useNavigate()
-    return <span className="logo" onClick={()=>naviate('/')}>PK&SURVEY</span>
-}

@@ -43,7 +43,7 @@ import {
 import translations from 'ckeditor5/translations/ko.js';
 import 'ckeditor5/ckeditor5.css';
 
-function CustomEditor({value, onChange, placeholder}) {
+function CustomEditor({value, onChange, placeholder, isReadOnly=false}) {
 	const editorConfig = {
 		toolbar: {
 			items: [
@@ -174,6 +174,7 @@ function CustomEditor({value, onChange, placeholder}) {
         data={value || ""}
         config={editorConfig}
         onChange={onChange}
+		disabled={isReadOnly}
         />
 	)
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const StyledCKEdtior = styled.div`
-  .content-editor-wrapper{
+const StyledCKEdtiorWrapper = styled.div`
+  &.ck-editor-wrapper{
     position: relative;
     margin: 10px 0;
     & > div{
@@ -9,12 +9,13 @@ const StyledCKEdtior = styled.div`
     }
   }
 
-  .on {
+  &.on {
     .ck-editor__top {
         top: 101%;
         opacity: 1;
     }
   }
+
   .ck-editor__top {
     position: absolute;
     top: 0;
@@ -25,7 +26,7 @@ const StyledCKEdtior = styled.div`
     border: none;
   }
 
-  & .ck {
+  .ck {
     .ck-placeholder::before {
       padding-left: 2px;
       color: #aaa;
@@ -39,17 +40,18 @@ const StyledCKEdtior = styled.div`
         margin-bottom: 5px;
       }
     }
+
     .ck-editor__main > * {
       padding: 0;
     }
 
     .ck.ck-editor__main > .ck-editor__editable {
-        border: none;
-        border-bottom: 1px solid transparent;
-        transition: margin .2s;
-        background-color: #fff;
-        position: relative;
-        z-index: 10;
+      border: none;
+      border-bottom: 1px solid transparent;
+      transition: margin .2s;
+      background-color: #fff;
+      position: relative;
+      z-index: 1;
     }
 
     .ck.ck-editor__editable.ck-blurred {
@@ -79,6 +81,6 @@ const StyledCKEdtior = styled.div`
       border: none;
     }
   }
-`;
+`
 
-export default StyledCKEdtior;
+export { StyledCKEdtiorWrapper as CKEditorWrapper }

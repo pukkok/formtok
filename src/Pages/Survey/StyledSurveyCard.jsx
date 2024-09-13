@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledCard = styled.div`
-    .card{
+    &.card{
         box-sizing: border-box;
         border: solid 2px #d7d7d7;
         background-color: #fff;
@@ -9,7 +9,7 @@ const StyledCard = styled.div`
         min-height: 180px;
         margin-bottom: 10px;
 
-        .pd{
+        & > *{
             border-radius: 8px 8px 0 0;
             padding: 10px 20px;
         }
@@ -51,6 +51,9 @@ const StyledCard = styled.div`
             transform: translateY(-50%);
         }
 
+        input:focus{
+            border-bottom: 2px solid var(--purple) !important; 
+        }
     }
 
     .active{
@@ -60,9 +63,31 @@ const StyledCard = styled.div`
     .ending-field{
         min-height: 120px;
     }
-    
-    
-
 `
 
-export default StyledCard
+const StyledQuestionOptionsWrapper = styled.div`
+    &.question-options-wrapper{
+        padding: 10px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 5px;
+        position: relative; 
+
+        .toggle-options{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+    .drop-down-wrapper{
+        margin-right: auto;
+    }
+`
+
+export {
+    StyledCard as SurveyCard,
+    StyledQuestionOptionsWrapper as QuestionOptionsWrapper
+}

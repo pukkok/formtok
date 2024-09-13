@@ -1,15 +1,15 @@
 const LoginForms = [
-    {name : 'userId', placeholder: 'ID', type: 'text'},
-    {name : 'password', placeholder: 'PASSWORD', type: 'password'}
+    {name : 'userId', placeholder: '아이디', type: 'text'},
+    {name : 'password', placeholder: '패스워드', type: 'password'}
 ]
 
 const JoinForms = [
-    {name : 'name', placeholder: 'NAME', type: 'text'},
-    {name : 'userId', placeholder: 'ID', type: 'text'},
-    {name : 'email', placeholder: 'EMAIL', type: 'email'},
-    {name : 'phone', placeholder: 'PHONE', type: 'text'},
-    {name : 'password', placeholder: 'PASSWORD', type: 'password'},
-    {name : 'confirmPassword', placeholder: 'CONFIRM PASSWORD', type: 'password'}
+    {name : 'name', placeholder: '이름', type: 'text', essentail : true},
+    {name : 'userId', placeholder: '아이디', type: 'text', essentail : true},
+    {name : 'email', placeholder: '이메일', type: 'email', essentail : false},
+    {name : 'phone', placeholder: '연락처', type: 'text', essentail : false},
+    {name : 'password', placeholder: '패스워드', type: 'password', essentail : true},
+    {name : 'confirmPassword', placeholder: '패스워드 확인', type: 'password', essentail : true}
 ]
 
 export { LoginForms, JoinForms }
