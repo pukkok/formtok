@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledMainPage = styled.section`
@@ -13,21 +12,24 @@ const StyledMainPage = styled.section`
 
 const StyledSideBar = styled.div`
     grid-area: s;
-    background-color: var(--purple);
-    background-color: var(--bg-purple);
     color: var(--purple-font);
     position: relative;
     overflow: hidden;
-
+    
     font-weight: 800;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
+    
 
     .tabs{
+        width: 320px; //글자가 흔들리지 않도록 크기 고정
+        background-color: var(--bg-purple);
         padding: 30px 20px;
         display: flex;
         flex-direction: column;
         height: 100%;
+
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+        
         .logo-box{ // 로고 부분
             padding-bottom: 20px;
             button{
@@ -97,6 +99,7 @@ const StyledSideBar = styled.div`
     }
 
     .open-tab{
+        background-color: var(--bg-purple);
         width: 100%;
         height: 100%;
         display: flex;
@@ -114,7 +117,22 @@ const StyledSideBar = styled.div`
         }
     }
 
-    
+    span.block{
+        display: block;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        z-index: -1;
+        right: 0;
+        &.top{
+            top: 0;
+            background-color: #fff;
+        }
+        &.bottom{
+            bottom: 0;
+            background-color: #fff;
+        }
+    }
 `
 
 const StyledHeader = styled.header`
@@ -134,8 +152,6 @@ const StyledHeader = styled.header`
         display: flex;
         align-items: center;
         justify-content: flex-end;
-
-        
     }
 
     button{
@@ -149,8 +165,9 @@ const StyledHeader = styled.header`
 
 const StyledViewer = styled.div`
     grid-area: v;
-    background-color: #777;
+    background-color: #f1f1f1;
     overflow: scroll;
+    
 `
 
 export {StyledMainPage as MainPageWrapper, 

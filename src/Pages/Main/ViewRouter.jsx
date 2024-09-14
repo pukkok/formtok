@@ -5,10 +5,14 @@ import SurveyMangager from "../Viewer/SurveyManager";
 import SurveyForm from "../SurveyFormViewer/SurveyForm";
 import NotFoundPage from '../Viewer/NotFoundPage';
 import { ViewerWrapper } from "./StyledMainPage";
+import { useRecoilState } from "recoil";
+import { ViewerBGAtom } from "../../recoils/surveyAtoms";
 
 function ViewRouter () {
+    const [viewerBG, setViewerBG] = useRecoilState(ViewerBGAtom)
+
     return (
-    <ViewerWrapper>
+    <ViewerWrapper style={{backgroundColor : viewerBG}}>
         <Routes>
             <Route path="/" element={<SurveyMangager/>}/>
             <Route path="survey">

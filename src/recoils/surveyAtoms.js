@@ -32,7 +32,12 @@ function randomUrl() {
 
 const gridAtom  = atom({
     key: 'amdin-grid',
-    default : 300
+    default : 320
+})
+
+const ViewerBGAtom = atom({
+    key: 'viewerBG-color',
+    default: '#f1f1f1'
 })
 
 const isSideOpenAtom = atom({
@@ -98,8 +103,11 @@ const activeCardAtom = atom({
     default : 'P-0'
 })
 
+
 export {
     randomKey, randomUrl,
+
+    ViewerBGAtom,
     gridAtom, isSideOpenAtom, urlAtom,
     tabsAtom, activeTabAtom, activeCardAtom,
     pagesAtom, endingMentAtom, surveyPeriodAtom, 

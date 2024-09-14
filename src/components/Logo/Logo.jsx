@@ -9,7 +9,7 @@ const StyledLogo = styled.div`
     height: 90px;
     border-radius: 12px;
     overflow: hidden;
-    border: solid 1px var(--first-light-purple);
+    border: solid 2px var(--box-purple);
     cursor: pointer;
 
     img{
