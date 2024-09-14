@@ -17,7 +17,7 @@ function MainPage() {
     }
 
     useEffect(() => {
-        isSideOpen ? setGrid(250) : setGrid(20)
+        isSideOpen ? setGrid(320) : setGrid(20)
     }, [isSideOpen, setGrid])
 
     return (

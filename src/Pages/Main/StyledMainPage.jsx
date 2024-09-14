@@ -13,22 +13,86 @@ const StyledMainPage = styled.section`
 
 const StyledSideBar = styled.div`
     grid-area: s;
-    background-color: #414141;
-    color: #fff;
+    background-color: var(--purple);
+    background-color: var(--bg-purple);
+    color: var(--purple-font);
     position: relative;
+    overflow: hidden;
+
+    font-weight: 800;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 
     .tabs{
-        padding: 10px 20px;
-        width: 250px;
-    }
-
-    .top{
+        padding: 30px 20px;
         display: flex;
-        align-items: center;
-        height: 50px;
+        flex-direction: column;
+        height: 100%;
+        .logo-box{ // 로고 부분
+            padding-bottom: 20px;
+            button{
+                margin-top: 8px;
+                float: right;
+                font-weight: 800;
+                &:hover{
+                    color: var(--light-purple-font);
+                }
+            }
+        }
 
-        button{
-            margin-left: auto;
+        ul, li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li{
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            &.active{
+                background-color: var(--box-purple);
+                color: var(--light-purple-font);
+            }
+        }
+
+        .user-info-wrapper{
+            border-top: solid 1px var(--box-purple);
+            padding-top: 20px;
+            margin-top: auto;
+            display: inline-flex;
+
+            & > .user-info{
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                span{ // 유저 아이콘
+                    font-size: 44px;
+                }
+                
+                & > div{
+                    h4{
+                        color: var(--light-purple-font);
+                    }
+                    p{
+                        font-size: 14px;
+                    }
+                }    
+            }
+
+            button{ // 로그인 로그아웃
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                & span{
+                    font-size: 26px;
+                }
+
+                &:hover{
+                    color: var(--brand-white);
+                }
+            }
         }
     }
 
@@ -44,54 +108,53 @@ const StyledSideBar = styled.div`
             content: '';
             width: 5px;
             height: 20px;
-            background-color: white;
+            background-color: #fff;
             padding: 5px 0;
             border-radius: 12px;
         }
     }
+
+    
 `
 
 const StyledHeader = styled.header`
     grid-area: h;
     display: flex;
-    background-color: #fff;
+    background-color: #fdfdfd;
     align-items: center;
     padding: 20px;
-    
-    .btns{
-        margin-left: auto;
+    position: relative;
+    z-index: 0;
 
-        button{
-            margin-left: 10px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: bold;
-        }
+    .tester{
+        width: calc(100% - 40px);
+        height: 100%;
+        position: absolute;
+        transition: 1s;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        
     }
+
+    button{
+        margin-left: 10px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+    
 `
 
 const StyledViewer = styled.div`
     grid-area: v;
-    background-color: #f1f1f1;
+    background-color: #777;
     overflow: scroll;
 `
-
-const StyledLogo = styled.span`
-    font-family: "Nanum Pen Script", cursive;
-    font-size: 30px;
-    font-weight: 400;
-    font-style: normal;
-    cursor: pointer;
-`
-
-function Logo () {
-    const naviate = useNavigate()
-    return <StyledLogo onClick={()=>naviate('/')}>PK&SURVEY</StyledLogo>
-}
 
 export {StyledMainPage as MainPageWrapper, 
     StyledSideBar as SideBarWrapper,
     StyledHeader as HeaderWrapper, 
     StyledViewer as ViewerWrapper,
-    Logo
 }

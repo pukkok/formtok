@@ -8,11 +8,11 @@ function UserButton ({onClick}) {
     useEffect(() => {
 
     },[token])
-    console.log(token)
+    // console.log(token)
 
     return <div className="user-button" onClick={onClick}>
-        <p>{userInfo? userInfo.userId : '비회원'}</p>
         <Icon code={'account_circle'}/>
+        <p>{userInfo? userInfo.userId : '비회원'}</p>
     </div>
 }
 

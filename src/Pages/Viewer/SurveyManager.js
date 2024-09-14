@@ -14,7 +14,7 @@ function SurveyManager () {
 
     useEffect(() => {
         let a = randomUrl()
-        console.log('url=', a)
+        // console.log('url=', a)
     },[])
 
     const modalRef = useRef(null)
