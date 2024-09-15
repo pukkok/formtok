@@ -1,5 +1,5 @@
 import React from "react"
-import useOutsideClick from "../hooks/useOutsideClick"
+import useOutsideClick from "../Hooks/useOutsideClick"
 import classNames from "classnames"
 import { Icon } from "./Icons"
 import styled from "styled-components"

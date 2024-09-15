@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import useOutsideClick from "../hooks/useOutsideClick";
+import useOutsideClick from "../Hooks/useOutsideClick";
 import styled from "styled-components";
 import { Icon } from "./Icons";
 
@@ -21,7 +21,7 @@ const DropDownWrapper = styled.div`
         font-weight: bold;
 
         &:hover{
-            border: solid 1px var(--purple);
+            border: solid 1px var(--purple-box);
         }
 
         & > span:nth-last-child(1){ 
@@ -32,7 +32,7 @@ const DropDownWrapper = styled.div`
             margin-left: auto;
         }
         &.open{
-            border: solid 1px var(--deep-purple);
+            border: solid 1px var(--purple-box);
 
             & span:nth-last-child(1){
                 rotate: 180deg;
@@ -46,7 +46,7 @@ const DropDownWrapper = styled.div`
         display: none;
         position: absolute;
         top: 50px;
-        border: solid 1px var(--deep-purple);
+        border: solid 1px var(--purple-box);
         border-radius: 12px;
         background-color: #fff;
         width: 100%;
@@ -64,8 +64,8 @@ const DropDownWrapper = styled.div`
             padding: 0 5px;
 
             &:hover{
-                background-color: #e1e1e1;
-                border-radius: 12px;
+                background-color: var(--light-grey);
+                border-radius: 8px;
             }
 
             button{

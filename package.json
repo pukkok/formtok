@@ -34,7 +34,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://pukkok.github.io/survey",
+  "homepage": "https://pukkok.github.io/whale-form",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import useOutsideClick from "../../hooks/useOutsideClick";
+import useOutsideClick from "../../Hooks/useOutsideClick";
 import { CKEditorWrapper } from "./StyledCKEditor";
 import CustomEditor from "./CustomEditor";
 

@@ -1,5 +1,5 @@
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { activeCardAtom, endingMentAtom, pagesAtom, randomKey } from "../recoils/surveyAtoms"
+import { activeCardAtom, endingMentAtom, pagesAtom, randomKey } from "../Recoils/surveyAtoms"
 
 function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)

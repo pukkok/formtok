@@ -1,0 +1,84 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
+
+*{
+  box-sizing: border-box;
+  --normal-weight: 400;
+  --bold-weight: 700;
+  --bolder-weight: 800;
+  --light-weight: 300;
+
+  --second-light-purple: #D1B1FC;
+  --light-purple: #8767D2;
+  
+  
+  --deepbg: #32323D;
+  --lightbg: #393944;
+
+  line-height: 1.5;
+
+  --color: #eaebff;
+  --color: #333;
+}
+
+:root{
+  --brand-white: #FBFBFC;
+
+  --purple-box: #7F56DA;
+  --purple-bg: #5D3FB8;
+  --light-purple-font: #EAEBFF;
+  --purple-font: #C3A2F7;
+  --deep-purple-font: #53389F;
+
+  --light-grey: #DEDAE3;
+  --deep-grey: #c1c1c1;
+  --fold-red: #c30928;
+}
+
+body{
+  font-family: 'NanumSquare', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+h1, h2, h3, h4, h5, h6, p{
+  padding: 0;
+  margin: 0;
+}
+
+button{
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+
+a{
+  all: unset;
+}
+
+input{
+  all: unset;
+  line-height: 1.5;
+  border-bottom: 1px solid transparent;
+  padding-left: 2px;
+}
+input::placeholder{
+  color: #aaa;
+}
+
+h4{
+  margin: 0;
+  padding: 0;
+}
+
+img{
+  width: 100%;
+  height: 100%;
+}
+
+.pd-box{
+  padding: 10px 20px;
+}
+

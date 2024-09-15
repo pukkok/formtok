@@ -1,8 +1,3 @@
-@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
 
-@import './App.css';
 @import './Components.css';
-@import './Qstyle.css';
-@import './Survey.css';
-
 @import './SurveyManager.css';

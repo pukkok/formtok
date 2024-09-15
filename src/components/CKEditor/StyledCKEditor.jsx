@@ -63,7 +63,7 @@ const StyledCKEdtiorWrapper = styled.div`
     .ck.ck-editor__editable.ck-focused {
       box-shadow: none;
       margin-bottom: 50px;
-      border-bottom: 2px solid var(--purple);
+      border-bottom: 2px solid var(--purple-bg);
     }
 
     .ck-content {
