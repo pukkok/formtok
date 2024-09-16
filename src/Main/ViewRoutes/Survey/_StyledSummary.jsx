@@ -10,20 +10,19 @@ const StyledSurveySummaryTab = styled.section`
         align-items: center;
         justify-content: space-between;
         user-select: none;
-
+        
         button{
             border-radius: 8px;
-            background-color: var(--purple-box);
+            background-color: var(--pk-charcoal);
             font-weight: 500;
-            color: #fff;
+            color: var(--pk-light-grey);
             padding: 5px 10px;
 
             &:hover{
-                background-color: var(--purple-bg);
-                color: #fff;
+                background-color: var(--pk-point);
             }
             &:disabled{
-                color: var(--deep-grey);
+                color: var(--pk-silver);
             }
         }
     }
@@ -34,15 +33,15 @@ const StyledSummaryScrollBox = styled.div`
     overflow: scroll;
     cursor: pointer;
     user-select: none;
-    border-top-right-radius: 12px;
+    border-top: 1px solid var(--pk-charcoal);
+    border-bottom: 1px solid var(--pk-charcoal);
 `
 
 const StyledSurveySummaryWrapper = styled.div`
     min-height: 100%;
     border-radius: 12px;
     padding: 10px;
-    margin: 0 20px;
-    border: solid 1px #f1f1f1;
+    margin: 0 16px;
 
     p.placeholder{
         color: #aaa;
@@ -63,7 +62,7 @@ const StyledSurveySummaryWrapper = styled.div`
 
         button{
             &:hover{
-                background-color: #ddd;
+                background-color: var(--pk-silver);
                 border-radius: 8px;
             }
             &:disabled{
@@ -92,28 +91,27 @@ const StyledSurveySummaryWrapper = styled.div`
 
 const StyledPageSummaryListWrapper = styled.div`
     margin-top: 10px;
-    background-color: #fff;
 `
 
 const StyledPageSummaryWrapper = styled.div`
     padding: 5px 8px;
     border: 2px solid transparent;
-    border-top: 2px solid var(--purple-bg);
-    
+    border-top: 2px solid var(--pk-point);
+
     &.active, &:hover{
-        border: solid 2px var(--purple-bg);
+        border: solid 2px var(--pk-point);
         border-radius: 12px;
     }
     &.fold{
-        border-top: 2px solid var(--fold-red);
+        border-top: 2px solid var(--pk-fold-point);
 
         h4{
-            color: var(--fold-red);
+            color: var(--pk-fold-point);
         }
     }
 
     &.active.fold, &.fold:hover{
-        border: 2px solid var(--fold-red);
+        border: 2px solid var(--pk-fold-point);
         border-radius: 12px;
     }
 
@@ -124,24 +122,24 @@ const StyledPageSummaryWrapper = styled.div`
     &.ending-summary{
         margin-top: 20px;
         padding: 5px 10px;
-        border: solid 2px var(--light-grey);
+        border: solid 2px var(--pk-silver);
+        
         border-radius: 12px;
 
         h4{
-            color: var(--light-grey);
+            color: var(--pk-silver);
         }
 
         &.active, &:hover{
-            border: 2px solid var(--purple-bg);
+            border: 2px solid var(--pk-point);
             h4{
-                color: var(--deep-purple-font);
+                color: var(--pk-point);
             }
         }
     }
 
     h4{
         font-size: 14px;
-        color: var(--deep-purple-font);
         text-align: center;
         position: relative;
         top: -15px;
@@ -149,7 +147,8 @@ const StyledPageSummaryWrapper = styled.div`
         left: 50%;
         transform: translateX(-50%);
         padding: 0 10px;
-        background-color: #fff;
+        background-color: var(--pk-dark);
+        color: var(--pk-point);
     }
 
     .title-box{
@@ -165,12 +164,12 @@ const StyledPageSummaryWrapper = styled.div`
     }
 
     .more-vert-wrapper > button > span:hover{
-        background-color: var(--purple-bg);
-        color: #fff;
+        background-color: var(--pk-point);
+        color: var(--pk-light-grey);
         border-radius: 8px;
     }
     &.fold .more-vert-wrapper > button > span:hover{
-        background-color: var(--fold-red);
+        background-color: var(--pk-fold-point);
     }
 
     .more-vert-wrapper .options{
@@ -205,20 +204,21 @@ const StyledQuestionSummaryWrapper = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+    transition: background-color .3s;
     &:hover{
-        background-color: var(--purple-box);
+        background-color: var(--pk-charcoal);
 
         p{
-            color: #fff;
+            color: var(--pk-light-grey);
             font-weight: 700;
         }
     }
     
     &.active, &:active{
-        background-color: var(--purple-bg);
+        background-color: var(--pk-point);
         
         p{
-            color: #fff;
+            color: var(--pk-light-grey);
             font-weight: 700;
         }
     }

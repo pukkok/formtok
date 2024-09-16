@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledLoginForm = styled.form`
+    color: var(--pk-light-grey);
     & > input{
         display: block;
         box-sizing: border-box;
@@ -15,7 +16,6 @@ const StyledLoginForm = styled.form`
         margin-top: 40px;
         display: flex;
         align-items: center;
-
         & > div{
             display: flex;
             align-items: center;
@@ -32,16 +32,15 @@ const StyledLoginForm = styled.form`
             border-radius: 50px;
             min-width: 100px;
             padding: 8px 16px;
-            border: solid 3px transparent;
-            color: #fff;
-            background-color: var(--purple-box);
+            border: solid 2px transparent;
+            background-color: var(--pk-point);
             font-weight: bold;
             cursor: pointer;
 
             &:hover{
-                border: solid 3px var(--purple-box);
-                background-color: #fff;
-                color: var(--purple);
+                /* border: solid 2px var(--pk-point); */
+                background-color: var(--pk-point);
+                background-color: #601dcd ;
             }
         }
     }

@@ -14,12 +14,13 @@ const StyledQuestionFormWrapper = styled.div`
                 font-weight: 500;
 
                 &.add-answer-btn{
-                    background-color: var(--purple-box);
-                    color: #fff;
+                    background-color: var(--pk-charcoal);
+                    color: var(--pk-light-grey);
                     margin-right: 10px;
                 }
                 &.add-extra-btn{
-                    background-color: #f3f3f3;
+                    background-color: #aaa;
+                    color: var(--pk-light-grey);
                     margin-left: 10px;
                 }
             }

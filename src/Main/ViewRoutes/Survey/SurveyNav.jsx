@@ -8,8 +8,8 @@ const StyledSurveyNavWrapper = styled.div`
     padding: 15px 0;
     position: sticky;
     top: 20px;
-    border: solid 1px #d7d7d7;
-    background-color: #fff;
+    border: solid 1px var(--pk-charcoal);
+    background-color: var(--pk-dark);
     border-radius: 12px;
     height: 80vh;
     width: 400px;
@@ -27,8 +27,8 @@ const StyledSurveyNavWrapper = styled.div`
             font-weight: 800;
 
             &.active{
-                color: var(--purple-bg);
-                border-bottom: 2px solid var(--purple-bg);
+                color: var(--pk-point);
+                border-bottom: 2px solid var(--pk-point);
             }
         }
     }

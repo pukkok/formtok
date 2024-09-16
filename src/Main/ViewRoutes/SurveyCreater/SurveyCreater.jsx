@@ -12,7 +12,6 @@ import { activeCardAtom, pagesAtom } from "../../../Recoils/surveyAtoms";
 import DropDown from "../../../Components/DropDown";
 import usePageActions from "../../../Hooks/usePageActions";
 
-
 function SurveyCreater () {
     const pages = useRecoilValue(pagesAtom)
     const activeCard = useRecoilValue(activeCardAtom)
@@ -20,7 +19,8 @@ function SurveyCreater () {
     const { whereIsNextPage } = usePageActions()
 
     useEffect(() => {
-        const activeTag = document.querySelector(`.active`)
+        const activeTag = document.querySelector(`.card-box .card.active`)
+        activeTag &&
         activeTag.scrollIntoView({behavior : "smooth", block: 'center'})
     }, [activeCard])
 

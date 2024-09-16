@@ -12,7 +12,9 @@ function ViewRouter () {
     const [viewerBG, setViewerBG] = useRecoilState(ViewerBGAtom)
 
     return (
-    <ViewerWrapper style={{backgroundColor : viewerBG}}>
+    <ViewerWrapper 
+    // style={{backgroundColor : viewerBG}}
+    >
         <Routes>
             <Route path="/" element={<SurveyMangager/>}/>
             <Route path="survey">

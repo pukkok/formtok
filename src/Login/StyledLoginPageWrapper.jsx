@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledLoginSection = styled.section`
     width: 100vw;
     height: 100vh;
-    background-color: #fff;
+    background-color: var(--pk-deep-dark);
 
     .wrapper{
         position: relative;

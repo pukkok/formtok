@@ -10,10 +10,10 @@ const StyledLargeBox = styled.div`
     min-width: 600px;
     width: 60%;
     height: 80vh;
-    background-color: #fff;
+    background-color: var(--pk-charcoal);
     padding: 40px;
     box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
-    border-top: 5px solid var(--purple-bg);
+    border-top: 5px solid var(--pk-point);
     z-index: 1;
 
     button.home{
@@ -22,7 +22,7 @@ const StyledLargeBox = styled.div`
             scale: 1.1;
         }
         span{
-            color: var(--purple-bg);
+            color: var(--pk-point);
             font-size: 28px;
         }
     }
@@ -30,7 +30,7 @@ const StyledLargeBox = styled.div`
     h2{
         padding-top: 110px;
         padding-bottom: 70px;
-        color: var(--purple-bg);
+        color: var(--pk-point);
     }
 
     &.show{
@@ -107,7 +107,8 @@ const StyledSmallBoxWrapper = styled.div`
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.03);
+    background-color: var(--pk-dark);
+    box-shadow: 0 0px 20px rgba(22, 22, 22, 0.1);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -161,8 +162,7 @@ const StyledSmallBox = styled.div`
         border: solid 2px #aaa;
 
         &:hover{
-            border: solid 2px var(--purple-bg);
-            color: #333;
+            border: solid 2px var(--pk-point);
             font-weight: bold;
         }
     }

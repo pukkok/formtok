@@ -4,7 +4,7 @@ import { activeTabAtom, tabsAtom, urlAtom } from "../Recoils/surveyAtoms";
 import classNames from "classnames";
 import { useHref, useNavigate, useParams } from "react-router-dom";
 import { HeaderWrapper } from "./_StyledMainPage";
-
+import { ViewerBGAtom } from "../Recoils/surveyAtoms";
 
 function Header () {
     const url = useRecoilValue(urlAtom)
@@ -13,6 +13,8 @@ function Header () {
     const href = useHref()
     
     const [push, setPush] = useState()
+
+    const [viewerBG, setViewerBG] = useRecoilState(ViewerBGAtom)
 
     useEffect(() => {
         console.log(href)
@@ -25,7 +27,11 @@ function Header () {
 
     const navigate = useNavigate()
 
-    return <HeaderWrapper>
+    return <HeaderWrapper 
+    className={classNames(
+        {create : href.includes('/create')}
+    )}
+    >
         {tabs.length > 0 && 
         tabs.map(tab => {
             return <div 
