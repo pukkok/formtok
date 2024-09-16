@@ -12,7 +12,55 @@ const StyledSurveyManagerWrapper = styled.section`
         width: 100%;
         gap: 20px;
     }
+    &.dark-mode{
+        .card{
+            background-color: var(--pk-dark);
+            color: var(--pk-light-grey);
 
+            .form-box:hover{
+                background-color: var(--pk-charcoal);
+            }
+        }
+
+        .create-survey-button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--pk-charcoal);
+            width: 100%;
+            height: 100%;
+            padding: 24px;
+
+            &:hover{
+                background-color: var(--pk-charcoal);
+                svg path{
+                    fill: var(--pk-point);
+                }
+            }
+            svg{
+                width: 56px;
+                height: 56px;
+
+                path{
+                    fill: var(--pk-light-grey);
+                }
+            }
+        }
+        
+
+        .modal{
+            background-color: var(--pk-dark);
+            color: var(--pk-light-grey);
+
+            h4, .btns{
+                border-top: 1px solid var(--pk-charcoal);
+            }
+        }
+    }
+
+    .white-mode{
+
+    }
     .card{
         color: rgb(33, 33, 33);
         transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -94,7 +142,7 @@ const StyledSurveyManagerWrapper = styled.section`
         box-sizing: border-box;
         padding: 20px;
         border-radius: 12px;
-        border: solid 2px var(--purple-box);
+        border: solid 2px var(--pk-point);
         & > div{
             min-width: 500px;
             min-height: 300px;
@@ -110,7 +158,7 @@ const StyledSurveyManagerWrapper = styled.section`
             }
 
             h4{
-                border-top: solid 1px #e5e5e5;
+                border-top: solid 1px var(--pk-light-grey);
                 padding-top: 10px;
                 margin-bottom: 10px;
             }
@@ -121,7 +169,7 @@ const StyledSurveyManagerWrapper = styled.section`
             }
 
             .btns{
-                border-top: solid 1px #e5e5e5;
+                border-top: solid 1px var(--pk-light-grey);
                 padding-top: 10px;
                 margin-top: auto;
                 display: flex;
@@ -131,12 +179,12 @@ const StyledSurveyManagerWrapper = styled.section`
                 button{
                     border-radius: 12px;
                     padding: 10px;
-                    color: #fff;
+                    color: var(--pk-light-grey);
                     font-weight: bold;
-                    background-color: var(--purple-box);
+                    background-color: var(--pk-point);
 
                     &:hover{
-                        background-color: var(--purple-bg);
+                        background-color: var(--pk-point-hover);
                     }
                 }
             }

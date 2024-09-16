@@ -12,8 +12,8 @@ const StyledMainPage = styled.section`
 
 const StyledSideBar = styled.div`
   grid-area: s;
-  color: var(--pk-light-grey);  // 글자색을 밝은 회색으로
-  /* background-color: #1E1E2E;  // 다크 모드 배경색 */
+  color: var(--pk-light-grey);
+  border-right: 1px solid var(--pk-charcoal);
   position: relative;
   overflow: hidden;
   font-weight: 800;
@@ -44,18 +44,49 @@ const StyledSideBar = styled.div`
       list-style: none;
     }
 
-    li {
-      padding: 10px 20px;
-      border-radius: 8px;
-      margin-bottom: 5px;
+    .depth1{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .depth1 > li {
       cursor: pointer;
-      transition: background-color 0.3s;  // 배경색 전환 애니메이션
-      &:hover {
-        background-color: var(--pk-charcoal);  // 호버시 어두운 색으로 변경
+      & button{
+        padding: 8px 16px;
+        border-radius: 8px;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        transition: background-color 0.3s;  // 배경색 전환 애니메이션
+        &:hover{
+          background-color: var(--pk-charcoal);  // 호버시 어두운 색으로 변경
+        }
       }
-      &.active {
+
+      &.active > button {
         background-color: var(--pk-point);  // 액티브 포인트
       }
+
+      .depth2{
+        height: 0;
+        box-sizing: border-box;
+        padding: 0 10px;
+        overflow: hidden;
+        transition: .4s;
+        &.active{
+          margin-top: 12px;
+          height: 120px;
+          display: flex;
+          flex-direction: column;
+          li{
+            flex: 1;
+          }
+        }
+      }
+
     }
 
     .user-info-wrapper {
@@ -96,13 +127,12 @@ const StyledSideBar = styled.div`
   }
 
   .open-tab {
-    background-color: var(--pk-dark);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    animation: changeBg 1.2s ease-in forwards;
     &::after {
       position: fixed;
       content: '';
@@ -111,6 +141,15 @@ const StyledSideBar = styled.div`
       background-color: var(--pk-light-grey);
       padding: 5px 0;
       border-radius: 12px;
+    }
+
+    @keyframes changeBg {
+      0%{
+        background-color: var(--pk-dark);
+      }
+      100%{
+        background-color: var(--pk-point);
+      }
     }
   }
 `;
