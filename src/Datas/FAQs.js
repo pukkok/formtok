@@ -37,3 +37,5 @@ const FAQs = [
         {answer: '제주'},
     ]}
 ]
+
+export default FAQs

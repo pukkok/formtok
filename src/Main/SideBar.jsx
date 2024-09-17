@@ -34,8 +34,10 @@ function SideBar () {
     const [active, setActive] = useState(0)
     const [openDepth2, setOpenDepth2] = useState([])
 
-    const navClick = (e, idx) => {
+    const navClick = (e, idx, path) => {
         setActive(idx)
+        if(path) navigate(path)
+            
         const depth2 = e.target.dataset.depth2
         if(!depth2) return
         if(openDepth2.includes(depth2)){
@@ -46,10 +48,10 @@ function SideBar () {
     }
 
     const sidebarNavs = [
-        {depth1: '홈', code: 'home'},
+        {depth1: '홈', code: 'home', path: 'home'},
         {depth1: '설문지', code: 'lab_profile', dataset: 'survey-list', depth2: [{text:'제작하기'}, {text:'참여하기'}, {text:'결과보기'}]},
         {depth1: '대시보드', code: 'equalizer'},
-        {depth1: '문항 관리', code: 'folder_managed'},
+        {depth1: '문항 관리', code: 'folder_managed', path: '/survey/FAQ'},
         {depth1: '설정', code: 'settings'},
     ]
 
@@ -62,10 +64,10 @@ function SideBar () {
             </div>
             <ul className="depth1">
             {sidebarNavs.map((list, idx) => {
-                const {depth1, code, dataset, depth2} = list
+                const {depth1, code, path, dataset, depth2} = list
                 return <li key={depth1} className={classNames({active : active === idx})}>
                     <button data-depth2={depth2 && dataset}
-                    onClick={e=>navClick(e, idx)}
+                    onClick={e=>navClick(e, idx, path)}
                     ><Icon code={code}/>{depth1}</button>
                     {depth2 &&
                     <ul className={classNames("depth2",{active: openDepth2.includes(dataset)})}>

@@ -9,7 +9,7 @@ const StyledLargeBox = styled.div`
     transform: translateY(-50%);
     min-width: 600px;
     width: 60%;
-    height: 80vh;
+    height: 800px;
     background-color: var(--pk-charcoal);
     padding: 40px;
     box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);

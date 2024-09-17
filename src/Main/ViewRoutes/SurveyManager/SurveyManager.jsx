@@ -3,12 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, SearchIcon } from "../../../Components/Icons";
 import MoreVert from "../../../Components/MoreVert";
-import { randomUrl, urlAtom } from "../../../Recoils/surveyAtoms";
-import { useSetRecoilState } from "recoil";
+import { randomUrl, surveyTitleAtom, urlAtom } from "../../../Recoils/surveyAtoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledSurveyManager";
 
 function SurveyManager () {
-    const [surveyTitle, setSurveyTitle] = useState('')
+    const [surveyTitle, setSurveyTitle] = useRecoilState(surveyTitleAtom)
     const naviate = useNavigate()
     const setUrl = useSetRecoilState(urlAtom)
 

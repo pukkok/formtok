@@ -7,6 +7,7 @@ import NotFoundPage from '../Pages/NotFoundPage';
 import { ViewerWrapper } from "./_StyledMainPage";
 import { useRecoilState } from "recoil";
 import { ViewerBGAtom } from "../Recoils/surveyAtoms";
+import FAQViewer from "./ViewRoutes/FAQList/FAQViewer";
 
 function ViewRouter () {
     const [viewerBG, setViewerBG] = useRecoilState(ViewerBGAtom)
@@ -20,6 +21,7 @@ function ViewRouter () {
             <Route path="survey">
                 <Route path="create/*" element={<SurveyCreater/>}></Route>
                 <Route path="form/*" element={<SurveyForm/>}/>
+                <Route path="FAQ" element={<FAQViewer/>}/>
             </Route>
             <Route exact path='*' element={<NotFoundPage />}/>
         </Routes>
