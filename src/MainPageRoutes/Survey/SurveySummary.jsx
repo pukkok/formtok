@@ -7,12 +7,15 @@ import MoreVert from "../../Components/MoreVert"
 import usePageActions from "../../Hooks/usePageActions"
 import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./_StyledSummary"
 
+/** 문항관리 탭 */
 function SurveySummary() {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const endingMent = useRecoilValue(endingMentAtom)
+
     const { addQuestion, addPage, changePLocation, changeQLocation, 
         copyP, copyQ, deleteP, deleteQ } = usePageActions()
+    
     const [foldQuestions, setFoldQuestions] = useState([])
     const toggleFoldQ = (id) => {
         foldQuestions.includes(id) ?
@@ -21,11 +24,14 @@ function SurveySummary() {
     }
 
     // 드롭 가능한 영역의 스타일
-    const getCardStyle = (isDragging, draggableStyle) => ({
-        border: isDragging && '2px solid #7E37ED',
-        borderRadius: isDragging && '12px',
-        ...draggableStyle
-    })
+    const getCardStyle = (isDragging, draggableStyle) => {
+        console.log(foldQuestions)
+        return {
+            border: isDragging && '2px solid #7E37ED',
+            borderRadius: isDragging && '12px',
+            ...draggableStyle
+        }
+    }
 
     const onDragStart = (result) => {
         setActiveCard('')
@@ -158,6 +164,7 @@ function SurveySummary() {
                 <button onClick={addQuestion} disabled={activeCard === '' || activeCard === 'end'}>
                     문항 추가
                 </button>
+                <p>추가하기</p>
                 <button onClick={addPage} disabled={activeCard === '' || activeCard === 'end'}>
                     페이지 추가
                 </button>

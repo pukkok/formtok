@@ -1,19 +1,14 @@
 import styled from "styled-components";
 
-const StyledSurveyCreaterWrapper = styled.section`
-    width: 1240px;
-    margin: 60px auto;
-    color: var(--pk-light-grey);  // 텍스트 색상 설정
-    background-color: var(--pk-deep-dark);  // 어두운 배경 설정
+const SurveyCreaterWrapper = styled.section`
+    width: calc(100% - 400px);
 
-    & > div {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 7fr 3fr;
-        gap: 30px;
+    .card-box{
+        max-width: 800px;
+        margin: 30px auto;
     }
-
-    .page-move {
+    
+    .page-move { // 답변 후
         display: flex;
         padding: 10px;
         align-items: center;
@@ -22,18 +17,7 @@ const StyledSurveyCreaterWrapper = styled.section`
         p {
             font-weight: bold;
         }
-        .drop-down-wrapper {
-            max-width: 800px;
-        }
     }
-`;
-
-function SurveyCreaterWrapper({ children }) {
-    return (
-        <StyledSurveyCreaterWrapper>
-            <div>{children}</div>
-        </StyledSurveyCreaterWrapper>
-    );
-}
+`
 
 export default SurveyCreaterWrapper;

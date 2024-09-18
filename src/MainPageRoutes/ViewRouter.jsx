@@ -8,7 +8,7 @@ import NotFoundPage from '../Pages/NotFoundPage';
 import FAQViewer from "./FAQList/FAQViewer";
 
 const ViewerWrapper = styled.div`
-    grid-area: v;
+    grid-area: viewer;
     background-color: #1E1E2E;  // 다크 모드 배경색
     overflow: scroll;  
 `

@@ -49,7 +49,7 @@ function SideBar () {
 
     const sidebarNavs = [
         {depth1: '홈', code: 'home', path: 'home'},
-        {depth1: '설문지', code: 'lab_profile', dataset: 'survey-list', depth2: [{text:'제작하기'}, {text:'참여하기'}, {text:'결과보기'}]},
+        {depth1: '설문지', code: 'lab_profile', path:'/', dataset: 'survey-list', depth2: [{text:'제작하기'}, {text:'참여하기'}, {text:'결과보기'}]},
         {depth1: '대시보드', code: 'equalizer'},
         {depth1: '문항 관리', code: 'folder_managed', path: '/survey/FAQ'},
         {depth1: '설정', code: 'settings'},

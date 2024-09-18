@@ -6,7 +6,7 @@ import logo from './logo-check-1.png'
 
 const StyledLogo = styled.div`
     width: 280px;
-    height: 100px;
+    height: 60px;
     border-radius: 12px;
     overflow: hidden;
     background-color: var(--pk-charcoal);
@@ -17,8 +17,8 @@ const StyledLogo = styled.div`
     align-items: center;
 
     .img-box{
-        width: 120px;
-        height: 150px;
+        width: 80px;
+        height: 80px;
         /* border: solid 1px blue; */
         img{
             object-fit: cover;
@@ -26,9 +26,11 @@ const StyledLogo = styled.div`
     }
 
     h1{
-        font-size: 28px;
+        font-size: 20px;
     }
-
+    p{
+        font-size: 12px;
+    }
 
 
     &:hover{

@@ -3,8 +3,8 @@ import styled from "styled-components";
 const StyledSurveySummaryTab = styled.section`
     height: 100%;
     .action-btns{
-        margin: 10px 20px 0 20px;
-        height: 70px;
+        margin: 0 20px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -13,7 +13,7 @@ const StyledSurveySummaryTab = styled.section`
         button{
             border-radius: 8px;
             background-color: var(--pk-charcoal);
-            font-weight: 500;
+            font-weight: 700;
             color: var(--pk-light-grey);
             padding: 5px 10px;
 
@@ -23,6 +23,11 @@ const StyledSurveySummaryTab = styled.section`
             &:disabled{
                 color: var(--pk-silver);
             }
+        }
+
+        p{
+            font-size: 18px;
+            font-weight: 800;
         }
     }
 `

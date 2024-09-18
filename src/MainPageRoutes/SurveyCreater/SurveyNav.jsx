@@ -1,24 +1,22 @@
 import React, { useState } from "react"
 import classNames from "classnames"
-import SurveySummary from "./SurveySummary"
-import SurveyOption from "./SurveyOption"
+import SurveySummary from "../Survey/SurveySummary"
+import SurveyOption from "../Survey/SurveyOption"
 import styled from "styled-components"
 
 const SurveyNavWrapper = styled.div`
     position: fixed;
-    right: 0;
     top: 0;
-
+    right: 0;
     border: solid 1px var(--pk-charcoal);
     background-color: var(--pk-dark);
-    height: 80vh;
     width: 400px;
     height: 100vh;
 
     nav{
         button{
             padding: 10px 16px;
-            height: 50px;
+            height: 60px;
             border-bottom: 2px solid transparent;
             font-weight: 800;
 

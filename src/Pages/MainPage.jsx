@@ -8,7 +8,8 @@ import { gridAtom, isSideOpenAtom } from "../Recoils/surveyAtoms";
 const MainPageWrapper = styled.section`
     display: grid;
     grid-template-areas: 
-    's v';
+    'side viewer';
+    width: 100vw;
     height: 100vh;
     transition: .5s;
 `
