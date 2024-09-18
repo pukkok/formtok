@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 const StyledSurveySummaryTab = styled.section`
     height: 100%;
-
     .action-btns{
         margin: 10px 20px 0 20px;
-        height: 50px;
+        height: 70px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -29,7 +28,7 @@ const StyledSurveySummaryTab = styled.section`
 `
 
 const StyledSummaryScrollBox = styled.div`
-    height: calc(100% - 100px);
+    height: calc(100% - 120px);
     overflow: scroll;
     cursor: pointer;
     user-select: none;
@@ -120,8 +119,7 @@ const StyledPageSummaryWrapper = styled.div`
     }
 
     &.ending-summary{
-        margin-top: 20px;
-        padding: 5px 10px;
+        margin-top: 10px;
         border: solid 2px var(--pk-silver);
         
         border-radius: 12px;
@@ -178,8 +176,6 @@ const StyledPageSummaryWrapper = styled.div`
             height: 120px;
             padding: 5px;
         }
-
-        
     }
 `
 

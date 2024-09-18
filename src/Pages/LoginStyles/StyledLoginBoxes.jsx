@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Icon } from "../Components/Icons";
+import { Icon } from "../../Components/Icons";
 import { useNavigate } from "react-router-dom";
 
 const StyledLargeBox = styled.div`

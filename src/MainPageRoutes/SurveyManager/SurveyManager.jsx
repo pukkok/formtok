@@ -1,9 +1,9 @@
 // import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AddCircleIcon, SearchIcon } from "../../../Components/Icons";
-import MoreVert from "../../../Components/MoreVert";
-import { randomUrl, surveyTitleAtom, urlAtom } from "../../../Recoils/surveyAtoms";
+import { AddCircleIcon, SearchIcon } from "../../Components/Icons";
+import MoreVert from "../../Components/MoreVert";
+import { randomUrl, surveyTitleAtom, urlAtom } from "../../Recoils/surveyAtoms";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledSurveyManager";
 

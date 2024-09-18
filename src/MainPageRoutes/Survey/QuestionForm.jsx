@@ -1,8 +1,8 @@
 import React from "react"
 import { useRecoilValue } from "recoil"
-import { pagesAtom } from "../../../Recoils/surveyAtoms"
-import AddAnswer from '../../../Components/AddAnswer'
-import usePageActions from "../../../Hooks/usePageActions"
+import { pagesAtom } from "../../Recoils/surveyAtoms"
+import AddAnswer from '../../Components/AddAnswer'
+import usePageActions from "../../Hooks/usePageActions"
 import { QuestionFormWrapper } from "./_StyledQuestionForm"
 
 function QuestionForm ({pi, qi}){

@@ -8,8 +8,8 @@ const DropDownWrapper = styled.div`
     position: relative;
 
     & > button{
-        border: solid 1px var(--light-grey);
-        background-color: #fff;
+        border: solid 1px var(--pk-charcoal);
+        background-color: var(--pk-dark);
         border-radius: 12px;
         min-width: 200px;
         display: flex;
@@ -21,7 +21,7 @@ const DropDownWrapper = styled.div`
         font-weight: bold;
 
         &:hover{
-            border: solid 1px var(--purple-box);
+            border: solid 1px var(--pk-silver);
         }
 
         & > span:nth-last-child(1){ 
@@ -32,7 +32,7 @@ const DropDownWrapper = styled.div`
             margin-left: auto;
         }
         &.open{
-            border: solid 1px var(--purple-box);
+            border: solid 1px var(--pk-silver);
 
             & span:nth-last-child(1){
                 rotate: 180deg;
@@ -46,9 +46,9 @@ const DropDownWrapper = styled.div`
         display: none;
         position: absolute;
         top: 50px;
-        border: solid 1px var(--purple-box);
+        border: solid 1px var(--pk-silver);
         border-radius: 12px;
-        background-color: #fff;
+        background-color: var(--pk-dark);
         width: 100%;
         padding: 10px 5px;
 
@@ -64,7 +64,8 @@ const DropDownWrapper = styled.div`
             padding: 0 5px;
 
             &:hover{
-                background-color: var(--light-grey);
+                background-color: var(--pk-charcoal);
+                color: var(--pk-point);
                 border-radius: 8px;
             }
 

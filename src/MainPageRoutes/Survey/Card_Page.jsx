@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { pagesAtom, activeCardAtom } from "../../../Recoils/surveyAtoms";
-import usePageActions from "../../../Hooks/usePageActions";
-import DescriptionEditor from "../../../Components/CKEditor/DescriptionEditor";
+import { pagesAtom, activeCardAtom } from "../../Recoils/surveyAtoms";
+import usePageActions from "../../Hooks/usePageActions";
+import DescriptionEditor from "../../Components/CKEditor/DescriptionEditor";
 import classNames from "classnames";
 import {SurveyCard} from "./_StyledSurveyCard";
 

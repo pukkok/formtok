@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
-import SideBar from '../Main/SideBar'
-import Header from '../Main/Header'
-import ViewRouter from '../Main/ViewRouter'
-import { MainPageWrapper } from "../Main/_StyledMainPage";
-
+import SideBar from '../MainPageRoutes/SideBar'
+import ViewRouter from '../MainPageRoutes/ViewRouter'
+import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { gridAtom, isSideOpenAtom } from "../Recoils/surveyAtoms";
+
+const MainPageWrapper = styled.section`
+    display: grid;
+    grid-template-areas: 
+    's v';
+    height: 100vh;
+    transition: .5s;
+`
 
 function MainPage() {
 
@@ -24,7 +30,6 @@ function MainPage() {
     return (
     <MainPageWrapper style={adminStyle}>
         <SideBar/>
-        <Header/>
         <ViewRouter/>
     </MainPageWrapper>
     )

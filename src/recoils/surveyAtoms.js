@@ -23,7 +23,7 @@ function randomUrl() {
     const upperCase = alphabets.toUpperCase().split('')
     const number = '0123456789'.split('')
     const merge = [...lowerCase, ...upperCase, ...number]
-    while(newUrl.length < 10){
+    while(newUrl.length <= 10){
         let rn = parseInt(Math.random() * merge.length)
         newUrl += merge[rn]
     }
@@ -37,7 +37,7 @@ const gridAtom  = atom({
 
 const ViewerBGAtom = atom({
     key: 'viewerBG-color',
-    default: '#f1f1f1'
+    default: '#FBFBFC'
 })
 
 const isSideOpenAtom = atom({
@@ -52,6 +52,11 @@ const tabsAtom = atom({
 
 const activeTabAtom = atom({
     key: 'active-tab',
+    default: ''
+})
+
+const surveyTitleAtom = atom({
+    key: 'survey-title',
     default: ''
 })
 
@@ -108,7 +113,8 @@ export {
     randomKey, randomUrl,
 
     ViewerBGAtom,
-    gridAtom, isSideOpenAtom, urlAtom,
+    gridAtom, isSideOpenAtom, 
+    urlAtom, surveyTitleAtom,
     tabsAtom, activeTabAtom, activeCardAtom,
     pagesAtom, endingMentAtom, surveyPeriodAtom, 
 }

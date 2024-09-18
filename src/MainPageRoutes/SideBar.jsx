@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isSideOpenAtom, ViewerBGAtom } from "../Recoils/surveyAtoms";
 import { useNavigate } from "react-router-dom";
-import { SideBarWrapper } from "./_StyledMainPage";
+import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/Logo/Logo";
 import { Icon } from "../Components/Icons";
 import classNames from "classnames";

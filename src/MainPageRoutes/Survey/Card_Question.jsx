@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeCardAtom, pagesAtom } from "../../../Recoils/surveyAtoms";
+import { activeCardAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import classNames from "classnames";
-import usePageActions from "../../../Hooks/usePageActions";
-import questionForms from "../../../Datas/questionForms";
+import usePageActions from "../../Hooks/usePageActions";
+import questionForms from "../../Datas/questionForms";
 import QuestionForm from "./QuestionForm";
-import { Icon } from "../../../Components/Icons";
-import DropDown from "../../../Components/DropDown";
-import DescriptionEditor from "../../../Components/CKEditor/DescriptionEditor";
-import ToggleButton from "../../../Components/ToggleButton";
-import MoreVert from '../../../Components/MoreVert'
+import { Icon } from "../../Components/Icons";
+import DropDown from "../../Components/DropDown";
+import DescriptionEditor from "../../Components/CKEditor/DescriptionEditor";
+import ToggleButton from "../../Components/ToggleButton";
+import MoreVert from '../../Components/MoreVert'
 import {QuestionOptionsWrapper, SurveyCard} from "./_StyledSurveyCard";
 
 function QuestionCard ({pi, qi}) {

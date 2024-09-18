@@ -17,3 +17,22 @@ function UserButton ({onClick}) {
 }
 
 export default UserButton
+
+/* 유저버튼 UserButton */
+// .user-button{
+//     display: flex;
+//     align-items: center;
+//     gap: 5px;
+//     height: 40px;
+//     cursor: pointer;
+// }
+// .user-button p{
+//     color: #777;
+//     font-weight: 700;
+// }
+// .user-button span{
+//     color: #777;
+//     font-weight: 300;
+//     margin-left: auto;
+//     font-size: 32px;
+// }

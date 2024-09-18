@@ -8,9 +8,9 @@ import SurveyCreaterWrapper from "./_StyledSurveyCreater";
 
 import SurveyNav from "../Survey/SurveyNav";
 import { useRecoilValue } from "recoil";
-import { activeCardAtom, pagesAtom } from "../../../Recoils/surveyAtoms";
-import DropDown from "../../../Components/DropDown";
-import usePageActions from "../../../Hooks/usePageActions";
+import { activeCardAtom, pagesAtom } from "../../Recoils/surveyAtoms";
+import DropDown from "../../Components/DropDown";
+import usePageActions from "../../Hooks/usePageActions";
 
 function SurveyCreater () {
     const pages = useRecoilValue(pagesAtom)

@@ -1,10 +1,10 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeCardAtom, endingMentAtom } from "../../../Recoils/surveyAtoms";
-import DescriptionEditor from "../../../Components/CKEditor/DescriptionEditor";
+import { activeCardAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
+import DescriptionEditor from "../../Components/CKEditor/DescriptionEditor";
 import classNames from "classnames";
 import {SurveyCard} from "./_StyledSurveyCard";
-import usePageActions from "../../../Hooks/usePageActions";
+import usePageActions from "../../Hooks/usePageActions";
 
 function EndingCard () {
 
@@ -17,7 +17,6 @@ function EndingCard () {
     <SurveyCard className={classNames("card ending-field", 
     {active : `end` === activeCard})}
     onClick={()=>setActiveCard(`end`)}>
-
         <h4>엔딩 메세지</h4>
         <div>
             <input className="title-B"

@@ -1,16 +1,6 @@
 import styled from "styled-components";
 
-const StyledMainPage = styled.section`
-    display: grid;
-    grid-template-areas: 
-    's h'
-    's v';
-    grid-template-rows: 50px 1fr;
-    height: 100vh;
-    transition: .5s;
-`
-
-const StyledSideBar = styled.div`
+const SideBarWrapper = styled.div`
   grid-area: s;
   color: var(--pk-light-grey);
   border-right: 1px solid var(--pk-charcoal);
@@ -152,46 +142,6 @@ const StyledSideBar = styled.div`
       }
     }
   }
-`;
-
-const StyledHeader = styled.header`
-    grid-area: h;
-    display: flex;
-    background-color: var(--pk-deep-dark);  // 다크 모드 배경색
-    border-bottom: 1px solid var(--pk-charcoal);
-    align-items: center;
-    padding: 30px 20px;
-    position: relative;
-    z-index: 100;
-
-    &.create{
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        button{
-            background-color: var(--pk-point);
-            color: #fff;
-        }
-    }
-
-    button{
-        margin-left: 10px;
-        padding: 6px 12px;
-        border-radius: 8px;
-        font-weight: bold;
-    }
-    
 `
 
-const StyledViewer = styled.div`
-    grid-area: v;
-    background-color: #1E1E2E;  // 다크 모드 배경색
-    overflow: scroll;
-    
-`
-
-export {StyledMainPage as MainPageWrapper, 
-    StyledSideBar as SideBarWrapper,
-    StyledHeader as HeaderWrapper, 
-    StyledViewer as ViewerWrapper,
-}
+export default SideBarWrapper

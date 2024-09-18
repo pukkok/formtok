@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { endingMentAtom, pagesAtom } from "../../../Recoils/surveyAtoms";
-import RadioButton from "../../../Components/RadioButton";
+import { endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
+import RadioButton from "../../Components/RadioButton";
 import {SurveyCard} from "../Survey/_StyledSurveyCard";
-import DescriptionEditor from '../../../Components/CKEditor/DescriptionEditor'
+import DescriptionEditor from '../../Components/CKEditor/DescriptionEditor'
 import {SurveyFormWrapper} from './_StyledSurveyForm'
 
 function SurveyForm() {

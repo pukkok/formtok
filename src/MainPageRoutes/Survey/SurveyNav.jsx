@@ -4,25 +4,21 @@ import SurveySummary from "./SurveySummary"
 import SurveyOption from "./SurveyOption"
 import styled from "styled-components"
 
-const StyledSurveyNavWrapper = styled.div`
-    padding: 15px 0;
-    position: sticky;
-    top: 20px;
+const SurveyNavWrapper = styled.div`
+    position: fixed;
+    right: 0;
+    top: 0;
+
     border: solid 1px var(--pk-charcoal);
     background-color: var(--pk-dark);
-    border-radius: 12px;
     height: 80vh;
     width: 400px;
+    height: 100vh;
 
     nav{
-        padding: 0 20px;
-        height: 30px;
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-
         button{
-            padding-bottom: 5px;
+            padding: 10px 16px;
+            height: 50px;
             border-bottom: 2px solid transparent;
             font-weight: 800;
 
@@ -39,7 +35,7 @@ function SurveyNav() {
     const btns = ['전체 문항', '설문 설정']
 
     return (
-        <StyledSurveyNavWrapper>
+        <SurveyNavWrapper>
             <nav>
                 {btns.map((btn, idx) => (
                     <button
@@ -53,7 +49,7 @@ function SurveyNav() {
             </nav>
             {activeBtn === 0 && <SurveySummary />}
             {activeBtn === 1 && <SurveyOption />}
-        </StyledSurveyNavWrapper>
+        </SurveyNavWrapper>
     )
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import FAQs from '../../../Datas/FAQs'
+import FAQs from '../../Datas/FAQs'
 
 function FAQViewer(){
     console.log(FAQs)

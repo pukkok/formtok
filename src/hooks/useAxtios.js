@@ -35,6 +35,23 @@ const useAxios = () => {
         }
     }
 
-    return { login, join }
+    const createForm = async (url, title, pages, token) => {
+        try {
+            const { data } = await axios.post("/form/create", 
+            { url, title, pages },
+            {headers : {'Authorization' : `Bearer ${token}`}} // 헤더
+            )
+            if (data.code === 200) {
+                console.log('저장 성공')
+                return data.data
+            } else {
+                console.log(data.msg)
+            }
+        } catch (error) {
+            console.log('오류 발생:', error)
+        }
+    }
+
+    return { login, join, createForm }
 }
 export default useAxios

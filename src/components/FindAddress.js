@@ -1,6 +1,43 @@
 import React, { useRef, useState } from "react"
+import styled from "styled-components"
 const {daum} = window
 //https://postcode.map.daum.net/guide#usage
+
+const StyledFindAddr = styled.div`
+    /* 주소 박스 FindAddress */
+    .post-box{
+        border: solid 1px red;
+        width: 600px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .postcode{
+        flex: 1;
+        max-width: 100px;
+        color: #601DCD;
+        font-weight: bold;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .post-box button{
+        margin-left: 10px;
+        padding: 5px 10px;
+        background-color: var(--purple);
+        color: #fff;
+    }
+    .post-box button:hover{
+        background-color: var(--deep-purple);
+    }
+
+    .post-box input{
+        padding: 5px 10px;
+        font-weight: bold;
+    }
+`
+
 
 function FindAddress() {
     const detailRef = useRef(null)

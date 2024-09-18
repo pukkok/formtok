@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import useAxios from "../Hooks/useAxtios";
 import { LoginForms, JoinForms } from "../Datas/loginForms";
-import LoginPageWrapper from "../Login/StyledLoginPageWrapper";
-import { LargeBox, SmallBox, SmallBoxWrapper } from "../Login/StyledLoginBoxes";
-import { LoginForm } from "../Login/StyledLoginForm";
+import LoginPageWrapper from "./LoginStyles/StyledLoginPageWrapper";
+import { LargeBox, SmallBox, SmallBoxWrapper } from "./LoginStyles/StyledLoginBoxes";
+import { LoginForm } from "./LoginStyles/StyledLoginForm";
 
 function LoginPage () {
     const navigate = useNavigate()

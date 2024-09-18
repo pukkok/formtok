@@ -13,6 +13,9 @@ const StyledCKEdtiorWrapper = styled.div`
     .ck-editor__top {
         top: 101%;
         opacity: 1;
+        background-color: var(--pk-dark);
+
+        
     }
   }
 
@@ -24,6 +27,40 @@ const StyledCKEdtiorWrapper = styled.div`
     opacity: 0;
     transition: .4s;
     border: none;
+
+    .ck-toolbar_grouping{
+      background-color: var(--pk-dark);
+    }
+
+    .ck.ck-toolbar__items{ // 아이템 부분
+      background-color: var(--pk-dark);
+      .ck-dropdown{
+        
+        .ck.ck-splitbutton.ck-splitbutton_open > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover), .ck.ck-splitbutton:hover > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover) {
+            background: none;
+        }
+
+        .ck-dropdown__panel{
+          background-color: var(--pk-dark);
+        }
+
+        .ck-collapsible{
+          display: none;
+        }
+      }
+
+      button{
+        color: var(--pk-light-grey);
+        background: none;
+        &.ck-on{
+          background: var(--pk-charcoal);
+          color: var(--pk-point)
+        }
+        &:hover{ // 아이템 호버했을때
+          background: var(--pk-charcoal);
+        }
+      }
+    }
   }
 
   .ck {
@@ -45,11 +82,13 @@ const StyledCKEdtiorWrapper = styled.div`
       padding: 0;
     }
 
+    /* 입력창 */
     .ck.ck-editor__main > .ck-editor__editable {
       border: none;
       border-bottom: 1px solid transparent;
       transition: margin .2s;
-      background-color: #fff;
+      background-color: var(--pk-dark);
+      padding-left: 2px;
       position: relative;
       z-index: 1;
     }
@@ -63,7 +102,7 @@ const StyledCKEdtiorWrapper = styled.div`
     .ck.ck-editor__editable.ck-focused {
       box-shadow: none;
       margin-bottom: 50px;
-      border-bottom: 2px solid var(--purple-bg);
+      border-bottom: 2px solid var(--pk-point);
     }
 
     .ck-content {

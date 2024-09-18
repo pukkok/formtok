@@ -1,31 +1,51 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import logo from './logo_whale.png'
+// import logo from './logo-normal.png'
+import logo from './logo-check-1.png'
 
 const StyledLogo = styled.div`
-    font-family: "Nanum Pen Script", cursive;
     width: 280px;
-    height: 90px;
+    height: 100px;
     border-radius: 12px;
     overflow: hidden;
-    border: solid 2px var(--box-purple);
+    background-color: var(--pk-charcoal);
+    transition: background-color 0.3s;  // 배경색 전환 애니메이션
     cursor: pointer;
+    /* position: relative; */
+    display: flex;
+    align-items: center;
 
-    img{
-        width: 100%;
-        height: 100%;
+    .img-box{
+        width: 120px;
+        height: 150px;
+        /* border: solid 1px blue; */
+        img{
+            object-fit: cover;
+        }
     }
 
-    &:hover{
+    h1{
+        font-size: 28px;
+    }
 
+
+
+    &:hover{
+        background-color: var(--pk-point);
     }
 `
 
 function Logo () {
     const naviate = useNavigate()
     return <StyledLogo  onClick={()=>naviate('/')}>
-        <img src={logo} alt=""/>
+        <div className="img-box">
+            <img src={logo} alt=""/>
+        </div>
+        <div>
+            <h1>고래폼</h1>
+            <p>WHALE FORM</p>
+        </div>
     </StyledLogo>
 }
 

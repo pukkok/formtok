@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import classNames from "classnames"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
-import { activeCardAtom, endingMentAtom, pagesAtom } from "../../../Recoils/surveyAtoms"
-import MoreVert from "../../../Components/MoreVert"
-import usePageActions from "../../../Hooks/usePageActions"
+import { activeCardAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms"
+import MoreVert from "../../Components/MoreVert"
+import usePageActions from "../../Hooks/usePageActions"
 import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./_StyledSummary"
 
 function SurveySummary() {

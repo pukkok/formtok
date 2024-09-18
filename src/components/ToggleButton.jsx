@@ -5,8 +5,8 @@ import styled from "styled-components";
 const StyledToggleBtn = styled.button`
     
     position: relative;
-    border: solid 2px var(--light-grey);
-    background-color: var(--light-grey);
+    border: solid 2px var(--pk-silver);
+    background-color: var(--pk-silver);
     width: 40px;
     height: 24px;
     border-radius: 40px;
@@ -18,14 +18,14 @@ const StyledToggleBtn = styled.button`
         transform: translate(-50%, -50%);
         width: 50%;
         height: calc(100% - 2px);
-        background-color: #fff;
+        background-color: var(--pk-light-grey);
         border-radius: 50%;
         transition: .3s;
     }
 
     &.on{
-        border: solid 2px var(--purple-bg);
-        background-color: var(--purple-bg);
+        border: solid 2px var(--pk-point);
+        background-color: var(--pk-point);
 
         span{
             left: calc(75% - 1px);
