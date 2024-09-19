@@ -6,6 +6,7 @@ import MoreVert from "../../Components/MoreVert";
 import { randomUrl, surveyTitleAtom, urlAtom } from "../../Recoils/surveyAtoms";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledSurveyManager";
+import ModalWrapper from "../../Components/StyledModal";
 
 function SurveyManager () {
     const [surveyTitle, setSurveyTitle] = useRecoilState(surveyTitleAtom)
@@ -77,21 +78,25 @@ function SurveyManager () {
                     <button className="card">템플릿 1번</button>
                     <button className="card">템플릿 1번</button>
                 </div>
-                <dialog ref={modalRef} className="modal" onKeyDown={enterClick}>
-                    <div>
-                        <input placeholder="설문지 제목" 
-                        onChange={(e)=>setSurveyTitle(e.target.value)}
-                        value={surveyTitle}/>
-                        <h4>사용 안내</h4>
-                        <p>* 제목을 입력하지 않아도 문제가 발생하지 않습니다.</p>
-                        <p>* 제목은 설문 제작자의 편한 관리를 위해 사용됩니다.</p>
-                        <p>* 설문지 제목은 이후 상단 탭에서 변경이 가능합니다.</p>
-                        <div className="btns">
+                <ModalWrapper ref={modalRef} onKeyDown={enterClick}>
+                    <div className="modal-content">
+                        <header>
+                            <input placeholder="설문지 제목" 
+                            onChange={(e)=>setSurveyTitle(e.target.value)}
+                            value={surveyTitle}/>
+                        </header>
+                        <main>
+                            <h4>사용 안내</h4>
+                            <p>* 제목을 입력하지 않아도 문제가 발생하지 않습니다.</p>
+                            <p>* 제목은 설문 제작자의 편한 관리를 위해 사용됩니다.</p>
+                            <p>* 설문지 제목은 이후 상단 탭에서 변경이 가능합니다.</p>
+                        </main>
+                        <footer className="btns">
                             <button onClick={goToCreate}>생성하기</button>
                             <button onClick={closeModal}>닫기</button>
-                        </div>
+                        </footer>
                     </div>
-                </dialog>
+                </ModalWrapper>
             </div>
         </SurveyManagerWrapper>
     )

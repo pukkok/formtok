@@ -36,6 +36,8 @@ const FAQs = [
         {answer: '경남'},
         {answer: '제주'},
     ]},
+
+    // 여기서부터 레이아웃 테스트용 추가
     {q: '거주 지역을 알려주세요.', type: '드롭다운', options: [
         {answer: '서울'},
         {answer: '부산'},
@@ -125,6 +127,34 @@ const FAQs = [
         {answer: '경북'},
         {answer: '경남'},
         {answer: '제주'},
+    ]},
+    {q: '최종 학력이 어떻게 되시나요?', type: '객관식', options: [
+        {answer: '고등학교 졸업 미만'},
+        {answer: '고등학교 졸업'},
+        {answer: '대학교 중퇴'},
+        {answer: '대학교 졸업'},
+        {answer: '대학원 졸업'}
+    ]},
+    {q: '최종 학력이 어떻게 되시나요?', type: '객관식', options: [
+        {answer: '고등학교 졸업 미만'},
+        {answer: '고등학교 졸업'},
+        {answer: '대학교 중퇴'},
+        {answer: '대학교 졸업'},
+        {answer: '대학원 졸업'}
+    ]},
+    {q: '최종 학력이 어떻게 되시나요?', type: '객관식', options: [
+        {answer: '고등학교 졸업 미만'},
+        {answer: '고등학교 졸업'},
+        {answer: '대학교 중퇴'},
+        {answer: '대학교 졸업'},
+        {answer: '대학원 졸업'}
+    ]},
+    {q: '최종 학력이 어떻게 되시나요?', type: '객관식', options: [
+        {answer: '고등학교 졸업 미만'},
+        {answer: '고등학교 졸업'},
+        {answer: '대학교 중퇴'},
+        {answer: '대학교 졸업'},
+        {answer: '대학원 졸업'}
     ]},
 ]
 

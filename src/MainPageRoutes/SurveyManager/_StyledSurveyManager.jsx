@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 const StyledSurveyManagerWrapper = styled.section`
     max-width: fit-content;
-    max-width: calc(260px * 5 + 20px * 4 + 20px * 2);
-    padding: 0 20px;
+    max-width: 2100px;
+    padding: 10px 30px;
     margin: 30px auto;
-
     .template-box{
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         flex-wrap: wrap;
         width: 100%;
-        gap: 20px;
+        column-gap: 10px;
+        row-gap: 20px;
     }
     &.dark-mode{
         .card{
@@ -48,14 +49,7 @@ const StyledSurveyManagerWrapper = styled.section`
         }
         
 
-        .modal{
-            background-color: var(--pk-dark);
-            color: var(--pk-light-grey);
-
-            h4, .btns{
-                border-top: 1px solid var(--pk-charcoal);
-            }
-        }
+        
     }
 
     .white-mode{
@@ -65,7 +59,7 @@ const StyledSurveyManagerWrapper = styled.section`
         color: rgb(33, 33, 33);
         transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         overflow: hidden;
-        width: 260px;
+        max-width: 280px;
         height: 160px;
         border-radius: 12px;
         box-shadow: rgba(0, 0, 0, 0.1) 2px 4px 10px;
@@ -135,61 +129,6 @@ const StyledSurveyManagerWrapper = styled.section`
             path{
                 fill: #CDCDCD;
             }
-        }
-    }
-
-    .modal{
-        box-sizing: border-box;
-        padding: 20px;
-        border-radius: 12px;
-        border: solid 2px var(--pk-point);
-        & > div{
-            min-width: 500px;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-
-            input{
-                padding-bottom: 10px;
-                font-weight: bold;
-                font-size: 18px;
-                width: 100%;
-                border-bottom: none;
-            }
-
-            h4{
-                border-top: solid 1px var(--pk-light-grey);
-                padding-top: 10px;
-                margin-bottom: 10px;
-            }
-
-            p{
-                font-size: 14px;
-                margin-bottom: 5px;
-            }
-
-            .btns{
-                border-top: solid 1px var(--pk-light-grey);
-                padding-top: 10px;
-                margin-top: auto;
-                display: flex;
-                justify-content: flex-end;
-                gap: 20px;
-
-                button{
-                    border-radius: 12px;
-                    padding: 10px;
-                    color: var(--pk-light-grey);
-                    font-weight: bold;
-                    background-color: var(--pk-point);
-
-                    &:hover{
-                        background-color: var(--pk-point-hover);
-                    }
-                }
-            }
-
-            
         }
     }
 `

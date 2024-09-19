@@ -99,9 +99,9 @@ const StyledQuestionOptionsWrapper = styled.div`
     }
 
     .more-vert-wrapper .options{
+        transition: none;
         &.on{
             width: 200px;
-            transition: none;
             top: -14px;
             right: 0;
 

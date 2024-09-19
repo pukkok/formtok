@@ -54,27 +54,53 @@ const SideBarWrapper = styled.div`
         &:hover{
           background-color: var(--pk-charcoal);  // 호버시 어두운 색으로 변경
         }
+
+        .arrow{ // 화살표 아이콘
+          margin-left: auto;
+          transition: all .2s;
+          &.open{
+            rotate: -180deg;
+          }
+        }
+
       }
 
       &.active > button {
         background-color: var(--pk-point);  // 액티브 포인트
       }
-
+      &.active.toggle > button{
+        background-color: var(--pk-point);
+      }
+      &.toggle {
+        & > button{
+          background-color: var(--pk-charcoal);
+        }
+        .depth2{
+          margin-top: 15px;
+        }
+      }
+      
       .depth2{
-        height: 0;
         box-sizing: border-box;
         padding: 0 10px;
         overflow: hidden;
         transition: .4s;
-        &.active{
-          margin-top: 12px;
-          height: 120px;
-          display: flex;
-          flex-direction: column;
-          li{
-            flex: 1;
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        li{
+          font-size: 15px;
+        }
+
+        li.active{
+          button{
+            background-color: var(--pk-point);
+          }
+          span{
+            font-weight: 300;
           }
         }
+        
       }
 
     }

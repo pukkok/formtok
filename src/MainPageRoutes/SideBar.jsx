@@ -6,6 +6,8 @@ import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/Logo/Logo";
 import { Icon } from "../Components/Icons";
 import classNames from "classnames";
+import sidebarNavs from "../Datas/sidebarNavs";
+
 function SideBar () {
 
     const viewerBG = useRecoilValue(ViewerBGAtom)
@@ -31,29 +33,24 @@ function SideBar () {
 
     const navigate = useNavigate()
 
-    const [active, setActive] = useState(0)
+    const [active, setActive] = useState({depth1 : 0, depth2: null})
     const [openDepth2, setOpenDepth2] = useState([])
 
-    const navClick = (e, idx, path) => {
-        setActive(idx)
-        if(path) navigate(path)
+    const depth1Click = (idx, path) => {
+        setActive({depth1 : idx, depth2: null})
+        if(path) return navigate(path)
             
-        const depth2 = e.target.dataset.depth2
-        if(!depth2) return
-        if(openDepth2.includes(depth2)){
-            setOpenDepth2(prev => prev = prev.filter(od => od !== depth2))
+        if(openDepth2.includes(idx)){
+            setOpenDepth2(prev => prev = prev.filter(openIdx => openIdx !== idx))
         }else{
-            setOpenDepth2([...openDepth2, depth2])
+            setOpenDepth2([...openDepth2, idx])
         }
     }
 
-    const sidebarNavs = [
-        {depth1: '홈', code: 'home', path: 'home'},
-        {depth1: '설문지', code: 'lab_profile', path:'/', dataset: 'survey-list', depth2: [{text:'제작하기'}, {text:'참여하기'}, {text:'결과보기'}]},
-        {depth1: '대시보드', code: 'equalizer'},
-        {depth1: '문항 관리', code: 'folder_managed', path: '/survey/FAQ'},
-        {depth1: '설정', code: 'settings'},
-    ]
+    const depth2Click = (idx2, path) => {
+        setActive({depth1: null, depth2: idx2})
+        navigate(path)
+    }
 
     return <SideBarWrapper>
         {isSideOpen ? 
@@ -64,36 +61,39 @@ function SideBar () {
             </div>
             <ul className="depth1">
             {sidebarNavs.map((list, idx) => {
-                const {depth1, code, path, dataset, depth2} = list
-                return <li key={depth1} className={classNames({active : active === idx})}>
-                    <button data-depth2={depth2 && dataset}
-                    onClick={e=>navClick(e, idx, path)}
-                    ><Icon code={code}/>{depth1}</button>
+                const {text, code, path, depth2} = list
+                return <li key={text}
+                className={classNames({
+                toggle : depth2 && openDepth2.includes(idx), 
+                active : active['depth1'] === idx})}>
+                    <button
+                    onClick={()=>depth1Click(idx, path)}
+                    >
+                    <Icon code={code}/>{text}
+                    
+                    {depth2 && //애로우 버튼
+                    <Icon className={classNames('arrow', {open : openDepth2.includes(idx)})}
+                    code={'keyboard_arrow_up'}/>}
+                    </button>
+                    
                     {depth2 &&
-                    <ul className={classNames("depth2",{active: openDepth2.includes(dataset)})}>
-                        {depth2.map(item => {
-                            const {text} = item
-                            return <li key={text}><button>{text}</button></li>
+                    <ul className={"depth2"}
+                    style={{height: openDepth2.includes(idx) ? 
+                        (depth2.length * 40 + (depth2.length-1) * 5)+'px' : 0}}
+                    >
+                        {depth2.map((item, idx2) => {
+                            const {text, path, code} = item
+                            return <li key={text} 
+                            className={classNames({active : active['depth2'] === idx2})}>
+                                <button onClick={()=>depth2Click(idx2, path)}>
+                                    <Icon code={code}/>{text}
+                                </button>
+                                </li>
                         })}
                     </ul>}
                 </li>
             })}
             </ul>
-            {/* <ul className="depth1">
-                <li className="active"><button><Icon code={'home'}/>홈</button></li>
-                <li><button data-depth2='survey-list' onClick={depth2Opener}>
-                    <Icon code={'lab_profile'}/>
-                    설문지</button>
-                    {openDepth2.includes('survey-list') && 
-                    <ul className="depth2">
-                        <li><button>제작하기</button></li>
-                        <li><button>참여하기</button></li>
-                        <li><button>결과보기</button></li>
-                    </ul>}
-                </li>
-                <li><button><Icon code={'equalizer'}/>대시보드</button></li>
-                <li><button><Icon code={'folder_managed'}/>문항 관리</button></li>
-            </ul> */}
 
             <div className="user-info-wrapper">
                 <div className="user-info">
