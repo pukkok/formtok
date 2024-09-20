@@ -24,13 +24,17 @@
   --pk-light-grey: #EDEDED;
   --pk-silver: #B0B0B0;
 
+  --pk-imsi-no-use: #c30928;
+  --pk-imsi: #ffd54f  ;
+  --pk-imsi: #4dd0e1 ;
+
   --pk-deep-dark: #1E1E2E;
   --pk-dark: #2A2A40;
   --pk-charcoal: #444466;
   --pk-point: #7E37ED;
   --pk-point-hover: #A873FF;
   --pk-point-hover: #9A5BFF;
-  --pk-fold-point: #c30928;
+  --pk-fold-point: #f06292 ;
 }
 
 body{

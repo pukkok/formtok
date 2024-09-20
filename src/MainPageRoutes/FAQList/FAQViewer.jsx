@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import FAQs from '../../Datas/FAQs'
 import questionForms from "../../Datas/questionForms";
 import FAQViewerWrapper from "./_StyledFAQList";
@@ -43,11 +43,9 @@ function FAQViewer(){
         <main>
             공개된 질문 리스트
         </main>
-        <main>
-            내 질문
-        </main>
         <div className="card-box">
-        {searchedFAQs.length > 0 ? searchedFAQs.map((faq, idx) => {
+        {searchedFAQs.length > 0 ? 
+        searchedFAQs.map((faq, idx) => {
             const {q, options, type} = faq
             const form = questionForms.find(x => x.form === type)
 

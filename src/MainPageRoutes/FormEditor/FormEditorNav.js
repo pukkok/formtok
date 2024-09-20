@@ -4,7 +4,7 @@ import SurveySummary from "../Survey/SurveySummary"
 import SurveyOption from "../Survey/SurveyOption"
 import styled from "styled-components"
 
-const SurveyNavWrapper = styled.div`
+const FormEditorNavWrapper = styled.div`
     position: fixed;
     top: 0;
     right: 0;
@@ -33,7 +33,7 @@ function SurveyNav() {
     const btns = ['전체 문항', '설문 설정']
 
     return (
-        <SurveyNavWrapper>
+        <FormEditorNavWrapper>
             <nav>
                 {btns.map((btn, idx) => (
                     <button
@@ -47,7 +47,7 @@ function SurveyNav() {
             </nav>
             {activeBtn === 0 && <SurveySummary />}
             {activeBtn === 1 && <SurveyOption />}
-        </SurveyNavWrapper>
+        </FormEditorNavWrapper>
     )
 }
 

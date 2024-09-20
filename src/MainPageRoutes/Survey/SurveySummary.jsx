@@ -24,11 +24,11 @@ function SurveySummary() {
     }
 
     // 드롭 가능한 영역의 스타일
-    const getCardStyle = (isDragging, draggableStyle) => {
-        console.log(foldQuestions)
+    const getCardStyle = (isDragging, draggableStyle, isFold) => {
         return {
-            border: isDragging && '2px solid #7E37ED',
+            border: isDragging && (isFold ? '2px solid #f06292' : '2px solid #7E37ED'),
             borderRadius: isDragging && '12px',
+            backgroundColor : isDragging && '#2A2A40',
             ...draggableStyle
         }
     }
@@ -77,7 +77,7 @@ function SurveySummary() {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    style={getCardStyle(snapshot.isDragging, provided.draggableProps.style)}
+                    style={getCardStyle(snapshot.isDragging, provided.draggableProps.style, foldQuestions.includes(page.id))}
                     >
                         <PageSummaryWrapper
                         onClick={() => setActiveCard(`P-${idx}`)}

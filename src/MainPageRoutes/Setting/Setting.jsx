@@ -14,7 +14,7 @@ function Setting () {
             연락처
             이메일
             비밀번호 변경
-            비밀번호
+            비밀번호    
         </div>
     </SettingWrapper>
     )

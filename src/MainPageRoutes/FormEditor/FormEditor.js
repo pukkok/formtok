@@ -4,14 +4,33 @@ import PageCard from "../Survey/Card_Page";
 import QuestionCard from "../Survey/Card_Question";
 import EndingCard from "../Survey/Card_End";
 
-import SurveyCreaterWrapper from "./_StyledSurveyCreater";
-
-import SurveyNav from "./SurveyNav";
+import SurveyNav from "./FormEditorNav";
 import { useRecoilValue } from "recoil";
 import { activeCardAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import DropDown from "../../Components/DropDown";
 import usePageActions from "../../Hooks/usePageActions";
-import SurveyHeader from "./SurveyHeader";
+import SurveyHeader from "./FormEditorHeader";
+import styled from "styled-components";
+
+const FormEditorWrapper = styled.section`
+    width: calc(100% - 400px);
+
+    .card-box{
+        max-width: 800px;
+        margin: 30px auto;
+    }
+    
+    .page-move { // 답변 후
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        p {
+            font-weight: bold;
+        }
+    }
+`
 
 function SurveyCreater () {
     const pages = useRecoilValue(pagesAtom)
@@ -34,7 +53,7 @@ function SurveyCreater () {
     }
 
     return (
-    <SurveyCreaterWrapper>
+    <FormEditorWrapper>
         {/* 상단 헤더 */}
         <main>
             <SurveyHeader />
@@ -74,7 +93,7 @@ function SurveyCreater () {
 
         {/* 오른쪽 네비게이션 */}
         <SurveyNav />
-    </SurveyCreaterWrapper>)
+    </FormEditorWrapper>)
 }
 
 export default SurveyCreater

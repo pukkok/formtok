@@ -66,26 +66,21 @@ const StyledSurveySummaryWrapper = styled.div`
 
         button{
             &:hover{
-                background-color: var(--pk-silver);
+                background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4));
                 border-radius: 8px;
             }
             &:disabled{
                 color: #aaa;
                 &:hover{
-                    background-color: #eee;
+                    background-color: #ededed;
                 }
             }
             &.remove{
                 color: #e8291b;
-                &:hover{
-                    background-color: #ffb6b6;
-                    border-radius: 8px;
-                }
-
                 &:disabled{
-                    color: #ffb6b6;
+                    color: #ffcaca;
                     &:hover{
-                        background-color: #eee;
+                        background-color: #ff9999 ;
                     }
                 }
             }
@@ -95,13 +90,15 @@ const StyledSurveySummaryWrapper = styled.div`
 
 const StyledPageSummaryListWrapper = styled.div`
     margin-top: 10px;
+    &:not(:nth-child(1)){
+        margin-top: 16px;
+    }
 `
 
 const StyledPageSummaryWrapper = styled.div`
     padding: 5px 8px;
     border: 2px solid transparent;
     border-top: 2px solid var(--pk-point);
-
     &.active, &:hover{
         border: solid 2px var(--pk-point);
         border-radius: 12px;
@@ -124,7 +121,7 @@ const StyledPageSummaryWrapper = styled.div`
     }
 
     &.ending-summary{
-        margin-top: 10px;
+        margin-top: 18px;
         border: solid 2px var(--pk-silver);
         
         border-radius: 12px;

@@ -5,7 +5,7 @@ import { pagesAtom, surveyTitleAtom, urlAtom } from "../../Recoils/surveyAtoms";
 import { useHref, useNavigate } from "react-router-dom";
 import useAxios from "../../Hooks/useAxtios";
 
-const HeaderWrapper = styled.header`
+const FormHeaderWrapper = styled.header`
     position: sticky;
     top: 0;
     width: 100%;
@@ -38,10 +38,10 @@ function SurveyHeader () {
     const { createForm } = useAxios() 
     const navigate = useNavigate()
 
-    return <HeaderWrapper>
+    return <FormHeaderWrapper>
         <button onClick={()=>navigate(`/survey/form/${url}`)}>미리보기</button>
-        <button onClick={()=>createForm(url, title, pages, token)}>임시저장</button>        
-    </HeaderWrapper>
+        <button onClick={()=>createForm(url, title, pages, token)}>저장</button>        
+    </FormHeaderWrapper>
 }
 
 export default SurveyHeader
