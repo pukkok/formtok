@@ -28,6 +28,15 @@ function FAQViewer(){
     const closeModal = () => {
         modalRef.current.close()
     }
+    
+    
+    const checkedRef = useRef([])
+    const takeQuestion = () => {
+        let x = checkedRef.current.filter(input => {
+            return input.checked
+        })
+        console.log(x)
+    }
 
     return <FAQViewerWrapper>
         <header>
@@ -35,9 +44,13 @@ function FAQViewer(){
                 <input placeholder="검색하기" 
                 onChange={e=>setSearchWord(word => word = e.target.value)} 
                 value={searchWord}/>
-                <button className="filter-btn"><Icon code={'tune'}/></button>
+                {/* <button className="filter-btn"><Icon code={'tune'}/></button> */}
                 <button className="search-btn" onClick={search}><Icon code={'search'}/></button>
             </form>
+            <div className="btns">
+                <button onClick={takeQuestion}>사용</button>
+                <button>삭제</button>
+            </div>
         </header>
 
         <main>
@@ -49,11 +62,12 @@ function FAQViewer(){
             const {q, options, type} = faq
             const form = questionForms.find(x => x.form === type)
 
-            return <div key={idx} className="card">
-                <button 
-                title="자세히 보기"
-                onClick={() => readMoreView(faq, form.code)}
-                className="read-more"><Icon code={'quick_reference_all'}/></button>
+            return <label key={idx} className="card">
+                <div className="check-box">
+                    <input name={idx} type={'checkbox'} 
+                    ref={el => checkedRef.current[idx] = el}/>
+                    <Icon code={'check'}/>
+                </div>
                 <p className="type-text"><span>{type}</span></p>
                 <p className="type-icon"><Icon code={form.code}/></p>
                 <h4>Q. {q}</h4>
@@ -63,10 +77,9 @@ function FAQViewer(){
                     })}
                 </div>
                 <div className="btns">
-                    {/* <button onClick={() => readMoreView(faq, form.code)}>자세히 보기</button> */}
-                    <button>가져가기</button>
+                    <button onClick={() => readMoreView(faq, form.code)}>자세히 보기</button>
                 </div>
-            </div>
+            </label>
         }) : <p>검색 결과가 없습니다.</p>}
         </div>
         <ModalWrapper ref={modalRef} className="modal-wrapper">
