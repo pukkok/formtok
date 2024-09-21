@@ -4,7 +4,7 @@ import PageCard from "../Survey/Card_Page";
 import QuestionCard from "../Survey/Card_Question";
 import EndingCard from "../Survey/Card_End";
 
-import SurveyNav from "./FormEditorNav";
+import FormNav from "./FormEditorNav";
 import { useRecoilValue } from "recoil";
 import { activeCardAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import DropDown from "../../Components/DropDown";
@@ -32,10 +32,10 @@ const FormEditorWrapper = styled.section`
     }
 `
 
-function SurveyCreater () {
+function FormEditor () {
     const pages = useRecoilValue(pagesAtom)
     const activeCard = useRecoilValue(activeCardAtom)
-
+    const token = localStorage.getItem('token')
     const { whereIsNextPage } = usePageActions()
 
     useEffect(() => {
@@ -56,7 +56,7 @@ function SurveyCreater () {
     <FormEditorWrapper>
         {/* 상단 헤더 */}
         <main>
-            <SurveyHeader />
+            <SurveyHeader token={token}/>
             <div className="card-box">
             {pages.map((page, idx) => {
                 const {id, questions} = page
@@ -92,8 +92,8 @@ function SurveyCreater () {
         </main>
 
         {/* 오른쪽 네비게이션 */}
-        <SurveyNav />
+        <FormNav token={token}/>
     </FormEditorWrapper>)
 }
 
-export default SurveyCreater
+export default FormEditor

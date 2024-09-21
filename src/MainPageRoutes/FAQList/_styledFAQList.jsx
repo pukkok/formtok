@@ -9,39 +9,49 @@ const FAQViewerWrapper = styled.section`
 
     header{
         display: flex;
-        .filter-btn{
-            
-        }
-    }
-    form{
-        border-radius: 12px;
+        align-items: center;
         margin-bottom: 30px;
-        background-color: var(--pk-dark);
-        min-width: 310px;
-        max-width: 400px;
-        height: 50px;
-        padding: 6px;
-        display: flex;
-        & > * {
-            height: 100%;
-        }
-        input{
-            padding-left: 10px;
-            flex: 1;
-        }
-        button.search-btn{
-            margin-left: auto;
+        form{
+            border-radius: 12px;
+            background-color: var(--pk-dark);
+            min-width: 310px;
+            max-width: 400px;
+            height: 50px;
+            padding: 6px;
             display: flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 16px;
-            background-color: var(--pk-point);
-            span{
-                font-size: 24px;
-                font-weight: 700;
+            & > * {
+                height: 100%;
+            }
+            input{
+                padding-left: 10px;
+                flex: 1;
+            }
+            button.search-btn{
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                padding: 4px 12px;
+                border-radius: 16px;
+                background-color: var(--pk-point);
+                span{
+                    font-size: 24px;
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .btns{
+            margin-left: auto;
+            button{
+                padding: 6px 12px;
+                border-radius: 8px;
+                background-color: var(--pk-point);
+                margin-left: 10px;
+                font-weight: 800;
             }
         }
     }
+    
 
     .card-box{
         display: grid;
@@ -51,19 +61,44 @@ const FAQViewerWrapper = styled.section`
         flex-wrap: wrap;
         text-align: center;
         width: 100%;
+        
+        user-select: none;
     }
     .card{
         background-color: var(--pk-dark);
         padding: 20px 10px;
         max-width: 350px;
         border-radius: 12px;
+        cursor: pointer;
 
-        .read-more{
+        .check-box{
             float: left;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 300;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background-color: var(--pk-silver);
+            input[type=checkbox]{
+                display: none;
+            }
+            input + span{
+                width: 0px;
+                height: 20px;
+                overflow: hidden;
+                transition: .3s;
+            }
+            input:checked + span{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 20px;
+                border-radius: 4px;
+                /* color: var(--pk-point);
+                background-color: #ffd54f; */
+                color: #EDEDED;
+                background-color: #f06292;
+                font-weight: 700;
+            }
+            
         }
 
         .type-text{ // 질문 타입

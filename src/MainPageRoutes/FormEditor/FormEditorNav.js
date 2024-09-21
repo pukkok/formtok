@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import classNames from "classnames"
-import SurveySummary from "../Survey/SurveySummary"
+import FormSummary from "../Survey/FormSummary"
 import SurveyOption from "../Survey/SurveyOption"
 import styled from "styled-components"
 
@@ -28,7 +28,7 @@ const FormEditorNavWrapper = styled.div`
     }
 ` 
 
-function SurveyNav() {
+function FormNav({token}) {
     const [activeBtn, setActiveBtn] = useState(0)
     const btns = ['전체 문항', '설문 설정']
 
@@ -45,10 +45,10 @@ function SurveyNav() {
                     </button>
                 ))}
             </nav>
-            {activeBtn === 0 && <SurveySummary />}
+            {activeBtn === 0 && <FormSummary token={token}/>}
             {activeBtn === 1 && <SurveyOption />}
         </FormEditorNavWrapper>
     )
 }
 
-export default SurveyNav
+export default FormNav

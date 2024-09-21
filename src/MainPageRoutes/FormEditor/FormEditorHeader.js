@@ -29,11 +29,10 @@ const FormHeaderWrapper = styled.header`
     }
 `
 
-function SurveyHeader () {
+function FormHeader ({token}) {
     const url = useRecoilValue(urlAtom)
     const pages = useRecoilValue(pagesAtom)
     const title = useRecoilValue(surveyTitleAtom)
-    const token = localStorage.getItem('token')
 
     const { createForm } = useAxios() 
     const navigate = useNavigate()
@@ -44,4 +43,4 @@ function SurveyHeader () {
     </FormHeaderWrapper>
 }
 
-export default SurveyHeader
+export default FormHeader

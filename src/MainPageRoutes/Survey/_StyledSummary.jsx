@@ -235,7 +235,7 @@ const StyledQuestionSummaryWrapper = styled.div`
             color: #fff;
         }
         .options.on{
-            height: 80px;
+            height: 120px;
             padding: 5px;
         }
     }

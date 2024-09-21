@@ -1,16 +1,29 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FAQs from '../../Datas/FAQs'
 import questionForms from "../../Datas/questionForms";
 import FAQViewerWrapper from "./_StyledFAQList";
 import { Icon } from "../../Components/Icons";
 import ModalWrapper from "../../Components/StyledModal";
 import RadioButton from '../../Components/RadioButton'
+import useAxios from "../../Hooks/useAxtios";
 
 function FAQViewer(){
     const modalRef = useRef()
     const [readMore, setReadMore] = useState()
-    const [searchedFAQs, setSerachedFAQs] = useState(FAQs)
+    const [loadQuestions, setLoadQuestions] = useState([])
+    const [searchedFAQs, setSerachedFAQs] = useState([])
     const [searchWord, setSearchWord] = useState('')
+    const token = localStorage.getItem('token')
+    const { getMyQuestionList } = useAxios()
+
+    useEffect(() => {
+        const getQuestions = async () => {
+            const questions = await getMyQuestionList(token)
+            setLoadQuestions(questions)
+            setSerachedFAQs(questions)
+        }
+        getQuestions()
+    }, [])
 
     const readMoreView = (faq, code) => {
         setReadMore({...faq, code})
@@ -19,7 +32,7 @@ function FAQViewer(){
 
     const search = (e) => {
         e.preventDefault()
-        const filteredFAQs = FAQs.filter(FAQ => {
+        const filteredFAQs = loadQuestions.filter(FAQ => {
             return FAQ.q.includes(searchWord) 
         })
         setSerachedFAQs(filteredFAQs)

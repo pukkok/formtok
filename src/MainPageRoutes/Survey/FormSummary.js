@@ -6,16 +6,19 @@ import { activeCardAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyA
 import MoreVert from "../../Components/MoreVert"
 import usePageActions from "../../Hooks/usePageActions"
 import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./_StyledSummary"
+import useAxios from "../../Hooks/useAxtios"
 
 /** 문항관리 탭 */
-function SurveySummary() {
+function FormSummary({token}) {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const endingMent = useRecoilValue(endingMentAtom)
-
+    
     const { addQuestion, addPage, changePLocation, changeQLocation, 
         copyP, copyQ, deleteP, deleteQ } = usePageActions()
     
+    const { saveQ } = useAxios()
+
     const [foldQuestions, setFoldQuestions] = useState([])
     const toggleFoldQ = (id) => {
         foldQuestions.includes(id) ?
@@ -59,6 +62,8 @@ function SurveySummary() {
             changeQLocation(p1, q1, p2, q2)   
         }
     }
+
+    
 
     return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
@@ -127,6 +132,7 @@ function SurveySummary() {
                                             {question.q ? <p>{question.q}</p> : <p className="placeholder">{`${idx2 + 1}번 문항`}</p>}
                                             {`Q-${idx}-${idx2}` === activeCard && 
                                             <MoreVert >
+                                                <button onClick={() => saveQ(idx, idx2, token)}>저장</button>
                                                 <button onClick={() => copyQ(idx, idx2)}>복사</button>
                                                 <button className="remove" onClick={() => deleteQ(idx, idx2)}>삭제</button>
                                             </MoreVert>}
@@ -175,4 +181,4 @@ function SurveySummary() {
     )
 }
 
-export default SurveySummary
+export default FormSummary
