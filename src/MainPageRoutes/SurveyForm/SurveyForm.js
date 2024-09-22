@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import RadioButton from "../../Components/RadioButton";
@@ -10,8 +10,6 @@ function SurveyForm() {
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
 
-    const pageDescriptionRef = useRef(null)
-    
     const [select, setSelect] = useState(null)
     const [currentIdx, setCurrentIdx] = useState(0)
 
@@ -21,7 +19,6 @@ function SurveyForm() {
             <h4 className="pd">{`${(currentIdx+1)}/${pages.length} 페이지`}</h4>
             <div className="pd">
                 <p className="title-A">{pages[currentIdx].title || '제목 없는 페이지'}</p>
-                {/* <p ref={pageDescriptionRef}></p> */}
             </div>
         </SurveyCard>
 

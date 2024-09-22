@@ -8,12 +8,14 @@ import SurveyForm from './MainPageRoutes/SurveyForm/SurveyForm';
 import Setting from './MainPageRoutes/Setting/Setting';
 import NotFoundPage from './Pages/NotFoundPage';
 import FAQViewer from './MainPageRoutes/FAQList/FAQViewer';
+import HomePage from './Pages/HomePage';
 
 function App() {
 
   return (
     <>
       <Routes>
+        <Route path='/' element={<HomePage/>}/>
         <Route element={<MainPage/>}>
           <Route path='my-form'>
             <Route path='' element={<SurveyManager/>}/>

@@ -6,7 +6,7 @@ import { activeCardAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyA
 import MoreVert from "../../Components/MoreVert"
 import usePageActions from "../../Hooks/usePageActions"
 import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./_StyledSummary"
-import useAxios from "../../Hooks/useAxtios"
+import useAxios from "../../Hooks/useAxios"
 
 /** 문항관리 탭 */
 function FormSummary({token}) {

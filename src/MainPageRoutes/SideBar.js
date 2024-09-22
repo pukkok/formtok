@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { isSideOpenAtom, ViewerBGAtom } from "../Recoils/surveyAtoms";
+import { useRecoilState } from "recoil";
+import { isSideOpenAtom } from "../Recoils/surveyAtoms";
 import { useNavigate } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/Logo/Logo";
 import { Icon } from "../Components/Icons";
 import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";
+import useAxios from "../Hooks/useAxios";
 
 function SideBar () {
 
-    const viewerBG = useRecoilValue(ViewerBGAtom)
     const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
     
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+
     const token = localStorage.getItem('token')
+    const { firstExpiredTokenCheck } = useAxios()
 
-    useEffect(()=>{
-        const localStorageChange = () => {
-            setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
-        }
-
-        window.addEventListener('storage', localStorageChange)
-
-        // 클린업
-        return () => window.removeEventListener('storage', localStorageChange)
-    }, [])
+    useEffect(() => {
+        if(token) firstExpiredTokenCheck(token)
+    }, [token])
 
     const sideOpener = () => {
         setIsSideOpen(prev => !prev)
@@ -115,8 +110,6 @@ function SideBar () {
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
 
-        <span className="top block"></span>
-        <span style={{backgroundColor : viewerBG}} className="bottom block"></span>
     </SideBarWrapper>
 }
 export default SideBar

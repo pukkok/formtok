@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
-import useAxios from "../Hooks/useAxtios";
+import useAxios from "../Hooks/useAxios";
 import { LoginForms, JoinForms } from "../Datas/loginForms";
 import LoginPageWrapper from "./LoginStyles/StyledLoginPageWrapper";
 import { LargeBox, SmallBox, SmallBoxWrapper } from "./LoginStyles/StyledLoginBoxes";
