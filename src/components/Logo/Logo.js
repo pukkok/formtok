@@ -98,8 +98,8 @@ function Logo() {
             </div>
             <div>
                 <h1>고래폼</h1>
-                <p>WHALE FORM</p>
-                <p>남은 시간: {timeLeft}</p>
+                {/* <p>WHALE FORM</p> */}
+                <p>만료 시간: {timeLeft}</p>
             </div>
         </StyledLogo>
     );

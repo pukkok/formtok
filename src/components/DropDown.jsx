@@ -31,11 +31,11 @@ const DropDownWrapper = styled.div`
             transition: .2s;
             margin-left: auto;
         }
-        &.open{
+        &.open{ // 애로우 버튼
             border: solid 1px var(--pk-silver);
 
             & span:nth-last-child(1){
-                rotate: 180deg;
+                rotate: -180deg;
             }
         }
     }
@@ -89,7 +89,7 @@ function DropDown ({initialItem, children, initialState=false, width}) {
         <button className={classNames({open : isOpen})}
             style={{width: width+'px'}}
             onClick={()=>{setIsOpen(!isOpen)}}>{initialItem}
-            <Icon code={'arrow_drop_down'}/>
+            <Icon code={'arrow_drop_up'}/>
         </button>
         
         <ul className={classNames({open: isOpen})} onClick={()=>setIsOpen(false)}>

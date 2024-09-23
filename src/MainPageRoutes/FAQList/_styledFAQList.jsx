@@ -11,34 +11,6 @@ const FAQViewerWrapper = styled.section`
         display: flex;
         align-items: center;
         margin-bottom: 30px;
-        form{
-            border-radius: 12px;
-            background-color: var(--pk-dark);
-            min-width: 310px;
-            max-width: 400px;
-            height: 50px;
-            padding: 6px;
-            display: flex;
-            & > * {
-                height: 100%;
-            }
-            input{
-                padding-left: 10px;
-                flex: 1;
-            }
-            button.search-btn{
-                margin-left: auto;
-                display: flex;
-                align-items: center;
-                padding: 4px 12px;
-                border-radius: 16px;
-                background-color: var(--pk-point);
-                span{
-                    font-size: 24px;
-                    font-weight: 700;
-                }
-            }
-        }
 
         .btns{
             margin-left: auto;

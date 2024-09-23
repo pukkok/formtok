@@ -33,7 +33,7 @@ const StyledHeader = styled.header`
             font-size: 16px;
             color: var(--pk-white);
             transition: color 0.3s;
-
+            cursor: pointer;
             &:hover {
                 color: var(--pk-point-hover);
             }
@@ -50,12 +50,12 @@ function HomeHeader() {
             </div>
             <nav>
                 <Link to="/">홈</Link>
-                <Link to="/features">특징</Link>
+                <Link to="/features">깃허브</Link>
                 <Link to="/contact">문의하기</Link>
-                <Link to="/login">로그인</Link>
+                <Link to="/user/login">로그인</Link>
             </nav>
         </StyledHeader>
     );
 }
 
-export default HomeHeader;
+export default HomeHeader

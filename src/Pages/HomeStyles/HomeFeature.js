@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import surveyIcons from './survey-icons-copy.png'
+import surveyIcons from './survey-icons-origin.png'
 
 const StyledFeatures = styled.section`
     padding: 80px 40px;
@@ -66,18 +66,6 @@ const StyledFeatures = styled.section`
 
             p {
                 font-size: 14px;
-            }
-        }
-    }
-
-    @media (max-width: 768px) {
-        .features-container {
-            flex-direction: column;
-            align-items: center;
-
-            .feature {
-                width: 80%;
-                margin-bottom: 20px;
             }
         }
     }

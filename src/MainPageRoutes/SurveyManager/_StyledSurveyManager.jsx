@@ -1,20 +1,21 @@
 import styled from "styled-components";
 
-const StyledSurveyManagerWrapper = styled.section`
+const SurveyManagerWrapper = styled.section`
     max-width: fit-content;
     max-width: 2100px;
     padding: 10px 30px;
     margin: 30px auto;
     .template-box{
+        margin-top: 30px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
         flex-wrap: wrap;
-        width: 100%;
         column-gap: 10px;
         row-gap: 20px;
     }
     &.dark-mode{
         .card{
+            width: 300px;
             background-color: var(--pk-dark);
             color: var(--pk-light-grey);
 
@@ -133,4 +134,8 @@ const StyledSurveyManagerWrapper = styled.section`
     }
 `
 
-export { StyledSurveyManagerWrapper as SurveyManagerWrapper}
+const SurveyCard = styled.div`
+    
+`
+
+export { SurveyManagerWrapper }

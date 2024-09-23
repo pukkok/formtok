@@ -1,5 +1,5 @@
 const sidebarNavs = [
-    {text: '홈', code: 'home', path: 'home'},
+    {text: '홈', code: 'home', path: '/'},
     {text: '내 설문지', code: 'lab_profile', 
         depth2: [
             {text:'제작하기', code: 'edit', path:'my-form'}, 

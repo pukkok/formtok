@@ -30,7 +30,7 @@ function LoginPage () {
         e.preventDefault()
         const {userId, password} = loginInputs
         const result = await login(userId, password)
-        if(result) navigate('/')
+        if(result) navigate('/my-form')
     }
     const joinAction = async () => {
         const result = await join(joinInputs)

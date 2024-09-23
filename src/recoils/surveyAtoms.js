@@ -35,11 +35,6 @@ const gridAtom  = atom({
     default : 320
 })
 
-const ViewerBGAtom = atom({
-    key: 'viewerBG-color',
-    default: '#FBFBFC'
-})
-
 const isSideOpenAtom = atom({
     key: 'sidebar-open',
     default : true
@@ -112,7 +107,6 @@ const activeCardAtom = atom({
 export {
     randomKey, randomUrl,
 
-    ViewerBGAtom,
     gridAtom, isSideOpenAtom, 
     urlAtom, surveyTitleAtom,
     tabsAtom, activeTabAtom, activeCardAtom,

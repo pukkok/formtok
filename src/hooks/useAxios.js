@@ -95,7 +95,18 @@ const useAxios = () => {
         }
     }
 
-    
+    const getMyFormList = async (token) => {
+        try{
+            const {data} = await axios.post('/form/my-form/load', {},
+                {headers : {'Authorization' : `Bearer ${token}`}}
+            )
+            if(data.code === 200) return data.forms
+        }catch (error){
+            console.log(error)
+            return []
+        }
+    }
+
     const getMyQuestionList = async (token) => {
         try{
             const {data} = await axios.post('/form/question/load', {},
@@ -114,6 +125,7 @@ const useAxios = () => {
     return { 
         firstExpiredTokenCheck,
         login, join, 
-        createForm, saveQ, getMyQuestionList }
+        createForm, saveQ, 
+        getMyFormList, getMyQuestionList }
 }
 export default useAxios

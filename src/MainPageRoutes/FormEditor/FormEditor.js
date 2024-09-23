@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 
-import PageCard from "../Survey/Card_Page";
-import QuestionCard from "../Survey/Card_Question";
-import EndingCard from "../Survey/Card_End";
+import {PageCard, QuestionCard, EndingCard} from "./FormCards";
 
 import FormNav from "./FormEditorNav";
 import { useRecoilValue } from "recoil";
 import { activeCardAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import DropDown from "../../Components/DropDown";
 import usePageActions from "../../Hooks/usePageActions";
-import SurveyHeader from "./FormEditorHeader";
 import styled from "styled-components";
+import FormHeader from "./FormEditorHeader";
 
 const FormEditorWrapper = styled.section`
     width: calc(100% - 400px);
@@ -56,7 +54,7 @@ function FormEditor () {
     <FormEditorWrapper>
         {/* 상단 헤더 */}
         <main>
-            <SurveyHeader token={token}/>
+            <FormHeader token={token}/>
             <div className="card-box">
             {pages.map((page, idx) => {
                 const {id, questions} = page

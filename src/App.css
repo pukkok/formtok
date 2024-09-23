@@ -2,22 +2,7 @@
 
 *{
   box-sizing: border-box;
-  --normal-weight: 400;
-  --bold-weight: 700;
-  --bolder-weight: 800;
-  --light-weight: 300;
-
-  --second-light-purple: #D1B1FC;
-  --light-purple: #8767D2;
-  
-  
-  --deepbg: #32323D;
-  --lightbg: #393944;
-
   line-height: 1.5;
-
-  --color: #eaebff;
-  --color: #333;
 }
 
 :root{
@@ -40,9 +25,13 @@ body{
   font-family: 'NanumSquare', sans-serif;
   margin: 0;
   padding: 0;
-  color: #EDEDED;
+  background-color: var(--pk-deep-dark);
+  color: var(--pk-light-grey);
 }
 
+a{
+  text-decoration: none;
+}
 
 
 h1, h2, h3, h4, h5, h6, p{
