@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-// import feature1 from '../images/feature1.png'; // 특징 이미지 경로
-// import feature2 from '../images/feature2.png';
-// import feature3 from '../images/feature3.png';
+import surveyIcons from './survey-icons-copy.png'
 
 const StyledFeatures = styled.section`
     padding: 80px 40px;
@@ -30,6 +28,26 @@ const StyledFeatures = styled.section`
             width: 30%;
             text-align: center;
             transition: transform 0.3s;
+
+            & > div{
+                width: 150px;
+                height: 120px;
+                margin: 0 auto;
+                margin-bottom: 10px;
+                background-image: url(${surveyIcons});
+                background-size: 600px;
+                background-repeat: no-repeat;
+            }
+
+            .write{
+                background-position: left -150px top -280px;
+            }
+            .analysis{
+                background-position: left -300px top -0px;
+            }
+            .my-dashboard{
+                background-position: left -150px top -130px;
+            }
 
             &:hover {
                 transform: translateY(-10px);
@@ -71,19 +89,19 @@ function HomeFeatures() {
             <h3>고래폼의 주요 기능</h3>
             <div className="features-container">
                 <div className="feature">
-                    <img src={'feature1'} alt="간편한 설문지 작성" />
+                    <div className='write'></div>
                     <h4>간편한 설문지 작성</h4>
-                    <p>드래그 앤 드롭 방식으로 쉽고 빠르게 설문지를 작성할 수 있습니다.</p>
+                    <p>드래그 앤 드롭 방식으로 쉽고 빠르게 <br/> 설문지를 작성할 수 있습니다.</p>
                 </div>
                 <div className="feature">
-                    <img src={'feature2'} alt="실시간 데이터 분석" />
+                <div className='analysis'></div>
                     <h4>실시간 데이터 분석</h4>
-                    <p>설문 응답 데이터를 실시간으로 분석하고 시각화할 수 있습니다.</p>
+                    <p>설문 응답 데이터를 실시간으로 분석하고 <br/> 시각화할 수 있습니다.</p>
                 </div>
                 <div className="feature">
-                    <img src={'feature3'} alt="다양한 템플릿 제공" />
-                    <h4>다양한 템플릿 제공</h4>
-                    <p>다양한 설문지 템플릿을 제공하여 필요에 맞게 선택할 수 있습니다.</p>
+                <div className='my-dashboard'></div>
+                    <h4>나만의 대시보드 구성</h4>
+                    <p>설문 응답 데이터를 내가 원하는대로 <br/> 대시보드를 꾸며보세요!</p>
                 </div>
             </div>
         </StyledFeatures>

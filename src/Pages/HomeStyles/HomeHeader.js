@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import logo from '../images/logo-check-1.png'; // 로고 이미지 경로
 
 const StyledHeader = styled.header`
     width: 100%;
-    padding: 20px 40px;
+    padding: 10px 30px;
     background-color: var(--pk-deep-dark);
     display: flex;
     justify-content: space-between;

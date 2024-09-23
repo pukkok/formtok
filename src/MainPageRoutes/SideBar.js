@@ -28,8 +28,8 @@ function SideBar () {
 
     const navigate = useNavigate()
 
-    const [active, setActive] = useState({depth1 : 0, depth2: null})
-    const [openDepth2, setOpenDepth2] = useState([])
+    const [active, setActive] = useState({depth1 : null, depth2: 0})
+    const [openDepth2, setOpenDepth2] = useState([1])
 
     const depth1Click = (idx, path) => {
         setActive({depth1 : idx, depth2: null})

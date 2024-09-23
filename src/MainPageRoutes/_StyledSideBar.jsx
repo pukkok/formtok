@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SideBarWrapper = styled.div`
+const SideBarWrapper = styled.aside`
   grid-area: side;
   color: var(--pk-light-grey);
   border-right: 1px solid var(--pk-charcoal);

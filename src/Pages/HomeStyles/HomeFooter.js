@@ -35,10 +35,9 @@ const StyledFooter = styled.footer`
 function HomeFooter() {
     return (
         <StyledFooter>
-            <p>&copy; {new Date().getFullYear()} 고래폼. 모든 권리 보유.</p>
+            <p>&copy; {new Date().getFullYear()} Whale Form. Powered By Pukkok.</p>
             <div className="social-links">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+                <a href="https://github.com/pukkok" target="_blank" rel="noopener noreferrer">Github</a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
             </div>
         </StyledFooter>
