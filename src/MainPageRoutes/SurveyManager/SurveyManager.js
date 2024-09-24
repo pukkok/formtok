@@ -1,36 +1,44 @@
-// import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AddCircleIcon } from "../../Components/Icons";
-import MoreVert from "../../Components/MoreVert";
-import { randomUrl, surveyTitleAtom, urlAtom } from "../../Recoils/surveyAtoms";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { AddCircleIcon, Icon } from "../../Components/Icons";
+import { randomUrl, randomKey, surveyTitleAtom, urlAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
+import { useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledSurveyManager";
 import ModalWrapper from "../../Components/StyledModal";
 import SearchForm from "../../Components/SearchForm";
 import useAxios from "../../Hooks/useAxios";
+import classNames from "classnames";
+import usePageActions from "../../Hooks/usePageActions";
 
 function SurveyManager () {
-    const [surveyTitle, setSurveyTitle] = useRecoilState(surveyTitleAtom)
-    const naviate = useNavigate()
+    const setTitle = useSetRecoilState(surveyTitleAtom)
+    const setEndingMent = useSetRecoilState(endingMentAtom)
     const setUrl = useSetRecoilState(urlAtom)
+
+    const naviate = useNavigate()
     const token = localStorage.getItem('token')
-    const { getMyFormList } = useAxios()
-    const [myForms, setMyFomrs] = useState([])
+
+    const [createTitle, setCreateTitle] = useState('')
+    const [myForms, setMyForms] = useState([])
+    const [searchedForms, setSerachedForms] = useState([])
+    const [light, setLight] = useState('green')
+
+    // custom hooks
+    const { getMyFormList, createForm, copyForm, deleteForm } = useAxios()
+    const { loadPages } = usePageActions() 
 
     useEffect(() => {
         const getForms = async () => {
             const forms = await getMyFormList(token)
-            console.log(forms)
-            setMyFomrs(forms)
+            setSerachedForms(forms)
+            setMyForms(forms)
         }
         token && getForms()
-    },[token])
+    }, [token])
 
-    // const [light, setLight] = useState('green')
-
+    
+    // 모달 열고 닫기
     const modalRef = useRef(null)
-
     const openModal = () => {
         modalRef.current.showModal()
     }
@@ -38,17 +46,71 @@ function SurveyManager () {
         modalRef.current.close()
     }
 
-    const goToCreate = () => {
-        let url = randomUrl()
+    const goToCreateForm = () => {
+        alert('새로운 설문지가 생성되었습니다.')
+        const url = randomUrl()
+        const newPages = [
+            {
+            id: 'P'+randomKey(), 
+            title: '', 
+            description : '',
+            questions: [
+                {id: 'Q'+randomKey(), 
+                    type: '객관식', 
+                    q: '', d: '', 
+                    options: [{id : 'O'+randomKey(), answer: ''}],
+                    hasExtraOption: false,
+                    essentail : false,
+                    next : null
+                }
+            ],
+            next : null
+            }
+        ]
+        createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
+
         setUrl(url)
-        naviate(`/my-form/create/${url}`)
+        setTitle(createTitle)
+        loadPages(newPages)
+        setEndingMent({title: '', description: ''})
+        naviate(`/my-form/edit/${url}`)
     }
+
+    const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}) => {
+        setTitle(title)
+        setUrl(url)
+        loadPages(pages)
+        setEndingMent(endingMent)
+        naviate(`/my-form/edit/${url}`)
+    }
+
     const enterClick = (e) => {
-        if(e.key === 'Enter') goToCreate()
+        if(e.key === 'Enter') goToCreateForm()
     }
     
     const search = (word) =>{
-        console.log(word)
+        const filteredForms = myForms.filter(form => form.title.includes(word))
+        setSerachedForms(filteredForms)
+    }
+
+    const copyFormAction = async (e, url, token) => {
+        e.stopPropagation()
+        const success = await copyForm(url, token)
+        if(success){
+            const forms = await getMyFormList(token)
+            setSerachedForms(forms)
+            setMyForms(forms)
+        }
+    }
+
+    const deleteFormAction = async (e, url, token) => {
+        e.stopPropagation()
+        const success = await deleteForm(url, token)
+        if(success){
+            const forms = await getMyFormList(token)
+            setSerachedForms(forms)
+            setMyForms(forms)
+        }
     }
 
     return (
@@ -61,39 +123,28 @@ function SurveyManager () {
                         <AddCircleIcon/>
                     </button>
                 </div>
-                {myForms.length > 0 && myForms.map(form => {
-                    const {title, url} = form
+                {searchedForms.length > 0 && searchedForms.map(form => {
+                    const {title, url, pages, endingMent} = form
                     return <div key={url} className="card">
-                        <div className="form-box">
+                        <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent)}>
                             <div className="form-status">
-                                <MoreVert></MoreVert>
+                                <span className={classNames("light", light)}></span>
+                                <button onClick={e=>copyFormAction(e, url, token)}><Icon code={'content_copy'}/></button>
+                                <button onClick={e=>deleteFormAction(e, url, token)}><Icon code={'delete'}/></button>
                             </div>
                             <h4>{title}</h4>
+                            <p>제출 0</p>
                         </div>
                     </div>
-                })
-            
-                }
-                <div className="card">
-                    <div className="form-box" onClick={(e) => console.log('바깥 버튼')}>
-                        <div className="form-status">
-                            {/* <span className={classNames("light", light)}></span> */}
-                            <MoreVert>
-
-                            </MoreVert>
-                        </div>
-                        <h4>2024학년도 진로결정 및 취업지원을 위한 재학생 실태조사</h4>
-                        <p>제출 0</p>
-                    </div>
-                </div>
+                })}
             </div>
 
             <ModalWrapper ref={modalRef} onKeyDown={enterClick}>
                 <div className="modal-content">
                     <header>
                         <input placeholder="설문지 제목" 
-                        onChange={(e)=>setSurveyTitle(e.target.value)}
-                        value={surveyTitle}/>
+                        onChange={(e)=>setCreateTitle(e.target.value)}
+                        value={createTitle}/>
                     </header>
                     <main>
                         <h4>사용 안내</h4>
@@ -103,7 +154,7 @@ function SurveyManager () {
                         <p>* 제목은 설문지 배포시에 사용됩니다.</p>
                     </main>
                     <footer className="btns">
-                        <button onClick={goToCreate}>생성하기</button>
+                        <button onClick={goToCreateForm}>생성하기</button>
                         <button onClick={closeModal}>닫기</button>
                     </footer>
                 </div>

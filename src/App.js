@@ -19,7 +19,7 @@ function App() {
         <Route element={<MainPage/>}>
           <Route path='my-form'>
             <Route path='' element={<SurveyManager/>}/>
-            <Route path='create/:surveyId' element={<FormEditor/>}/>
+            <Route path='edit/:surveyId' element={<FormEditor/>}/>
             <Route path='form/:surveyId' element={<SurveyForm/>}/>
             <Route path='FAQ' element={<FAQViewer/>}/>
           </Route>
