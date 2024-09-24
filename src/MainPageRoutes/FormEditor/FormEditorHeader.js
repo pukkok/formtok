@@ -17,6 +17,19 @@ const FormHeaderWrapper = styled.header`
     height: 60px;
     padding: 0 20px;
     z-index: 100;
+    input{
+        width: fit-content;
+        width: 250px;
+        font-size: 18px;
+        margin-top: 2px;
+        margin-right: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &:focus{
+            overflow: none;
+            border-bottom: 1px solid var(--pk-silver);
+        }
+    }
 
     button{
         background-color: var(--pk-point);

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FAQViewerWrapper = styled.section`
+const MyQuestionsWrapper = styled.section`
     display: flex;
     flex-direction: column;
     padding: 20px 30px;
@@ -88,7 +88,7 @@ const FAQViewerWrapper = styled.section`
         
         .type-icon{ // 질문 타입 아이콘
             span{
-                color: var(--pk-point);
+                /* color: var(--pk-point); */
                 font-size: 60px;
             }
             margin-bottom: 10px;
@@ -131,4 +131,4 @@ const FAQViewerWrapper = styled.section`
         }
     }
 `
-export default FAQViewerWrapper
+export default MyQuestionsWrapper

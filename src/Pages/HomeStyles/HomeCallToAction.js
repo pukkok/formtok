@@ -43,7 +43,7 @@ function CallToAction() {
         <StyledCTA>
             <h3>설명만 듣는것 보단 한번 해보는게 빠르죠!</h3>
             <p>고래폼을 사용하여 쉽게 설문조사를 생성하고 데이터를 분석해보세요.</p>
-            <button onClick={() => navigate('/signup')}>가입하기</button>
+            <button onClick={() => navigate('/user/login')}>가입하기</button>
         </StyledCTA>
     );
 }

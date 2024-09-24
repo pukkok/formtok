@@ -7,8 +7,8 @@ import FormEditor from './MainPageRoutes/FormEditor/FormEditor';
 import SurveyForm from './MainPageRoutes/SurveyForm/SurveyForm';
 import Setting from './MainPageRoutes/Setting/Setting';
 import NotFoundPage from './Pages/NotFoundPage';
-import FAQViewer from './MainPageRoutes/FAQList/FAQViewer';
 import HomePage from './Pages/HomePage';
+import MyQuestions from './MainPageRoutes/MyQuestions/MyQuestions';
 
 function App() {
 
@@ -21,7 +21,7 @@ function App() {
             <Route path='' element={<SurveyManager/>}/>
             <Route path='edit/:surveyId' element={<FormEditor/>}/>
             <Route path='form/:surveyId' element={<SurveyForm/>}/>
-            <Route path='FAQ' element={<FAQViewer/>}/>
+            <Route path='questions' element={<MyQuestions/>}/>
           </Route>
           <Route path='setting' element={<Setting/>}/>
           <Route path='*' element={<NotFoundPage/>}/>

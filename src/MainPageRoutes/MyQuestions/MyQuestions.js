@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import questionForms from "../../Datas/questionForms";
-import FAQViewerWrapper from "./_StyledFAQList";
+import MyQuestionsWrapper from "./_StyledMyQuestions";
 import { Icon } from "../../Components/Icons";
 import ModalWrapper from "../../Components/StyledModal";
 import RadioButton from '../../Components/RadioButton'
 import useAxios from "../../Hooks/useAxios";
 import SearchForm from "../../Components/SearchForm";
 
-function FAQViewer(){
+function MyQuestions(){
     const modalRef = useRef()
     const [readMore, setReadMore] = useState()
     const [loadQuestions, setLoadQuestions] = useState([])
@@ -15,7 +15,17 @@ function FAQViewer(){
     const token = localStorage.getItem('token')
     const { getMyQuestionList } = useAxios()
 
-    useEffect(() => {
+    const colorPick = (type) => {
+        let color = ''
+        switch (type) {
+            case '객관식' : color = '#4dd0e1' ; break
+            case '드롭다운' : color = '#ffd54f' ; break
+        }
+        console.log({color})
+        return {color}
+    }
+
+    useEffect(() => { // 문항 가져오기
         const getQuestions = async () => {
             const questions = await getMyQuestionList(token)
             setLoadQuestions(questions)
@@ -49,14 +59,14 @@ function FAQViewer(){
         console.log(x)
     }
 
-    return <FAQViewerWrapper>
+    return (
+    <MyQuestionsWrapper>
         <header>
             <SearchForm handleClick={search}/>
             <div className="btns">
-                <button>추가</button>
-                <button>수정</button>
-                <button onClick={takeQuestion}>사용</button>
-                <button>삭제</button>
+                <button>추가하기</button>
+                <button onClick={takeQuestion}>사용하기</button>
+                <button>삭제하기</button>
             </div>
         </header>
 
@@ -65,15 +75,17 @@ function FAQViewer(){
         searchedFAQs.map((faq, idx) => {
             const {q, options, type} = faq
             const form = questionForms.find(x => x.form === type)
-
-            return <label key={idx} className="card">
+            return (
+            <label key={idx} className="card">
                 <div className="check-box">
                     <input name={idx} type={'checkbox'} 
                     ref={el => checkedRef.current[idx] = el}/>
                     <Icon code={'check'}/>
                 </div>
                 <p className="type-text"><span>{type}</span></p>
-                <p className="type-icon"><Icon code={form.code}/></p>
+                <p className={"type-icon"}
+                style={colorPick(type)}
+                ><Icon code={form.code}/></p>
                 <h4>Q. {q}</h4>
                 <div className="answer-box">
                     {options.map((option, idx2) => {
@@ -84,8 +96,10 @@ function FAQViewer(){
                     <button onClick={() => readMoreView(faq, form.code)}>자세히 보기</button>
                 </div>
             </label>
+            )
         }) : token ? <p>검색 결과가 없습니다.</p> : <p>해당 탭은 로그인 후 사용 가능합니다.</p>}
         </div>
+
         <ModalWrapper ref={modalRef} className="modal-wrapper">
             {readMore && <div>
                 <header>Q. {readMore.q}
@@ -98,12 +112,14 @@ function FAQViewer(){
                 })}
                 </main>
                 <footer className="btns">
-                    <button onClick={()=>{}}>가져가기</button>
+                    <button onClick={()=>{}}>사용하기</button>
+                    <button style={{backgroundColor: '#c30928'}} onClick={()=>{}}>삭제하기</button>
                     <button onClick={closeModal}>닫기</button>
                 </footer>
             </div>
             }
         </ModalWrapper>
-    </FAQViewerWrapper>
+    </MyQuestionsWrapper>
+    )
 }
-export default FAQViewer
+export default MyQuestions

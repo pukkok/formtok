@@ -4,7 +4,7 @@ const sidebarNavs = [
         depth2: [
             {text:'제작하기', code: 'edit', path:'my-form'}, 
             {text:'결과확인', code: 'search_check'},
-            {text:'문항관리', code: 'folder_managed', path: '/my-form/FAQ'}
+            {text:'문항관리', code: 'folder_managed', path: '/my-form/questions'}
         ]},
     {text:'참여하기', code: 'inventory'}, 
     {text: '대시보드', code: 'equalizer'},

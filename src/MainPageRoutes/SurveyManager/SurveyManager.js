@@ -14,7 +14,7 @@ function SurveyManager () {
     const setTitle = useSetRecoilState(surveyTitleAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
     const setUrl = useSetRecoilState(urlAtom)
-
+    
     const naviate = useNavigate()
     const token = localStorage.getItem('token')
 
@@ -38,16 +38,16 @@ function SurveyManager () {
 
     
     // 모달 열고 닫기
-    const modalRef = useRef(null)
+    const createModalRef = useRef(null)
     const openModal = () => {
-        modalRef.current.showModal()
+        createModalRef.current.showModal()
     }
     const closeModal = () => {
-        modalRef.current.close()
+        createModalRef.current.close()
     }
 
-    const goToCreateForm = () => {
-        alert('새로운 설문지가 생성되었습니다.')
+    // 설문지 생성
+    const goToCreateForm = async () => {
         const url = randomUrl()
         const newPages = [
             {
@@ -67,15 +67,21 @@ function SurveyManager () {
             next : null
             }
         ]
-        createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
-
-        setUrl(url)
-        setTitle(createTitle)
-        loadPages(newPages)
-        setEndingMent({title: '', description: ''})
-        naviate(`/my-form/edit/${url}`)
+        const success = await createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
+        if(success){
+            alert('새로운 설문지가 생성되었습니다.')
+            setUrl(url)
+            setTitle(createTitle)
+            loadPages(newPages)
+            setEndingMent({title: '', description: ''})
+            naviate(`/my-form/edit/${url}`)
+        }else{
+            alert('로그인 후 사용이 필요합니다.')
+            naviate('/user/login')
+        }
     }
 
+    // 불러온 폼으로 이동
     const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}) => {
         setTitle(title)
         setUrl(url)
@@ -98,6 +104,7 @@ function SurveyManager () {
         const success = await copyForm(url, token)
         if(success){
             const forms = await getMyFormList(token)
+            alert('복사되었습니다.')
             setSerachedForms(forms)
             setMyForms(forms)
         }
@@ -105,9 +112,14 @@ function SurveyManager () {
 
     const deleteFormAction = async (e, url, token) => {
         e.stopPropagation()
+        
+        let lastChance = prompt(`정말로 삭제를 원하시나요? \n삭제를 원하시면 "삭제" 라고 입력해주세요`)
+        if(lastChance !== '삭제') return alert('취소 되었습니다.')
+
         const success = await deleteForm(url, token)
         if(success){
             const forms = await getMyFormList(token)
+            alert('설문지가 삭제되었습니다.')
             setSerachedForms(forms)
             setMyForms(forms)
         }
@@ -129,8 +141,8 @@ function SurveyManager () {
                         <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent)}>
                             <div className="form-status">
                                 <span className={classNames("light", light)}></span>
-                                <button onClick={e=>copyFormAction(e, url, token)}><Icon code={'content_copy'}/></button>
-                                <button onClick={e=>deleteFormAction(e, url, token)}><Icon code={'delete'}/></button>
+                                <button title="복사" onClick={e=>copyFormAction(e, url, token)}><Icon code={'content_copy'}/></button>
+                                <button title="삭제" onClick={e=>deleteFormAction(e, url, token)}><Icon code={'delete'}/></button>
                             </div>
                             <h4>{title}</h4>
                             <p>제출 0</p>
@@ -139,7 +151,7 @@ function SurveyManager () {
                 })}
             </div>
 
-            <ModalWrapper ref={modalRef} onKeyDown={enterClick}>
+            <ModalWrapper ref={createModalRef} onKeyDown={enterClick}>
                 <div className="modal-content">
                     <header>
                         <input placeholder="설문지 제목" 
@@ -155,7 +167,7 @@ function SurveyManager () {
                     </main>
                     <footer className="btns">
                         <button onClick={goToCreateForm}>생성하기</button>
-                        <button onClick={closeModal}>닫기</button>
+                        <button onClick={()=>closeModal(createModalRef)}>닫기</button>
                     </footer>
                 </div>
             </ModalWrapper>
