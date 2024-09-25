@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import surveyIcons from './survey-icons-origin.png'
+// import surveyIcons from './survey-icons-origin.png'
+import surveyIcons from '../../Imgs/coloful-business-icons.png'
 
 const StyledFeatures = styled.section`
-    padding: 80px 40px;
-    background-color: var(--pk-dark);
+    padding: 20px;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,38 +16,59 @@ const StyledFeatures = styled.section`
         color: var(--pk-point);
     }
 
+    @keyframes moveToHigh {
+        0%{
+            top: 100vh;
+        }
+        100%{
+            top: -15vh;
+        }
+    }
+
     .features-container {
-        display: flex;
-        justify-content: space-between;
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
         width: 100%;
-        max-width: 1200px;
+        max-width: var(--pk-container);
 
         .feature {
-            background-color: var(--pk-charcoal);
-            padding: 20px;
-            border-radius: 12px;
-            width: 30%;
-            text-align: center;
-            transition: transform 0.3s;
+            position: relative;
+            top: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 360px;
 
+            background-color: var(--pk-charcoal);
+            background-image: linear-gradient(var(--pk-charcoal) 20%, var(--pk-dark));
+            padding: 35px;
+            border-radius: 12px;
+
+            flex-basis: auto;
+            flex: 1 1;
+
+            transition: transform 0.3s;
+            animation: moveToHigh 1s forwards;
+            animation-delay: 1s;
             & > div{
-                width: 150px;
-                height: 120px;
-                margin: 0 auto;
+                width: 110px;
+                height: 110px;
                 margin-bottom: 10px;
                 background-image: url(${surveyIcons});
-                background-size: 600px;
+                background-size: 500px;
                 background-repeat: no-repeat;
             }
 
             .write{
-                background-position: left -150px top -280px;
+                background-position: left -252px top -252px;
             }
             .analysis{
-                background-position: left -300px top -0px;
+                background-position: left -140px top -28px;
             }
             .my-dashboard{
-                background-position: left -150px top -130px;
+                background-position: left -30px top -252px;
             }
 
             &:hover {
@@ -60,12 +82,12 @@ const StyledFeatures = styled.section`
             }
 
             h4 {
-                font-size: 20px;
+                font-size: 26px;
                 margin-bottom: 10px;
             }
 
             p {
-                font-size: 14px;
+                font-size: 16px;
             }
         }
     }
@@ -74,7 +96,7 @@ const StyledFeatures = styled.section`
 function HomeFeatures() {
     return (
         <StyledFeatures>
-            <h3>고래폼의 주요 기능</h3>
+            {/* <h3>고래폼의 주요 기능</h3> */}
             <div className="features-container">
                 <div className="feature">
                     <div className='write'></div>

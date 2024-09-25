@@ -47,11 +47,12 @@ function SideBar () {
         navigate(path)
     }
 
-    return <SideBarWrapper>
+    return (
+    <SideBarWrapper>
         {isSideOpen ? 
         <div className="tabs">
             <div className="logo-box">
-                <Logo/>
+                <Logo />
                 <button onClick={sideOpener}>닫기</button>
             </div>
             <ul className="depth1">
@@ -67,8 +68,7 @@ function SideBar () {
                     <Icon code={code}/>{text}
                     
                     {depth2 && //애로우 버튼
-                    <Icon className={classNames('arrow', {open : openDepth2.includes(idx)})}
-                    code={'keyboard_arrow_up'}/>}
+                    <Icon className={classNames('arrow', {open : openDepth2.includes(idx)})} code={'keyboard_arrow_up'}/>}
                     </button>
                     
                     {depth2 &&
@@ -110,7 +110,7 @@ function SideBar () {
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
 
-    </SideBarWrapper>
+    </SideBarWrapper>)
 }
 export default SideBar
 

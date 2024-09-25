@@ -6,7 +6,7 @@ const sidebarNavs = [
             {text:'결과확인', code: 'search_check'},
             {text:'문항관리', code: 'folder_managed', path: '/my-form/questions'}
         ]},
-    {text:'참여하기', code: 'inventory'}, 
+    {text:'참여하기', code: 'inventory', path: '/survey-answer'}, 
     {text: '대시보드', code: 'equalizer'},
     // {text: '공개 문항', code: 'folder_open'},
     {text: '설정', code: 'settings', path: 'setting'},

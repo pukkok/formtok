@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import classNames from "classnames"
 import FormSummary from "./FormSummary"
-import SurveyOption from "./SurveyOption"
+import SurveyOption from "./FormOption"
 import styled from "styled-components"
 
 const FormEditorNavWrapper = styled.div`
@@ -28,6 +28,7 @@ const FormEditorNavWrapper = styled.div`
     }
 ` 
 
+/** 오른쪽 사이드바 설문지 네비게이션 */
 function FormNav({token}) {
     const [activeBtn, setActiveBtn] = useState(0)
     const btns = ['전체 문항', '설문 설정']

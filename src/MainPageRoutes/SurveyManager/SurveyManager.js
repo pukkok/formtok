@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, Icon } from "../../Components/Icons";
-import { randomUrl, randomKey, surveyTitleAtom, urlAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
+import { randomUrl, randomKey, surveyTitleAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledSurveyManager";
 import ModalWrapper from "../../Components/StyledModal";
@@ -13,7 +13,6 @@ import usePageActions from "../../Hooks/usePageActions";
 function SurveyManager () {
     const setTitle = useSetRecoilState(surveyTitleAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
-    const setUrl = useSetRecoilState(urlAtom)
     
     const naviate = useNavigate()
     const token = localStorage.getItem('token')
@@ -70,7 +69,6 @@ function SurveyManager () {
         const success = await createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
         if(success){
             alert('새로운 설문지가 생성되었습니다.')
-            setUrl(url)
             setTitle(createTitle)
             loadPages(newPages)
             setEndingMent({title: '', description: ''})
@@ -84,7 +82,6 @@ function SurveyManager () {
     // 불러온 폼으로 이동
     const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}) => {
         setTitle(title)
-        setUrl(url)
         loadPages(pages)
         setEndingMent(endingMent)
         naviate(`/my-form/edit/${url}`)
