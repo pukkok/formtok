@@ -13,7 +13,7 @@ const MainPageWrapper = styled.section`
     height: 100vh;
     transition: .5s;
 
-    --pk-first-background: var(--pk-first-white);
+    --pk-first-background: var(--pk-silver);
     --pk-second-background: var(--pk-second-white);
     --pk-third-white: var(--pk-third-white);
     color: #333;
