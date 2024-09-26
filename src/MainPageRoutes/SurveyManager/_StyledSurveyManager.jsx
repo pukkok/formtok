@@ -5,6 +5,7 @@ const SurveyManagerWrapper = styled.section`
     max-width: 2100px;
     padding: 10px 30px;
     margin: 30px auto;
+
     .template-box{
         margin-top: 30px;
         display: grid;
@@ -13,17 +14,61 @@ const SurveyManagerWrapper = styled.section`
         column-gap: 10px;
         row-gap: 20px;
     }
+
+    .card{
+        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        overflow: hidden;
+        height: 180px;
+        border-radius: 12px;
+        box-shadow: rgba(0, 0, 0, 0.1) 2px 4px 10px;
+        padding: 0px;
+        cursor: pointer;
+    }
+    .form-box{
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .form-status{
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 10px;
+
+            .light{
+                margin-right: auto;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+
+                background-color: #666a73;
+                background-color: #d1180b;
+                background-color: #599468;
+                background-color: #ffd900;
+                background-color: #0020c2;
+            }
+
+            button{
+                &:hover span{
+                    color: var(--pk-point);
+                }
+            }
+        }
+    }
+
+    .white-mode{
+        .form-box:hover{
+            background-color: rgb(246, 246, 246);
+        }
+    }
+
     &.dark-mode{
         .card{
-            transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-            overflow: hidden;
-            height: 180px;
-            border-radius: 12px;
-            box-shadow: rgba(0, 0, 0, 0.1) 2px 4px 10px;
-            padding: 0px;
             background-color: var(--pk-dark);
-            color: var(--pk-light-grey);
-            cursor: pointer;
 
             .form-box{
                 width: 100%;
@@ -33,9 +78,9 @@ const SurveyManagerWrapper = styled.section`
                 flex-direction: column;
                 justify-content: flex-start;
 
-            &:hover{
-                background-color: var(--pk-charcoal);
-            }
+                &:hover{
+                    background-color: var(--pk-charcoal);
+                }
 
                 .form-status{
                     display: flex;
@@ -80,8 +125,6 @@ const SurveyManagerWrapper = styled.section`
                     margin-top: auto;
                 }
             }
-
-            
         }
 
         .create-survey-button{
@@ -109,7 +152,6 @@ const SurveyManagerWrapper = styled.section`
                 }
             }
         }
-        
     }
 
     .create-survey-button{

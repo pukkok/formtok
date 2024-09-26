@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import mainBg from '../../Imgs/main-bg.jpg'
-// import mainBg from './main-board.png'
-import hero from '../../Imgs/billboard-character.png'
-// import hero from '../../Imgs/main-board.png'
+import hero from '../../Imgs/billboard-character - copy.png'
 import { useNavigate } from 'react-router-dom';
 import cloud from '../../Imgs/clouds.png'
 
@@ -14,10 +11,7 @@ const HeroWrapper = styled.section`
     overflow: hidden;
     background-color: var(--pk-charcoal);
     
-    background-image: linear-gradient(to right, #5B1FB7 55%, var(--pk-fold-point));
-    /* background: linear-gradient(#444466 10%, #9A5BFF 50%, #2A2A40 100%);
-    background: linear-gradient(180deg, #f06292 5%, #ffd54f 30%, #1E1E2E 100%);
-    background: linear-gradient(180deg, #EDEDED 10%, #4DD0E1 40%, #7E37ED 90%); */
+    background-image: linear-gradient(to right, #5B1FB7 60%, var(--pk-fold-point));
 
     &::before{
         content: '';
@@ -36,7 +30,6 @@ const HeroWrapper = styled.section`
         margin: 0 auto;
         transform: translateY(-50%);
         max-width: var(--pk-container);
-        border: solid 1px red;
         perspective: 1800px;
 
         & > div{
@@ -60,10 +53,12 @@ const HeroWrapper = styled.section`
 
         }
 
-        button{
+        button{ // 시작하기 버튼
             border-radius: 55px;
             background-image: linear-gradient(to right, var(--pk-point) 0%, var(--pk-fold-point) 100%);
-            padding: 15px 30px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 12px 30px;
+            font-size: 17px;
         }
 
         .hero{
@@ -71,7 +66,7 @@ const HeroWrapper = styled.section`
             right: 0;
             top: 100vh;
             transform: scaleX(-1) translateY(-50%) rotateY(45deg);
-            filter: drop-shadow(-2px 6px 16px var(--pk-silver));
+            filter: drop-shadow(-2px 8px 14px var(--pk-charcoal));
             max-width: 580px;
             height: fit-content;
             animation: heroUp 1s forwards;
@@ -115,9 +110,9 @@ function HeroSection () {
         <HeroWrapper>
             <main>
                 <div>
-                    <p>여기에 로고명과 홈페이지 설명이 들어갈곳</p>
-                    <h1>나만의 대시보드 <br/>
-                    만들어 보아요                    
+                    <p>폼톡 - 당신의 의견을 나눠보세요. 쉽게 사용하는 오픈 설문 플랫폼</p>
+                    <h1>나만의 대시보드를<br/>
+                    만들어 보세요                    
                     </h1>
 
                     <h4>조사, 분석, 자료정리까지 쉽고 빠르게 설문지를 만들어보세요 <br/>

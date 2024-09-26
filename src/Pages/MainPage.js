@@ -12,11 +12,26 @@ const MainPageWrapper = styled.section`
     width: 100vw;
     height: 100vh;
     transition: .5s;
+
+    --pk-first-background: var(--pk-first-white);
+    --pk-second-background: var(--pk-second-white);
+    --pk-third-white: var(--pk-third-white);
+    color: #333;
+
+    &.dark-mode{
+        --pk-first-background: var(--pk-deep-dark);
+        --pk-second-background: var(--pk-dark);
+        --pk-third-background: var(--pk-charcoal);
+        color: var(--pk-light-grey);
+    }
+
+
 `
 
 const ViewerWrapper = styled.div`
     grid-area: viewer;
-    background-color: var(--pk-deep-dark);
+    background-color: var(--pk-first-background);
+    
     overflow: scroll;  
 `
 
@@ -34,7 +49,9 @@ function MainPage() {
         isSideOpen ? setGrid(320) : setGrid(20)
     }, [isSideOpen, setGrid])
 
-    return <MainPageWrapper style={screenRatio}>
+    return <MainPageWrapper style={screenRatio}
+    className="dark-mode" 
+    >
         <SideBar/>
         <ViewerWrapper>
             <Outlet/>

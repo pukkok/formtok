@@ -37,7 +37,7 @@ const MyQuestionsWrapper = styled.section`
         user-select: none;
     }
     .card{
-        background-color: var(--pk-dark);
+        background-color: var(--pk-second-background);
         padding: 20px 10px;
         max-width: 350px;
         border-radius: 12px;
@@ -64,10 +64,8 @@ const MyQuestionsWrapper = styled.section`
                 align-items: center;
                 width: 20px;
                 border-radius: 4px;
-                /* color: var(--pk-point);
-                background-color: #ffd54f; */
                 color: #EDEDED;
-                background-color: #f06292;
+                background-color: var(--pk-fold-point);
                 font-weight: 700;
             }
             

@@ -8,17 +8,21 @@
 :root{
   --pk-imsi-no-use: #c30928;
 
+  --pk-first-white:#fff;
+  --pk-second-white: #f7f7f7;
+  --pk-third-white: #e1e1e1;
+
   --pk-light-grey: #EDEDED;
   --pk-silver: #B0B0B0;
 
   --pk-yellow: #ffd54f;
-  --pk-imsi: #4dd0e1 ;
+  --pk-mint: #4dd0e1 ;
 
   --pk-deep-dark: #1E1E2E;
   --pk-dark: #2A2A40;
   --pk-charcoal: #444466;
   --pk-point: #7E37ED;
-  --color: #af7eff;
+  --pk-purple-font: #af7eff;
   --pk-point-hover: #9A5BFF;
   --pk-fold-point: #f06292 ;
 
@@ -78,3 +82,6 @@ img{
   padding: 10px 20px;
 }
 
+.dark-mode{
+  color: var(--pk-light-grey);
+}
