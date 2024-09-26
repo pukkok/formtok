@@ -25,7 +25,7 @@ function FormViewer() {
     
     const moveToPrevPage = () => {
         moveLogs.current.pop()
-        setCurrentIdx(moveLogs.current.length-1)
+        setCurrentIdx(moveLogs.current.length > 0 ?moveLogs.current.length-1 : 0)
     }
 
     const moveToNextPage = () => {
