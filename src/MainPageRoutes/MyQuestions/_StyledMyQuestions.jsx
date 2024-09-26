@@ -12,12 +12,17 @@ const MyQuestionsWrapper = styled.section`
         align-items: center;
         margin-bottom: 30px;
 
+        form{
+            width: 100%;
+        }
+
         .btns{
             margin-left: auto;
             button{
                 padding: 6px 12px;
                 border-radius: 8px;
                 background-color: var(--pk-point);
+                color: var(--pk-light-grey);
                 margin-left: 10px;
                 font-weight: 800;
             }
@@ -37,7 +42,8 @@ const MyQuestionsWrapper = styled.section`
         user-select: none;
     }
     .card{
-        background-color: var(--pk-second-background);
+        background-color: var(--pk-myquestion-card);
+        box-shadow: var(--pk-myquestion-card-shadow);
         padding: 20px 10px;
         max-width: 350px;
         border-radius: 12px;
@@ -48,18 +54,18 @@ const MyQuestionsWrapper = styled.section`
             width: 20px;
             height: 20px;
             border-radius: 4px;
-            background-color: var(--pk-silver);
+            background-color: var(--pk-myquestion-checkbox);
             input[type=checkbox]{
                 display: none;
             }
             input + span{
+                display: flex;
                 width: 0px;
                 height: 20px;
                 overflow: hidden;
-                transition: .3s;
+                /* transition: .3s; */
             }
             input:checked + span{
-                display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 20px;
@@ -75,7 +81,7 @@ const MyQuestionsWrapper = styled.section`
             text-align: right;
             
             & > span{
-                border: solid 2px var(--pk-charcoal);
+                border: solid 2px var(--pk-myquestion-typetext-border);
                 padding: 4px 8px;
                 border-radius: 2px;
                 font-size: 14px;
@@ -105,7 +111,7 @@ const MyQuestionsWrapper = styled.section`
             text-align: left;
             height: 110px;
             overflow: scroll;
-            border: solid 2px var(--pk-charcoal);
+            border: solid 2px var(--pk-myquestion-answer-box);
             border-radius: 12px;
             p:not(:nth-last-child(1)){
                 padding-bottom: 5px;
@@ -120,10 +126,11 @@ const MyQuestionsWrapper = styled.section`
             button{
                 padding: 8px 12px;
                 border-radius: 8px;
-                background-color: var(--pk-charcoal);
+                background-color: var(--pk-myquestion-detail-btn);
                 transition: background-color .2s;
                 &:hover{
                     background-color: var(--pk-point);
+                    color: var(--pk-light-grey);
                 }
             }
         }

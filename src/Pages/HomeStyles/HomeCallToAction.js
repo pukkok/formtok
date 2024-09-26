@@ -42,7 +42,7 @@ function CallToAction() {
     return (
         <StyledCTA>
             <h3>한번 해보는게 빠르죠!</h3>
-            <p>고래폼을 사용하여 쉽게 설문조사를 생성하고 데이터를 분석해보세요.</p>
+            <p>폼톡을 사용하여 쉽게 설문조사를 생성하고 데이터를 분석해보세요.</p>
             <button onClick={() => navigate('/user/login')}>가입하기</button>
         </StyledCTA>
     );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { isSideOpenAtom } from "../Recoils/surveyAtoms";
+import { isSideOpenAtom, modeAtom } from "../Recoils/screenAtom";
 import { useNavigate } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/Logo/Logo";
@@ -8,25 +8,23 @@ import { Icon } from "../Components/Icons";
 import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";
 import useAxios from "../Hooks/useAxios";
+import SwitchScreenModeBtn from "../Components/SwitchScreenModeBtn";
 
-function SideBar () {
+function SideBar ({logo}) {
 
     const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
-    
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
-
+    const navigate = useNavigate()
     const token = localStorage.getItem('token')
     const { firstExpiredTokenCheck } = useAxios()
 
     useEffect(() => {
         if(token) firstExpiredTokenCheck(token)
     }, [token])
-
+    // 사이드바 열고 닫기
     const sideOpener = () => {
         setIsSideOpen(prev => !prev)
     }
-
-    const navigate = useNavigate()
 
     const [active, setActive] = useState({depth1 : null, depth2: 0})
     const [openDepth2, setOpenDepth2] = useState([1])
@@ -52,7 +50,7 @@ function SideBar () {
         {isSideOpen ? 
         <div className="tabs">
             <div className="logo-box">
-                <Logo />
+                <Logo src={logo}/>
                 <button onClick={sideOpener}>닫기</button>
             </div>
             <ul className="depth1">
@@ -90,6 +88,10 @@ function SideBar () {
             })}
             </ul>
 
+            <footer>
+            <div className="switch-box">
+                <SwitchScreenModeBtn />
+            </div>
             <div className="user-info-wrapper">
                 <div className="user-info">
                     <Icon code={'account_circle'}/>
@@ -107,6 +109,8 @@ function SideBar () {
                 <button onClick={()=>navigate('/user/login')}><Icon code={'login'}/></button>
                 }
             </div>
+            </footer>
+            
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
 

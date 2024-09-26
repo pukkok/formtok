@@ -8,9 +8,32 @@
 :root{
   --pk-imsi-no-use: #c30928;
 
-  --pk-first-white:#fff;
-  --pk-second-white: #f7f7f7;
-  --pk-third-white: #e1e1e1;
+  --white-font-color: #333;
+  --white-first-background: #7E37ED;
+  --white-second-background:#f1f1f1;
+  --white-third-background: #e1e1e1;
+  
+  --white-side-border-right: #9A5BFF;
+  --white-side-active: #9A5BFF;
+  --white-side-button-hover: #af7eff;
+  --white-side-depth2-opened-depth1: #af7eff;
+  --white-user-info-border-top: #af7eff;
+  --white-loginout: #333;
+
+  --white-survey-card: #fafbfc;
+  --white-create-survey-btn: #f6f6f6;
+  --white-create-survey-btn-hover: #f0f2f5;
+
+  --white-modal-background: #fafbfc;
+  --white-modal-border-top: #ddd;
+
+  --white-myquestion-card: #fafbfc;
+  --white-myquestion-checkbox: #ddd;
+  --white-myquestion-typetext-border: #f0f2f5;
+  --white-myquestion-answer-box: #ddd;
+  --white-myquestion-detail-btn: #bbb;
+
+  --white-search-from-background: #ddd;
 
   --pk-light-grey: #EDEDED;
   --pk-silver: #B0B0B0;
@@ -80,8 +103,4 @@ img{
 
 .pd-box{
   padding: 10px 20px;
-}
-
-.dark-mode{
-  color: var(--pk-light-grey);
 }

@@ -3,19 +3,19 @@ import styled from "styled-components";
 const SideBarWrapper = styled.aside`
   grid-area: side;
   color: var(--pk-light-grey);
-  border-right: 1px solid var(--pk-charcoal);
+  border-right: var(--pk-side-border-right);
   position: relative;
   overflow: hidden;
   font-weight: 800;
 
   .tabs {
     width: 320px;  // 글자가 흔들리지 않도록 고정 크기
-    background-color: var(--pk-dark);  // 탭 배경색을 약간 더 밝게
+    background-color: var(--pk-first-background);  // 탭 배경색을 약간 더 밝게  // 탭 배경색을 약간 더 밝게
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
-
+    
     .logo-box {
       padding-bottom: 20px;
       button {
@@ -23,7 +23,7 @@ const SideBarWrapper = styled.aside`
         float: right;
         font-weight: 800;
         &:hover {
-          color: var(--pk-point);
+          color: var(--pk-loginout);
         }
       }
     }
@@ -52,7 +52,7 @@ const SideBarWrapper = styled.aside`
 
         transition: background-color 0.3s;  // 배경색 전환 애니메이션
         &:hover{
-          background-color: var(--pk-charcoal);  // 호버시 어두운 색으로 변경
+          background-color: var(--pk-side-button-hover);  // 호버시 어두운 색으로 변경
         }
 
         .arrow{ // 화살표 아이콘
@@ -66,14 +66,14 @@ const SideBarWrapper = styled.aside`
       }
 
       &.active > button {
-        background-color: var(--pk-point);  // 액티브 포인트
+        background-color: var(--pk-side-active);  // 액티브 포인트
       }
-      &.active.toggle > button{
-        background-color: var(--pk-point);
+      &.active.toggle > button{ 
+        background-color: var(--pk-side-active);
       }
       &.toggle {
-        & > button{
-          background-color: var(--pk-charcoal);
+        & > button{ // 뎁스2가 액티브일때 뎁스1
+          background-color: var(--pk-depth2-opened-depth1);
         }
         .depth2{
           margin-top: 15px;
@@ -94,7 +94,7 @@ const SideBarWrapper = styled.aside`
 
         li.active{
           button{
-            background-color: var(--pk-point);
+            background-color: var(--pk-side-active);
           }
           span{
             font-weight: 300;
@@ -102,14 +102,21 @@ const SideBarWrapper = styled.aside`
         }
         
       }
-
     }
 
-    .user-info-wrapper {
-      border-top: solid 1px var(--pk-charcoal);
-      padding-top: 20px;
+    footer{
       margin-top: auto;
-      display: inline-flex;
+      width: 100%;
+      & > .switch-box{
+        display: flex;
+        justify-content: center;
+        /* border: solid 1px red; */
+      }
+    }
+    .user-info-wrapper {
+      border-top: solid 1px var(--pk-user-info-border-top);
+      padding-top: 20px;
+      display: flex;
 
       & > .user-info {
         display: flex;
@@ -136,7 +143,7 @@ const SideBarWrapper = styled.aside`
         align-items: center;
         gap: 10px;
         &:hover {
-          color: var(--pk-point);  //포인트 컬러
+          color: var(--pk-loginout);  //포인트 컬러
         }
       }
     }
@@ -161,7 +168,7 @@ const SideBarWrapper = styled.aside`
 
     @keyframes changeBg {
       0%{
-        background-color: var(--pk-dark);
+        background-color: var(--pk-first-background);
       }
       100%{
         background-color: var(--pk-point);
