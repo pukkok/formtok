@@ -7,6 +7,7 @@ import { gridAtom, isSideOpenAtom, modeAtom } from "../Recoils/screenAtom";
 import whiteModeLogo from '../Imgs/formtok-logo.png'
 import darkModeLogo from '../Imgs/formtok-logo-white.png'
 import classNames from "classnames";
+import { Icon } from "../Components/Icons";
 
 const MainPageWrapper = styled.section`
     display: grid;
@@ -175,6 +176,31 @@ const ViewerWrapper = styled.div`
     overflow: scroll;  
 `
 
+const ButtonWrapper = styled.button`
+    &.close-btn{
+        --circle-radius: 50px;
+        position: absolute;
+        top: 8%;
+        left: 280px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(-50%);
+        width: var(--circle-radius);
+        height: var(--circle-radius);
+        padding: 5px;
+        /* border-radius: 50%; */
+        background-color: var(--pk-first-background);
+
+        /* box-shadow: 0px 0px 6px var(--pk-charcoal); */
+
+        span{
+            font-size: 32px;
+            font-weight: 500;
+        }
+    }
+`
+
 function MainPage() {
 
     const mode = useRecoilValue(modeAtom)
@@ -199,6 +225,7 @@ function MainPage() {
     className={classNames({'darkmode': mode === 'dark'})} 
     >
         <SideBar logo={logo}/>
+        {/* <ButtonWrapper className="close-btn"><Icon code={'chevron_left'}/></ButtonWrapper> */}
         <ViewerWrapper>
             <Outlet/>
         </ViewerWrapper>

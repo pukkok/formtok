@@ -5,10 +5,13 @@ const SideBarWrapper = styled.aside`
   color: var(--pk-light-grey);
   border-right: var(--pk-side-border-right);
   position: relative;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   font-weight: 800;
 
   .tabs {
+    
     width: 320px;  // 글자가 흔들리지 않도록 고정 크기
     background-color: var(--pk-first-background);  // 탭 배경색을 약간 더 밝게  // 탭 배경색을 약간 더 밝게
     padding: 30px 20px;
@@ -18,12 +21,26 @@ const SideBarWrapper = styled.aside`
     
     .logo-box {
       padding-bottom: 20px;
+      margin-bottom: 20px;
       button {
         margin-top: 8px;
         float: right;
         font-weight: 800;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        color: black;
+
+        /* display: none; */
         &:hover {
           color: var(--pk-loginout);
+        }
+        span{
+          font-size: 32px;
         }
       }
     }

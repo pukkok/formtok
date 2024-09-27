@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import hero from '../../Imgs/billboard-character - copy.png'
-import { useNavigate } from 'react-router-dom';
 import cloud from '../../Imgs/clouds.png'
+import useSwitchPage from '../../Hooks/useSwitchPage';
 
 const HeroWrapper = styled.section`
     width: 100%;
     height: 90vh;
     position: relative;
     overflow: hidden;
-    background-color: var(--pk-charcoal);
-    
     background-image: linear-gradient(to right, #5B1FB7 60%, var(--pk-fold-point));
 
     &::before{
@@ -86,25 +84,8 @@ const HeroWrapper = styled.section`
     }
 `
 
-// function HeroSection() {
-//     const navigate = useNavigate()
-
-//     return (
-//         <HeroWrapper>
-            
-//             {/* <div className="content">
-//                 <h2 className='fade-in'>간편하게 설문조사를 만들어보세요</h2>
-//                 <p className='fade-in'>고래폼을 통해 쉽고 빠르게 설문지를 제작하고 데이터를 분석하세요.</p>
-//                 <button className='fade-in'
-//                 onClick={() => navigate('/my-form')}>시작하기</button>
-//             </div> */}
-//         </HeroWrapper>
-//     )
-// }
-
-
 function HeroSection () {
-    const navigate = useNavigate()
+    const { goToPage } = useSwitchPage()
 
     return (
         <HeroWrapper>
@@ -118,7 +99,7 @@ function HeroSection () {
                     <h4>조사, 분석, 자료정리까지 쉽고 빠르게 설문지를 만들어 보세요 <br/>
                     대시보드를 사용해 응답받은 자료를 정리해보세요  
                     </h4>
-                    <button onClick={()=>navigate('/my-form')}>시작하기</button>
+                    <button onClick={()=>goToPage('/my-form')}>시작하기</button>
                 </div>
 
                 <img className='hero' src={hero}/>

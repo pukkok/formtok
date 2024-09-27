@@ -15,7 +15,13 @@ const isSideOpenAtom = atom({
     default : true
 })
 
+const switchTheScreenAtom = atom({
+    key: 'switchTheScreen',
+    default : ''
+})
+
 export {
     modeAtom,
-    gridAtom, isSideOpenAtom
+    gridAtom, isSideOpenAtom,
+    switchTheScreenAtom
 }

@@ -10,26 +10,13 @@ import NotFoundPage from './Pages/NotFoundPage';
 import HomePage from './Pages/HomePage';
 import MyQuestions from './MainPageRoutes/MyQuestions/MyQuestions';
 import SurveyAnswer from './MainPageRoutes/SurveyAnswer/SurveyAnswer';
-
-import styled from 'styled-components';
-const TestWrapper = styled.section`
-  position: fixed;
-  z-index: 1000;
-  width: 100vw;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2));
-
-  &::after{
-    content: '';
-    background-color: black;
-  }
-`
+import PageSwitcher from './Components/PageSwitcher';
 
 function App() {
 
   return (
     <>
-      {/* <TestWrapper></TestWrapper> */}
+      <PageSwitcher/>
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route element={<MainPage/>}>

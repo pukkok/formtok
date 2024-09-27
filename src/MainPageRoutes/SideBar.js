@@ -9,6 +9,7 @@ import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";
 import useAxios from "../Hooks/useAxios";
 import SwitchScreenModeBtn from "../Components/SwitchScreenModeBtn";
+import useSwitchPage from "../Hooks/useSwitchPage";
 
 function SideBar ({logo}) {
 
@@ -28,8 +29,10 @@ function SideBar ({logo}) {
 
     const [active, setActive] = useState({depth1 : null, depth2: 0})
     const [openDepth2, setOpenDepth2] = useState([1])
+    const {goToPage} = useSwitchPage()
 
     const depth1Click = (idx, path) => {
+        if(idx === 0) return goToPage(path) 
         setActive({depth1 : idx, depth2: null})
         if(path) return navigate(path)
             
@@ -51,7 +54,7 @@ function SideBar ({logo}) {
         <div className="tabs">
             <div className="logo-box">
                 <Logo src={logo}/>
-                <button onClick={sideOpener}>닫기</button>
+                <button onClick={sideOpener}><Icon code={'chevron_left'}/></button>
             </div>
             <ul className="depth1">
             {sidebarNavs.map((list, idx) => {
@@ -60,9 +63,7 @@ function SideBar ({logo}) {
                 className={classNames({
                 toggle : depth2 && openDepth2.includes(idx), 
                 active : active['depth1'] === idx})}>
-                    <button
-                    onClick={()=>depth1Click(idx, path)}
-                    >
+                    <button onClick={()=>depth1Click(idx, path)}>
                     <Icon code={code}/>{text}
                     
                     {depth2 && //애로우 버튼
@@ -103,6 +104,7 @@ function SideBar ({logo}) {
                 
                 {userInfo ? 
                 <button onClick={()=>{
+                    alert('로그아웃 되었습니다.')
                     localStorage.clear()
                     setUserInfo(null)
                 }}><Icon code={'logout'}/></button> :

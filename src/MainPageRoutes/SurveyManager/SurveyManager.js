@@ -109,7 +109,7 @@ function SurveyManager () {
     const deleteFormAction = async (e, url, token) => {
         e.stopPropagation()
         
-        let lastChance = prompt(`정말로 삭제를 원하시나요? \n삭제를 원하시면 "삭제" 라고 입력해주세요`)
+        let lastChance = prompt(`정말로 삭제를 원하시나요? \n삭제를 원하시면 "삭제"를 입력해주세요`)
         if(lastChance !== '삭제') return alert('취소 되었습니다.')
 
         const success = await deleteForm(url, token)

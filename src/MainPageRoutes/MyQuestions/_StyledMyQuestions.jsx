@@ -4,7 +4,7 @@ const MyQuestionsWrapper = styled.section`
     display: flex;
     flex-direction: column;
     padding: 20px 30px;
-    max-width: 2100px;
+    max-width: var(--pk-board-container);
     margin: 0 auto;
 
     header{

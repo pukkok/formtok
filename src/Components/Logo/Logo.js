@@ -37,17 +37,18 @@ const StyledLogo = styled.div`
 `
 
 function Logo({src}) {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [timeLeft, setTimeLeft] = useState("")
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
         if(token){
             const decode = jwtDecode(token)
             const exp = decode.exp * 1000
             startTimer(exp)
         }else{
+            setTimeLeft('로그인 필요')
             localStorage.clear()
         }
 
@@ -57,7 +58,7 @@ function Logo({src}) {
                 clearInterval(intervalRef.current)
             }
         }
-    }, [])
+    }, [token])
 
     const startTimer = (expTime) => {
         intervalRef.current = setInterval(() => {
@@ -66,7 +67,7 @@ function Logo({src}) {
 
             if (remainingMs <= 0) {
                 clearInterval(intervalRef.current)
-                setTimeLeft("로그아웃 됨")
+                setTimeLeft("만료 됨")
                 localStorage.clear()
             } else {
                 updateTimeLeft(remainingMs)
@@ -92,13 +93,14 @@ function Logo({src}) {
     }
 
     return (
-        <StyledLogo onClick={() => navigate('/')}>
+        <StyledLogo 
+        // onClick={() => navigate('/')}
+        >
             <div className="img-box">
                 <img src={src} alt="" />
             </div>
             <div>
                 <h1>폼톡</h1>
-                {/* <p>WHALE FORM</p> */}
                 <p>만료 시간: {timeLeft}</p>
             </div>
         </StyledLogo>

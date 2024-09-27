@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 10;
     nav{
         max-width: var(--pk-container);
         margin: 0 auto;

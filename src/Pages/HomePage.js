@@ -11,8 +11,7 @@ function HomePage () {
     <HomeHeader />
     <HeroSection />
     <HomeFeatures />
-    <HomeDetails />
-    {/* <HomeService />         */}
+    <HomeDetails />    
     <CallToAction />
     <HomeFooter />
     </>
