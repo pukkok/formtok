@@ -5,6 +5,11 @@ function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
+    
+    const loadPages = (pages) => {
+        setPages(pages)
+    }
+    
     // 페이지 위치변경
     const changePLocation = (dragPi, dropPi) => {
         let newPages = [...pages]
@@ -319,8 +324,9 @@ function usePageActions () {
     }
 
     return { 
-        changePLocation, changeQLocation,
-        changePTitle, changePDescription,
+        loadPages, // 설문지 불러오기
+        changePLocation, changeQLocation, // 위치변경 드래그앤드롭
+        changePTitle, changePDescription, // 페이지 내용변경
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,
         copyP, deleteP, copyQ, deleteQ, deleteOption,

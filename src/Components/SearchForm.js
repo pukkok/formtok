@@ -4,8 +4,8 @@ import { Icon } from "./Icons";
 
 const SearchFormWrapper = styled.form`
     & {
-        border-radius: 12px;
-        background-color: var(--pk-dark);
+        border-radius: 22px;
+        background-color: var(--pk-search-form-background);
         min-width: 310px;
         max-width: 400px;
         height: 50px;
@@ -22,19 +22,22 @@ const SearchFormWrapper = styled.form`
             margin-left: auto;
             display: flex;
             align-items: center;
-            padding: 4px 12px;
-            border-radius: 16px;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background-color: var(--pk-point);
             span{
+                color: var(--pk-light-grey);
                 font-size: 24px;
-                font-weight: 700;
+                font-weight: 600;
             }
         }
     }
 `
 
 /** handleClick의 첫번째 인자로 input의 value가 전달됩니다. */
-function SearchForm ({placeholder='검색하기', handleClick}) {
+function SearchForm ({placeholder='검색하기', handleClick, width}) {
     const [searchWord, setSearchWord] = useState('')
     
     const search = (e, word) => {

@@ -30,16 +30,6 @@ function randomUrl() {
     return newUrl
 }
 
-const gridAtom  = atom({
-    key: 'amdin-grid',
-    default : 320
-})
-
-const isSideOpenAtom = atom({
-    key: 'sidebar-open',
-    default : true
-})
-
 const tabsAtom = atom({
     key: 'tab-list',
     default: []
@@ -62,24 +52,7 @@ const urlAtom = atom({
 
 const pagesAtom = atom({
     key: 'pages',
-    default : [
-        {
-        id: 'P'+randomKey(), 
-        title: '', 
-        description : '',
-        questions: [
-            {id: 'Q'+randomKey(), 
-                type: '객관식', 
-                q: '', d: '', 
-                options: [{id : 'O'+randomKey(), answer: ''}],
-                hasExtraOption: false,
-                essentail : false,
-                next : null
-            }
-        ],
-        next : null
-        }
-    ]
+    default : []
 })
 
 const endingMentAtom = atom({
@@ -106,8 +79,7 @@ const activeCardAtom = atom({
 
 export {
     randomKey, randomUrl,
-
-    gridAtom, isSideOpenAtom, 
+ 
     urlAtom, surveyTitleAtom,
     tabsAtom, activeTabAtom, activeCardAtom,
     pagesAtom, endingMentAtom, surveyPeriodAtom, 

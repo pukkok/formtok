@@ -2,22 +2,22 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
-import logo from './logo-check-2.png';
 
 const StyledLogo = styled.div`
     width: 280px;
     height: 60px;
     border-radius: 12px;
     overflow: hidden;
-    background-color: var(--pk-charcoal);
     transition: background-color 0.3s;  // 배경색 전환 애니메이션
     cursor: pointer;
     display: flex;
+    gap: 10px;
+    padding: 0 10px;
     align-items: center;
 
     .img-box {
-        width: 80px;
-        height: 80px;
+        width: 40px;
+        height: 40px;
         img {
             object-fit: cover;
         }
@@ -36,7 +36,7 @@ const StyledLogo = styled.div`
     }
 `
 
-function Logo() {
+function Logo({src}) {
     const navigate = useNavigate()
     const [timeLeft, setTimeLeft] = useState("")
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
@@ -66,7 +66,7 @@ function Logo() {
 
             if (remainingMs <= 0) {
                 clearInterval(intervalRef.current)
-                setTimeLeft("토큰 만료됨")
+                setTimeLeft("로그아웃 됨")
                 localStorage.clear()
             } else {
                 updateTimeLeft(remainingMs)
@@ -94,15 +94,15 @@ function Logo() {
     return (
         <StyledLogo onClick={() => navigate('/')}>
             <div className="img-box">
-                <img src={logo} alt="" />
+                <img src={src} alt="" />
             </div>
             <div>
-                <h1>고래폼</h1>
+                <h1>폼톡</h1>
                 {/* <p>WHALE FORM</p> */}
                 <p>만료 시간: {timeLeft}</p>
             </div>
         </StyledLogo>
-    );
+    )
 }
 
 export default Logo;

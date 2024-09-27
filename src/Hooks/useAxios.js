@@ -2,7 +2,8 @@ import axios from "axios"
 import { useRecoilValue } from "recoil"
 import { pagesAtom, randomKey } from "../Recoils/surveyAtoms"
 import { useNavigate } from "react-router-dom"
-axios.defaults.baseURL = process.env.REACT_APP_RESTAPI_URL
+
+axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` : process.env.REACT_APP_RESTAPI_URL
 
 const useAxios = () => {
     const pages = useRecoilValue(pagesAtom)
@@ -72,13 +73,63 @@ const useAxios = () => {
             {headers : {'Authorization' : `Bearer ${token}`}} // 헤더
             )
             if (data.code === 200) {
-                console.log('저장 성공')
-                return data.data
+                console.log('설문지 생성 성공')
+                return true
             } else {
                 console.log(data.msg)
             }
         } catch (error) {
             console.log('오류 발생:', error)
+        }
+    }
+
+    const saveForm = async (url, title, pages, endingMent, token) => {
+        try{
+            const { data } = await axios.post('/form/edit', 
+            { url, title, endingMent, pages},
+            {headers : {'Authorization' : `Bearer ${token}`}}
+            )
+            if(data.code === 200) {
+                console.log('설문지 저장 성공')
+            }else{
+                console.log(data)
+            }
+        } catch (error) {
+            console.log('오류 발생', error)
+        }
+    }
+
+    const copyForm = async (url, token) => {
+        try{
+            const {data} = await axios.post('/form/my-form/copy', 
+            {url},
+            {headers : {'Authorization' : `Bearer ${token}`}}
+            )
+            if(data.code === 200){
+                console.log('설문지 복사 성공')
+                return true
+            }else{
+                console.log(data.msg)
+            }
+        }catch (error) {
+            console.log('오류발생', error)
+        }
+    }
+
+    const deleteForm = async (url, token) => {
+        try{
+            const {data} = await axios.post('/form/my-form/delete', 
+            {url},
+            {headers : {'Authorization' : `Bearer ${token}`}}
+            )
+            if(data.code === 200){
+                console.log('삭제 완료')
+                return true
+            }else{
+                console.log(data.msg)
+            }
+        }catch (error) {
+            console.log('오류발생', error)
         }
     }
 
@@ -101,6 +152,7 @@ const useAxios = () => {
                 {headers : {'Authorization' : `Bearer ${token}`}}
             )
             if(data.code === 200) return data.forms
+            else return []
         }catch (error){
             console.log(error)
             return []
@@ -125,7 +177,8 @@ const useAxios = () => {
     return { 
         firstExpiredTokenCheck,
         login, join, 
-        createForm, saveQ, 
+        createForm, saveForm, copyForm, deleteForm,
+        saveQ, 
         getMyFormList, getMyQuestionList }
 }
 export default useAxios
