@@ -30,6 +30,7 @@ const HomeDetailsWrapper = styled.section`
             outline: none; // focus일때 막기
             border-radius: 8px;
             -webkit-appearance: none;
+            
             &::-webkit-slider-thumb {
                 -webkit-appearance: none;
                 /* background: var(--pk-point); */
