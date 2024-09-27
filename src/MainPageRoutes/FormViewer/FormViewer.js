@@ -21,7 +21,7 @@ function FormViewer() {
     const [select, setSelect] = useState(null)
     const [currentIdx, setCurrentIdx] = useState(0)
 
-    const moveLogs = useRef([])
+    const moveLogs = useRef([0])
     
     const moveToPrevPage = () => {
         moveLogs.current.pop()

@@ -19,7 +19,7 @@ const StyledQuestionFormWrapper = styled.div`
                     margin-right: 10px;
                 }
                 &.add-extra-btn{
-                    background-color: var(--pk-charcoal);
+                    background-color: var(--pk-add-extra-btn-bg);
                     color: var(--pk-light-grey);
                     margin-left: 10px;
                 }

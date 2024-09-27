@@ -8,11 +8,16 @@
 :root{
   --pk-imsi-no-use: #c30928;
 
+  --pk-lightest-white: #fafbfc;
+  --pk-lighter-white: #f6f6f6;
+  --pk-grey-line: #ddd;
+  --pk-weak-purple: #af7eff;
+
   --white-font-color: #333;
   --white-first-background: #7E37ED;
   --white-second-background:#f1f1f1;
   --white-third-background: #e1e1e1;
-  
+
   --white-side-border-right: #9A5BFF;
   --white-side-active: #9A5BFF;
   --white-side-button-hover: #af7eff;
@@ -35,6 +40,14 @@
   --white-myquestion-detail-btn: #bbb;
 
   --white-search-from-background: #ddd;
+
+  --white-form-border: #ddd;
+  --white-form-card-bg : #fafbfc;
+
+  --white-form-editor-nav-border: #ddd;
+  --white-form-editor-nav: #fafbfc;
+  --white-form-editor-nav-scroll-border: #ddd;
+  --white-form-editor-question-summary-bg: #af7eff;
 
   --pk-light-grey: #EDEDED;
   --pk-silver: #B0B0B0;

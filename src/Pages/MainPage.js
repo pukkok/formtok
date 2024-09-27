@@ -47,14 +47,51 @@ const MainPageWrapper = styled.section`
     --pk-myquestion-typetext-border: var(--white-myquestion-typetext-border);
     --pk-myquestion-answer-box: var(--white-myquestion-answer-box);
     --pk-myquestion-detail-btn: var(--white-myquestion-detail-btn);
+    --pk-myquestion-detail-btn: var(--pk-weak-purple);
 
     // 검색창
     --pk-search-form-background: var(--white-search-from-background);
+
+    // 설문지 제작
+    --pk-form-header-bg: var(--pk-lightest-white);
+    --pk-form-header-border-bottom: var(--pk-grey-line);
+    --pk-form-card-border: var(--white-form-border);
+    --pk-form-card-bg: var(--white-form-card-bg);
+    --pk-form-card-color: var(--white-font-color);
+    --pk-form-card-title-bg: var(--pk-weak-purple);
+
+    --pk-form-editor-nav-border: var(--white-form-editor-nav-border);
+    --pk-form-editor-nav: var(--white-form-editor-nav);
+    --pk-form-editor-nav-scroll-border: var(--white-form-editor-nav-scroll-border);
+    --pk-form-editor-summary-title: var(--white-form-editor-nav);
+    --pk-form-editor-question-summary-bg: var(--white-form-editor-question-summary-bg);
+    --pk-form-editor-nav-more-vert-bg: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1));
+
+    // 질문 옵션 question form
+    --pk-add-extra-btn-bg: var(--pk-silver);
+
+
+    // ck-editor
+    --pk-ck-editor-bg: var(--pk-lightest-white);
+    --pk-ck-editor-tool-color: var(--white-font-color);
+    --pk-ck-editor-tool-on-bg: var(--pk-weak-purple);
+    --pk-ck-editor-tool-on-color: var(--pk-light-grey); 
+
+    // 더보기 버튼
+    --pk-more-btn-hover-bg: var(--pk-light-grey);
+    --pk-more-btn-hover-color: var(--pk-deep-dark);
+    --pk-more-options-bg: var(--pk-lightest-white);
+    --pk-more-color: var(--pk-light-grey);
+
+    // 드롭다운 버튼
+    --pk-dropdown-btn-border: rgba(34, 34, 34, .1);
+    --pk-dropdown-bg: var(--pk-lightest-white);
+    --pk-dropdown-btn-active-border: var(--pk-silver);
+    --pk-dropdown-list-hover-bg: var(--pk-light-grey);
+
     &.darkmode{
         // 컬러
         color: var(--pk-light-grey);
-
-        --test: pink;
 
         // 사이드, 메인, 헤더
         --pk-first-background: var(--pk-dark);
@@ -77,7 +114,7 @@ const MainPageWrapper = styled.section`
         // 모달창
         --pk-modal-background: var(--pk-dark);
         --pk-modal-border-top: var(--pk-charcoal);
-        --pk-modal-font: var(--pk-light-grey)
+        --pk-modal-font: var(--pk-light-grey);
 
         // 문항관리
         --pk-myquestion-card: var(--pk-dark);
@@ -88,6 +125,42 @@ const MainPageWrapper = styled.section`
         --pk-myquestion-detail-btn: var(--pk-charcoal);
 
         --pk-search-form-background: var(--pk-dark);
+
+        // 설문지 제작
+        --pk-form-header-bg: var(--pk-deep-dark);
+        --pk-form-header-border-bottom: var(--pk-charcoal); 
+        --pk-form-card-border: var(--pk-charcoal);
+        --pk-form-card-bg: var(--pk-dark);
+        --pk-form-card-color: var(--pk-light-grey);
+        --pk-form-card-title-bg: var(--pk-charcoal);
+
+        --pk-form-editor-nav-border: var(--pk-charcoal);
+        --pk-form-editor-nav: var(--pk-dark);
+        --pk-form-editor-nav-scroll-border: var(--pk-charcoal);
+        --pk-form-editor-summary-title: var(--pk-dark);
+        --pk-form-editor-question-summary-bg: var(--pk-charcoal);
+        --pk-form-editor-nav-more-vert-bg: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4));
+
+        // 질문 옵션 question form
+        --pk-add-extra-btn-bg: var(--pk-charcoal);
+
+        // ck-editor
+        --pk-ck-editor-bg: var(--pk-dark);
+        --pk-ck-editor-tool-color: var(--pk-light-grey);
+        --pk-ck-editor-tool-on-bg: var(--pk-charcoal);
+        --pk-ck-editor-tool-on-color: var(--pk-point);
+
+        // 더보기 버튼
+        --pk-more-btn-hover-bg: var(--pk-light-grey);
+        --pk-more-btn-hover-color: var(--pk-deep-dark);
+        --pk-more-options-bg: var(--pk-charcoal);
+        --pk-more-color: var(--pk-light-grey);
+
+        // 드롭다운 버튼
+        --pk-dropdown-btn-border: var(--pk-charcoal);
+        --pk-dropdown-bg: var(--pk-dark);
+        --pk-dropdown-btn-active-border: var(--pk-silver);
+        --pk-dropdown-list-hover-bg: var(--pk-charcoal);
     }
 
 

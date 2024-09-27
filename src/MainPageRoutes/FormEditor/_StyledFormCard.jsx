@@ -3,12 +3,12 @@ import styled from "styled-components";
 const FormCardWrapper = styled.div`
     &.card {
         box-sizing: border-box;
-        border: 2px solid var(--pk-charcoal);  // 그림자에 어두운 색상 적용
-        background-color: var(--pk-dark);  // 어두운 배경색
+        border: 2px solid var(--pk-form-card-border);  // 그림자에 어두운 색상 적용
+        background-color: var(--pk-form-card-bg);  // 어두운 배경색
         border-radius: 12px;
         min-height: 180px;
         margin-bottom: 16px;
-        color: var(--pk-light-grey);
+        color: var(--pk-form-card-color);
 
         input{
             padding-left: 2px;
@@ -23,7 +23,7 @@ const FormCardWrapper = styled.div`
         }
 
         h4 {  // 페이지 제목 부분
-            background-color: var(--pk-charcoal);
+            background-color: var(--pk-form-card-title-bg);
             color: var(--pk-light-grey);
             font-weight: bold;
             margin-bottom: 10px;
@@ -35,18 +35,16 @@ const FormCardWrapper = styled.div`
             padding-bottom: 3px;
 
             &:hover {
-                border-bottom: 1px solid var(--pk-silver);  // 호버 시 민트색 포인트
+                border-bottom: 1px solid var(--pk-silver);
             }
         }
 
         .title-A {
             font-size: 22px;
-            color: var(--pk-light-grey);  // 밝은 텍스트 색상
         }
         .title-B {
             padding-top: 5px;
             font-size: 18px;
-            color: var(--pk-light-grey);  // 밝은 텍스트 색상
         }
 
         .essential{
@@ -63,8 +61,6 @@ const FormCardWrapper = styled.div`
 
         input:focus {
             border-bottom: 2px solid var(--pk-point) !important;  // 포커스 시 민트색으로 강조
-            background-color: var(--pk-dark);  // 포커스 시에도 배경색 유지
-            color: var(--pk-light-grey);  // 입력 텍스트 색상
         }
     }
 
@@ -99,7 +95,7 @@ const QuestionOptionsWrapper = styled.div`
     }
 
     .more-vert-wrapper .options{
-        transition: none;
+        transition: none !important;
         &.on{
             width: 200px;
             top: -14px;
@@ -107,7 +103,6 @@ const QuestionOptionsWrapper = styled.div`
 
             height: 120px;
             padding: 5px;
-            box-shadow: 0px 1px 3px 0px var(--light-grey);
         }
 
         p{

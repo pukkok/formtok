@@ -3,7 +3,8 @@ import styled from "styled-components";
 const StyledSurveySummaryTab = styled.section`
     height: 100%;
     .action-btns{
-        margin: 0 20px;
+        border-top: 1px solid var(--pk-form-editor-nav-border);
+        padding: 0 20px;
         height: 50px;
         display: flex;
         align-items: center;
@@ -37,8 +38,6 @@ const StyledSummaryScrollBox = styled.div`
     overflow: scroll;
     cursor: pointer;
     user-select: none;
-    border-top: 1px solid var(--pk-charcoal);
-    border-bottom: 1px solid var(--pk-charcoal);
 `
 
 const StyledSurveySummaryWrapper = styled.div`
@@ -66,13 +65,13 @@ const StyledSurveySummaryWrapper = styled.div`
 
         button{
             &:hover{
-                background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4));
+                background-image: var(--pk-form-editor-nav-more-vert-bg);
                 border-radius: 8px;
             }
             &:disabled{
                 color: #aaa;
                 &:hover{
-                    background-color: #ededed;
+                    background-color: #ddd;
                 }
             }
             &.remove{
@@ -147,7 +146,7 @@ const StyledPageSummaryWrapper = styled.div`
         left: 50%;
         transform: translateX(-50%);
         padding: 0 10px;
-        background-color: var(--pk-dark);
+        background-color: var(--pk-form-editor-summary-title);
         color: var(--pk-point);
     }
 
@@ -204,7 +203,7 @@ const StyledQuestionSummaryWrapper = styled.div`
     position: relative;
     transition: background-color .3s;
     &:hover{
-        background-color: var(--pk-charcoal);
+        background-color: var(--pk-form-editor-question-summary-bg);
 
         p{
             color: var(--pk-light-grey);

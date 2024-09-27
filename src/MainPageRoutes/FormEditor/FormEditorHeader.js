@@ -10,8 +10,8 @@ const FormHeaderWrapper = styled.header`
     top: 0;
     width: 100%;
     display: flex;
-    background-color: var(--pk-deep-dark);  // 다크 모드 배경색
-    border-bottom: 1px solid var(--pk-charcoal);
+    background-color: var(--pk-form-header-bg);  
+    border-bottom: 1px solid var(--pk-form-header-border-bottom);
     align-items: center;
     justify-content: flex-end;
     height: 60px;
@@ -21,18 +21,18 @@ const FormHeaderWrapper = styled.header`
         width: 220px;
         font-size: 18px;
         margin-right: auto;
-        padding: 4px 10px 0;
+        padding: 6px 10px 2px;
         overflow: hidden;
         text-overflow: ellipsis;
-        border-bottom: 2px solid transparent;
+        border: 2px solid transparent;
         
-        &:focus{
+        &:focus, &:hover{
             overflow: none;
-            background-color: var(--pk-charcoal);
-            border-bottom: 2px solid var(--pk-point);
-            box-shadow: inset 0 2px 15px rgba(30,30,46, .2),
+            border: 2px solid var(--pk-point);
+            border-radius: 12px;
+            /* box-shadow: inset 0 2px 15px rgba(30,30,46, .2),
             inset 0 2px 2px rgba(30,30,46, .4),
-            inset 0 -1px 1px rgba(30,30,46, .4);
+            inset 0 -1px 1px rgba(30,30,46, .4); */
         }
     }
 

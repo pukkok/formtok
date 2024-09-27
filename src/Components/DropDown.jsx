@@ -8,8 +8,8 @@ const DropDownWrapper = styled.div`
     position: relative;
 
     & > button{
-        border: solid 1px var(--pk-charcoal);
-        background-color: var(--pk-dark);
+        border: solid 1px var(--pk-dropdown-btn-border);
+        background-color: var(--pk-dropdown-bg);
         border-radius: 12px;
         min-width: 200px;
         display: flex;
@@ -21,7 +21,7 @@ const DropDownWrapper = styled.div`
         font-weight: bold;
 
         &:hover{
-            border: solid 1px var(--pk-silver);
+            border: solid 1px var(--pk-dropdown-btn-active-border);
         }
 
         & > span:nth-last-child(1){ 
@@ -31,10 +31,10 @@ const DropDownWrapper = styled.div`
             transition: .2s;
             margin-left: auto;
         }
-        &.open{ // 애로우 버튼
-            border: solid 1px var(--pk-silver);
+        &.open{ 
+            border: solid 1px var(--pk-dropdown-btn-active-border);
 
-            & span:nth-last-child(1){
+            & span:nth-last-child(1){// 애로우 버튼
                 rotate: -180deg;
             }
         }
@@ -46,11 +46,11 @@ const DropDownWrapper = styled.div`
         display: none;
         position: absolute;
         top: 50px;
-        border: solid 1px var(--pk-silver);
+        border: solid 1px var(--pk-dropdown-btn-active-border);
         border-radius: 12px;
-        background-color: var(--pk-dark);
+        background-color: var(--pk-dropdown-bg);
         width: 100%;
-        padding: 10px 5px;
+        padding: 8px 5px;
 
         &.open{
             display: block;
@@ -64,7 +64,7 @@ const DropDownWrapper = styled.div`
             padding: 0 5px;
 
             &:hover{
-                background-color: var(--pk-charcoal);
+                background-color: var(--pk-dropdown-list-hover-bg);
                 color: var(--pk-point);
                 border-radius: 8px;
             }

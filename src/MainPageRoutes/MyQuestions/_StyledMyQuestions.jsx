@@ -123,14 +123,14 @@ const MyQuestionsWrapper = styled.section`
             justify-content: center;
             margin-top: 20px;
             gap: 20px;
-            button{
+            button{ // 자세히보기
                 padding: 8px 12px;
                 border-radius: 8px;
                 background-color: var(--pk-myquestion-detail-btn);
+                color: var(--pk-light-grey);
                 transition: background-color .2s;
                 &:hover{
                     background-color: var(--pk-point);
-                    color: var(--pk-light-grey);
                 }
             }
         }

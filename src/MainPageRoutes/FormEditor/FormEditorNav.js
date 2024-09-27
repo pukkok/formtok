@@ -8,8 +8,8 @@ const FormEditorNavWrapper = styled.div`
     position: fixed;
     top: 0;
     right: 0;
-    border: solid 1px var(--pk-charcoal);
-    background-color: var(--pk-dark);
+    border-left: solid 1px var(--pk-form-editor-nav-border);
+    background-color: var(--pk-form-editor-nav);
     width: 400px;
     height: 100vh;
 
@@ -25,6 +25,7 @@ const FormEditorNavWrapper = styled.div`
                 border-bottom: 2px solid var(--pk-point);
             }
         }
+        border-bottom: 1px solid var(--pk-form-editor-nav-border);
     }
 ` 
 

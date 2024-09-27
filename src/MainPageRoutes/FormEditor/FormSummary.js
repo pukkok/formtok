@@ -169,7 +169,7 @@ function FormSummary({token}) {
             </SummaryScrollBox>                    
             )}
             </Droppable>
-
+        
             <div className="action-btns">
                 <button onClick={addQuestion} disabled={activeCard === '' || activeCard === 'end'}>
                     문항 추가
@@ -179,8 +179,7 @@ function FormSummary({token}) {
                     페이지 추가
                 </button>
             </div>
-                
-        </SurveySummaryTab>
+        </SurveySummaryTab>   
     </DragDropContext>
     )
 }

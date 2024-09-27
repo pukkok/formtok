@@ -25,8 +25,8 @@ const StyledMoreVertWrapper = styled.div`
                 font-size: 18px;
 
                 &:hover{
-                    background-color: var(--pk-light-grey);
-                    color: var(--pk-deep-dark);
+                    background-color: var(--pk-more-btn-hover-bg);
+                    color: var(--pk-more-btn-hover-color);
                     border-radius: 8px;
                 }
             }
@@ -36,12 +36,12 @@ const StyledMoreVertWrapper = styled.div`
             position: absolute;
             right: 5px;
             top: 5px;
-            background-color: var(--pk-charcoal);
+            background-color: var(--pk-more-options-bg);
+            box-shadow: 1px 1px 4px var(--pk-charcoal);
             border-radius: 12px;
             overflow: hidden;
             height: 0;
             transition: .1s;
-            color: var(--pk-light-grey);
             font-size: 14px;
             display: flex;
             flex-direction: column;

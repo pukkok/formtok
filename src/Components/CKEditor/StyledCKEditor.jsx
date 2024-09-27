@@ -13,9 +13,7 @@ const StyledCKEdtiorWrapper = styled.div`
     .ck-editor__top {
         top: 101%;
         opacity: 1;
-        background-color: var(--pk-dark);
-
-        
+        background-color: var(--pk-ck-editor-bg);
     }
   }
 
@@ -29,11 +27,11 @@ const StyledCKEdtiorWrapper = styled.div`
     border: none;
 
     .ck-toolbar_grouping{
-      background-color: var(--pk-dark);
+      background-color: var(--pk-ck-editor-bg);
     }
 
     .ck.ck-toolbar__items{ // 아이템 부분
-      background-color: var(--pk-dark);
+      background-color: var(--pk-ck-editor-bg);
       .ck-dropdown{
         
         .ck.ck-splitbutton.ck-splitbutton_open > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover), .ck.ck-splitbutton:hover > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover) {
@@ -41,7 +39,7 @@ const StyledCKEdtiorWrapper = styled.div`
         }
 
         .ck-dropdown__panel{
-          background-color: var(--pk-dark);
+          background-color: var(--pk-ck-editor-bg);
         }
 
         .ck-collapsible{
@@ -50,14 +48,15 @@ const StyledCKEdtiorWrapper = styled.div`
       }
 
       button{
-        color: var(--pk-light-grey);
+        color: var(--pk-ck-editor-tool-color);
         background: none;
         &.ck-on{
-          background: var(--pk-charcoal);
-          color: var(--pk-point)
+          background: var(--pk-ck-editor-tool-on-bg);
+          color: var(--pk-ck-editor-tool-on-color);
         }
         &:hover{ // 아이템 호버했을때
-          background: var(--pk-charcoal);
+          background: var(--pk-ck-editor-tool-on-bg);
+          color: var(--pk-ck-editor-tool-on-color);
         }
       }
     }
@@ -87,7 +86,7 @@ const StyledCKEdtiorWrapper = styled.div`
       border: none;
       border-bottom: 1px solid transparent;
       transition: margin .2s;
-      background-color: var(--pk-dark);
+      background-color: var(--pk-ck-editor-bg);
       padding-left: 2px;
       position: relative;
       z-index: 1;
