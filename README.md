@@ -1,6 +1,6 @@
 # 설문조사 대시보드
 
-### [조사하러 가기](https://pukkok.github.io/whale-form)
+### [조사하러 가기](https://formtok.vercel.app/)
 
 ## 제작 사유
 - 나에게 2번째 필요한 페이지 대시보드 <br>
