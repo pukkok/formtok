@@ -3,7 +3,7 @@ import styled from "styled-components";
 const SurveyManagerWrapper = styled.section`
     padding: 20px 30px;
     margin: 0px auto;
-
+    max-width: 1600px;
     .template-box{
         margin-top: 30px;
         display: grid;
@@ -16,7 +16,7 @@ const SurveyManagerWrapper = styled.section`
     .card{
         transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         overflow: hidden;
-        height: 180px;
+        height: 210px;
         border-radius: 12px;
         box-shadow: rgba(0, 0, 0, 0.1) 2px 4px 10px;
         padding: 0px;
@@ -48,11 +48,19 @@ const SurveyManagerWrapper = styled.section`
                     height: 10px;
                     border-radius: 50%;
 
+                    &.stop{
+                        background-color: #d1180b;
+                    }
+                    &.ready{
+                        background-color: #ffd900;
+                    }
+                    &.working{
+                        background-color: #599468;
+                    }
+                    &.making{
+                        background-color: #0020c2;
+                    }
                     background-color: #666a73;
-                    background-color: #d1180b;
-                    background-color: #599468;
-                    background-color: #ffd900;
-                    background-color: #0020c2;
                 }
 
                 button{
@@ -73,9 +81,12 @@ const SurveyManagerWrapper = styled.section`
                 text-overflow: ellipsis;      /* 넘치는 부분을 ...으로 표시 */
                 white-space: normal;          /* 텍스트를 줄바꿈 */
             }
-
-            p{
+            .info{
                 margin-top: auto;
+                font-size: 14px;
+                p:not(:nth-last-child(1)){
+                    padding-bottom: 5px;
+                }
             }
 
         }

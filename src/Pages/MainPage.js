@@ -38,6 +38,7 @@ const MainPageWrapper = styled.section`
     // 모달창
     --pk-modal-background: var(--white-modal-background);
     --pk-modal-border-top: var(--white-modal-border-top);
+    --pk-modal-font: var(--white-modal-font);
 
     // 문항관리
     --pk-myquestion-card: var(--white-myquestion-card);
@@ -52,6 +53,9 @@ const MainPageWrapper = styled.section`
     &.darkmode{
         // 컬러
         color: var(--pk-light-grey);
+
+        --test: pink;
+
         // 사이드, 메인, 헤더
         --pk-first-background: var(--pk-dark);
         --pk-second-background: var(--pk-deep-dark);
@@ -71,8 +75,9 @@ const MainPageWrapper = styled.section`
         --pk-create-survey-btn-hover: var(--pk-charcoal);
 
         // 모달창
-        --pk-modal-background: var(--pk-charcoal);
+        --pk-modal-background: var(--pk-dark);
         --pk-modal-border-top: var(--pk-charcoal);
+        --pk-modal-font: var(--pk-light-grey)
 
         // 문항관리
         --pk-myquestion-card: var(--pk-dark);

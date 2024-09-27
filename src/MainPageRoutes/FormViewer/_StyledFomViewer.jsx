@@ -10,7 +10,7 @@ const FormViewerWrapper = styled.section`
         margin-bottom: 30px;
         border-bottom: solid 1px var(--pk-charcoal);
         position: relative;
-        input{
+        input{ // 진행 상황
             position: absolute;
             width: 100%;
             height: 2px;

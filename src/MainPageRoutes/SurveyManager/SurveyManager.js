@@ -20,7 +20,6 @@ function SurveyManager () {
     const [createTitle, setCreateTitle] = useState('')
     const [myForms, setMyForms] = useState([])
     const [searchedForms, setSerachedForms] = useState([])
-    const [light, setLight] = useState('green')
 
     // custom hooks
     const { getMyFormList, createForm, copyForm, deleteForm } = useAxios()
@@ -122,6 +121,20 @@ function SurveyManager () {
         }
     }
 
+    const testlayouts = [
+        {count: '응답 72', full: '응답제한 200', startDate: '2024.05.12', endDate: '2024.05.24', light: 'stop'},
+        {count: '응답 10', full: '응답제한 없음', startDate: '2024.05.24', endDate: '2024.05.30', light: 'making'},
+        {count: '응답 100', full: '응답제한 100', startDate: '2024.06.30', endDate: '2024.07.15', light: 'stop'},
+        {count: '응답 25', full: '응답제한 50', startDate: '2024.07.11', endDate: null, light: 'ready' },
+        {count: '응답 80', full: '응답제한 200', startDate: '2024.07.24', endDate: '2024.08.02', light: 'ready'},
+        {count: '응답 120', full: '응답제한 없음', startDate: '2024.08.03', endDate: null, light: 'working'},
+        {count: '응답 110', full: '응답제한 200', startDate: '2024.08.08', endDate: null, light: 'working'},
+        {count: '응답 60', full: '응답제한 300', startDate: '2024.08.13', endDate: '2024.09.12', light: 'green'},
+        {count: '응답 40', full: '응답제한 100', startDate: '2024.09.27', endDate: '2024.09.28', light: 'green'},
+        {count: '응답 80', full: '응답제한 120', startDate: '2024.10.12', endDate: '2024.10.19', light: 'green'},
+        {count: '응답 20', full: '응답제한 100', startDate: '2024.10.12', endDate: null},
+    ]
+
     return (
         <SurveyManagerWrapper className="dark-mode">
             <SearchForm placeholder="제목으로 검색" handleClick={search}/>
@@ -132,8 +145,10 @@ function SurveyManager () {
                         <AddCircleIcon/>
                     </button>
                 </div>
-                {searchedForms.length > 0 && searchedForms.map(form => {
+                {searchedForms.length > 0 && searchedForms.map((form, idx) => {
                     const {title, url, pages, endingMent} = form
+                    //임시
+                    const {count, full, startDate, endDate, light} = testlayouts[idx]
                     return <div key={url} className="card">
                         <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent)}>
                             <div className="form-status">
@@ -142,7 +157,10 @@ function SurveyManager () {
                                 <button title="삭제" onClick={e=>deleteFormAction(e, url, token)}><Icon code={'delete'}/></button>
                             </div>
                             <h4>{title}</h4>
-                            <p>제출 0</p>
+                            <div className="info">
+                                <p>{count} | {full}</p>
+                                <p>{startDate} ~ {endDate || ''}</p>
+                            </div>
                         </div>
                     </div>
                 })}

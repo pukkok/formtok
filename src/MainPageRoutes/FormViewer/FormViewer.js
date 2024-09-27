@@ -38,7 +38,7 @@ function FormViewer() {
     return (
     <FormViewerWrapper>
         <header>
-            <p>진행사항</p>
+            <p>진행 상황</p>
             <input type="range" onChange={change} max={pages.length} min={0} step={1} value={currentIdx}/>
         </header>
 

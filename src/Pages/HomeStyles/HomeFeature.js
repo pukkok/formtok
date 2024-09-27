@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-// import surveyIcons from './survey-icons-origin.png'
 import surveyIcons from '../../Imgs/coloful-business-icons.png'
 
 const StyledFeatures = styled.section`
     padding: 20px;
     background-color: #fff;
     display: flex;
+    
     flex-direction: column;
     align-items: center;
-
     h3 {
         font-size: 32px;
         margin-bottom: 40px;
@@ -27,9 +26,9 @@ const StyledFeatures = styled.section`
 
     .features-container {
         position: relative;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
         width: 100%;
         max-width: var(--pk-container);
 
@@ -96,7 +95,6 @@ const StyledFeatures = styled.section`
 function HomeFeatures() {
     return (
         <StyledFeatures>
-            {/* <h3>고래폼의 주요 기능</h3> */}
             <div className="features-container">
                 <div className="feature">
                     <div className='write'></div>
