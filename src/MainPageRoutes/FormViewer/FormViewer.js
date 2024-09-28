@@ -6,17 +6,18 @@ import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
 import { Link, useParams, useResolvedPath } from "react-router-dom";
+import DropDown from "../../Components/DropDown";
 
 function FormViewer() {
-    const { surveyId } = useParams()
-    const path = useResolvedPath()
+    const {surveyId} = useParams()
+    const {pathname} = useResolvedPath()
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
 
     useEffect(() => {
-        console.log(path)
+        // console.log(pathname)
         // if(pages.length===0) surveyId
-    },[pages, path])
+    },[pages, pathname])
 
     const [select, setSelect] = useState(null)
     const [currentIdx, setCurrentIdx] = useState(0)
@@ -38,6 +39,7 @@ function FormViewer() {
     return (
     <FormViewerWrapper>
         <header>
+            <Link to={`/my-form/edit/${surveyId}`}>돌아가기</Link>
             <p>진행 상황</p>
             <input type="range" onChange={change} max={pages.length} min={0} step={1} value={currentIdx}/>
         </header>
@@ -71,6 +73,15 @@ function FormViewer() {
                     {type === '단답형' &&
                     <input placeholder="답변 입력"/>
                     }
+
+                    {(options.length>0 && type === '드롭다운') &&
+                    <DropDown initialItem={'옵션을 선택해주세요'}>
+                        {options.map((option, idx3) => {
+                            return <li key={option.id}>{option.answer}</li>
+                        })}
+                    </DropDown>
+                    }
+                    
                     </div>
                 </FormCardWrapper>
             })}
@@ -94,7 +105,7 @@ function FormViewer() {
                 <DescriptionEditor value={endingMent.description} isReadOnly={true}></DescriptionEditor>
             </FormCardWrapper>
             
-            <Link to={path.pathname.includes('preview') ? '/my-form' : '/survey-answer'}>나가기</Link>
+            <Link to={pathname.includes('preview') ? '/my-form' : '/survey-answer'}>나가기</Link>
             </>}
         </main>
 

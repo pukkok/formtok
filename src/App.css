@@ -3,6 +3,7 @@
 *{
   box-sizing: border-box;
   line-height: 1.5;
+  scroll-behavior: smooth;
 }
 
 :root{
@@ -10,7 +11,7 @@
 
   --pk-lightest-white: #fafbfc;
   --pk-lighter-white: #f6f6f6;
-  --pk-grey-line: #ddd;
+  --pk-grey-line: #ededed;
   --pk-weak-purple: #af7eff;
 
   --white-font-color: #333;
@@ -41,10 +42,9 @@
 
   --white-search-from-background: #ddd;
 
-  --white-form-border: #ddd;
+  --white-form-border: #ededed;
   --white-form-card-bg : #fafbfc;
 
-  --white-form-editor-nav-border: #ddd;
   --white-form-editor-nav: #fafbfc;
   --white-form-editor-nav-scroll-border: #ddd;
   --white-form-editor-question-summary-bg: #af7eff;

@@ -53,15 +53,26 @@ const HeroWrapper = styled.section`
 
         button{ // 시작하기 버튼
             border-radius: 55px;
-            background-image: linear-gradient(to right, var(--pk-point) 0%, var(--pk-fold-point) 100%);
+            background-image: linear-gradient(to right, var(--pk-point) 0%, var(--pk-fold-point) 50%, var(--pk-point) 100%);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 6px 20px rgba(0, 0, 0, 0.1);
             padding: 12px 30px;
             font-size: 17px;
+            background-size: 200% 100%; // 백그라운드의 크기를 2배로 설정하여 이동 효과 적용
+            background-position: 0% 0%; // 처음 위치는 0%
+            transition: background-position .4s ease-in-out;
+
+            &:hover {
+                background-position: 100% 0%;
+            }
+            &:active {
+                transform: scale(0.98);  // 버튼을 살짝 줄여 눌린 느낌
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 10px rgba(0, 0, 0, 0.1);  // 그림자 크기 줄이기
+            }
         }
 
         .hero{
             position: absolute;
-            right: 0;
+            right: -100px;
             top: 100vh;
             transform: scaleX(-1) translateY(-50%) rotateY(45deg);
             filter: drop-shadow(-2px 8px 14px var(--pk-charcoal));
@@ -102,7 +113,7 @@ function HeroSection () {
                     <button onClick={()=>goToPage('/my-form')}>시작하기</button>
                 </div>
 
-                <img className='hero' src={hero}/>
+                <img className='hero' src={hero} alt='히어로 이미지'/>
             </main>
         </HeroWrapper>
     )

@@ -4,7 +4,6 @@ const StyledQuestionFormWrapper = styled.div`
     margin-bottom: 20px;
 
     .multiple{
-        
         .add-btns{
             margin-top: 20px;
 
@@ -31,14 +30,18 @@ const StyledQuestionFormWrapper = styled.div`
     margin-top: 15px;
     width: 80%;
     padding-bottom: 5px;
-    border-bottom: 1px dotted var(--deep-grey);
+    border-bottom: 1px dotted #aaa;
     }
     .short-text{
         margin-top: 15px;
         width: 40%;
         padding-bottom: 5px;
-        border-bottom: 1px dotted var(--deep-grey);
+        border-bottom: 1px dotted #aaa;
     }
+
+    
+
+
 `
 
 export {StyledQuestionFormWrapper as QuestionFormWrapper}

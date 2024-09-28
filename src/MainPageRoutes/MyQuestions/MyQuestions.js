@@ -20,6 +20,7 @@ function MyQuestions(){
         switch (type) {
             case '객관식' : color = '#4dd0e1' ; break
             case '드롭다운' : color = '#ffd54f' ; break
+            default : color = '#7E37ED'
         }
         console.log({color})
         return {color}
@@ -32,7 +33,7 @@ function MyQuestions(){
             setSerachedFAQs(questions)
         }
         token && getQuestions()
-    }, [token])
+    }, [token, getMyQuestionList])
 
     const readMoreView = (faq, code) => {
         setReadMore({...faq, code})

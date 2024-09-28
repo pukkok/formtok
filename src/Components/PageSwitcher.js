@@ -10,23 +10,41 @@ const PageSwitcherWrapper = styled.section`
     justify-content: center;
     align-items: center;
     font-size: 70px;
-    z-index: 100;
+    z-index: 1000;
     bottom: -100vh;
     width: 100vw;
     height: 100vh;
-    background-color: var(--pk-deep-dark);
+    background-color: var(--pk-lightest-white);
+    color: var(--white-font-color);
+
+    img{
+        width: 160px;
+        height: 160px;
+        filter: drop-shadow(0 0 6px var(--pk-charcoal));
+    }
+
+    &.dark{
+        background-color: var(--pk-deep-dark);
+        color: var(--pk-silver);
+        img{
+            filter: drop-shadow(0 0 12px var(--pk-yellow));
+        }
+    }
     &.switching{
         animation: hidingScreen 1s ease-in-out forwards;
     }
 
     @keyframes hidingScreen {
         0%{
+            height: 0;
             bottom: -100vh;
         }
         25%{
+            
             bottom: 0;
         }
         50%{
+            height: 100vh;
             bottom: 0;
         }
         75%{
@@ -40,11 +58,11 @@ const PageSwitcherWrapper = styled.section`
 `
 
 
-function PageSwitcher () {
+function PageSwitcher ({ mode, logo }) {
     const switchTheScreen = useRecoilValue(switchTheScreenAtom)
 
-    return <PageSwitcherWrapper className={classNames({switching: switchTheScreen==='go'})}>
-        폼톡~!
+    return <PageSwitcherWrapper className={classNames({dark : mode === 'dark', switching: switchTheScreen==='go'})}>
+        <img src={logo} alt="로고"/>
     </PageSwitcherWrapper>
 }
 

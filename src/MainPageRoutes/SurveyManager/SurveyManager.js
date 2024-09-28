@@ -32,7 +32,7 @@ function SurveyManager () {
             setMyForms(forms)
         }
         token && getForms()
-    }, [token])
+    }, [token, getMyFormList])
 
     
     // 모달 열고 닫기
@@ -135,6 +135,10 @@ function SurveyManager () {
         {count: '응답 20', full: '응답제한 100', startDate: '2024.10.12', endDate: null},
     ]
 
+    // const allQuetinoCount = pages.reduce((acc, currentPage) => {
+    //     return acc += currentPage.questions.length
+    // }, 0)
+
     return (
         <SurveyManagerWrapper className="dark-mode">
             <SearchForm placeholder="제목으로 검색" handleClick={search}/>
@@ -146,6 +150,7 @@ function SurveyManager () {
                     </button>
                 </div>
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
+                    
                     const {title, url, pages, endingMent} = form
                     //임시
                     const {count, full, startDate, endDate, light} = testlayouts[idx]

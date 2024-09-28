@@ -82,7 +82,7 @@ function QuestionCard ({pi, qi}) {
         onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}>
     
             <QuestionOptionsWrapper className="question-options-wrapper">
-                <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>}>
+                <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>} style={{minWidth : '200px'}}>
                 {questionForms.map(qs => {
                     return <li key={qs.form}>
                         <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.code)}>

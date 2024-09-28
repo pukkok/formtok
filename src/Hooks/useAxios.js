@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useRecoilValue } from "recoil"
 import { pagesAtom, randomKey } from "../Recoils/surveyAtoms"
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 
 axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` : process.env.REACT_APP_RESTAPI_URL
 
@@ -21,16 +21,16 @@ const useAxios = () => {
         })
     }
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     // 사용중일 때 토큰 만료시 로그인 페이지로 이동
-    const expiredTokenCheck = (err) => { 
-        if(err.response.data.errName === 'TokenExpiredError'){
-            alert('세션이 만료되었습니다. 로그인 페이지로 이동합니다.')
-            localStorage.clear()
-            console.clear()
-            navigate('/user/login')
-        }
-    }
+    // const expiredTokenCheck = (err) => { 
+    //     if(err.response.data.errName === 'TokenExpiredError'){
+    //         alert('세션이 만료되었습니다. 로그인 페이지로 이동합니다.')
+    //         localStorage.clear()
+    //         console.clear()
+    //         navigate('/user/login')
+    //     }
+    // }
 
     /** 아이디, 패스워드 */
     const login = async (userId, password) => {
@@ -90,7 +90,7 @@ const useAxios = () => {
             {headers : {'Authorization' : `Bearer ${token}`}}
             )
             if(data.code === 200) {
-                console.log('설문지 저장 성공')
+                alert('성공적으로 저장 되었습니다.')
             }else{
                 console.log(data)
             }

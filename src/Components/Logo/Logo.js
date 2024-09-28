@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
 
@@ -8,8 +7,6 @@ const StyledLogo = styled.div`
     height: 60px;
     border-radius: 12px;
     overflow: hidden;
-    transition: background-color 0.3s;  // 배경색 전환 애니메이션
-    cursor: pointer;
     display: flex;
     gap: 10px;
     padding: 0 10px;
@@ -30,10 +27,6 @@ const StyledLogo = styled.div`
     p {
         font-size: 12px;
     }
-
-    &:hover {
-        background-color: var(--pk-point);
-    }
 `
 
 function Logo({src}) {
@@ -41,8 +34,28 @@ function Logo({src}) {
     const [timeLeft, setTimeLeft] = useState("")
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
     const token = localStorage.getItem('token')
+    const [warningAlert, setWarningAlert] = useState(true)
 
     useEffect(() => {
+        const startTimer = (expTime) => {
+            intervalRef.current = setInterval(() => {
+                const currentTime = Date.now();
+                const remainingMs = expTime - currentTime;
+                if(remainingMs <=1000 * 60 * 5){
+                    setWarningAlert(false)
+                    if(warningAlert) alert('5분 남았습니다.')
+                    // 나중에 연장기능 만들기
+                }
+                if(remainingMs <= 0){
+                    clearInterval(intervalRef.current)
+                    setTimeLeft("만료 됨")
+                    localStorage.clear()
+                }else{
+                    updateTimeLeft(remainingMs)
+                }
+            }, 1000)
+        }
+
         if(token){
             const decode = jwtDecode(token)
             const exp = decode.exp * 1000
@@ -58,22 +71,7 @@ function Logo({src}) {
                 clearInterval(intervalRef.current)
             }
         }
-    }, [token])
-
-    const startTimer = (expTime) => {
-        intervalRef.current = setInterval(() => {
-            const currentTime = Date.now();
-            const remainingMs = expTime - currentTime;
-
-            if (remainingMs <= 0) {
-                clearInterval(intervalRef.current)
-                setTimeLeft("만료 됨")
-                localStorage.clear()
-            } else {
-                updateTimeLeft(remainingMs)
-            }
-        }, 1000)
-    }
+    }, [token, warningAlert])
 
     const updateTimeLeft = (remainingMs) => {
         const seconds = Math.floor(remainingMs / 1000)
@@ -93,9 +91,7 @@ function Logo({src}) {
     }
 
     return (
-        <StyledLogo 
-        // onClick={() => navigate('/')}
-        >
+        <StyledLogo >
             <div className="img-box">
                 <img src={src} alt="" />
             </div>
@@ -103,6 +99,7 @@ function Logo({src}) {
                 <h1>폼톡</h1>
                 <p>만료 시간: {timeLeft}</p>
             </div>
+            
         </StyledLogo>
     )
 }

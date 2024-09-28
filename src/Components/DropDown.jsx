@@ -6,12 +6,11 @@ import { Icon } from "./Icons";
 
 const DropDownWrapper = styled.div`
     position: relative;
-
     & > button{
         border: solid 1px var(--pk-dropdown-btn-border);
         background-color: var(--pk-dropdown-bg);
         border-radius: 12px;
-        min-width: 200px;
+        width: 100%;
         display: flex;
         gap: 5px;
         align-items: center;
@@ -81,13 +80,12 @@ const DropDownWrapper = styled.div`
     }
 `
 
-function DropDown ({initialItem, children, initialState=false, width}) {
+function DropDown ({initialItem, children, initialState=false, style}) {
     const {isOpen, setIsOpen, ref} = useOutsideClick(initialState)
 
     return (
-    <DropDownWrapper className={"drop-down-wrapper"} ref={ref}>
+    <DropDownWrapper className={"drop-down-wrapper"} ref={ref} style={style}>
         <button className={classNames({open : isOpen})}
-            style={{width: width+'px'}}
             onClick={()=>{setIsOpen(!isOpen)}}>{initialItem}
             <Icon code={'arrow_drop_up'}/>
         </button>

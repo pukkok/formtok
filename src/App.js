@@ -11,15 +11,26 @@ import HomePage from './Pages/HomePage';
 import MyQuestions from './MainPageRoutes/MyQuestions/MyQuestions';
 import SurveyAnswer from './MainPageRoutes/SurveyAnswer/SurveyAnswer';
 import PageSwitcher from './Components/PageSwitcher';
+import { useRecoilValue } from 'recoil';
+import { modeAtom } from './Recoils/screenAtom';
+import whiteModeLogo from './Imgs/formtok-logo.png'
+import darkModeLogo from './Imgs/formtok-logo-white.png'
+import { useState, useEffect } from 'react';
 
 function App() {
 
+  const mode = useRecoilValue(modeAtom)
+  const [logo, setLogo] = useState(darkModeLogo)
+  useEffect(() => {
+      mode === 'dark' ? setLogo(darkModeLogo) : setLogo(whiteModeLogo)
+  }, [mode])
+
   return (
     <>
-      <PageSwitcher/>
+      <PageSwitcher mode={mode} logo={logo}/>
       <Routes>
         <Route path='/' element={<HomePage/>}/>
-        <Route element={<MainPage/>}>
+        <Route element={<MainPage mode={mode} logo={logo}/>}>
           <Route path='my-form'>
             <Route path='' element={<SurveyManager/>}/>
             <Route path='edit/:surveyId' element={<FormEditor/>}/>

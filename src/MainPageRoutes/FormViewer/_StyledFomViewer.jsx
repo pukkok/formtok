@@ -8,7 +8,7 @@ const FormViewerWrapper = styled.section`
         padding: 10px 20px;
         align-items: center;
         margin-bottom: 30px;
-        border-bottom: solid 1px var(--pk-charcoal);
+        /* border-bottom: solid 1px var(--pk-charcoal); */
         position: relative;
         input{ // 진행 상황
             position: absolute;

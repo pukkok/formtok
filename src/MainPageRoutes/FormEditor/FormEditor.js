@@ -69,7 +69,7 @@ function FormEditor () {
                 {pages.length-1 !== idx ?
                 <div className="page-move">
                     <p>답변 후</p>
-                    <DropDown initialItem={nextPageText(page) || '다음페이지로 이동'} width={320}>
+                    <DropDown initialItem={nextPageText(page) || '다음페이지로 이동'} style={{minWidth : '320px'}}>
                         <li><button onClick={()=>{whereIsNextPage(idx, null)}}>다음페이지로 이동</button></li>
                         {pages.filter((_, cnt) => cnt>idx).map((page, cnt) => {
                             const { title, id } = page

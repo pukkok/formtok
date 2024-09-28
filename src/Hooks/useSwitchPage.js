@@ -17,9 +17,9 @@ function useSwitchPage () {
         if(switchTheScreen==='go'){
             setTimeout(() => {
                 setSwitchTheScreen('')
-            }, 1100);
+            }, 1000);
         }
-    }, [switchTheScreen])
+    }, [switchTheScreen, setSwitchTheScreen])
 
     return { goToPage }
 }

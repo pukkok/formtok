@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useRef, useState } from "react";
+import React from "react";
 import classNames from "classnames";
 import { useRecoilState } from "recoil";
 import { modeAtom } from "../Recoils/screenAtom";

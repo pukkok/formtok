@@ -67,12 +67,20 @@ const StyledHeader = styled.header`
                 a{
                     display: block;
                     border-radius: 50px;
-                    background-image: linear-gradient(to right, var(--pk-fold-point) 0%, var(--pk-point) 100%);
+                    background-image: linear-gradient(to right, var(--pk-fold-point) 0%, var(--pk-point) 50%, #f06292);
                     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 6px 20px rgba(0, 0, 0, 0.1);
+                    background-size: 200% 100%;
                     padding: 8px 24px;
-                    transition: color 0.3s;
-
-                    
+                    background-position: 0% 0%; 
+                    transition: background-position .4s ease-in-out;
+                    &:hover {
+                        background-position: 100% 0%;
+                        color: var(--pk-light-grey);
+                    }
+                    &:active {
+                        transform: scale(0.98);  // 버튼을 살짝 줄여 눌린 느낌
+                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 10px rgba(0, 0, 0, 0.1);  // 그림자 크기 줄이기
+                    }
                 }
 
             }

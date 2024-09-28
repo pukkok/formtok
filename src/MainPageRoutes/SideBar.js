@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { isSideOpenAtom, modeAtom } from "../Recoils/screenAtom";
+import { isSideOpenAtom } from "../Recoils/screenAtom";
 import { useNavigate } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/Logo/Logo";
@@ -21,7 +21,10 @@ function SideBar ({logo}) {
 
     useEffect(() => {
         if(token) firstExpiredTokenCheck(token)
-    }, [token])
+        else {
+            setUserInfo(null) 
+        }
+    }, [token, firstExpiredTokenCheck])
     // 사이드바 열고 닫기
     const sideOpener = () => {
         setIsSideOpen(prev => !prev)
@@ -46,6 +49,13 @@ function SideBar ({logo}) {
     const depth2Click = (idx2, path) => {
         setActive({depth1: null, depth2: idx2})
         navigate(path)
+    }
+
+    const logout = () => {
+        alert('로그아웃 되었습니다.')
+        localStorage.clear()
+        setUserInfo(null)
+        navigate('/')
     }
 
     return (
@@ -103,11 +113,7 @@ function SideBar ({logo}) {
                 </div>
                 
                 {userInfo ? 
-                <button onClick={()=>{
-                    alert('로그아웃 되었습니다.')
-                    localStorage.clear()
-                    setUserInfo(null)
-                }}><Icon code={'logout'}/></button> :
+                <button onClick={logout}><Icon code={'logout'}/></button> :
                 <button onClick={()=>navigate('/user/login')}><Icon code={'login'}/></button>
                 }
             </div>

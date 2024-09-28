@@ -20,6 +20,8 @@ const SideBarWrapper = styled.aside`
     height: 100%;
     
     .logo-box {
+      display: flex;
+      align-items: center;
       padding-bottom: 20px;
       margin-bottom: 20px;
       button {
@@ -32,12 +34,15 @@ const SideBarWrapper = styled.aside`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: white;
-        color: black;
+        background-color: var(--pk-lighter-white);
+        color: #333;
+        transition: all.2s;
+        overflow: hidden;
 
-        /* display: none; */
         &:hover {
           color: var(--pk-loginout);
+          justify-content: flex-start;
+          width: 50px;
         }
         span{
           font-size: 32px;
