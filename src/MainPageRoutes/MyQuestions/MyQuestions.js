@@ -22,7 +22,7 @@ function MyQuestions(){
             case '드롭다운' : color = '#ffd54f' ; break
             default : color = '#7E37ED'
         }
-        console.log({color})
+        // console.log({color})
         return {color}
     }
 

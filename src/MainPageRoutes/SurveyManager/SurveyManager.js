@@ -47,7 +47,7 @@ function SurveyManager () {
     // 설문지 생성
     const goToCreateForm = async () => {
         const url = randomUrl()
-        const newPages = [
+        const newPages = [ // 초기 모델링
             {
             id: 'P'+randomKey(), 
             title: '', 
@@ -57,6 +57,7 @@ function SurveyManager () {
                     type: '객관식', 
                     q: '', d: '', 
                     options: [{id : 'O'+randomKey(), answer: ''}],
+                    scoreRanges : {min:0, max:5, minText: '', maxText: ''},
                     hasExtraOption: false,
                     essentail : false,
                     next : null

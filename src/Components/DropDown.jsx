@@ -49,7 +49,7 @@ const DropDownWrapper = styled.div`
         border-radius: 12px;
         background-color: var(--pk-dropdown-bg);
         width: 100%;
-        padding: 8px 5px;
+        padding: 6px 8px;
 
         &.open{
             display: block;
@@ -60,11 +60,11 @@ const DropDownWrapper = styled.div`
             list-style: none;
             box-sizing: border-box;
             width: 100%;
-            padding: 0 5px;
+            padding: 0 8px;
 
             &:hover{
                 background-color: var(--pk-dropdown-list-hover-bg);
-                color: var(--pk-point);
+                color: var(--pk-purple-font);
                 border-radius: 8px;
             }
 

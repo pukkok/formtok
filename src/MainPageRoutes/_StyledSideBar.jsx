@@ -8,6 +8,7 @@ const SideBarWrapper = styled.aside`
   height: 100%;
   width: 100%;
   overflow: hidden;
+  transition: 2s;
   font-weight: 800;
 
   .tabs {

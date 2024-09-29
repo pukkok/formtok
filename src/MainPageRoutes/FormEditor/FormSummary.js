@@ -7,10 +7,12 @@ import MoreVert from "../../Components/MoreVert"
 import usePageActions from "../../Hooks/usePageActions"
 import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./_StyledFormSummary"
 import useAxios from "../../Hooks/useAxios"
+import { modeAtom } from "../../Recoils/screenAtom"
 
 /** 문항관리 탭 */
 function FormSummary({token}) {
     const pages = useRecoilValue(pagesAtom)
+    const mode = useRecoilValue(modeAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     
@@ -36,7 +38,7 @@ function FormSummary({token}) {
         return {
             border: isDragging && (isFold ? '2px solid #f06292' : '2px solid #7E37ED'),
             borderRadius: isDragging && '12px',
-            backgroundColor : isDragging && '#2A2A40',
+            backgroundColor : mode === 'dark' ? '#2A2A40' : '#fafbfc',
             ...draggableStyle
         }
     }

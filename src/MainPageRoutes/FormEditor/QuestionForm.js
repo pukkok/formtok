@@ -3,66 +3,161 @@ import { useRecoilValue } from "recoil"
 import { pagesAtom } from "../../Recoils/surveyAtoms"
 import AddAnswer from '../../Components/AddAnswer'
 import usePageActions from "../../Hooks/usePageActions"
-import { QuestionFormWrapper } from "./_StyledQuestionForm"
 import DropDown from "../../Components/DropDown"
 import styled from "styled-components"
+
+const StyledQuestionForm = styled.div`
+    margin-bottom: 20px;
+`
 
 function QuestionForm ({pi, qi}){
     const pages = useRecoilValue(pagesAtom)
     const style = pages[pi].questions[qi].type || '객관식'
-    
-    const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()
 
-    return <QuestionFormWrapper>
-        {(style === '객관식' || style === '드롭다운' || style === '체크박스') &&
-        <div className="multiple">
-            {pages[pi].questions[qi].options.map((option, idx3) => {
-                const {id, answer} = option
-                return <AddAnswer key={id} 
-                inputChange={(e)=>changeOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={answer} 
-                buttonClick={()=>deleteOption(pi, qi, idx3)}
-                isNotUseBtn={pages[pi].questions[qi].options.length===1 && idx3===0}
-                />
-            })}
-            {pages[pi].questions[qi].hasExtraOption && 
-            <AddAnswer defaultValue={'기타'} disabled={true} buttonClick={()=>toggleEXtraOption(pi, qi, false)}/>}
-            <div className="add-btns">
-                <button className="add-answer-btn" onClick={()=>addOption(pi, qi)}>항목 추가</button>
-                {!pages[pi].questions[qi].hasExtraOption && <>
-                    또는
-                <button className="add-extra-btn"onClick={()=>toggleEXtraOption(pi, qi, true)}>'기타' 추가</button>
-                </>}
-            </div>
-        </div>
+    return <StyledQuestionForm>
+        {style === '서술형' && <LongText />}
+        {style === '단답형' && <ShortText />}
+        {['객관식', '드롭다운', '체크박스'].includes(style) &&
+            <Multiple pages={pages} pi={pi} qi={qi}/>
         }
-        {style === '서술형' &&
-            <p className="long-text">서술형</p>
-        }
-        {style === '단답형' && 
-            <input className="short-text" placeholder="단답형" disabled={true}/>
-        }
-        {style === '날짜' &&
-            <input className="short-text" type="date" disabled={true}/>
-        }
-        {style === '시간' &&
-            <input className="short-text" type="time" disabled={true}/>
+        {['날짜', '시간', '날짜 + 시간'].includes(style) &&
+            <DateTypeInput style={style}/>
         }
         {style === '점수 선택형' &&
-            <SelectScore />
+            <SelectScore pi={pi} qi={qi}/>
         }
-    </QuestionFormWrapper>
+    </StyledQuestionForm>
 }
 
 export default QuestionForm
 
-const SelectScoreWrapper = styled.div` // 점수 선택형
+const StyledMultiple = styled.div`
+    .add-btns{
+        margin-top: 20px;
+
+        button{
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+
+            &.add-answer-btn{
+                background-color: var(--pk-point);
+                color: var(--pk-light-grey);
+                margin-right: 10px;
+            }
+            &.add-extra-btn{
+                background-color: var(--pk-add-extra-btn-bg);
+                color: var(--pk-light-grey);
+                margin-left: 10px;
+            }
+        }
+    }
+`
+
+function Multiple ({pages, pi, qi}) {
+    
+    const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()
+
+    return (
+    <StyledMultiple>
+        {pages[pi].questions[qi].options.map((option, idx3) => {
+            const {id, answer} = option
+            return <AddAnswer key={id} 
+            inputChange={(e)=>changeOption(e, pi, qi, idx3)} placeholder={'옵션'+(idx3+1)} value={answer} 
+            buttonClick={()=>deleteOption(pi, qi, idx3)}
+            isNotUseBtn={pages[pi].questions[qi].options.length===1 && idx3===0}
+            />
+        })}
+        {pages[pi].questions[qi].hasExtraOption && 
+        <AddAnswer defaultValue={'기타'} disabled={true} buttonClick={()=>toggleEXtraOption(pi, qi, false)}/>}
+        <div className="add-btns">
+            <button className="add-answer-btn" onClick={()=>addOption(pi, qi)}>항목 추가</button>
+            {!pages[pi].questions[qi].hasExtraOption && <>
+                또는
+            <button className="add-extra-btn"onClick={()=>toggleEXtraOption(pi, qi, true)}>'기타' 추가</button>
+            </>}
+        </div>
+    </StyledMultiple>)
+}
+
+// 서술형
+const StyledLongText = styled.div`
+    margin-top: 15px;
+    width: 100%;
+    height: 80px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background-color: var(--pk-charcoal);
+`
+function LongText () {
+    return <StyledLongText>
+        <input placeholder="서술형 (1000자 이내)" disabled={true}/>
+    </StyledLongText>
+}
+
+// 단답형
+const StyledShortText = styled.div`
+    margin-top: 15px;
+    width: 40%;
+    height: 40px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background-color: var(--pk-charcoal);
+`
+function ShortText () {
+    return <StyledShortText>
+        <input placeholder="단답형 (100자 이내)" disabled={true}/>
+    </StyledShortText>
+}
+
+// 날짜, 시간, 날짜+시간
+const StyledDateTypeInput = styled.div`
+    margin-top: 15px;
+    width: fit-content;
+    height: 40px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background-color: var(--pk-charcoal);
+
+    input[type="date"]::-webkit-calendar-picker-indicator, 
+    input[type="time"]::-webkit-calendar-picker-indicator, 
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
+        filter: invert(.8);
+        cursor: pointer;
+    }
+
+    input:focus{
+        border: none;
+    }
+`
+
+function DateTypeInput ({style}) {
+
+    const changeStyleToType = (style) => {
+        let type = ''
+        switch (style) {
+            case '날짜' : type = 'date'; break;
+            case '시간' : type = 'date'; break;
+            case '날짜 + 시간' : type = 'datetime-local'; break;
+            default : type = 'date'
+        }
+        return type 
+    }
+
+    return <StyledDateTypeInput>
+        <input type={changeStyleToType(style)} />
+    </StyledDateTypeInput>
+}
+
+// 점수 선택형
+const StyledSelcetScore = styled.div` 
     width: 80%;
     margin: 30px auto;
     .option-input-box{
         input{
             width: 100px;
             border: solid 1px var(--pk-charcoal);
-            padding: 2px 5px;
+            padding: 4px 8px;
             border-radius: 8px;
             &:focus{
                 border: solid 1px var(--pk-point);
@@ -79,12 +174,9 @@ const SelectScoreWrapper = styled.div` // 점수 선택형
         margin-bottom: 20px;
     }
 
-    ul, li{
+    ul.line{
         margin: 0;
         padding: 0;
-    }
-
-    ul.line{
         width: 100%;
         list-style: none;
         position: relative;
@@ -159,38 +251,40 @@ const SelectScoreWrapper = styled.div` // 점수 선택형
         
 `
 
-function SelectScore () {
+function SelectScore ({pi, qi}) {
     const [percent, setPercent] = useState(50)
+    const [maxScore, setMaxScore] = useState(5)
+
+    const scores = Array(maxScore).fill(1).map((n, idx) => n+idx)
 
     return (
-    <SelectScoreWrapper>
+    <StyledSelcetScore>
         <div className="option-input-box">
             <input placeholder="왼쪽값 입력"/>
             <input placeholder="오른쪽값 입력"/>
         </div>
 
         <ul className="line">
-            {Array(5).fill(1).map((n, idx) => {
-                return <li key={idx} value={idx} onClick={()=>setPercent(idx / 4 * 100)}>{n+idx}</li>
+            {scores.map((n, idx) => {
+                return <li key={idx} value={idx} onClick={()=>setPercent(idx / (scores.length - 1) * 100)}>{n}</li>
             })}
             <span className="ball" 
             style={{width : percent + '%'}}></span>
         </ul>
 
         <div className="minmax-box">
-            <div>
-                최소 : 
-                <DropDown initialItem={1} style={{width: '100px'}}>
-                    <li>1</li>
-                    <li>1</li>
-                    <li>1</li>
-                    <li>1</li>
-                    <li>1</li>
+            <div>최소 : 
+                <DropDown initialItem={1} style={{width: '80px'}}>
+                    <li><button>1</button></li>
+                    <li><button>2</button></li>
+                    <li><button>3</button></li>
+                    <li><button>4</button></li>
+                    <li><button>5</button></li>
                 </DropDown>
             </div>
             <span>~</span>
             <div>최대 :
-                <DropDown initialItem={5} style={{width: '100px'}}>
+                <DropDown initialItem={5} style={{width: '80px'}}>
                     <li>10</li>
                     <li>10</li>
                     <li>10</li>
@@ -200,6 +294,6 @@ function SelectScore () {
                 </DropDown>
             </div>
         </div>
-    </SelectScoreWrapper>
+    </StyledSelcetScore>
     )
 }

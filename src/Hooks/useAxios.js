@@ -43,10 +43,10 @@ const useAxios = () => {
                 localStorage.setItem('userInfo', JSON.stringify({name, email, userId}))
                 return data.data
             } else {
-                console.log(data.msg)
+                alert(data.msg)
             }
         } catch (error) {
-            console.log('로그인 오류:', error)
+            console.log('로그인 오류')
         }
     }
     /** 이름, 아이디, 이메일, 연락처, 패스워드, 패스워드확인 */
@@ -62,7 +62,7 @@ const useAxios = () => {
                 console.log('회원가입 실패:', data.msg)
             }
         } catch (error) {
-            console.error('회원가입 오류:', error)
+            console.log('회원가입 오류')
         }
     }
 
@@ -79,7 +79,7 @@ const useAxios = () => {
                 console.log(data.msg)
             }
         } catch (error) {
-            console.log('오류 발생:', error)
+            console.log('설문지 생성 오류 발생')
         }
     }
 
@@ -92,10 +92,10 @@ const useAxios = () => {
             if(data.code === 200) {
                 alert('성공적으로 저장 되었습니다.')
             }else{
-                console.log(data)
+                console.log(data.msg)
             }
         } catch (error) {
-            console.log('오류 발생', error)
+            console.log('설문지 저장 오류 발생')
         }
     }
 
@@ -112,7 +112,7 @@ const useAxios = () => {
                 console.log(data.msg)
             }
         }catch (error) {
-            console.log('오류발생', error)
+            console.log('설문지 복사 오류 발생')
         }
     }
 
@@ -129,7 +129,7 @@ const useAxios = () => {
                 console.log(data.msg)
             }
         }catch (error) {
-            console.log('오류발생', error)
+            console.log('설문지 삭제 오류 발생')
         }
     }
 
@@ -168,8 +168,6 @@ const useAxios = () => {
                 return data.questions
             }
         }catch (error) {
-            // console.log(error.response)
-            // expiredTokenCheck(error)
             return []
         }
     }

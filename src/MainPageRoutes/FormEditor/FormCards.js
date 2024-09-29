@@ -97,10 +97,11 @@ function QuestionCard ({pi, qi}) {
                     <ToggleButton onClick={()=>usedCheck('essential')} isOn={isUsedOptipn.essential}/>
                 </div>
 
-                <MoreVert autoClose={false}>
+                <MoreVert autoClose={false} addOptionClass={['날짜', '시간', '날짜 + 시간'].includes(pages[pi].questions[qi].type) && 'date-type'}>
                     <p>설명 추가 <ToggleButton onClick={()=>usedCheck('description', pi, qi)} isOn={isUsedOptipn.description}/></p>
                     <p>답변별 페이지 이동<ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
-                    <p>복수 선택 <ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
+                    {['날짜', '시간', '날짜 + 시간'].includes(pages[pi].questions[qi].type) &&
+                    <p>기간으로 설정 <ToggleButton onClick={requireCheck} isOn={isRequire}/></p>}
                 </MoreVert>
             </QuestionOptionsWrapper>
     

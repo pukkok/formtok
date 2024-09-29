@@ -61,7 +61,7 @@ const MainPageWrapper = styled.section`
 
     --pk-form-editor-nav-border: var(--pk-grey-line);
     --pk-form-editor-nav: var(--white-form-editor-nav);
-    --pk-form-editor-nav-scroll-border: var(--white-form-editor-nav-scroll-border);
+
     --pk-form-editor-summary-title: var(--white-form-editor-nav);
     --pk-form-editor-question-summary-bg: var(--white-form-editor-question-summary-bg);
     --pk-form-editor-nav-more-vert-bg: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1));
@@ -135,7 +135,7 @@ const MainPageWrapper = styled.section`
 
         --pk-form-editor-nav-border: var(--pk-charcoal);
         --pk-form-editor-nav: var(--pk-dark);
-        --pk-form-editor-nav-scroll-border: var(--pk-charcoal);
+
         --pk-form-editor-summary-title: var(--pk-dark);
         --pk-form-editor-question-summary-bg: var(--pk-charcoal);
         --pk-form-editor-nav-more-vert-bg: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4));

@@ -11,7 +11,7 @@
 
   --pk-lightest-white: #fafbfc;
   --pk-lighter-white: #f6f6f6;
-  --pk-grey-line: #ededed;
+  --pk-grey-line: #d7d7d7;
   --pk-weak-purple: #af7eff;
 
   --white-font-color: #333;
@@ -46,7 +46,7 @@
   --white-form-card-bg : #fafbfc;
 
   --white-form-editor-nav: #fafbfc;
-  --white-form-editor-nav-scroll-border: #ddd;
+  --white-form-editor-nav-border: #bbb;
   --white-form-editor-question-summary-bg: #af7eff;
 
   --pk-light-grey: #EDEDED;

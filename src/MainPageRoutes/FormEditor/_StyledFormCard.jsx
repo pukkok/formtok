@@ -59,7 +59,7 @@ const FormCardWrapper = styled.div`
             transform: translateY(-50%);
         }
 
-        input:focus {
+        input:not([type='date'], [type="time"], [type="datetime-local"]):focus {
             border-bottom: 2px solid var(--pk-point) !important;  // 포커스 시 민트색으로 강조
         }
     }
@@ -100,9 +100,11 @@ const QuestionOptionsWrapper = styled.div`
             width: 200px;
             top: -14px;
             right: 0;
-
-            height: 120px;
+            height: 80px;
             padding: 5px;
+            &.date-type{
+                height: 120px;
+            }
         }
 
         p{

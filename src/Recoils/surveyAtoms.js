@@ -50,7 +50,7 @@ const urlAtom = atom({
     default: ''
 })
 
-const pagesAtom = atom({
+const pagesAtom = atom({ // 설문지 생성할때 초기에 만들기
     key: 'pages',
     default : []
 })

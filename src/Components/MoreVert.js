@@ -55,7 +55,7 @@ const StyledMoreVertWrapper = styled.div`
 `
 
 // more-vertical
-function MoreVert({ children, autoClose=true }) {
+function MoreVert({ children, autoClose=true, addOptionClass }) {
     const { isOpen, setIsOpen, ref } = useOutsideClick(false)
 
     return (
@@ -65,7 +65,7 @@ function MoreVert({ children, autoClose=true }) {
             </button>
             
             <div onClick={() => autoClose && setIsOpen(false)}
-            className={classNames({ on: isOpen }, 'options')}>
+            className={classNames({ on: isOpen }, {[addOptionClass] : addOptionClass}, 'options')}>
                 {children}
             </div>
         </StyledMoreVertWrapper>
