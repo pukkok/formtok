@@ -13,12 +13,12 @@ const StyledQuestionForm = styled.div`
 function QuestionForm ({pi, qi}){
     const pages = useRecoilValue(pagesAtom)
     const style = pages[pi].questions[qi].type || '객관식'
-
+    const {setNextToPage, setPeriod} = pages[pi].questions[qi]
     return <StyledQuestionForm>
         {style === '서술형' && <LongText />}
         {style === '단답형' && <ShortText />}
         {['객관식', '객관식(복수 선택)', '드롭다운'].includes(style) && <Multiple pages={pages} pi={pi} qi={qi}/>}
-        {['날짜', '시간', '날짜 + 시간'].includes(style) && <DateTypeInput style={style}/>}
+        {['날짜', '시간', '날짜 + 시간'].includes(style) && <DateTypeInput style={style} setPeriod={setPeriod}/>}
         {style === '표형' && <TableCanvas/>}
         {style === '점수 선택형' &&<SelectScore pi={pi} qi={qi}/>}
     </StyledQuestionForm>
@@ -135,7 +135,7 @@ const StyledDateTypeInput = styled.div`
     }
 `
 
-function DateTypeInput ({style, setToPeriod = true}) {
+function DateTypeInput ({style, setPeriod = false}) {
 
     const changeStyleToType = (style) => {
         let type = ''
@@ -152,7 +152,7 @@ function DateTypeInput ({style, setToPeriod = true}) {
         <div>
             <input type={changeStyleToType(style)} />
         </div>
-        {setToPeriod && <>
+        {setPeriod && <>
             <span>~</span>
         <div>
             <input type={changeStyleToType(style)} />

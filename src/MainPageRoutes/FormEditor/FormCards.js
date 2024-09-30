@@ -52,7 +52,9 @@ function PageCard({pi}) {
 function QuestionCard ({pi, qi}) {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-    const {changeQTitle, changeQDescription, changeQType} = usePageActions()
+    const {changeQTitle, changeQDescription, changeQType, usedOptionCheck} = usePageActions()
+
+    const selectedQuestion = pages[pi].questions[qi]
 
     // 질문 타입 변경
     const [typeIcon, setTypeIcon] = useState('format_list_numbered')
@@ -71,8 +73,9 @@ function QuestionCard ({pi, qi}) {
 
     const usedCheck = (toggle, pi, qi) => {
         // 설명 추가기능 종료시 설명 부분 초기화
-        if(toggle === 'description'){
-            !isUsedOptipn[toggle] && changeQDescription('', pi, qi)
+        usedOptionCheck(pi, qi, toggle)
+        if(toggle === 'hasDescription'){
+            !pages[pi].questions[qi].hasDescription && changeQDescription('', pi, qi)
         }
         setisUsedOptions({...isUsedOptipn, [toggle] : !isUsedOptipn[toggle]})
     }
@@ -83,7 +86,7 @@ function QuestionCard ({pi, qi}) {
         onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}>
     
             <QuestionOptionsWrapper className="question-options-wrapper">
-                <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>} style={{minWidth : '230px'}}>
+                <DropDown initialItem={<><Icon code={typeIcon}/>{selectedQuestion.type}</>} style={{minWidth : '230px'}}>
                 {questionForms.map(qs => {
                     return <li key={qs.form}>
                         <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.code)}>
@@ -95,14 +98,14 @@ function QuestionCard ({pi, qi}) {
 
                 <div className={'toggle-options'}>
                     <p>필수</p>
-                    <ToggleButton onClick={()=>usedCheck('essential')} isOn={isUsedOptipn.essential}/>
+                    <ToggleButton onClick={()=>usedCheck('essential', pi, qi)} isOn={selectedQuestion.essential}/>
                 </div>
 
-                <MoreVert autoClose={false} addOptionClass={['날짜', '시간', '날짜 + 시간'].includes(pages[pi].questions[qi].type) && 'date-type'}>
-                    <p>설명 추가 <ToggleButton onClick={()=>usedCheck('description', pi, qi)} isOn={isUsedOptipn.description}/></p>
-                    <p>답변별 페이지 이동<ToggleButton onClick={requireCheck} isOn={isRequire}/></p>
-                    {['날짜', '시간', '날짜 + 시간'].includes(pages[pi].questions[qi].type) &&
-                    <p>기간으로 설정 <ToggleButton onClick={requireCheck} isOn={isRequire}/></p>}
+                <MoreVert autoClose={false} addOptionClass={['날짜', '시간', '날짜 + 시간'].includes(selectedQuestion.type) && 'date-type'}>
+                    <p>설명 추가 <ToggleButton onClick={()=>usedCheck('hasDescription', pi, qi)} isOn={selectedQuestion.hasDescription}/></p>
+                    <p>답변별 페이지 이동<ToggleButton onClick={()=>usedCheck('setNextToPage', pi, qi)} isOn={selectedQuestion.setNextToPage}/></p>
+                    {['날짜', '시간', '날짜 + 시간'].includes(selectedQuestion.type) &&
+                    <p>기간으로 설정 <ToggleButton onClick={()=>usedCheck('setPeriod', pi, qi)} isOn={selectedQuestion.setPeriod}/></p>}
                 </MoreVert>
             </QuestionOptionsWrapper>
     
@@ -110,11 +113,11 @@ function QuestionCard ({pi, qi}) {
                 <div className={classNames({essential : isUsedOptipn.essential})}>
                     <input className={"title-B"}
                     placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
-                    value={pages[pi].questions[qi].q}
+                    value={selectedQuestion.q}
                     />
                 </div>
-                {isUsedOptipn.description && <DescriptionEditor 
-                value={pages[pi].questions[qi].d}
+                {selectedQuestion.hasDescription && <DescriptionEditor 
+                value={selectedQuestion.d}
                 placeholder={'질문 설명'}
                 pi={pi} qi={qi}
                 handleChange={changeQDescription}/>}

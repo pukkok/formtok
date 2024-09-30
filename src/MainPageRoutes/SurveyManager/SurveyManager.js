@@ -57,11 +57,13 @@ function SurveyManager () {
                     type: '객관식', 
                     q: '', d: '', 
                     options: [{id : 'O'+randomKey(), answer: ''}],
-                    scoreRanges : {min:0, max:5, minText: '', maxText: ''},
-                    setToPeriod : false,
                     hasExtraOption: false,
-                    essentail : false,
-                    next : null
+                    scoreRanges : {min:0, max:5, minText: '', maxText: ''},
+                    hasDescription : false,
+                    setPeriod : false, // 날짜 타입일때 사용
+                    essentail : false, // 필수 질문
+                    setNextToPage : false, // 답변별 페이지 이동
+                    next : null // 다음 페이지 설정
                 }
             ],
             next : null
