@@ -62,17 +62,17 @@ const HomeDetailsWrapper = styled.section`
         & > .img-box.dark{
             width: 50%;
             position: absolute;
-            transition: all .0s;
             top: 0;
             left:0;
             img{
                 width: var(--pk-container);
+                height: fit-content;
             }
         }
         
     }
 
-    .auto-show{
+    /* .auto-show{
         animation: autoShow both;
         animation-timeline: view(85% 15%);
     }
@@ -86,7 +86,7 @@ const HomeDetailsWrapper = styled.section`
             opacity: 1;
             transform: translateY(0) scale(1);
         }
-    }
+    } */
 `
 
 function HomeDetails () {

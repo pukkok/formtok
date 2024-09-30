@@ -96,7 +96,7 @@ a{
   all: unset;
 }
 
-input:not([type=checkbox], [type=range]){
+input:not([type=checkbox], [type=range], [type=radio]){
   all: unset;
   line-height: 1.5;
   border-bottom: 1px solid transparent;

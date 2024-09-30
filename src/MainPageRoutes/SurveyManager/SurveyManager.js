@@ -58,6 +58,7 @@ function SurveyManager () {
                     q: '', d: '', 
                     options: [{id : 'O'+randomKey(), answer: ''}],
                     scoreRanges : {min:0, max:5, minText: '', maxText: ''},
+                    setToPeriod : false,
                     hasExtraOption: false,
                     essentail : false,
                     next : null

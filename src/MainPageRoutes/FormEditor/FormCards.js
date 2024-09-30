@@ -23,6 +23,7 @@ function PageCard({pi}) {
     const [pageCnt, setPageCnt] = useState('1/1')
     useEffect(() => {
         setPageCnt(`${pi+1}/${pages.length}`)
+        console.log(pages[pi].description)
     }, [pages, pi])
 
     const {changePTitle, changePDescription} = usePageActions()
@@ -82,7 +83,7 @@ function QuestionCard ({pi, qi}) {
         onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}>
     
             <QuestionOptionsWrapper className="question-options-wrapper">
-                <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>} style={{minWidth : '200px'}}>
+                <DropDown initialItem={<><Icon code={typeIcon}/>{pages[pi].questions[qi].type}</>} style={{minWidth : '230px'}}>
                 {questionForms.map(qs => {
                     return <li key={qs.form}>
                         <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.code)}>

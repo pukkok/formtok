@@ -27,7 +27,7 @@ const StyledFeatures = styled.section`
     .features-container {
         position: relative;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         gap: 40px;
         width: 100%;
         max-width: var(--pk-container);

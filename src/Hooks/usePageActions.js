@@ -120,8 +120,8 @@ function usePageActions () {
 
     // 페이지 디스크립션 변경하기
     const changePDescription = (html, pi) => {
-        setPages(prevPages => {
-            return prevPages.map((page, idx) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
                 if(idx === pi){
                     page = {...page,
                         description : html

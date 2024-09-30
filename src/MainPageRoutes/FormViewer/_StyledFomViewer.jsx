@@ -3,13 +3,15 @@ import styled from "styled-components";
 const FormViewerWrapper = styled.section`
     
     header{
+        position: sticky;
+        top: 0;
         height: 60px;
         display: flex;
         padding: 10px 20px;
         align-items: center;
         margin-bottom: 30px;
-        /* border-bottom: solid 1px var(--pk-charcoal); */
-        position: relative;
+        background-color: var(--pk-form-header-bg);
+        z-index: 100;
         input{ // 진행 상황
             position: absolute;
             width: 100%;
@@ -28,22 +30,7 @@ const FormViewerWrapper = styled.section`
     main{
         max-width: 700px;
         margin: 0 auto;
-    }
-
-    .form-card *{
-        .title-A, .title-B{
-            &:hover, &:disabled{
-                border-bottom: none;
-            }
-            border-bottom: none;
-        }
-
-        .multiple{
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-            cursor: pointer;
-        }
+        margin-bottom: 10vh;
     }
 
     .btns{

@@ -59,13 +59,42 @@ const FormCardWrapper = styled.div`
             transform: translateY(-50%);
         }
 
+        
+    }
+
+    &.active:not(.viewer) {
+        border: 2px solid var(--pk-point);
+
         input:not([type='date'], [type="time"], [type="datetime-local"]):focus {
             border-bottom: 2px solid var(--pk-point) !important;  // 포커스 시 민트색으로 강조
         }
     }
 
-    &.active {
-        border: 2px solid var(--pk-point);
+    &.viewer{
+        min-height: 120px;
+        .title-A, .title-B {
+            border-bottom: none;
+            &:hover, &:disabled {
+                border-bottom: none;
+            }
+        }
+
+        .option{
+            margin-top: 18px;
+        }
+        .ck-editor-wrapper{
+            user-select: none;
+            .ck.ck-editor__editable.ck-blurred{
+                border-bottom: none;
+            }
+            .ck.ck-editor__editable.ck-focused{
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+        }
+        input:focus{
+            border-bottom: none;
+        }
     }
 
     &.ending-field {

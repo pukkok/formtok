@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useRecoilValue } from "recoil"
 import { pagesAtom } from "../../Recoils/surveyAtoms"
 import AddAnswer from '../../Components/AddAnswer'
@@ -17,15 +17,10 @@ function QuestionForm ({pi, qi}){
     return <StyledQuestionForm>
         {style === '서술형' && <LongText />}
         {style === '단답형' && <ShortText />}
-        {['객관식', '드롭다운', '체크박스'].includes(style) &&
-            <Multiple pages={pages} pi={pi} qi={qi}/>
-        }
-        {['날짜', '시간', '날짜 + 시간'].includes(style) &&
-            <DateTypeInput style={style}/>
-        }
-        {style === '점수 선택형' &&
-            <SelectScore pi={pi} qi={qi}/>
-        }
+        {['객관식', '객관식(복수 선택)', '드롭다운'].includes(style) && <Multiple pages={pages} pi={pi} qi={qi}/>}
+        {['날짜', '시간', '날짜 + 시간'].includes(style) && <DateTypeInput style={style}/>}
+        {style === '표형' && <TableCanvas/>}
+        {style === '점수 선택형' &&<SelectScore pi={pi} qi={qi}/>}
     </StyledQuestionForm>
 }
 
@@ -113,11 +108,16 @@ function ShortText () {
 // 날짜, 시간, 날짜+시간
 const StyledDateTypeInput = styled.div`
     margin-top: 15px;
-    width: fit-content;
-    height: 40px;
-    padding: 8px 10px;
-    border-radius: 12px;
-    background-color: var(--pk-charcoal);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & > div{
+        width: fit-content;
+        height: 40px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        background-color: var(--pk-charcoal);
+    }
 
     input[type="date"]::-webkit-calendar-picker-indicator, 
     input[type="time"]::-webkit-calendar-picker-indicator, 
@@ -129,15 +129,19 @@ const StyledDateTypeInput = styled.div`
     input:focus{
         border: none;
     }
+
+    span{
+        /* font-weight: 800; */
+    }
 `
 
-function DateTypeInput ({style}) {
+function DateTypeInput ({style, setToPeriod = true}) {
 
     const changeStyleToType = (style) => {
         let type = ''
         switch (style) {
             case '날짜' : type = 'date'; break;
-            case '시간' : type = 'date'; break;
+            case '시간' : type = 'time'; break;
             case '날짜 + 시간' : type = 'datetime-local'; break;
             default : type = 'date'
         }
@@ -145,7 +149,16 @@ function DateTypeInput ({style}) {
     }
 
     return <StyledDateTypeInput>
-        <input type={changeStyleToType(style)} />
+        <div>
+            <input type={changeStyleToType(style)} />
+        </div>
+        {setToPeriod && <>
+            <span>~</span>
+        <div>
+            <input type={changeStyleToType(style)} />
+        </div>
+        </>
+        }
     </StyledDateTypeInput>
 }
 
@@ -268,8 +281,7 @@ function SelectScore ({pi, qi}) {
             {scores.map((n, idx) => {
                 return <li key={idx} value={idx} onClick={()=>setPercent(idx / (scores.length - 1) * 100)}>{n}</li>
             })}
-            <span className="ball" 
-            style={{width : percent + '%'}}></span>
+            <span className="ball" style={{width : percent + '%'}}></span>
         </ul>
 
         <div className="minmax-box">
@@ -285,15 +297,145 @@ function SelectScore ({pi, qi}) {
             <span>~</span>
             <div>최대 :
                 <DropDown initialItem={5} style={{width: '80px'}}>
-                    <li>10</li>
-                    <li>10</li>
-                    <li>10</li>
-                    <li>10</li>
-                    <li>10</li>
-                    <li>10</li>
+                    <li><button>2</button></li>
+                    <li><button>3</button></li>
+                    <li><button>4</button></li>
+                    <li><button>5</button></li>
+                    <li><button>6</button></li>
+                    <li><button>7</button></li>
+                    <li><button>8</button></li>
+                    <li><button>9</button></li>
+                    <li><button>10</button></li>
                 </DropDown>
             </div>
         </div>
     </StyledSelcetScore>
     )
 }
+
+const TableCanvas = () => {
+  const canvasRef = useRef(null);
+  const [cells, setCells] = useState([
+    { row: 0, col: 0, x: 0, y: 0, width: 100, height: 50 },
+    { row: 0, col: 1, x: 100, y: 0, width: 100, height: 50 },
+    { row: 0, col: 2, x: 200, y: 0, width: 100, height: 50 },
+    { row: 1, col: 0, x: 0, y: 50, width: 100, height: 50 },
+    { row: 1, col: 1, x: 100, y: 50, width: 100, height: 50 },
+    { row: 1, col: 2, x: 200, y: 50, width: 100, height: 50 }
+  ]);
+  const [selectedCells, setSelectedCells] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    drawTable(ctx);
+    console.log(cells)
+  }, [cells, selectedCells]);
+
+  const drawTable = (ctx) => {
+    ctx.clearRect(0, 0, 300, 150); // Clear the canvas
+
+    cells.forEach((cell) => {
+      ctx.beginPath();
+
+      // If the cell is selected, fill it with a background color
+      if (selectedCells.includes(cell)) {
+        ctx.fillStyle = "rgba(0, 128, 255, 0.3)"; // Light blue background for selected cells
+        ctx.fillRect(cell.x, cell.y, cell.width, cell.height);
+      }
+
+      // Draw cell borders
+      ctx.strokeStyle = "black"; // Border color for cells
+      ctx.rect(cell.x, cell.y, cell.width, cell.height);
+      ctx.stroke();
+    });
+  };
+
+  const getCellAtPosition = (x, y) => {
+    return cells.find(
+      (cell) =>
+        x >= cell.x && x < cell.x + cell.width && y >= cell.y && y < cell.y + cell.height
+    );
+  };
+
+  const handleMouseDown = (e) => {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const startCell = getCellAtPosition(x, y);
+    if (startCell) {
+      setIsDragging(true);
+      setDragStart(startCell); // Store the start cell
+      setSelectedCells([startCell]); // Reset selection to the initial cell
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || !dragStart) return;
+
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const endCell = getCellAtPosition(x, y);
+    if (endCell) {
+      const startRow = Math.min(dragStart.row, endCell.row);
+      const endRow = Math.max(dragStart.row, endCell.row);
+      const startCol = Math.min(dragStart.col, endCell.col);
+      const endCol = Math.max(dragStart.col, endCell.col);
+
+      // Select all cells within the rectangle defined by drag start and end
+      const newSelectedCells = cells.filter(
+        (cell) =>
+          cell.row >= startRow &&
+          cell.row <= endRow &&
+          cell.col >= startCol &&
+          cell.col <= endCol
+      );
+      setSelectedCells(newSelectedCells);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const mergeCells = () => {
+    if (selectedCells.length > 1) {
+        console.log('셀렉티드셀',selectedCells)
+      const mergedCell = {
+        row: selectedCells[0].row,
+        col: selectedCells[selectedCells.length - 1].col,
+        x: selectedCells[0].x,
+        y: selectedCells[0].y,
+        width: selectedCells.reduce((acc, cell) => acc + cell.width, 0),
+        height: selectedCells.reduce((acc, cell) => acc + cell.height, 0)
+      };
+
+      const remainingCells = cells.filter(
+        (cell) => !selectedCells.includes(cell)
+      );
+      setCells([...remainingCells, mergedCell]);
+      setSelectedCells([]);
+    }
+  };
+
+  return (
+    <div>
+      <canvas
+        ref={canvasRef}
+        width={300}
+        height={150}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        style={{ border: "1px solid black" }}
+      ></canvas>
+      <button onClick={mergeCells}>Merge Cells</button>
+    </div>
+  );
+};
+

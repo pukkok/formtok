@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
-import RadioButton from "../../Components/RadioButton";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
 import { Link, useParams, useResolvedPath } from "react-router-dom";
-import DropDown from "../../Components/DropDown";
+import ViewerQuestionForm from "./ViewerQuestionForm";
 
 function FormViewer() {
     const {surveyId} = useParams()
@@ -46,41 +45,22 @@ function FormViewer() {
 
         <main>
             {pages[currentIdx] && <>
-            <FormCardWrapper className="card active form-card">
+            <FormCardWrapper className="card viewer active">
                 <h4>{`${(currentIdx+1)}/${pages.length} 페이지`}</h4>
                 <div>
                     <p className="title-A">{pages[currentIdx].title || '제목 없는 페이지'}</p>
+                    {pages[currentIdx].description && <DescriptionEditor  value={pages[currentIdx].description} isReadOnly={true}/>}
                 </div>
             </FormCardWrapper>
 
             {pages[currentIdx].questions.map(question => {
                 const {id, q, d, options, type} = question
-                return <FormCardWrapper className="card active form-card" key={id}>
+                return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
                         <p className="title-B">{q || '제목 없는 질문'}</p>
-                        <p>{d}</p>
+                        {d && <DescriptionEditor value={d}/>}
                     
-                    {(options.length>0 && type === '객관식') &&
-                    options.map((option, idx3) => {    
-                        return (<div className="multiple" key={option.id} onClick={()=>setSelect(idx3)}>
-                            {option.answer && <>
-                            <RadioButton isSelect={idx3 === select}/> 
-                            <p>{option.answer}</p>
-                            </>}
-                        </div>)
-                    })}
-
-                    {type === '단답형' &&
-                    <input placeholder="답변 입력"/>
-                    }
-
-                    {(options.length>0 && type === '드롭다운') &&
-                    <DropDown initialItem={'옵션을 선택해주세요'}>
-                        {options.map((option, idx3) => {
-                            return <li key={option.id}>{option.answer}</li>
-                        })}
-                    </DropDown>
-                    }
+                    <ViewerQuestionForm type={type} options={options} name={question.id}/>
                     
                     </div>
                 </FormCardWrapper>
@@ -99,10 +79,12 @@ function FormViewer() {
 
             </>}
             {currentIdx === pages.length && <>
-            <FormCardWrapper className="card active">
-                <h4>설문 종료</h4>
-                    {endingMent.title || '설문 종료'}
-                <DescriptionEditor value={endingMent.description} isReadOnly={true}></DescriptionEditor>
+            <FormCardWrapper className="card viewer active">
+                <h4>설문지 제출</h4>
+                <div>
+                    <p className="title-B">{endingMent.title || '설문 종료'}</p>
+                    {endingMent.description && <DescriptionEditor value={endingMent.description} isReadOnly={true} />}
+                </div>
             </FormCardWrapper>
             
             <Link to={pathname.includes('preview') ? '/my-form' : '/survey-answer'}>나가기</Link>

@@ -3,7 +3,7 @@ import questionForms from "../../Datas/questionForms";
 import MyQuestionsWrapper from "./_StyledMyQuestions";
 import { Icon } from "../../Components/Icons";
 import ModalWrapper from "../../Components/StyledModal";
-import RadioButton from '../../Components/RadioButton'
+import { RadioButton } from "../../Components/MultipleButton";
 import useAxios from "../../Hooks/useAxios";
 import SearchForm from "../../Components/SearchForm";
 

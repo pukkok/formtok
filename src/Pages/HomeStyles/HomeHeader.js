@@ -64,7 +64,7 @@ const StyledHeader = styled.header`
             }
 
             &.login{
-                a{
+                a, button{
                     display: block;
                     border-radius: 50px;
                     background-image: linear-gradient(to right, var(--pk-fold-point) 0%, var(--pk-point) 50%, #f06292);
@@ -91,6 +91,9 @@ const StyledHeader = styled.header`
 
 function HomeHeader() {
     const navigate = useNavigate()
+    const token = localStorage.getItem('token')
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    console.log(userInfo)
     return (
         <StyledHeader>
             <nav>
@@ -100,6 +103,7 @@ function HomeHeader() {
                 </div>
                 <ul>
                     <li><Link to="/contact">문의하기</Link></li>
+                    <li>{token ? userInfo.name : ''}</li>
                     <li className='login'><Link to="/user/login">로그인</Link></li>
                 </ul>
             </nav>
