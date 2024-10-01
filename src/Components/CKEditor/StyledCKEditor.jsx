@@ -92,6 +92,8 @@ const StyledCKEdtiorWrapper = styled.div`
       z-index: 1;
     }
 
+    
+
     .ck.ck-editor__editable.ck-blurred {
       &:hover {
         border-bottom: solid 1px #cecece;
@@ -119,6 +121,13 @@ const StyledCKEdtiorWrapper = styled.div`
       border: none;
     }
   }
+
+  &[aria-disabled="true"] .ck.ck-editor__editable.ck-blurred{
+    &:hover{
+      border-bottom: none !important;
+    }
+  } // ck가 disabled면 밑줄이 생기지 않음
+
 `
 
 export { StyledCKEdtiorWrapper as CKEditorWrapper }

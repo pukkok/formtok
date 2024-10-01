@@ -15,8 +15,8 @@ const StyledMultipleButton = styled.label`
     span{
         position: relative;
         display: inline-block;
-        width: 26px;
-        height: 26px;
+        width: 24px;
+        height: 24px;
         margin-right: 15px;
         transition: .3s;
 
@@ -26,9 +26,9 @@ const StyledMultipleButton = styled.label`
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 3px;
+            height: 2px;
             background-color: #fff;
-            box-shadow: 0 -24px 0 #fff;
+            box-shadow: 0 -22px 0 #fff;
             transition: .3s;
         }
         &::after{
@@ -36,10 +36,10 @@ const StyledMultipleButton = styled.label`
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 3px;
+            width: 2px;
             height: 100%;
             background-color: #fff;
-            box-shadow: 24px 0 0 #fff;
+            box-shadow: 22px 0 0 #fff;
             transition: all.3s;
         }
     }
@@ -60,11 +60,11 @@ const StyledMultipleButton = styled.label`
 `
 
 // 단일 선택
-function RadioButton ({children, name}) {
+function RadioButton ({children, name, disabled=false}) {
     
     return (
         <StyledMultipleButton>
-            <input type="radio" name={name}/>
+            <input type="radio" name={name} disabled={disabled}/>
             <span></span>
             {children}
         </StyledMultipleButton>

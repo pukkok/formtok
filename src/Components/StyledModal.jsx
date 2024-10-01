@@ -9,6 +9,10 @@ const ModalWrapper = styled.dialog`
     color: var(--pk-modal-font);
     
     h4{font-size: 18px;}
+    h5{
+        font-size: 16px;
+        font-weight: 500;
+    }
     p{font-size:14px;}
 
     .line-up{ // 정렬

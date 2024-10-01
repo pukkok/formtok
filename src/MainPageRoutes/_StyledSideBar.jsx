@@ -41,13 +41,14 @@ const SideBarWrapper = styled.aside`
         overflow: hidden;
 
         &:hover {
-          color: var(--pk-loginout);
           justify-content: flex-start;
-          width: 50px;
+          width: 44px;
+        
         }
         span{
           font-size: 32px;
         }
+        
       }
     }
 

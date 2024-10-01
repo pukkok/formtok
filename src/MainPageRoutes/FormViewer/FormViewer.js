@@ -53,12 +53,12 @@ function FormViewer() {
                 </div>
             </FormCardWrapper>
 
-            {pages[currentIdx].questions.map(question => {
+            {pages[currentIdx].questions.map(question => { // 질문
                 const {id, q, d, options, type} = question
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
                         <p className="title-B">{q || '제목 없는 질문'}</p>
-                        {d && <DescriptionEditor value={d}/>}
+                        {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
                     <ViewerQuestionForm type={type} options={options} name={question.id}/>
                     

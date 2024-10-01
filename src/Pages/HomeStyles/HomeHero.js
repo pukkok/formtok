@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import hero from '../../Imgs/billboard-character - copy.png'
+// import hero from '../../Imgs/billboard-character - copy.png'
+import hero from '../../Imgs/second-board.png'
 import cloud from '../../Imgs/clouds.png'
 import useSwitchPage from '../../Hooks/useSwitchPage';
 
@@ -28,7 +29,7 @@ const HeroWrapper = styled.section`
         margin: 0 auto;
         transform: translateY(-50%);
         max-width: var(--pk-container);
-        perspective: 1800px;
+        /* perspective: 1800px; */
 
         & > div{
             display: flex;
@@ -73,10 +74,11 @@ const HeroWrapper = styled.section`
         .hero{
             position: absolute;
             right: -100px;
+            right: 0px;
             top: 100vh;
-            transform: scaleX(-1) translateY(-50%) rotateY(45deg);
+            /* transform: scaleX(-1) translateY(-50%) rotateY(45deg); */
             filter: drop-shadow(-2px 8px 14px var(--pk-charcoal));
-            max-width: 580px;
+            max-width: 780px;
             height: fit-content;
             animation: heroUp 1s forwards;
             animation-delay: .9s;
@@ -86,11 +88,13 @@ const HeroWrapper = styled.section`
     @keyframes heroUp {
         0%{
             top: 100vh;
-            transform: scaleX(-1) translateY(-50%) rotateY(45deg);
+            /* transform: scaleX(-1) translateY(-50%) rotateY(45deg); */
+            transform: translateY(-50%);
         }
         100%{
-            top: 50%;
-            transform: scaleX(-1) translateY(-50%) rotateY(45deg);
+            top: 30%;
+            /* transform: scaleX(-1) translateY(-50%) rotateY(45deg); */
+            transform: translateY(-50%);
         }
     }
 `

@@ -20,7 +20,7 @@ function QuestionForm ({pi, qi}){
         {['객관식', '객관식(복수 선택)', '드롭다운'].includes(style) && <Multiple pages={pages} pi={pi} qi={qi}/>}
         {['날짜', '시간', '날짜 + 시간'].includes(style) && <DateTypeInput style={style} setPeriod={setPeriod}/>}
         {style === '표형' && <TableCanvas/>}
-        {style === '점수 선택형' &&<SelectScore pi={pi} qi={qi}/>}
+        {style === '점수 선택형' &&<SelectScore pages={pages} pi={pi} qi={qi}/>}
     </StyledQuestionForm>
 }
 
@@ -170,7 +170,7 @@ const StyledSelcetScore = styled.div`
         input{
             width: 100px;
             border: solid 1px var(--pk-charcoal);
-            padding: 4px 8px;
+            padding: 8px 16px;
             border-radius: 8px;
             &:focus{
                 border: solid 1px var(--pk-point);
@@ -188,9 +188,9 @@ const StyledSelcetScore = styled.div`
     }
 
     ul.line{
-        margin: 0;
         padding: 0;
-        width: 100%;
+        width: 95%;
+        margin: 0 auto;
         list-style: none;
         position: relative;
         display: flex;
@@ -203,7 +203,7 @@ const StyledSelcetScore = styled.div`
             width: 100%;
             height: 3px;
             position: absolute;
-            top: 25%;
+            top: 30%;
             left: 0;
             right: 0;
             background-color: var(--pk-charcoal);
@@ -227,7 +227,7 @@ const StyledSelcetScore = styled.div`
         .ball{
             display: block;
             position: absolute;
-            top: 25%;
+            top: 30%;
             left: 0;
             width: 50%;
             height: 3px;
@@ -264,54 +264,58 @@ const StyledSelcetScore = styled.div`
         
 `
 
-function SelectScore ({pi, qi}) {
-    const [percent, setPercent] = useState(50)
-    const [maxScore, setMaxScore] = useState(5)
+function SelectScore ({pages, pi, qi}) {
+    const [percent, setPercent] = useState(0)
+    // const [range, setRange] = useState({min: 1, max: 5}) // 기본 최소값 1, 최대값 5
+    const range = pages[pi].questions[qi].scoreRanges
 
-    const scores = Array(maxScore).fill(1).map((n, idx) => n+idx)
+    // 선택된 범위의 점수 리스트 생성
+    const scores = Array.from({ length: range.max - range.min + 1 }, (_, idx) => range.min + idx)
+    const { periodSetting } = usePageActions()
+
+    // 드롭다운에서 선택한 값을 기반으로 최소, 최대 범위 업데이트
+    const minMaxChange = (minmax, value) => {
+        periodSetting(pi, qi, minmax, value)
+        setPercent(0)
+    }
 
     return (
-    <StyledSelcetScore>
-        <div className="option-input-box">
-            <input placeholder="왼쪽값 입력"/>
-            <input placeholder="오른쪽값 입력"/>
-        </div>
-
-        <ul className="line">
-            {scores.map((n, idx) => {
-                return <li key={idx} value={idx} onClick={()=>setPercent(idx / (scores.length - 1) * 100)}>{n}</li>
-            })}
-            <span className="ball" style={{width : percent + '%'}}></span>
-        </ul>
-
-        <div className="minmax-box">
-            <div>최소 : 
-                <DropDown initialItem={1} style={{width: '80px'}}>
-                    <li><button>1</button></li>
-                    <li><button>2</button></li>
-                    <li><button>3</button></li>
-                    <li><button>4</button></li>
-                    <li><button>5</button></li>
-                </DropDown>
+        <StyledSelcetScore>
+            <div className="option-input-box">
+                <input className="nbb" placeholder="왼쪽값 입력" onChange={e => periodSetting(pi, qi, 'minText', e.target.value)}/>
+                <input className="nbb" placeholder="오른쪽값 입력" onChange={e => periodSetting(pi, qi, 'maxText', e.target.value)}/>
             </div>
-            <span>~</span>
-            <div>최대 :
-                <DropDown initialItem={5} style={{width: '80px'}}>
-                    <li><button>2</button></li>
-                    <li><button>3</button></li>
-                    <li><button>4</button></li>
-                    <li><button>5</button></li>
-                    <li><button>6</button></li>
-                    <li><button>7</button></li>
-                    <li><button>8</button></li>
-                    <li><button>9</button></li>
-                    <li><button>10</button></li>
-                </DropDown>
+
+            <ul className="line">
+                {scores.map((n, idx) => (
+                    <li key={idx} value={n} onClick={() => setPercent(((n - range.min) / (scores.length - 1)) * 100)}>
+                        {n}
+                    </li>
+                ))}
+                <span className="ball" style={{width: percent + '%'}}></span>
+            </ul>
+
+            <div className="minmax-box">
+                <div>최소 : 
+                    <DropDown initialItem={range.min} style={{width: '80px'}}>
+                        {Array.from({ length: 2 }, (_, idx) => idx).map((n) => (
+                            <li key={n}><button onClick={() => minMaxChange('min', n)}>{n}</button></li>
+                        ))}
+                    </DropDown>
+                </div>
+                <span>~</span>
+                <div>최대 :
+                    <DropDown initialItem={range.max} style={{width: '80px'}}>
+                        {Array.from({ length: 9 }, (_, idx) => idx + 2).map((n) => (
+                            <li key={n}><button onClick={() => minMaxChange('max', n)}>{n}</button></li>
+                        ))}
+                    </DropDown>
+                </div>
             </div>
-        </div>
-    </StyledSelcetScore>
+        </StyledSelcetScore>
     )
 }
+
 
 const TableCanvas = () => {
   const canvasRef = useRef(null);

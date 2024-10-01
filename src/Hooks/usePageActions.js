@@ -5,7 +5,50 @@ function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
+
+    const createPage = () => {
+        const newPages = [ // 초기 모델링
+            {
+            id: 'P'+randomKey(), 
+            title: '', 
+            description : '',
+            questions: [
+                {id: 'Q'+randomKey(), 
+                    type: '객관식', q: '', d: '', 
+                    options: [{id : 'O'+randomKey(), answer: ''}],
+                    hasExtraOption: false,
+                    scoreRanges : {min:1, max:5, minText: '', maxText: ''},
+                    hasDescription : false,
+                    period: {start: '', end: null},
+                    setPeriod : false, // 날짜 타입일때 사용
+                    essentail : false, // 필수 질문
+                    setNextToPage : false, // 답변별 페이지 이동
+                    next : null // 다음 페이지 설정
+                }
+            ],
+            next : null
+            }
+        ]
+        return newPages
+    }
+
+    const createQuestion = () => {
+        const newQuestion = { 
+            id : 'Q'+randomKey(), type: '객관식', q: '', d: '', 
+            options: [{id:'O' + randomKey(), answer:''}], 
+            hasExtraOption: false,
+            scoreRanges : {min:1, max:5, minText: '', maxText: ''},
+            hasDescription : false,
+            period: {start: '', end: null},
+            setPeriod : false, // 날짜 타입일때 사용
+            essentail : false, // 필수 질문
+            setNextToPage : false, // 답변별 페이지 이동
+            next : null // 다음 페이지 설정
+        }
+        return newQuestion
+    }
     
+
     const loadPages = (pages) => {
         setPages(pages)
     }
@@ -75,10 +118,8 @@ function usePageActions () {
 
     // 질문 추가하기
     const addQuestion = () => {
-        let id = 'Q' + randomKey()
         let pageCnt = activeCard.split('-')[1]
         let length
-        let id2 = 'O' + randomKey()
 
         setPages(prev => {
             return prev.map((page, idx) => {
@@ -88,10 +129,7 @@ function usePageActions () {
                         ...page,
                         questions: [
                             ...page.questions,
-                            { 
-                                id, type: '객관식', q: '', d: '', 
-                                options: [{id:id2, answer:''}], hasExtraOption:false, required: false, next: null 
-                            }
+                            createQuestion()
                         ]
                     }
                 }
@@ -241,7 +279,7 @@ function usePageActions () {
             })
         })
     }
-    // 옵션 설정하기
+    /** 옵션 설정하기 */
     const changeOption = (e, pi, qi, oi) => {
         setPages(pages => {
             return pages.map((page, idx) => {
@@ -320,6 +358,24 @@ function usePageActions () {
             })
         })
     }
+    /** 기간설정 pi, qi, key: value */
+    const periodSetting = (pi, qi , key, value) => {
+        setPages(pages=> {
+            return pages.map((page, idx) => {
+                if(idx === pi) {
+                    const updateQuestions = page.questions.map((question, idx2) => {
+                        if(idx2 === qi) {
+                            return { ...question, scoreRanges : {...question.scoreRanges, [key] : value}}
+                        }
+                        return question
+                    })
+                    return {...page, questions : updateQuestions}
+                }
+                return page
+            })
+        })
+    }
+
 
     /** 현재페이지가 끝나면 어디로 갈껀가요? */
     const whereIsNextPage = (pi, nextPageIdx) => {
@@ -343,6 +399,7 @@ function usePageActions () {
     }
 
     return { 
+        createPage,
         loadPages, // 설문지 불러오기
         changePLocation, changeQLocation, // 위치변경 드래그앤드롭
         changePTitle, changePDescription, // 페이지 내용변경
@@ -350,6 +407,7 @@ function usePageActions () {
         changeQTitle, changeQDescription, changeQType, changeOption,
         copyP, deleteP, copyQ, deleteQ, deleteOption,
         usedOptionCheck, // 부가옵션 설정
+        periodSetting, // 날짜 타입 기간으로 설정할 경우
         whereIsNextPage,
         changeEndingTitle, changeEndingDescription
     }

@@ -1,10 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import surveyIcons from './survey-icons-origin.png'
+import serviceItems from '../../Imgs/isometric-case-study-infographics-copy.png'
 
 const ServiceWrapper = styled.section`
     padding: 80px 40px;
+    max-width: var(--pk-container);
+    margin: 0 auto;
     background-color: var(--pk-dark);
+
+    background-image: url(${serviceItems});
+    background-size: 1200px;
+    background-repeat: no-repeat;
+
 
     h3{
         font-size: 48px;
@@ -23,9 +30,7 @@ const ServiceWrapper = styled.section`
         & > .img-box{
             width: 300px;
             height: 300px;
-            background-image: url(${surveyIcons});
-            background-size: 1200px;
-            background-repeat: no-repeat;
+            
         }
 
         caption{
@@ -75,7 +80,7 @@ function HomeService () {
     
     return(
         <ServiceWrapper>
-            <h3 className="auto-show">왜 고래폼인가요?</h3>
+            <h3 className="auto-show">왜 폼톡인가요?</h3>
             <div className="feature">
                 <div className="write img-box"></div>
                 <caption className="auto-show">

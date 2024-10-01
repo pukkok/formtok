@@ -23,7 +23,7 @@ function SurveyManager () {
 
     // custom hooks
     const { getMyFormList, createForm, copyForm, deleteForm } = useAxios()
-    const { loadPages } = usePageActions() 
+    const { createPage, loadPages } = usePageActions() 
 
     useEffect(() => {
         const getForms = async () => {
@@ -47,28 +47,7 @@ function SurveyManager () {
     // 설문지 생성
     const goToCreateForm = async () => {
         const url = randomUrl()
-        const newPages = [ // 초기 모델링
-            {
-            id: 'P'+randomKey(), 
-            title: '', 
-            description : '',
-            questions: [
-                {id: 'Q'+randomKey(), 
-                    type: '객관식', 
-                    q: '', d: '', 
-                    options: [{id : 'O'+randomKey(), answer: ''}],
-                    hasExtraOption: false,
-                    scoreRanges : {min:0, max:5, minText: '', maxText: ''},
-                    hasDescription : false,
-                    setPeriod : false, // 날짜 타입일때 사용
-                    essentail : false, // 필수 질문
-                    setNextToPage : false, // 답변별 페이지 이동
-                    next : null // 다음 페이지 설정
-                }
-            ],
-            next : null
-            }
-        ]
+        const newPages = createPage()
         const success = await createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
         if(success){
             alert('새로운 설문지가 생성되었습니다.')

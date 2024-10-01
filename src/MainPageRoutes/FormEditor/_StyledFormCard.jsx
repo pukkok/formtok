@@ -65,8 +65,8 @@ const FormCardWrapper = styled.div`
     &.active:not(.viewer) {
         border: 2px solid var(--pk-point);
 
-        input:not([type='date'], [type="time"], [type="datetime-local"]):focus {
-            border-bottom: 2px solid var(--pk-point) !important;  // 포커스 시 민트색으로 강조
+        input:not([type='date'], [type="time"], [type="datetime-local"], .nbb):focus {
+            border-bottom: 2px solid var(--pk-point);  // 포커스 시 민트색으로 강조
         }
     }
 

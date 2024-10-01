@@ -109,12 +109,12 @@ function MyQuestions(){
                 <main>
                 {readMore.options && readMore.options.map((option, key) => {
                     return <h5 key={key} className="line-up"
-                    ><RadioButton/>{option.answer}</h5>
+                    ><RadioButton disabled={true}>{option.answer}</RadioButton></h5>
                 })}
                 </main>
                 <footer className="btns">
-                    <button onClick={()=>{}}>사용하기</button>
-                    <button style={{backgroundColor: '#c30928'}} onClick={()=>{}}>삭제하기</button>
+                    <button onClick={()=>{}}>사용</button>
+                    <button style={{backgroundColor: '#c30928'}} onClick={()=>{}}>삭제</button>
                     <button onClick={closeModal}>닫기</button>
                 </footer>
             </div>

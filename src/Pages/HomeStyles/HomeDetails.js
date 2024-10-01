@@ -100,7 +100,7 @@ function HomeDetails () {
     return (
     <HomeDetailsWrapper>
         <div className="container auto-show">
-            <h1>원하는 대시보드를 사용하세요<span>핀을 좌우로 움직여보세요!</span></h1>
+            <h1>작업 환경에 맞춰 자유롭게 모드를 선택하세요.<span>핀을 좌우로 움직여보세요!</span></h1>
             <input type="range" onChange={changePercent} max={100} min={0} value={percent}/>
             <div className="switcher">
                 <div className="img-box white">
