@@ -30,16 +30,6 @@ function randomUrl() {
     return newUrl
 }
 
-const tabsAtom = atom({
-    key: 'tab-list',
-    default: []
-})
-
-const activeTabAtom = atom({
-    key: 'active-tab',
-    default: ''
-})
-
 const surveyTitleAtom = atom({
     key: 'survey-title',
     default: ''
@@ -76,11 +66,16 @@ const activeCardAtom = atom({
     default : 'P-0'
 })
 
+const AnswerBoxAtom = atom({
+    key: 'answer-box',
+    default : {}
+})
 
 export {
     randomKey, randomUrl,
  
     urlAtom, surveyTitleAtom,
-    tabsAtom, activeTabAtom, activeCardAtom,
+    activeCardAtom, 
     pagesAtom, endingMentAtom, surveyPeriodAtom, 
+    AnswerBoxAtom,
 }

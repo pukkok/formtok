@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { AnswerBoxAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
@@ -12,26 +12,34 @@ function FormViewer() {
     const {pathname} = useResolvedPath()
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
+    const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
+
+    
 
     useEffect(() => {
-        // console.log(pathname)
-        // if(pages.length===0) surveyId
-    },[pages, pathname])
+        let newAnswerBox = pages.reduce((acc, page) => {
+            const {id : pageId, questions} = page
+            acc[pageId] = {
+                questions : questions.reduce((qAcc, question) => {
+                    qAcc[question.id] = null
+                    return qAcc
+                }, {})
+            }
+            return acc
+        }, {})
+        if (Object.keys(answerBox).length === 0) setAnswerBox(newAnswerBox)
+    },[pages, answerBox, setAnswerBox])
 
     const [currentIdx, setCurrentIdx] = useState(0)
-
-    const moveLogs = useRef([0])
-    
+    const moveLogs = useRef([0]) // 움직인 기록 남기기
     const moveToPrevPage = () => {
         moveLogs.current.pop()
-        setCurrentIdx(moveLogs.current.length > 0 ?moveLogs.current.length-1 : 0)
+        setCurrentIdx(moveLogs.current.length > 0 ? moveLogs.current.length-1 : 0)
     }
-
     const moveToNextPage = () => {
         moveLogs.current = [...moveLogs.current, currentIdx]
         setCurrentIdx(pages[currentIdx].next || currentIdx+1)
     }
-
     const change = () => {}
 
     return (
@@ -53,13 +61,13 @@ function FormViewer() {
             </FormCardWrapper>
 
             {pages[currentIdx].questions.map(question => { // 질문
-                const {id, q, d, options, type} = question
+                const {id, q, d, options, type, scoreRanges} = question
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
                         <p className="title-B">{q || '제목 없는 질문'}</p>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
-                    <ViewerQuestionForm type={type} options={options} name={question.id}/>
+                    <ViewerQuestionForm type={type} scoreRanges={scoreRanges} options={options} pageId={pages[currentIdx].id} questionId={id} name={id}/>
                     
                     </div>
                 </FormCardWrapper>

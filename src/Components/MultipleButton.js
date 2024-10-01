@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledMultipleButton = styled.label`
@@ -60,11 +60,20 @@ const StyledMultipleButton = styled.label`
 `
 
 // 단일 선택
-function RadioButton ({children, name, disabled=false}) {
-    
+function RadioButton ({children, name, onChange, disabled=false}) {
+    const [checked, setChecked] = useState(false);
+
+    const handleClick = () => {
+        if (!disabled) {
+            setChecked(!checked); // 토글
+            onChange(!checked ? children : null); // 체크된 값(children=option.answer) 또는 해제된 값(null) 전달
+        }
+    };
+
     return (
         <StyledMultipleButton>
-            <input type="radio" name={name} disabled={disabled}/>
+            <input type="radio" name={name} checked={checked}
+                onChange={handleClick} disabled={disabled}/>
             <span></span>
             {children}
         </StyledMultipleButton>
@@ -72,11 +81,20 @@ function RadioButton ({children, name, disabled=false}) {
 }
 
 // 중복 선택
-function CheckBoxButton({children}) {
-    
+function CheckBoxButton({children, onChange }) {
+    const [checked, setChecked] = useState(false);
+
+    const handleClick = () => {
+        setChecked(!checked);
+        onChange(!checked ? children : null); // 체크된 값(children=option.answer) 또는 해제된 값(null) 전달
+    };
+
     return (
     <StyledMultipleButton>
-        <input type="checkbox"/>
+        <input type="checkbox"
+            checked={checked}
+            onChange={handleClick}
+        />
         <span></span>
         {children}
     </StyledMultipleButton>

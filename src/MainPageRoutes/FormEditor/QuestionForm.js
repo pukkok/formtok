@@ -167,7 +167,7 @@ function DateTypeInput ({style, setPeriod = false}) {
 // 점수 선택형
 const StyledSelcetScore = styled.div` 
     width: 80%;
-    margin: 30px auto;
+    margin: 15px auto 0 auto;
     .option-input-box{
         input{
             width: 100px;
@@ -284,8 +284,8 @@ function SelectScore ({pages, pi, qi}) {
     return (
         <StyledSelcetScore>
             <div className="option-input-box">
-                <input className="nbb" placeholder="왼쪽값 입력" onChange={e => periodSetting(pi, qi, 'minText', e.target.value)}/>
-                <input className="nbb" placeholder="오른쪽값 입력" onChange={e => periodSetting(pi, qi, 'maxText', e.target.value)}/>
+                <input className="nbb" placeholder="왼쪽값 입력" onChange={e => periodSetting(pi, qi, 'minText', e.target.value)} value={range.minText}/>
+                <input className="nbb" placeholder="오른쪽값 입력" onChange={e => periodSetting(pi, qi, 'maxText', e.target.value)} value={range.maxText}/>
             </div>
 
             <ul className="line">
