@@ -23,7 +23,6 @@ function PageCard({pi}) {
     const [pageCnt, setPageCnt] = useState('1/1')
     useEffect(() => {
         setPageCnt(`${pi+1}/${pages.length}`)
-        console.log(pages[pi].description)
     }, [pages, pi])
 
     const {changePTitle, changePDescription} = usePageActions()
@@ -65,11 +64,6 @@ function QuestionCard ({pi, qi}) {
     const [isUsedOptipn, setisUsedOptions] = useState({
         description: false, essential: false, next: false, multiSelect: false, 
     })
-    
-    const [isRequire, setIsRequire] = useState(false)
-    const requireCheck = () => {
-        setIsRequire(!isRequire)
-    }
 
     const usedCheck = (toggle, pi, qi) => {
         // 설명 추가기능 종료시 설명 부분 초기화

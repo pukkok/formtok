@@ -9,7 +9,7 @@ import Setting from './MainPageRoutes/Setting/Setting';
 import NotFoundPage from './Pages/NotFoundPage';
 import HomePage from './Pages/HomePage';
 import MyQuestions from './MainPageRoutes/MyQuestions/MyQuestions';
-import SurveyAnswer from './MainPageRoutes/SurveyAnswer/SurveyAnswer';
+import FormList from './MainPageRoutes/FormList';
 import PageSwitcher from './Components/PageSwitcher';
 import { useRecoilValue } from 'recoil';
 import { modeAtom } from './Recoils/screenAtom';
@@ -38,7 +38,7 @@ function App() {
             <Route path='questions' element={<MyQuestions/>}/>
           </Route>
           <Route path='view/:surveyId' element={<FormViewer/>}/>
-          <Route path='survey-answer' element={<SurveyAnswer/>}/>
+          <Route path='form-list' element={<FormList/>}/>
           <Route path='setting' element={<Setting/>}/>
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>

@@ -27,13 +27,14 @@ function MyQuestions(){
     }
 
     useEffect(() => { // 문항 가져오기
+        
         const getQuestions = async () => {
             const questions = await getMyQuestionList(token)
             setLoadQuestions(questions)
             setSerachedFAQs(questions)
         }
-        token && getQuestions()
-    }, [token, getMyQuestionList])
+        if(token && loadQuestions.length === 0) getQuestions()
+    },[token, loadQuestions, getMyQuestionList])
 
     const readMoreView = (faq, code) => {
         setReadMore({...faq, code})

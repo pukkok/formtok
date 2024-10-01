@@ -5,7 +5,7 @@ import HomeFeatures from "./HomeStyles/HomeFeature";
 import CallToAction from "./HomeStyles/HomeCallToAction";
 import HomeFooter from "./HomeStyles/HomeFooter";
 import HomeDetails from "./HomeStyles/HomeDetails";
-import HomeService from "./HomeStyles/HomeService";
+// import HomeService from "./HomeStyles/HomeService";
 
 function HomePage () {
     return <>

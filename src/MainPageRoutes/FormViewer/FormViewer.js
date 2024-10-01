@@ -18,7 +18,6 @@ function FormViewer() {
         // if(pages.length===0) surveyId
     },[pages, pathname])
 
-    const [select, setSelect] = useState(null)
     const [currentIdx, setCurrentIdx] = useState(0)
 
     const moveLogs = useRef([0])

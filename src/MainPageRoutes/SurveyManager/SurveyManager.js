@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, Icon } from "../../Components/Icons";
-import { randomUrl, randomKey, surveyTitleAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
+import { randomUrl, surveyTitleAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledSurveyManager";
 import ModalWrapper from "../../Components/StyledModal";
@@ -123,7 +123,7 @@ function SurveyManager () {
     // }, 0)
 
     return (
-        <SurveyManagerWrapper className="dark-mode">
+        <SurveyManagerWrapper>
             <SearchForm placeholder="제목으로 검색" handleClick={search}/>
             
             <div className="template-box">

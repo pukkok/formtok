@@ -348,7 +348,7 @@ function usePageActions () {
                 if(idx === pi) {
                     const updateQuestions = page.questions.map((question, idx2) => {
                         if(idx2 === qi) {
-                            return { ... question, [toggle] : !question[toggle]}
+                            return { ...question, [toggle] : !question[toggle]}
                         }
                         return question
                     })

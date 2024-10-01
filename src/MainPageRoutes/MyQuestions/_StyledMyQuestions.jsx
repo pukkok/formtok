@@ -32,7 +32,7 @@ const MyQuestionsWrapper = styled.section`
 
     .card-box{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(330px, 350px));
         column-gap: 15px;
         row-gap: 25px;
         flex-wrap: wrap;
@@ -45,7 +45,6 @@ const MyQuestionsWrapper = styled.section`
         background-color: var(--pk-myquestion-card);
         box-shadow: var(--pk-myquestion-card-shadow);
         padding: 20px 10px;
-        max-width: 350px;
         border-radius: 12px;
         cursor: pointer;
 
