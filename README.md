@@ -7,7 +7,7 @@
 - 추후에 상품 관리 및 관리자 페이지를 만들기 위해 연습
 
 
-## 사용한 라이브러리
+## 사용한 라이브러리 및 이슈
 1. jwt-decode
    - 토큰 디코딩 라이브러리
    - 로그인 후 token을 가져와서 exp타임을 추출해서 로그인 만료시간 구현을 위해 사용했다.
@@ -85,6 +85,29 @@
    git add .
    git commit -m "Rename: Modify Case"
    git push
+   ```
+
+2. 번역시 구글 아이콘이 폰트로 나오는 문제
+   - 여러 지인에게 홈페이지 테스트 중에 페이지 자동번역을 쓰는 지인이 있었다. <br>
+     그 사람의 컴퓨터에만 페이지가 이상하게 나온다고 해서 번역을 눌러보니, <br>
+     구글아이콘이 폰트로 나오는 문제가 있었다.
+
+   ##### 해결법
+   - classname에 notranslate를 추가한다.
+   - 컴포넌트로 만들어서 사용중이라 참 다행이었다.
+   ```
+   function Icon ({ code, handleclick, className }) {
+       return <span 
+       className={`material-symbols-outlined notranslate icon ${className}`}
+       onClick={handleclick}
+       >{code}</span>
+   }
+   ```
+
+   ##### 전체 번역을 해제할 경우
+   - index.html header에 추가하기
+   ```
+   <meta name="google" content="notranslate" />
    ```
 
 ## 서버는?
