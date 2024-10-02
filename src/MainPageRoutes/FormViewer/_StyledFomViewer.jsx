@@ -12,6 +12,17 @@ const FormViewerWrapper = styled.section`
         margin-bottom: 30px;
         background-color: var(--pk-form-header-bg);
         z-index: 100;
+        p{
+            font-weight: 700;
+        }
+        a{
+            margin-left: auto;
+            background-color: var(--pk-point);
+            color: var(--pk-light-grey);
+            border-radius: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
         input{ // 진행 상황
             position: absolute;
             width: 100%;
@@ -42,7 +53,7 @@ const FormViewerWrapper = styled.section`
         }
     
         button.prev{
-            background-color: var(--pk-charcoal);
+            background-color: var(--pk-standard-btn-bg);
             color: var(--pk-light-grey);
             margin-right: 12px;
         }

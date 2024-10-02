@@ -87,7 +87,7 @@ function DropDown ({initialItem, children, initialState=false, style}) {
     <DropDownWrapper className={"drop-down-wrapper"} ref={ref} style={style}>
         <button className={classNames({open : isOpen})}
             onClick={()=>{setIsOpen(!isOpen)}}>{initialItem}
-            <Icon code={'arrow_drop_up'}/>
+            <Icon code="arrow_drop_up"/>
         </button>
         
         <ul className={classNames({open: isOpen})} onClick={()=>setIsOpen(false)}>

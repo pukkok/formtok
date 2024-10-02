@@ -14,7 +14,6 @@ function FormViewer() {
     const endingMent = useRecoilValue(endingMentAtom)
     const setAnswerBox = useSetRecoilState(AnswerBoxAtom)
     
-
     useEffect(() => {
         let newAnswerBox = pages.reduce((acc, page) => {
             const {id, questions} = page
@@ -44,8 +43,8 @@ function FormViewer() {
     return (
     <FormViewerWrapper>
         <header>
-            <Link to={`/my-form/edit/${surveyId}`}>돌아가기</Link>
             <p>진행 상황</p>
+            <Link to={`/my-form/edit/${surveyId}`}>돌아가기</Link>
             <input type="range" onChange={change} max={pages.length} min={0} step={1} value={currentIdx}/>
         </header>
 

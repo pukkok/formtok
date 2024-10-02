@@ -71,6 +71,7 @@ const MainPageWrapper = styled.section`
     --pk-question-form-bg : var(--pk-light-grey);
     --pk-question-date-indicater-filter : none;
 
+    --pk-standard-btn-bg: var(--pk-weak-purple);
 
     // ck-editor
     --pk-ck-editor-bg: var(--pk-lightest-white);
@@ -147,6 +148,8 @@ const MainPageWrapper = styled.section`
 
         --pk-question-form-bg : var(--pk-charcoal);
         --pk-question-date-indicater-filter : invert(.8);
+
+        --pk-standard-btn-bg: var(--pk-charcoal);
         // ck-editor
         --pk-ck-editor-bg: var(--pk-dark);
         --pk-ck-editor-tool-color: var(--pk-light-grey);

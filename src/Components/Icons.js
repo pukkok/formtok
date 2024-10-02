@@ -2,7 +2,7 @@ import React from "react";
 
 function Icon ({ code, handleclick, className }) {
     return <span 
-    className={`material-symbols-outlined icon ${className}`}
+    className={`material-symbols-outlined notranslate icon ${className}`}
     onClick={handleclick}
     >{code}</span>
 }

@@ -13,7 +13,7 @@ const StyledSurveySummaryTab = styled.section`
         
         button{
             border-radius: 8px;
-            background-color: var(--pk-charcoal);
+            background-color: var(--pk-standard-btn-bg);
             font-weight: 700;
             color: var(--pk-light-grey);
             padding: 5px 10px;
