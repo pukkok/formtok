@@ -130,10 +130,6 @@ const StyledDateTypeInput = styled.div`
     input:focus{
         border: none;
     }
-
-    span{
-        /* font-weight: 800; */
-    }
 `
 
 function DateTypeInput ({style, setPeriod = false}) {

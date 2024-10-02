@@ -18,6 +18,10 @@ const StyledViewerQuestionForm = styled.div`
         padding: 8px 10px;
         border-radius: 12px;
         background-color: var(--pk-question-form-bg);
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
         input{
             width: 100%;
         }
@@ -40,82 +44,107 @@ const StyledViewerQuestionForm = styled.div`
         &:empty:before {
             content: attr(placeholder);
             color: #aaa;
+            cursor: text;
         }
     }
 `
 
-function ViewerQuestionForm ({ type, options=[], name, scoreRanges, pageId, questionId }) {
-    const { eTargetAnswer } = useAnswerActions()
+function ViewerQuestionForm ({ type, options=[], scoreRanges, setPeriod, pageId, questionId }) {
+    const { answerPick, answerPicks, answerInValue, answerInHTML, answerDateType } = useAnswerActions()
     const answerBox = useRecoilValue(AnswerBoxAtom)
-    
-    const longTextRef = useRef(null)
-
-    useEffect(() => {
-        if(longTextRef.current){
-            
-        }
-    }, [longTextRef])
-
-    const [selectedRadioValue, setSelectedRadioValue] = useState(null); // 라디오 선택 값
-    const [selectedCheckboxValues, setSelectedCheckboxValues] = useState([]); // 체크박스 선택 값 배열
-
-    const handleRadioChange = (selectedOption) => {
-        setSelectedRadioValue(selectedOption); // 선택된 라디오 값 저장
-    }
-
-    const handleCheckboxChange = (selectedOption) => {
-        if (selectedOption) {
-            // 체크된 값 추가
-            setSelectedCheckboxValues((prev) => [...prev, selectedOption]);
-        } else {
-            // 체크 해제된 값 제거
-            setSelectedCheckboxValues((prev) =>
-                prev.filter((value) => value !== selectedOption)
-            );
-        }
-    };
-
-    useEffect(() => {
-        console.log("Selected Radio Value:", selectedRadioValue);
-    }, [selectedRadioValue]);
-
-    useEffect(() => {
-        console.log("Selected Checkbox Values:", selectedCheckboxValues);
-    }, [selectedCheckboxValues]);
 
     return (
     <StyledViewerQuestionForm>
         {(type === '객관식' && options.length > 0) && 
             options.map(option => {
-                return (option.answer && <RadioButton key={option.id} onChange={handleRadioChange} name={name}>{option.answer}</RadioButton>)
+                return (option.answer && <RadioButton 
+                    key={option.id} 
+                    onClick={() => answerPick(option.answer, pageId, questionId)}
+                    pick={answerBox[pageId]?.[questionId] || ''}
+                    >
+                    {option.answer}</RadioButton>)
             })
         }
         {(type === '객관식(복수 선택)' && options.length > 0) && 
-            options.map((option, idx) => {
-                return (option.answer && <CheckBoxButton key={option.id} name={name} onChange={handleCheckboxChange}>{option.answer}</CheckBoxButton>)
+            options.map(option => {
+                return (option.answer && <CheckBoxButton 
+                    key={option.id}
+                    onClick={() => answerPicks(option.answer, pageId, questionId)}
+                    picks={answerBox[pageId]?.[questionId] || []}
+                    >
+                    {option.answer}</CheckBoxButton>)
             })
         }
         {(type === '드롭다운' && options.length > 0) && 
-        <DropDown initialItem={'옵션을 선택해주세요'} style={{width: '260px'}}>
+        <DropDown initialItem={answerBox[pageId]?.[questionId] || '옵션을 선택해주세요'} style={{width: '260px'}}>
             {options.map((option, idx) => {
                 return (option.answer && 
                 <li key={option.id}>
-                    <button>{option.answer}</button>
+                    <button onClick={e => answerInHTML(e, pageId, questionId)}>{option.answer}</button>
                 </li>)
             })}
         </DropDown>
         }
-        {type === '단답형' && <div className="input-wrapper"><input placeholder="답변 입력" onChange={e => eTargetAnswer(e, pageId, questionId)} value={answerBox[pageId]?.[questionId] || ""}/></div>}
-        {type === '서술형' && <div contentEditable placeholder={'답변 입력(최대 1000자)'} ref={longTextRef}></div>}
-        {['날짜', '시간', '날짜 + 시간'].includes(type) && <DateTypeInput style={type} />}
-        {type === '점수 선택형' && <SelectScore scoreRanges={scoreRanges} pageId={pageId} questionId={questionId}/>}
+        {type === '단답형' && 
+        <div className="input-wrapper">
+            <input 
+            placeholder="답변 입력" 
+            onChange={e => answerInValue(e, pageId, questionId)} 
+            value={answerBox[pageId]?.[questionId] || ""}/>
+        </div>}
+        {type === '서술형' && 
+        <div 
+            contentEditable 
+            placeholder={'답변 입력(최대 1000자)'}
+            onBlur={e => answerInHTML(e, pageId, questionId)} // 입력을 벗어났을때 데이터 저장
+            dangerouslySetInnerHTML={{ __html : answerBox[pageId]?.[questionId] || ""}}
+        />}
+        {['날짜', '시간', '날짜 + 시간'].includes(type) && 
+        <DateTypeInput 
+            style={type}
+            onChange={e => answerDateType(e, pageId, questionId, 'start')}
+            secondOnChange={e => answerDateType(e, pageId, questionId, 'end')}
+            setPeriod={setPeriod}
+            value={answerBox[pageId]?.[questionId]?.start || ""}
+            secondValue={answerBox[pageId]?.[questionId]?.end || ""}
+        />}
+        {type === '점수 선택형' && 
+        <SelectScore 
+            scoreRanges={scoreRanges} 
+            pageId={pageId} 
+            questionId={questionId}
+            getScore={e => answerInValue(e, pageId, questionId)}
+        />}
     </StyledViewerQuestionForm>)
 
 }
 
 export default ViewerQuestionForm
 
-function DateTypeInput ({style}) {
+const StyledDateTypeInput = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & > div{
+        width: fit-content;
+        height: 40px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        background-color: var(--pk-question-form-bg);
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator, 
+    input[type="time"]::-webkit-calendar-picker-indicator, 
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
+        filter: var(--pk-question-date-indicater-filter);
+        cursor: pointer;
+    }
+
+    input:focus{
+        border: none;
+    }
+`
+
+function DateTypeInput ({style, onChange, secondOnChange, setPeriod, value="", secondValue=""}) {
 
     const changeStyleToType = (style) => {
         let type = ''
@@ -128,9 +157,26 @@ function DateTypeInput ({style}) {
         return type 
     }
 
-    return <div className="input-wrapper">
-        <input type={changeStyleToType(style)} />
+    return (
+    <StyledDateTypeInput>
+    <div>
+        <input 
+        type={changeStyleToType(style)} 
+        onChange={onChange} 
+        value={value}/>
     </div>
+    {setPeriod && <>
+        <span>~</span>
+    <div>
+        <input 
+        type={changeStyleToType(style)} 
+        onChange={secondOnChange} 
+        value={secondValue}/>
+    </div>
+    </>
+    }
+    </StyledDateTypeInput>
+    )
 }
 
 const StyledSelcetScore = styled.div`
@@ -220,20 +266,11 @@ width: 80%;
     }
 `
 
-function SelectScore ({scoreRanges, pageId, questionId}) {
-    const { eTargetAnswer } = useAnswerActions()
+function SelectScore ({scoreRanges, pageId, questionId, getScore}) {
     const answerBox = useRecoilValue(AnswerBoxAtom)
     const {min, max, minText, maxText} = scoreRanges
-    const [percent, setPercent] = useState(((answerBox[pageId]?.[questionId] - min) / (max - min) * 100))
     // 선택된 범위의 점수 리스트 생성
     const scores = Array.from({ length: scoreRanges.max - scoreRanges.min + 1 }, (_, idx) => scoreRanges.min + idx)
-
-    const getScore = (e) => {
-        const n = e.target.value
-        eTargetAnswer(e, pageId, questionId)
-        setPercent(((n - min) / (max - min)) * 100)
-    }
-
 
     return (
         <StyledSelcetScore>
@@ -248,7 +285,8 @@ function SelectScore ({scoreRanges, pageId, questionId}) {
                         {n}
                     </li>
                 ))}
-                <span className="ball" style={{width: percent + '%'}}></span>
+                <span className="ball" 
+                style={{width: (answerBox[pageId]?.[questionId] ? ((answerBox[pageId]?.[questionId] - min) / (max - min) * 100) : 0) + '%'}}></span>
             </ul>
         </StyledSelcetScore>
     )

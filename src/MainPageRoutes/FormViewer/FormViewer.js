@@ -17,14 +17,22 @@ function FormViewer() {
     useEffect(() => {
         let newAnswerBox = pages.reduce((acc, page) => {
             const {id, questions} = page
-            acc[id] = {
-                questions : questions.reduce((qAcc, question) => {
+            const newQuestions = questions.reduce((qAcc, question) => {
+                if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
+                    qAcc[question.id] = {start:'', end:''}
+                }
+                else if(question.type ==='객관식(복수 선택)'){
+                    qAcc[question.id] = []
+                }
+                else{
                     qAcc[question.id] = null
-                    return qAcc
-                }, {})
-            }
+                }
+                return qAcc
+            }, {})
+            acc[id] = {...newQuestions}
             return acc
         }, {})
+        console.log(newAnswerBox)
         setAnswerBox(newAnswerBox)
     },[pages])
 
@@ -59,13 +67,19 @@ function FormViewer() {
             </FormCardWrapper>
 
             {pages[currentIdx].questions.map(question => { // 질문
-                const {id, q, d, options, type, scoreRanges} = question
+                const {id, q, d, options, type, scoreRanges, setPeriod} = question
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
                         <p className="title-B">{q || '제목 없는 질문'}</p>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
-                    <ViewerQuestionForm type={type} scoreRanges={scoreRanges} options={options} pageId={pages[currentIdx].id} questionId={id} name={id}/>
+                    <ViewerQuestionForm 
+                        type={type} 
+                        options={options}
+                        scoreRanges={scoreRanges} 
+                        setPeriod={setPeriod}
+                        pageId={pages[currentIdx].id} questionId={id} 
+                    />
                     
                     </div>
                 </FormCardWrapper>
