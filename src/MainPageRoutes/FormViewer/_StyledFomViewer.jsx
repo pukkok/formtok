@@ -43,10 +43,12 @@ const FormViewerWrapper = styled.section`
     
         button.prev{
             background-color: var(--pk-charcoal);
+            color: var(--pk-light-grey);
             margin-right: 12px;
         }
         button.next{
             background-color: var(--pk-point);
+            color: var(--pk-light-grey);
         }
     }
 `

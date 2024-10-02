@@ -120,11 +120,10 @@ const StyledDateTypeInput = styled.div`
         border-radius: 12px;
         background-color: var(--pk-question-form-bg);
     }
-
     input[type="date"]::-webkit-calendar-picker-indicator, 
     input[type="time"]::-webkit-calendar-picker-indicator, 
     input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
-        filter: invert(.8);
+        filter: var(--pk-question-date-indicater-filter);
         cursor: pointer;
     }
 

@@ -17,7 +17,7 @@ const StyledViewerQuestionForm = styled.div`
         height: 40px;
         padding: 8px 10px;
         border-radius: 12px;
-        background-color: var(--pk-charcoal);
+        background-color: var(--pk-question-form-bg);
         input{
             width: 100%;
         }
@@ -25,7 +25,7 @@ const StyledViewerQuestionForm = styled.div`
         input[type="date"]::-webkit-calendar-picker-indicator, 
         input[type="time"]::-webkit-calendar-picker-indicator, 
         input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
-            filter: invert(.8);
+            filter: var(--pk-question-date-indicater-filter);
             cursor: pointer;
         }
     }
@@ -36,7 +36,7 @@ const StyledViewerQuestionForm = styled.div`
         min-height: 80px;
         padding: 8px 10px;
         border-radius: 12px;
-        background-color: var(--pk-charcoal);
+        background-color: var(--pk-question-form-bg);
         &:empty:before {
             content: attr(placeholder);
             color: #aaa;

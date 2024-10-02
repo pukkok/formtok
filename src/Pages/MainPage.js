@@ -69,6 +69,8 @@ const MainPageWrapper = styled.section`
     // 질문 옵션 question form
     --pk-add-extra-btn-bg: var(--pk-silver);
     --pk-question-form-bg : var(--pk-light-grey);
+    --pk-question-date-indicater-filter : none;
+
 
     // ck-editor
     --pk-ck-editor-bg: var(--pk-lightest-white);
@@ -144,7 +146,7 @@ const MainPageWrapper = styled.section`
         --pk-add-extra-btn-bg: var(--pk-charcoal);
 
         --pk-question-form-bg : var(--pk-charcoal);
-
+        --pk-question-date-indicater-filter : invert(.8);
         // ck-editor
         --pk-ck-editor-bg: var(--pk-dark);
         --pk-ck-editor-tool-color: var(--pk-light-grey);
