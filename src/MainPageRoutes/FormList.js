@@ -104,15 +104,17 @@ function FormList () {
             <div className="template-box">
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
                     const {title, url, pages, endingMent} = form
-                    console.log(pages, endingMent)
+                    // console.log(pages, endingMent)
+                    console.log(testlayouts[idx])
                     //임시
-                    const {count, full, startDate, endDate} = testlayouts[idx]
+                    // const {count, full, startDate, endDate} = testlayouts[idx]
                     return <div key={url} className="card">
                         <div className="form-box" onClick={() => {}}>
                             <h4>{title}</h4>
                             <div className="info">
-                                <p>{count} | {full}</p>
-                                <p>{startDate} ~ {endDate || ''}</p>
+                                <p>준비중</p>
+                                {/* <p>{count} | {full}</p>
+                                <p>{startDate} ~ {endDate || ''}</p> */}
                             </div>
                         </div>
                     </div>

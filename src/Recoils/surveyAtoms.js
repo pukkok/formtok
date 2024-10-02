@@ -7,7 +7,7 @@ function randomKey(){
         return parseInt(5 + Math.random() * 5)
     }
     const x = 'abcdefghijklmnopqrstuvwxyz'.split('')
-    const now = dayjs().format('YYYY-MM-DDTHH:mm:ss')
+    const now = dayjs().format('YYYY-MM-DD')
     let r = getRandomNumber()
     for(let i=0; i<r; i++){
         newKey += x[parseInt(Math.random()*x.length)]

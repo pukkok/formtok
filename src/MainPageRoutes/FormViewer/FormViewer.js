@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { AnswerBoxAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
@@ -12,14 +12,13 @@ function FormViewer() {
     const {pathname} = useResolvedPath()
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
-    const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
-
+    const setAnswerBox = useSetRecoilState(AnswerBoxAtom)
     
 
     useEffect(() => {
         let newAnswerBox = pages.reduce((acc, page) => {
-            const {id : pageId, questions} = page
-            acc[pageId] = {
+            const {id, questions} = page
+            acc[id] = {
                 questions : questions.reduce((qAcc, question) => {
                     qAcc[question.id] = null
                     return qAcc
@@ -27,8 +26,8 @@ function FormViewer() {
             }
             return acc
         }, {})
-        if (Object.keys(answerBox).length === 0) setAnswerBox(newAnswerBox)
-    },[pages, answerBox, setAnswerBox])
+        setAnswerBox(newAnswerBox)
+    },[pages])
 
     const [currentIdx, setCurrentIdx] = useState(0)
     const moveLogs = useRef([0]) // 움직인 기록 남기기

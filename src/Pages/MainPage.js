@@ -68,7 +68,7 @@ const MainPageWrapper = styled.section`
 
     // 질문 옵션 question form
     --pk-add-extra-btn-bg: var(--pk-silver);
-
+    --pk-question-form-bg : var(--pk-light-grey);
 
     // ck-editor
     --pk-ck-editor-bg: var(--pk-lightest-white);
@@ -142,6 +142,8 @@ const MainPageWrapper = styled.section`
 
         // 질문 옵션 question form
         --pk-add-extra-btn-bg: var(--pk-charcoal);
+
+        --pk-question-form-bg : var(--pk-charcoal);
 
         // ck-editor
         --pk-ck-editor-bg: var(--pk-dark);

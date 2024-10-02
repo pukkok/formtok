@@ -84,7 +84,7 @@ const StyledLongText = styled.div`
     height: 80px;
     padding: 8px 10px;
     border-radius: 12px;
-    background-color: var(--pk-charcoal);
+    background-color: var(--pk-question-form-bg);
 `
 function LongText () {
     return <StyledLongText>
@@ -99,7 +99,7 @@ const StyledShortText = styled.div`
     height: 40px;
     padding: 8px 10px;
     border-radius: 12px;
-    background-color: var(--pk-charcoal);
+    background-color: var(--pk-question-form-bg);
 `
 function ShortText () {
     return <StyledShortText>
@@ -118,7 +118,7 @@ const StyledDateTypeInput = styled.div`
         height: 40px;
         padding: 8px 10px;
         border-radius: 12px;
-        background-color: var(--pk-charcoal);
+        background-color: var(--pk-question-form-bg);
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator, 
@@ -171,7 +171,8 @@ const StyledSelcetScore = styled.div`
     .option-input-box{
         input{
             width: 100px;
-            border: solid 1px var(--pk-charcoal);
+            border: solid 1px transparent;
+            background-color: var(--pk-question-form-bg);
             padding: 8px 16px;
             border-radius: 8px;
             &:focus{

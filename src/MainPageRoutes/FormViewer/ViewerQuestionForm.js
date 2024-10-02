@@ -61,7 +61,7 @@ function ViewerQuestionForm ({ type, options=[], name, scoreRanges, pageId, ques
 
     const handleRadioChange = (selectedOption) => {
         setSelectedRadioValue(selectedOption); // 선택된 라디오 값 저장
-    };
+    }
 
     const handleCheckboxChange = (selectedOption) => {
         if (selectedOption) {
@@ -105,10 +105,10 @@ function ViewerQuestionForm ({ type, options=[], name, scoreRanges, pageId, ques
             })}
         </DropDown>
         }
-        {type === '단답형' && <div className="input-wrapper"><input placeholder="답변 입력" onChange={e => eTargetAnswer(e, pageId, questionId)} value={answerBox[pageId][questionId]}/></div>}
+        {type === '단답형' && <div className="input-wrapper"><input placeholder="답변 입력" onChange={e => eTargetAnswer(e, pageId, questionId)} value={answerBox[pageId]?.[questionId] || ""}/></div>}
         {type === '서술형' && <div contentEditable placeholder={'답변 입력(최대 1000자)'} ref={longTextRef}></div>}
         {['날짜', '시간', '날짜 + 시간'].includes(type) && <DateTypeInput style={type} />}
-        {type === '점수 선택형' && <SelectScore scoreRanges={scoreRanges} pageId={pageId} questionId={questionId} value={answerBox[pageId][questionId] || 0}/>}
+        {type === '점수 선택형' && <SelectScore scoreRanges={scoreRanges} pageId={pageId} questionId={questionId}/>}
     </StyledViewerQuestionForm>)
 
 }
@@ -220,28 +220,26 @@ width: 80%;
     }
 `
 
-function SelectScore ({scoreRanges, pageId, questionId, value=0}) {
+function SelectScore ({scoreRanges, pageId, questionId}) {
     const { eTargetAnswer } = useAnswerActions()
-    const [percent, setPercent] = useState(((value - scoreRanges.min) / (scoreRanges.max - scoreRanges.min)) * 100)
+    const answerBox = useRecoilValue(AnswerBoxAtom)
+    const {min, max, minText, maxText} = scoreRanges
+    const [percent, setPercent] = useState(((answerBox[pageId]?.[questionId] - min) / (max - min) * 100))
     // 선택된 범위의 점수 리스트 생성
     const scores = Array.from({ length: scoreRanges.max - scoreRanges.min + 1 }, (_, idx) => scoreRanges.min + idx)
-
-    useEffect(() => {
-        if(value) setPercent(((value - scoreRanges.min) / (scores.length - 1)) * 100)
-    },[value, scoreRanges, scores.length])
 
     const getScore = (e) => {
         const n = e.target.value
         eTargetAnswer(e, pageId, questionId)
-        setPercent(((n - scoreRanges.min) / (scores.length - 1)) * 100)
+        setPercent(((n - min) / (max - min)) * 100)
     }
 
 
     return (
         <StyledSelcetScore>
             <div className="option-input-box">
-                <input className="nbb" placeholder="왼쪽값 입력" defaultValue={scoreRanges.minText} readOnly={true}/>
-                <input className="nbb" placeholder="오른쪽값 입력" defaultValue={scoreRanges.maxText} readOnly={true}/>
+                <input className="nbb" placeholder="왼쪽값 입력" defaultValue={minText} readOnly={true}/>
+                <input className="nbb" placeholder="오른쪽값 입력" defaultValue={maxText} readOnly={true}/>
             </div>
 
             <ul className="line">

@@ -103,7 +103,7 @@ function HomeHeader() {
                 </div>
                 <ul>
                     <li><Link to="/contact">문의하기</Link></li>
-                    <li>{token ? userInfo.name : ''}</li>
+                    {/* <li>{token ? userInfo.name : ''}</li> */}
                     <li className='login'><Link to="/user/login">로그인</Link></li>
                 </ul>
             </nav>
