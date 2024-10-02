@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 const SurveyManagerWrapper = styled.section`
-    padding: 20px 30px;
+    padding: var(--pk-viewer-padding);
     margin: 0px auto;
-    max-width: var(--pk-board-container);
     .template-box{
         margin-top: 30px;
         display: grid;

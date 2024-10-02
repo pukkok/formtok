@@ -2,14 +2,14 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './Pages/LoginPage';
 import './App.css';
 import MainPage from './Pages/MainPage'
-import SurveyManager from './MainPageRoutes/SurveyManager/SurveyManager';
+import FormManager from './MainPageRoutes/FormManager/FormManager';
 import FormEditor from './MainPageRoutes/FormEditor/FormEditor';
 import FormViewer from './MainPageRoutes/FormViewer/FormViewer';
 import Setting from './MainPageRoutes/Setting/Setting';
 import NotFoundPage from './Pages/NotFoundPage';
 import HomePage from './Pages/HomePage';
 import MyQuestions from './MainPageRoutes/MyQuestions/MyQuestions';
-import FormList from './MainPageRoutes/FormList';
+import FormList from './MainPageRoutes/FormList/FormList';
 import PageSwitcher from './Components/PageSwitcher';
 import { useRecoilValue } from 'recoil';
 import { modeAtom } from './Recoils/screenAtom';
@@ -32,7 +32,7 @@ function App() {
         <Route path='/' element={<HomePage/>}/>
         <Route element={<MainPage mode={mode} logo={logo}/>}>
           <Route path='my-form'>
-            <Route path='' element={<SurveyManager/>}/>
+            <Route path='' element={<FormManager/>}/>
             <Route path='edit/:surveyId' element={<FormEditor/>}/>
             <Route path='preview/:surveyId' element={<FormViewer/>}/>
             <Route path='questions' element={<MyQuestions/>}/>

@@ -21,6 +21,23 @@ const useAxios = () => {
         })
     }
 
+    const refreshAuthToken = async (oldToken) => {
+        try {
+            const { data } = await axios.post('/refresh-token', {}, 
+                {headers : {'Authorization' : `Bearer ${oldToken}`}} // 헤더
+            )
+            const newToken = data.token
+            // 새로운 토큰을 로컬 스토리지에 저장하거나 다른 방식으로 관리
+            console.log('연장 완료')
+            localStorage.setItem('token', newToken)
+            return newToken
+        } catch (error) {
+            console.error('토큰 갱신 실패', error)
+            // 필요한 경우 로그아웃 처리 또는 재인증 절차 진행
+            // localStorage.clear()
+        }
+    }
+
     // const navigate = useNavigate()
     // 사용중일 때 토큰 만료시 로그인 페이지로 이동
     // const expiredTokenCheck = (err) => { 
@@ -173,7 +190,7 @@ const useAxios = () => {
     }
 
     return { 
-        firstExpiredTokenCheck,
+        firstExpiredTokenCheck, refreshAuthToken,
         login, join, 
         createForm, saveForm, copyForm, deleteForm,
         saveQ, 

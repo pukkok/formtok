@@ -1,29 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, Icon } from "../../Components/Icons";
-import { randomUrl, surveyTitleAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
+import { surveyTitleAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
-import { SurveyManagerWrapper } from "./_StyledSurveyManager";
-import ModalWrapper from "../../Components/StyledModal";
+import { SurveyManagerWrapper } from "./_StyledFormManager";
 import SearchForm from "../../Components/SearchForm";
 import useAxios from "../../Hooks/useAxios";
 import classNames from "classnames";
 import usePageActions from "../../Hooks/usePageActions";
+import CreateFormModal from "./CreateFormModal";
 
-function SurveyManager () {
+function FormManager () {
     const setTitle = useSetRecoilState(surveyTitleAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
     
     const naviate = useNavigate()
     const token = localStorage.getItem('token')
 
-    const [createTitle, setCreateTitle] = useState('')
-    const [myForms, setMyForms] = useState([])
-    const [searchedForms, setSerachedForms] = useState([])
+    const [myForms, setMyForms] = useState([]) // 전체 데이터
+    const [searchedForms, setSerachedForms] = useState([]) // 초기 데이터
 
     // custom hooks
-    const { getMyFormList, createForm, copyForm, deleteForm } = useAxios()
-    const { createPage, loadPages } = usePageActions() 
+    const { getMyFormList, copyForm, deleteForm } = useAxios()
+    const { loadPages } = usePageActions() 
 
     useEffect(() => {
         const getForms = async () => {
@@ -31,34 +30,13 @@ function SurveyManager () {
             setSerachedForms(forms)
             setMyForms(forms)
         }
-        token && getForms()
+        if(token && myForms.length === 0) getForms()
     }, [token, getMyFormList])
 
-    
     // 모달 열고 닫기
-    const createModalRef = useRef(null)
+    const createFormModalRef = useRef(null)
     const openModal = () => {
-        createModalRef.current.showModal()
-    }
-    const closeModal = () => {
-        createModalRef.current.close()
-    }
-
-    // 설문지 생성
-    const goToCreateForm = async () => {
-        const url = randomUrl()
-        const newPages = createPage()
-        const success = await createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
-        if(success){
-            alert('새로운 설문지가 생성되었습니다.')
-            setTitle(createTitle)
-            loadPages(newPages)
-            setEndingMent({title: '', description: ''})
-            naviate(`/my-form/edit/${url}`)
-        }else{
-            alert('로그인 후 사용이 필요합니다.')
-            naviate('/user/login')
-        }
+        createFormModalRef.current.showModal()
     }
 
     // 불러온 폼으로 이동
@@ -67,10 +45,6 @@ function SurveyManager () {
         loadPages(pages)
         setEndingMent(endingMent)
         naviate(`/my-form/edit/${url}`)
-    }
-
-    const enterClick = (e) => {
-        if(e.key === 'Enter') goToCreateForm()
     }
     
     const search = (word) =>{
@@ -154,31 +128,12 @@ function SurveyManager () {
                 })}
             </div>
 
-            <ModalWrapper ref={createModalRef} onKeyDown={enterClick}>
-                <div className="modal-content">
-                    <header>
-                        <input placeholder="설문지 제목" 
-                        onChange={(e)=>setCreateTitle(e.target.value)}
-                        value={createTitle}/>
-                    </header>
-                    <main>
-                        <h4>사용 안내</h4>
-                        <p>* 바로 제목을 입력하지 않아도 됩니다.</p>
-                        <p>* 설문지 제목은 이후 상단 탭에서 변경이 가능합니다.</p>
-                        <p>* 설문지 제작 후 상단의 저장 버튼을 이용해 주세요.</p>
-                        <p>* 제목은 설문지 배포시에 사용됩니다.</p>
-                    </main>
-                    <footer className="btns">
-                        <button onClick={goToCreateForm}>생성하기</button>
-                        <button onClick={()=>closeModal(createModalRef)}>닫기</button>
-                    </footer>
-                </div>
-            </ModalWrapper>
+            <CreateFormModal token={token} ref={createFormModalRef}/>
             
         </SurveyManagerWrapper>
     )
 }
-export default SurveyManager
+export default FormManager
 
 
 

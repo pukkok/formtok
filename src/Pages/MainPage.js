@@ -176,9 +176,9 @@ const ViewerWrapper = styled.div`
     grid-area: viewer;
     transition: background-color .3s;
     background-color: var(--pk-second-background);
-    /* background-color: #f1f1f1; */
-    
     overflow: scroll;  
+
+    --pk-viewer-padding: 20px 40px;
 `
 
 function MainPage({ mode, logo }) {

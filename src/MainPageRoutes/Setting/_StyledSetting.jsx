@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const SettingWrapper = styled.section`
-    padding: 20px 30px;
+    padding: var(--pk-viewer-padding);
 
 `
 

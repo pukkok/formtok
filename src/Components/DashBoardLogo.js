@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
+import useAxios from "../Hooks/useAxios";
 
 const StyledLogo = styled.div`
     width: 280px;
@@ -11,6 +12,7 @@ const StyledLogo = styled.div`
     gap: 10px;
     padding: 0 10px;
     align-items: center;
+    position: relative;
 
     .img-box {
         width: 40px;
@@ -27,10 +29,29 @@ const StyledLogo = styled.div`
     p {
         font-size: 12px;
     }
+
+    &:hover .renew{
+        display: flex;
+    }
+
+    .renew{
+        display: none;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+        width: 100px;
+        height: 40px;
+        /* background-image: linear-gradient(rgba(0,0,0, .8), rgba(0,0,0, .8)); */
+        background-color: #000;
+        cursor: pointer;
+    }
 `
 
 function Logo({src}) {
-    // const navigate = useNavigate()
     const [timeLeft, setTimeLeft] = useState("")
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
     const token = localStorage.getItem('token')
@@ -41,9 +62,9 @@ function Logo({src}) {
             intervalRef.current = setInterval(() => {
                 const currentTime = Date.now();
                 const remainingMs = expTime - currentTime;
-                if(remainingMs <=1000 * 60 * 5){
+                if(remainingMs <=1000 * 60 * 30){
                     setWarningAlert(false)
-                    if(warningAlert) alert('5분 남았습니다.')
+                    if(warningAlert) alert('30분 남았습니다.')
                     // 나중에 연장기능 만들기
                 }
                 if(remainingMs <= 0){
@@ -90,8 +111,11 @@ function Logo({src}) {
         }
     }
 
+    const { refreshAuthToken } = useAxios()
+    
+
     return (
-        <StyledLogo >
+        <StyledLogo>
             <div className="img-box">
                 <img src={src} alt="" />
             </div>
@@ -99,7 +123,9 @@ function Logo({src}) {
                 <h1>폼톡</h1>
                 <p>만료 시간: {timeLeft}</p>
             </div>
-            
+            <div
+            className="renew"
+            onClick={() => refreshAuthToken(token)}>연장하기</div>
         </StyledLogo>
     )
 }

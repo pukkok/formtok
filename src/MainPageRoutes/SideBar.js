@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { isSideOpenAtom } from "../Recoils/screenAtom";
 import { useNavigate } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
-import Logo from "../Components/Logo/Logo";
+import Logo from "../Components/DashBoardLogo";
 import { Icon } from "../Components/Icons";
 import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";

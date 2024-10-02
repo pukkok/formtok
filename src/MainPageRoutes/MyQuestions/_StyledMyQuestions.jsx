@@ -3,8 +3,7 @@ import styled from "styled-components";
 const MyQuestionsWrapper = styled.section`
     display: flex;
     flex-direction: column;
-    padding: 20px 30px;
-    max-width: var(--pk-board-container);
+    padding: var(--pk-viewer-padding);
     margin: 0 auto;
 
     header{
@@ -33,8 +32,8 @@ const MyQuestionsWrapper = styled.section`
     .card-box{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(330px, 350px));
-        column-gap: 15px;
-        row-gap: 25px;
+        column-gap: 20px;
+        row-gap: 20px;
         flex-wrap: wrap;
         text-align: center;
         width: 100%;

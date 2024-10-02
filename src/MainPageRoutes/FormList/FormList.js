@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import SearchForm from "../Components/SearchForm";
+import SearchForm from "../../Components/SearchForm";
 import axios from "axios";
 
 const StyledFormList = styled.section`
-    padding: 20px 30px;
+    padding: var(--pk-viewer-padding);
     margin: 0 auto;
     max-width: var(--pk-board-container);
 
