@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { RadioButton, CheckBoxButton } from "../../Components/MultipleButton";
 import DropDown from "../../Components/DropDown";
@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 import { AnswerBoxAtom } from "../../Recoils/surveyAtoms";
 
 const StyledViewerQuestionForm = styled.div`
-    margin-top: 18px;
+    margin-top: 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -180,7 +180,7 @@ function DateTypeInput ({style, onChange, secondOnChange, setPeriod, value="", s
 }
 
 const StyledSelcetScore = styled.div`
-width: 80%;
+    width: 80%;
     margin: 30px auto;
     .option-input-box{
         input{

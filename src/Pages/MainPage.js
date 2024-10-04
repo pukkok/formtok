@@ -48,6 +48,8 @@ const MainPageWrapper = styled.section`
     --pk-myquestion-detail-btn: var(--white-myquestion-detail-btn);
     --pk-myquestion-detail-btn: var(--pk-weak-purple);
 
+    --pk-checkbox-color: var(--pk-dark); 
+
     // 검색창
     --pk-search-form-background: var(--white-search-from-background);
 
@@ -125,6 +127,8 @@ const MainPageWrapper = styled.section`
         --pk-myquestion-typetext-border: var(--pk-charcoal);
         --pk-myquestion-answer-box: var(--pk-charcoal);
         --pk-myquestion-detail-btn: var(--pk-charcoal);
+
+        --pk-checkbox-color: var(--pk-light-grey);
 
         --pk-search-form-background: var(--pk-dark);
 

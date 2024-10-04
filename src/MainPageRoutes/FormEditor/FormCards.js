@@ -61,9 +61,6 @@ function QuestionCard ({pi, qi}) {
         changeQType(pi, qi, style)
         setTypeIcon(icon)
     }
-    const [isUsedOptipn, setisUsedOptions] = useState({
-        description: false, essential: false, next: false, multiSelect: false, 
-    })
 
     const usedCheck = (toggle, pi, qi) => {
         // 설명 추가기능 종료시 설명 부분 초기화
@@ -71,7 +68,6 @@ function QuestionCard ({pi, qi}) {
         if(toggle === 'hasDescription'){
             !pages[pi].questions[qi].hasDescription && changeQDescription('', pi, qi)
         }
-        setisUsedOptions({...isUsedOptipn, [toggle] : !isUsedOptipn[toggle]})
     }
 
     return (
@@ -104,7 +100,7 @@ function QuestionCard ({pi, qi}) {
             </QuestionOptionsWrapper>
     
             <div>
-                <div className={classNames({essential : isUsedOptipn.essential})}>
+                <div className={classNames({essential : selectedQuestion.essential})}>
                     <input className={"title-B"}
                     placeholder="질문" onChange={e=>changeQTitle(e, pi, qi)}
                     value={selectedQuestion.q}

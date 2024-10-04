@@ -6,6 +6,9 @@ import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
 import { Link, useParams, useResolvedPath } from "react-router-dom";
 import ViewerQuestionForm from "./ViewerQuestionForm";
+import { Icon } from "../../Components/Icons";
+import FormViewerHeader from "./FormViewerHeader";
+import classNames from "classnames";
 
 function FormViewer() {
     const {surveyId} = useParams()
@@ -46,20 +49,16 @@ function FormViewer() {
         moveLogs.current = [...moveLogs.current, currentIdx]
         setCurrentIdx(pages[currentIdx].next || currentIdx+1)
     }
-    const change = () => {}
 
     return (
     <FormViewerWrapper>
-        <header>
-            <p>진행 상황</p>
-            <Link to={`/my-form/edit/${surveyId}`}>돌아가기</Link>
-            <input type="range" onChange={change} max={pages.length} min={0} step={1} value={currentIdx}/>
-        </header>
+        <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
 
         <main>
             {pages[currentIdx] && <>
             <FormCardWrapper className="card viewer active">
                 <h4>{`${(currentIdx+1)}/${pages.length} 페이지`}</h4>
+
                 <div>
                     <p className="title-A">{pages[currentIdx].title || '제목 없는 페이지'}</p>
                     {pages[currentIdx].description && <DescriptionEditor  value={pages[currentIdx].description} isReadOnly={true}/>}
@@ -67,14 +66,16 @@ function FormViewer() {
             </FormCardWrapper>
 
             {pages[currentIdx].questions.map(question => { // 질문
-                const {id, q, d, options, type, scoreRanges, setPeriod} = question
+                const {id, q, d, options, type, scoreRanges, essential, setPeriod} = question
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
-                        <p className="title-B">{q || '제목 없는 질문'}</p>
+                        <div className={classNames({essential})}>
+                            <p className="title-B">{q || '제목 없는 질문'}</p>
+                        </div>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
                     <ViewerQuestionForm 
-                        type={type} 
+                        type={type}
                         options={options}
                         scoreRanges={scoreRanges} 
                         setPeriod={setPeriod}
@@ -87,12 +88,12 @@ function FormViewer() {
             <div className="btns">
                 {currentIdx !== 0 && 
                 <button className="prev" 
-                onClick={moveToPrevPage}>이전</button>}
+                onClick={moveToPrevPage}><Icon code={'arrow_left_alt'}/></button>}
 
                 {currentIdx !== pages.length - 1 ?
                     <button className="next" 
-                    onClick={moveToNextPage}>다음</button>
-                    : <button className="next" onClick={()=>setCurrentIdx(prev=> prev+=1)}>설문지 제출</button>
+                    onClick={moveToNextPage}>다음페이지 <Icon code={'arrow_right_alt'}/></button>
+                    : <button className="next" onClick={()=>setCurrentIdx(prev=> prev+=1)}>제출 <Icon code={'arrow_right_alt'}/></button>
                 }
             </div>
 

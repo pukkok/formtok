@@ -103,7 +103,7 @@ function Logo({src}) {
 
         // 시간에 따른 포맷 설정
         if (hours > 0) {
-            setTimeLeft(`${hours}시간 ${remainingMinutes}분`)
+            setTimeLeft(`${hours}시간 ${remainingMinutes}분 ${remainingSeconds}초`)
         } else if (remainingMinutes > 0) {
             setTimeLeft(`${remainingMinutes}분 ${remainingSeconds}초`)
         } else {

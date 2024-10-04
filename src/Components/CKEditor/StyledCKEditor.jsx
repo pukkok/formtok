@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 const StyledCKEdtiorWrapper = styled.div`
+  font-size: 15px;
   &.ck-editor-wrapper{
     position: relative;
-    margin: 10px 0;
+    margin: 5px 0;
     & > div{
       line-height: 1.5;
     }

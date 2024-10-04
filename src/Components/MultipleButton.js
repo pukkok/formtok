@@ -9,6 +9,7 @@ const StyledMultipleButton = styled.label`
     display: flex;
     align-items: center;
     user-select: none;
+    font-size: 15px;
     input{
         appearance: none;
         display: none;
@@ -16,8 +17,8 @@ const StyledMultipleButton = styled.label`
     span{
         position: relative;
         display: inline-block;
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
         margin-right: 15px;
         transition: .3s;
 
@@ -28,8 +29,8 @@ const StyledMultipleButton = styled.label`
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #fff;
-            box-shadow: 0 -22px 0 #fff;
+            background-color: var(--pk-checkbox-color);
+            box-shadow: 0 -20px 0 var(--pk-checkbox-color);
             transition: .3s;
         }
         &::after{
@@ -39,20 +40,22 @@ const StyledMultipleButton = styled.label`
             left: 0;
             width: 2px;
             height: 100%;
-            background-color: #fff;
-            box-shadow: 22px 0 0 #fff;
+            background-color: var(--pk-checkbox-color);
+            box-shadow: 20px 0 0 var(--pk-checkbox-color);
             transition: all.3s;
         }
     }
 
     span.check{
-        transform: rotate(-45deg) translate(7px, -7px);
+        transform: rotate(-45deg) translate(6px, -7px);
         &::before{
             background-color: #00ff00;
+            background-color: var(--pk-point);
             box-shadow: 0 0 0 transparent;
         }
         &::after{
             background-color: #00ff00;
+            background-color: var(--pk-point);
             box-shadow: 0 0 0 transparent;
             height: 50%;
         }

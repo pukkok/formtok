@@ -14,7 +14,7 @@
   --pk-grey-line: #d7d7d7;
   --pk-weak-purple: #af7eff;
 
-  --white-font-color: #333;
+  --white-font-color: #111;
   --white-first-background: #7E37ED;
   --white-second-background:#f1f1f1;
   --white-third-background: #e1e1e1;
@@ -24,7 +24,7 @@
   --white-side-button-hover: #af7eff;
   --white-side-depth2-opened-depth1: #af7eff;
   --white-user-info-border-top: #af7eff;
-  --white-loginout: #333;
+  --white-loginout: #222;
 
   --white-survey-card: #fafbfc;
   --white-create-survey-btn: #f6f6f6;
@@ -32,7 +32,7 @@
 
   --white-modal-background: #fafbfc;
   --white-modal-border-top: #ddd;
-  --white-modal-font: #333;
+  --white-modal-font: #222;
 
   --white-myquestion-card: #fafbfc;
   --white-myquestion-checkbox: #ddd;
