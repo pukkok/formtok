@@ -14,8 +14,10 @@ function LoginPage () {
     const [joinInputs, setJoinInputs] = useState(
         {name: '', userId: '', email: '', phone: '', password: '', confirmPassword : ''}
     )
-
+    const [capsLockActive, setCapsLockActive] = useState(false) // Caps Lock 상태
+    const [isPasswordFocused, setIsPasswordFocused] = useState(false) // 포커스 상태
     const { login, join } = useAxios()
+    const [activeForm, setActiveForm] = useState('')
     // 타이핑 입력
     const typingLogin = (e) => {
         const {name, value} = e.target
@@ -37,7 +39,22 @@ function LoginPage () {
         console.log(result)
     }
 
-    const [activeForm, setActiveForm] = useState('')
+    const checkCapsLock = (e) => {
+        const isCapsLock = e.getModifierState("CapsLock")
+        setCapsLockActive(isCapsLock)
+    }
+
+    // 비밀번호 필드 포커스
+    const handleFocus = () => {
+        setIsPasswordFocused(true)
+    }
+
+    // 비밀번호 필드 포커스 해제
+    const handleBlur = () => {
+        setIsPasswordFocused(false)
+        setCapsLockActive(false) // 포커스 해제 시 메시지 숨기기
+    }
+    
     
     return (
     <LoginPageWrapper>
@@ -49,12 +66,18 @@ function LoginPage () {
             <LoginForm>
             {LoginForms.map(form => {
                 const {name, placeholder, type} = form
-                return <input key={name} name={name}  
+                console.log(name)
+                return <input key={name} name={name} 
+                onKeyUp={name === 'password' ? checkCapsLock : null}
+                onFocus={name === 'password' ? handleFocus : null} // 포커스 이벤트
+                onBlur={name === 'password' ? handleBlur : null} // 블러 이벤트
                 type={type} placeholder={placeholder}
                 autoComplete={'off'}
                 onChange={typingLogin} value={loginInputs[name]}
                 />
             })}
+            {capsLockActive && <p>캡스락이 켜져있습니다.</p>}
+            
             <div className="btns"> 
                 <div>
                     <input type="button" defaultValue={'아이디 찾기'}/>
@@ -75,11 +98,15 @@ function LoginPage () {
             {JoinForms.map(form => {
                 const {name, placeholder, type} = form
                 return <input key={name} name={name}
+                onKeyUp={['password', 'confirmPassword'].includes(name) ? checkCapsLock : null}
+                onFocus={['password', 'confirmPassword'].includes(name) ? handleFocus : null} // 포커스 이벤트
+                onBlur={['password', 'confirmPassword'].includes(name) ? handleBlur : null} // 블러 이벤트
                 placeholder={placeholder} type={type}
                 autoComplete="off"
                 onChange={typingJoin} value={joinInputs[name]}
                 />
             })}
+            {capsLockActive && <p>캡스락이 켜져있습니다.</p>}
             <div className="btns">
                 <button type="submit" className="round-btn" 
                 onClick={joinAction}>회원가입</button>
