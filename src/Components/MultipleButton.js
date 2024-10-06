@@ -50,12 +50,12 @@ const StyledMultipleButton = styled.label`
         transform: rotate(-45deg) translate(6px, -7px);
         &::before{
             background-color: #00ff00;
-            background-color: var(--pk-point);
+            /* background-color: var(--pk-point); */
             box-shadow: 0 0 0 transparent;
         }
         &::after{
             background-color: #00ff00;
-            background-color: var(--pk-point);
+            /* background-color: var(--pk-point); */
             box-shadow: 0 0 0 transparent;
             height: 50%;
         }

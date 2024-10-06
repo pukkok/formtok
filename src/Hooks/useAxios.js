@@ -66,6 +66,22 @@ const useAxios = () => {
             console.log('로그인 오류')
         }
     }
+    const idDupCheck = async (userId) => {
+        try {
+            const {data} = await axios.post('/user/join/id-check', {
+                userId
+            })
+            if(data.code === 200){ // 아이디 사용 가능
+                alert(data.msg)
+                return true
+            }else{ // 아이디 사용 불가
+                alert(data.msg)
+            }
+        } catch (error) {
+            console.log('아이디 중복 확인 오류')
+        }
+    }
+
     /** 이름, 아이디, 이메일, 연락처, 패스워드, 패스워드확인 */
     const join = async ({ name, userId, email, phone, password, confirmPassword }) => {
         try {
@@ -73,11 +89,11 @@ const useAxios = () => {
                 name, userId, email, phone, password, confirmPassword
             })
             if (data.code === 200) {
-                console.log('회원가입 성공:', data.msg)
-                return data.msg
+                console.log('회원가입 성공')
             } else {
-                console.log('회원가입 실패:', data.msg)
+                console.log('회원가입 실패')
             }
+            return data.msg
         } catch (error) {
             console.log('회원가입 오류')
         }
@@ -191,7 +207,7 @@ const useAxios = () => {
 
     return { 
         firstExpiredTokenCheck, refreshAuthToken,
-        login, join, 
+        login, join, idDupCheck,
         createForm, saveForm, copyForm, deleteForm,
         saveQ, 
         getMyFormList, getMyQuestionList }

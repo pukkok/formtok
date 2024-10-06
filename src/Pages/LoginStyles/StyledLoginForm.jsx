@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledLoginForm = styled.form`
     color: var(--pk-light-grey);
-    & > input{
+    input{
         display: block;
         box-sizing: border-box;
         width: 100%;
@@ -11,6 +11,30 @@ const StyledLoginForm = styled.form`
         font-weight: bold;
         border-bottom: 1px solid #cecece;
     }
+
+    p{
+        position: relative;
+        .option{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+            display: none;
+            &.on{
+                display: block;
+            }
+            &.possible{
+                color: #2adb2a;
+            }
+        }
+        
+        span{
+            color: var(--pk-fold-point);
+            
+            
+        }
+    }
+
 
     .btns{
         margin-top: 40px;
@@ -38,9 +62,7 @@ const StyledLoginForm = styled.form`
             cursor: pointer;
 
             &:hover{
-                /* border: solid 2px var(--pk-point); */
                 background-color: var(--pk-point);
-                background-color: #601dcd ;
             }
         }
     }
