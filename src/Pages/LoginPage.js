@@ -7,6 +7,7 @@ import { LoginForms, JoinForms } from "../Datas/loginForms";
 import LoginPageWrapper from "./LoginStyles/StyledLoginPageWrapper";
 import { LargeBox, SmallBox, SmallBoxWrapper } from "./LoginStyles/StyledLoginBoxes";
 import { LoginForm } from "./LoginStyles/StyledLoginForm";
+import dayjs from "dayjs";
 
 function LoginPage () {
     const navigate = useNavigate()
@@ -16,7 +17,8 @@ function LoginPage () {
     )
     const [capsLockActive, setCapsLockActive] = useState(false) // Caps Lock 상태
     const [focusedInput, setFocusedInput] = useState('') // 포커스 상태
-    const { login, join, idDupCheck } = useAxios()
+    const { login, join, idDupCheck, sendOtp, verifyOtp } = useAxios()
+    const [otp, setOtp] = useState('')
     const [possibleId, setPossileId] = useState('')
     const [activeForm, setActiveForm] = useState('')
     // 타이핑 입력
@@ -28,7 +30,7 @@ function LoginPage () {
         const {name, value} = e.target
         setJoinInputs({...joinInputs, [name] : value})
 
-        if(name === 'userId') setPossileId('')
+        if(name === 'userId') setPossileId('') // 다시 입력할경우 취소
     }
     //마우스 클릭
     const loginAction = async (e) => {
@@ -41,9 +43,6 @@ function LoginPage () {
         const result = await idDupCheck(id)
         if(result) setPossileId(id)
     }
-    // useEffect(() => {
-    //     setPossileId('')
-    // },[joinInputs, possibleId])
 
     const joinAction = async (e) => {
         e.preventDefault()
@@ -66,8 +65,7 @@ function LoginPage () {
         setFocusedInput('')
         setCapsLockActive(false) // 포커스 해제 시 메시지 숨기기
     }
-    
-    
+
     return (
     <LoginPageWrapper>
         <LargeBox className={classNames(
@@ -88,7 +86,7 @@ function LoginPage () {
                     autoComplete={'off'}
                     onChange={typingLogin} value={loginInputs[name]}
                     />
-                    {name === 'password' && <span className={classNames({on : capsLockActive})}>캡스락이 켜져있습니다.</span>}
+                    {name === 'password' && <span className={classNames('option', {on : capsLockActive && focusedInput === 'password'})}>캡스락이 켜져있습니다.</span>}
                     </p>
                 )
             })}
@@ -121,8 +119,23 @@ function LoginPage () {
                     autoComplete={"off"}
                     onChange={typingJoin} value={joinInputs[name]}
                     />
+                    {name === 'email' && <>
+                    <button 
+                    type="button"
+                    className="option on"
+                    onClick={()=>sendOtp(joinInputs[name])}
+                    >이메일 인증</button>
+                    <input onChange={e => setOtp(e.target.value)} placeholder="인증번호" value={otp}/>
+                    <button 
+                    type="button"
+                    onClick={()=>verifyOtp(joinInputs[name], otp)}
+                    >인증 확인</button>
+                    </>
+                    }
                     {name === 'userId' && 
-                    <button className={classNames("option on", {possible : possibleId})} type="button"
+                    <button 
+                    type="button"
+                    className={classNames("option on", {possible : possibleId})}
                     onClick={() => idDupCheckAction(joinInputs[name])}
                     >중복 확인</button>}
                     {['password', 'confirmPassword'].includes(name) && <span className={classNames('option', {on : capsLockActive && focusedInput === name})}>캡스락이 켜져있습니다.</span>}

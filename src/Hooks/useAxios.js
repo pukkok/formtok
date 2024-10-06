@@ -99,6 +99,28 @@ const useAxios = () => {
         }
     }
 
+    // 이메일 인증
+    const sendOtp = async (email) => {
+        try {
+            const { data } = await axios.post('/confirm/send-otp', 
+                { email }
+            )
+            console.log(data.msg) // OTP 전송 성공 메시지
+            console.log(data)
+        } catch (error) {
+            console.error('Error sending OTP:', error);
+        }
+    };
+
+    const verifyOtp = async (email, otp) => {
+        try {
+          const response = await axios.post('/confirm/verify-otp', { email, otp });
+          console.log(response.data.message); // OTP 인증 성공 메시지
+        } catch (error) {
+          console.error('Error verifying OTP:', error.response.data.message);
+        }
+    };
+
     const createForm = async (url, title, pages, token) => {
         try {
             const { data } = await axios.post("/form/create", 
@@ -207,7 +229,7 @@ const useAxios = () => {
 
     return { 
         firstExpiredTokenCheck, refreshAuthToken,
-        login, join, idDupCheck,
+        login, join, idDupCheck, sendOtp, verifyOtp,
         createForm, saveForm, copyForm, deleteForm,
         saveQ, 
         getMyFormList, getMyQuestionList }
