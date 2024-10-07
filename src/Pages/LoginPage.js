@@ -76,8 +76,8 @@ function LoginPage () {
         if(result) setHideOtp(false)
     }
 
-    const verifyOtpAction = async (email, otp) => {
-        const result = await verifyOtp(email, otp)
+    const verifyOtpAction = async (email, otp) => { // 이메일 인증
+        const result = await verifyOtp(email.trim(), otp.trim())
         if(result){
             setPass(pass => pass = {...pass, email : true})
             setJoinInputs(prev=> prev = {...prev, otp: ''})
