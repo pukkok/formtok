@@ -5,33 +5,57 @@ const StyledLoginForm = styled.form`
     input{
         display: block;
         box-sizing: border-box;
-        width: 100%;
-        padding: 10px 10px;
-        margin-bottom: 16px;
+        flex: 1;
         font-weight: bold;
-        border-bottom: 1px solid #cecece;
     }
-
+    
     p{
-        position: relative;
+        background-color: var(--pk-charcoal);
+        padding: 10px 10px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #cecece;
+        display: flex;
+        align-items: center;
+
+        &.hide{
+            display: none;
+        }
+
         .option{
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 0;
             display: none;
             &.on{
                 display: block;
-            }
-            &.possible{
-                color: #2adb2a;
             }
         }
         
         span{
             color: var(--pk-fold-point);
-            
-            
+        }
+
+        & .pass{
+            width: 22px;
+            height: 22px;
+            transform: rotate(-45deg) translate(0px, -7px);
+            &::before{
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: #2adb2a;
+                transition: .3s;
+            }
+            &::after{
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 2px;
+                height: 50%;
+                background-color: #2adb2a;
+                transition: all.3s;
+            }
         }
     }
 

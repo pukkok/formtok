@@ -89,11 +89,12 @@ const useAxios = () => {
                 name, userId, email, phone, password, confirmPassword
             })
             if (data.code === 200) {
-                console.log('회원가입 성공')
+                alert('회원가입이 완료되었습니다.')
+                return true
             } else {
-                console.log('회원가입 실패')
+                alert(data.msg)
+                return false
             }
-            return data.msg
         } catch (error) {
             console.log('회원가입 오류')
         }
@@ -102,24 +103,33 @@ const useAxios = () => {
     // 이메일 인증
     const sendOtp = async (email) => {
         try {
-            const { data } = await axios.post('/confirm/send-otp', 
-                { email }
-            )
-            console.log(data.msg) // OTP 전송 성공 메시지
-            console.log(data)
+            const { data } = await axios.post('/confirm/send-otp', { email })
+            if(data.code === 200){
+                alert('메일이 발송되었습니다.')
+                return true
+            }else{
+                alert('메일 발송에 실패하였습니다.')
+                return false
+            }
         } catch (error) {
-            console.error('Error sending OTP:', error);
+            console.error('메일 발송 오류')
         }
-    };
+    }
 
     const verifyOtp = async (email, otp) => {
         try {
-          const response = await axios.post('/confirm/verify-otp', { email, otp });
-          console.log(response.data.message); // OTP 인증 성공 메시지
+            const { data } = await axios.post('/confirm/verify-otp', { email, otp });
+            if(data.code === 200){
+                alert('인증이 완료되었습니다.')
+                return true
+            }else{
+                alert('인증에 실패하였습니다.')
+                return false
+            }
         } catch (error) {
-          console.error('Error verifying OTP:', error.response.data.message);
+          console.error('OTP 확인 에러')
         }
-    };
+    }
 
     const createForm = async (url, title, pages, token) => {
         try {
