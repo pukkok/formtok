@@ -21,7 +21,15 @@ const StyledAddAnswerWrapper = styled.div`
     }
 
     button{
-        margin-left: auto;
+        span{
+            font-weight: 300;
+            transition: all.2s;
+            &:hover{
+                rotate: 90deg;
+            }
+        }
+
+        margin-left: 10px;
     }
 `
 

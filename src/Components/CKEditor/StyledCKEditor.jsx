@@ -8,6 +8,7 @@ const StyledCKEdtiorWrapper = styled.div`
     & > div{
       line-height: 1.5;
     }
+    color: var(--pk-ck-editor-color);
   }
 
   &.on {
@@ -91,9 +92,7 @@ const StyledCKEdtiorWrapper = styled.div`
       padding-left: 2px;
       position: relative;
       z-index: 1;
-    }
-
-    
+    }   
 
     .ck.ck-editor__editable.ck-blurred {
       &:hover {

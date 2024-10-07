@@ -49,7 +49,7 @@ const DropDownWrapper = styled.div`
         border-radius: 12px;
         background-color: var(--pk-dropdown-bg);
         width: 100%;
-        padding: 6px 8px;
+        padding: 12px 8px;
 
         &.open{
             display: block;
@@ -68,12 +68,18 @@ const DropDownWrapper = styled.div`
                 border-radius: 8px;
             }
 
+            &:nth-last-child(1){
+                button{
+                    margin-bottom: 0;
+                }
+            }
+
             button{
                 padding: 5px 20px 5px 0px;
                 width: 100%;
                 display: flex;
                 align-items: center;
-                gap: 5px;
+                gap: 10px;
                 margin-bottom: 5px;
             }
         }

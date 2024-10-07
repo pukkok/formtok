@@ -113,7 +113,7 @@ function LoginPage () {
                 const {name, placeholder, type} = form  
                 return (
                     <p key={name}>
-                    <input name={name} 
+                    <input name={name} autoFocus={name==='userId'}
                     onKeyUp={name === 'password' ? checkCapsLock : null}
                     onFocus={() => handleFocus(name)} // 포커스 이벤트
                     onBlur={name === 'password' ? handleBlur : null} // 블러 이벤트
@@ -146,7 +146,7 @@ function LoginPage () {
                 const {name, placeholder, optionText, type} = form
                 return (
                     <p key={name} className={classNames({hide : name === 'otp' && hideOtp})}>
-                    <input name={name}
+                    <input name={name} autoFocus={name==='userId'}
                     onKeyUp={['password', 'confirmPassword'].includes(name) ? checkCapsLock : null}
                     onFocus={() => handleFocus(name)} // 포커스 이벤트
                     onBlur={['password', 'confirmPassword'].includes(name) ? handleBlur : null} // 블러 이벤트

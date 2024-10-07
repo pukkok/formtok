@@ -30,6 +30,11 @@ function randomUrl() {
     return newUrl
 }
 
+const surveyListStyleAtom = atom({
+    key: 'survey-list-style',
+    default: {style: null, text: '없음'}
+})
+
 const surveyTitleAtom = atom({
     key: 'survey-title',
     default: ''
@@ -73,7 +78,7 @@ const AnswerBoxAtom = atom({
 
 export {
     randomKey, randomUrl,
- 
+    surveyListStyleAtom,
     urlAtom, surveyTitleAtom,
     activeCardAtom, 
     pagesAtom, endingMentAtom, surveyPeriodAtom, 

@@ -47,6 +47,17 @@ const FormCardWrapper = styled.div`
             font-size: 18px;
         }
 
+        .question-title-box{
+            display: flex;
+            align-items: center;
+
+            span{
+                float: left;
+                font-size: 18px;
+                margin-right: 10px;
+                font-weight: 500;
+            }
+        }
         .essential{
             position: relative;
         }

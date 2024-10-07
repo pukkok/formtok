@@ -72,8 +72,6 @@ function FormSummary({token}) {
         }
     }
 
-    
-
     return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <SurveySummaryTab>

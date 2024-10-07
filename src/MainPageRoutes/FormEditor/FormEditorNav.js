@@ -15,8 +15,8 @@ const FormEditorNavWrapper = styled.div`
 
     nav{
         button{
-            padding: 10px 16px;
-            height: 60px;
+            padding: 10px 16px 5px;
+            height: 58px;
             border-bottom: 2px solid transparent;
             font-weight: 800;
 

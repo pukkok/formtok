@@ -93,7 +93,7 @@ function HomeHeader() {
     const navigate = useNavigate()
     const token = localStorage.getItem('token')
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-    console.log(userInfo)
+    // console.log(userInfo)
     return (
         <StyledHeader>
             <nav>

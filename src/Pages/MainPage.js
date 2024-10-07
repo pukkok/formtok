@@ -77,6 +77,7 @@ const MainPageWrapper = styled.section`
 
     // ck-editor
     --pk-ck-editor-bg: var(--pk-lightest-white);
+    --pk-ck-editor-color: #555;
     --pk-ck-editor-tool-color: var(--white-font-color);
     --pk-ck-editor-tool-on-bg: var(--pk-weak-purple);
     --pk-ck-editor-tool-on-color: var(--pk-light-grey); 
@@ -156,6 +157,7 @@ const MainPageWrapper = styled.section`
         --pk-standard-btn-bg: var(--pk-charcoal);
         // ck-editor
         --pk-ck-editor-bg: var(--pk-dark);
+        --pk-ck-editor-color: var(--pk-medium-emphasis);
         --pk-ck-editor-tool-color: var(--pk-light-grey);
         --pk-ck-editor-tool-on-bg: var(--pk-charcoal);
         --pk-ck-editor-tool-on-color: var(--pk-point);

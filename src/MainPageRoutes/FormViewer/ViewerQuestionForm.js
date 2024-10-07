@@ -34,6 +34,16 @@ const StyledViewerQuestionForm = styled.div`
         }
     }
 
+    .drop-down-wrapper{ // 커스텀
+        & > button{
+            background-color: var(--pk-question-form-bg);
+            transition: background-color .3s;
+            &.open{
+                background-color: var(--pk-dropdown-bg);
+            }
+        }
+    }
+
     div[contenteditable="true"]{
         outline: none;
         width: 100%;
