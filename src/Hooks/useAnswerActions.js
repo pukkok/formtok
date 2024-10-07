@@ -66,7 +66,21 @@ function useAnswerActions () {
         })
     }
 
-    return { answerPick, answerPicks, answerInValue, answerInHTML, answerDateType }
+    const answerPeriodValueReset = (value, pageId, questionId, ForB) => {
+        setAnswerBox(prevBox => {
+            return { ...prevBox,
+                [pageId]: {
+                    ...prevBox[pageId],
+                    [questionId]: {
+                        ...prevBox[pageId][questionId], 
+                        [ForB] : value
+                    }
+                }
+            }
+        })
+    }
+
+    return { answerPick, answerPicks, answerInValue, answerInHTML, answerDateType, answerPeriodValueReset }
 
 }
 

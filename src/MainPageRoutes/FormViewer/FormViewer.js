@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { AnswerBoxAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
@@ -15,8 +15,8 @@ function FormViewer() {
     const {pathname} = useResolvedPath()
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
-    const setAnswerBox = useSetRecoilState(AnswerBoxAtom)
-    
+    const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
+
     useEffect(() => {
         let newAnswerBox = pages.reduce((acc, page) => {
             const {id, questions} = page
@@ -35,7 +35,7 @@ function FormViewer() {
             acc[id] = {...newQuestions}
             return acc
         }, {})
-        console.log(newAnswerBox)
+        // console.log(newAnswerBox)
         setAnswerBox(newAnswerBox)
     },[pages])
 
@@ -45,7 +45,40 @@ function FormViewer() {
         moveLogs.current.pop()
         setCurrentIdx(moveLogs.current.length > 0 ? moveLogs.current.length-1 : 0)
     }
+
+    const canMoveToNextPage = () => {
+        const currentPage = pages[currentIdx]
+        if (!currentPage) return false
+        const pageId = currentPage.id
+
+        const essentialCheck = currentPage.questions.every(question => {
+            const {id : questionId, essential, type, setPeriod} = question
+            const answer = answerBox[pageId][questionId]
+            if(essential){
+                if(['날짜', '시간', '날짜 + 시간'].includes(type)){
+                    if(setPeriod){
+                        return answer.start !== '' && answer.end !== ''
+                    }else{
+                        return answer.start !== ''
+                    }
+                }
+                else if(type ==='객관식(복수 선택)'){
+                    return answer.length > 0
+                }
+                else{
+                    return answer
+                }
+            }else{
+                return true
+            }
+        })
+        return essentialCheck
+    }
+
     const moveToNextPage = () => {
+        const essentialCheck = canMoveToNextPage()
+        if(!essentialCheck) return alert('필수 질문에 대한 답변을 입력해주세요.')
+        
         moveLogs.current = [...moveLogs.current, currentIdx]
         setCurrentIdx(pages[currentIdx].next || currentIdx+1)
     }
@@ -74,7 +107,7 @@ function FormViewer() {
                         </div>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
-                    <ViewerQuestionForm 
+                    <ViewerQuestionForm
                         type={type}
                         options={options}
                         scoreRanges={scoreRanges} 
@@ -93,7 +126,7 @@ function FormViewer() {
                 {currentIdx !== pages.length - 1 ?
                     <button className="next" 
                     onClick={moveToNextPage}>다음페이지 <Icon code={'arrow_right_alt'}/></button>
-                    : <button className="next" onClick={()=>setCurrentIdx(prev=> prev+=1)}>제출 <Icon code={'arrow_right_alt'}/></button>
+                    : <button className="next" onClick={moveToNextPage}>제출 <Icon code={'arrow_right_alt'}/></button>
                 }
             </div>
 

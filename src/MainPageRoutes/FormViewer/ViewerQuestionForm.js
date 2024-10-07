@@ -50,7 +50,7 @@ const StyledViewerQuestionForm = styled.div`
 `
 
 function ViewerQuestionForm ({ type, options=[], scoreRanges, setPeriod, pageId, questionId }) {
-    const { answerPick, answerPicks, answerInValue, answerInHTML, answerDateType } = useAnswerActions()
+    const { answerPick, answerPicks, answerInValue, answerInHTML, answerDateType, answerPeriodValueReset } = useAnswerActions()
     const answerBox = useRecoilValue(AnswerBoxAtom)
 
     return (
@@ -104,6 +104,7 @@ function ViewerQuestionForm ({ type, options=[], scoreRanges, setPeriod, pageId,
             style={type}
             onChange={e => answerDateType(e, pageId, questionId, 'start')}
             secondOnChange={e => answerDateType(e, pageId, questionId, 'end')}
+            secondValueCheck={() => answerPeriodValueReset(answerBox[pageId]?.[questionId]?.start, pageId, questionId, 'end')}
             setPeriod={setPeriod}
             value={answerBox[pageId]?.[questionId]?.start || ""}
             secondValue={answerBox[pageId]?.[questionId]?.end || ""}
@@ -144,7 +145,7 @@ const StyledDateTypeInput = styled.div`
     }
 `
 
-function DateTypeInput ({style, onChange, secondOnChange, setPeriod, value="", secondValue=""}) {
+function DateTypeInput ({style, onChange, secondOnChange, secondValueCheck, setPeriod, value="", secondValue=""}) {
 
     const changeStyleToType = (style) => {
         let type = ''
@@ -157,20 +158,31 @@ function DateTypeInput ({style, onChange, secondOnChange, setPeriod, value="", s
         return type 
     }
 
+    const valueCheck = () => {
+        if(secondValue === '') return
+        if(value >= secondValue){
+            alert('두 번째 날짜/시간은 첫 번째 날짜/시간보다 이후여야 합니다.')
+            secondValueCheck && secondValueCheck()
+            return // 유효하지 않은 경우 변경하지 않음
+        }
+    }
+
     return (
     <StyledDateTypeInput>
     <div>
         <input 
         type={changeStyleToType(style)} 
-        onChange={onChange} 
+        onChange={onChange}
+        onBlur={valueCheck}
         value={value}/>
     </div>
     {setPeriod && <>
         <span>~</span>
     <div>
         <input 
-        type={changeStyleToType(style)} 
-        onChange={secondOnChange} 
+        type={changeStyleToType(style)}
+        onChange={secondOnChange}
+        onBlur={valueCheck}
         value={secondValue}/>
     </div>
     </>
