@@ -105,7 +105,7 @@ function FormList () {
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
                     const {title, url, pages, endingMent} = form
                     // console.log(pages, endingMent)
-                    console.log(testlayouts[idx])
+                    // console.log(testlayouts[idx])
                     //임시
                     // const {count, full, startDate, endDate} = testlayouts[idx]
                     return <div key={url} className="card">

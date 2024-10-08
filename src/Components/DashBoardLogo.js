@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
 import useAxios from "../Hooks/useAxios";
+import { Icon } from "./Icons";
 
 const StyledLogo = styled.div`
     width: 280px;
@@ -11,8 +12,9 @@ const StyledLogo = styled.div`
     display: flex;
     gap: 10px;
     padding: 0 10px;
-    align-items: center;
+    align-items: flex-end;
     position: relative;
+    margin-bottom: 40px;
 
     .img-box {
         width: 40px;
@@ -27,32 +29,37 @@ const StyledLogo = styled.div`
     }
 
     p {
+        flex: 1;
         font-size: 12px;
     }
 
-    &:hover .renew{
-        display: flex;
-    }
-
     .renew{
-        display: none;
-        position: absolute;
+        font-size: 15px;
+        margin-left: 10px;
+        display: flex;
         justify-content: center;
         align-items: center;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 12px;
-        width: 100px;
-        height: 40px;
-        /* background-image: linear-gradient(rgba(0,0,0, .8), rgba(0,0,0, .8)); */
-        background-color: #000;
+        background-color: var(--pk-charcoal);
+        color: #fff;
+        padding: 4px 4px;
+        font-weight: bold;
+        border-radius: 6px;
         cursor: pointer;
+        &:hover {
+            background-color: var(--pk-point-hover);
+            span{
+                transform: rotate(180deg);
+            }
+        }
+        span{
+            transition: transform .5s;
+            font-size: 18px;
+        }
     }
 `
 
-function Logo({src}) {
-    const [timeLeft, setTimeLeft] = useState("")
+function Logo({src, isExpiredToken}) {
+    const [timeLeft, setTimeLeft] = useState("0시간 00분")
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
     const token = localStorage.getItem('token')
     const [warningAlert, setWarningAlert] = useState(true)
@@ -60,16 +67,17 @@ function Logo({src}) {
     useEffect(() => {
         const startTimer = (expTime) => {
             intervalRef.current = setInterval(() => {
-                const currentTime = Date.now();
-                const remainingMs = expTime - currentTime;
+                const currentTime = Date.now()
+                const remainingMs = expTime - currentTime
                 if(remainingMs <=1000 * 60 * 30){
-                    setWarningAlert(false)
                     if(warningAlert) alert('30분 남았습니다.')
-                    // 나중에 연장기능 만들기
+                    setWarningAlert(false)
                 }
+
                 if(remainingMs <= 0){
                     clearInterval(intervalRef.current)
                     setTimeLeft("만료 됨")
+                    isExpiredToken(true)
                     localStorage.clear()
                 }else{
                     updateTimeLeft(remainingMs)
@@ -103,7 +111,7 @@ function Logo({src}) {
 
         // 시간에 따른 포맷 설정
         if (hours > 0) {
-            setTimeLeft(`${hours}시간 ${remainingMinutes}분 ${remainingSeconds}초`)
+            setTimeLeft(`${hours}시간 ${remainingMinutes}분`)
         } else if (remainingMinutes > 0) {
             setTimeLeft(`${remainingMinutes}분 ${remainingSeconds}초`)
         } else {
@@ -119,15 +127,16 @@ function Logo({src}) {
             <div className="img-box">
                 <img src={src} alt="" />
             </div>
-            <div>
+            <div className="timer">
                 <h1>폼톡</h1>
-                <p>만료 시간: {timeLeft}</p>
+                <p>만료 시간: {timeLeft}
+                </p>
             </div>
-            <div
-            className="renew"
-            onClick={() => refreshAuthToken(token)}>연장하기</div>
+            <button className="renew" onClick={() => refreshAuthToken(token)}>
+            <Icon code={'cached'}/>    
+            </button>
         </StyledLogo>
     )
 }
 
-export default Logo;
+export default Logo

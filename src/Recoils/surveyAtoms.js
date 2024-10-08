@@ -30,10 +30,7 @@ function randomUrl() {
     return newUrl
 }
 
-const surveyListStyleAtom = atom({
-    key: 'survey-list-style',
-    default: {style: null, text: '없음'}
-})
+
 
 const surveyTitleAtom = atom({
     key: 'survey-title',
@@ -48,6 +45,24 @@ const urlAtom = atom({
 const pagesAtom = atom({ // 설문지 생성할때 초기에 만들기
     key: 'pages',
     default : []
+})
+
+const surveyListStyleAtom = atom({
+    key: 'survey-list-style',
+    default: {style: null, text: '없음'}
+})
+
+const surveyOptionAtom = atom({
+    key: 'survey-option',
+    default : {
+        isUsePeriod : false,
+        period : {start: null, end: null},
+        isNeedLogin : false,
+        isUseMaximum : false,
+        isAllowConfirmation : false,
+        isAllowModify: false,
+        isRevealTheResult: false,
+    }
 })
 
 const endingMentAtom = atom({
@@ -78,9 +93,9 @@ const AnswerBoxAtom = atom({
 
 export {
     randomKey, randomUrl,
-    surveyListStyleAtom,
-    urlAtom, surveyTitleAtom,
+    surveyListStyleAtom, surveyOptionAtom,
+    urlAtom, surveyTitleAtom, 
     activeCardAtom, 
     pagesAtom, endingMentAtom, surveyPeriodAtom, 
-    AnswerBoxAtom,
+    AnswerBoxAtom, 
 }

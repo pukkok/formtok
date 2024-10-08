@@ -7,7 +7,6 @@ import Logo from "../Components/DashBoardLogo";
 import { Icon } from "../Components/Icons";
 import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";
-import useAxios from "../Hooks/useAxios";
 import SwitchScreenModeBtn from "../Components/SwitchScreenModeBtn";
 import useSwitchPage from "../Hooks/useSwitchPage";
 
@@ -15,20 +14,19 @@ function SideBar ({logo}) {
 
     const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+    const [isExpiredToken, setIsExpiredToken] = useState(false)
     const navigate = useNavigate()
-    const token = localStorage.getItem('token')
-    const { firstExpiredTokenCheck } = useAxios()
 
-    useEffect(() => {
-        if(token) firstExpiredTokenCheck(token)
-        else {
-            setUserInfo(null) 
-        }
-    }, [token, firstExpiredTokenCheck])
     // 사이드바 열고 닫기
     const sideOpener = () => {
         setIsSideOpen(prev => !prev)
     }
+
+    useEffect(() => {
+        if(isExpiredToken){
+            setUserInfo(null)
+        }
+    }, [isExpiredToken])
 
     const [active, setActive] = useState({depth1 : null, depth2: 0})
     const [openDepth2, setOpenDepth2] = useState([1])
@@ -63,8 +61,7 @@ function SideBar ({logo}) {
         {isSideOpen ? 
         <div className="tabs">
             <div className="logo-box">
-                <Logo src={logo}/>
-                <button onClick={sideOpener}><Icon code={'chevron_left'}/></button>
+                <Logo src={logo} isExpiredToken={setIsExpiredToken}/>
             </div>
             <ul className="depth1">
             {sidebarNavs.map((list, idx) => {

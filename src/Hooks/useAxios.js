@@ -8,19 +8,6 @@ axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` 
 const useAxios = () => {
     const pages = useRecoilValue(pagesAtom)
 
-    // 처음 켰을때 토큰 만료인지 확인
-    // 만료되어 있다면 토큰 삭제
-    const firstExpiredTokenCheck = (token) => {
-        axios.post('/auth', {} ,
-            {headers : {'Authorization' : `Bearer ${token}`}}
-        ).catch(error => {
-            if(error.status === 404) console.clear()
-            if(error.response.data.errName){
-                localStorage.clear()
-            }
-        })
-    }
-
     const refreshAuthToken = async (oldToken) => {
         try {
             const { data } = await axios.post('/refresh-token', {}, 
@@ -28,12 +15,12 @@ const useAxios = () => {
             )
             const newToken = data.token
             // 새로운 토큰을 로컬 스토리지에 저장하거나 다른 방식으로 관리
-            console.log('연장 완료')
+            alert('로그인 시간이 연장되었습니다.')
             localStorage.setItem('token', newToken)
             return newToken
         } catch (error) {
-            console.error('토큰 갱신 실패', error)
-            // 필요한 경우 로그아웃 처리 또는 재인증 절차 진행
+            alert('로그인 상태가 아닙니다.')
+            // console.error('토큰 갱신 실패', error)
             // localStorage.clear()
         }
     }
@@ -238,7 +225,7 @@ const useAxios = () => {
     }
 
     return { 
-        firstExpiredTokenCheck, refreshAuthToken,
+        refreshAuthToken,
         login, join, idDupCheck, sendOtp, verifyOtp,
         createForm, saveForm, copyForm, deleteForm,
         saveQ, 

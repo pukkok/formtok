@@ -23,9 +23,9 @@ const StyledAddAnswerWrapper = styled.div`
     button{
         span{
             font-weight: 300;
-            transition: all.2s;
             &:hover{
-                rotate: 90deg;
+                scale: 1.05;
+                font-weight: 500;
             }
         }
 

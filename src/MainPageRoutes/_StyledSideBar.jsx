@@ -19,38 +19,6 @@ const SideBarWrapper = styled.aside`
     display: flex;
     flex-direction: column;
     height: 100%;
-    
-    .logo-box {
-      display: flex;
-      align-items: center;
-      padding-bottom: 20px;
-      margin-bottom: 20px;
-      button {
-        margin-top: 8px;
-        float: right;
-        font-weight: 800;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--pk-lighter-white);
-        color: #333;
-        transition: all.2s;
-        overflow: hidden;
-
-        &:hover {
-          justify-content: flex-start;
-          width: 44px;
-        
-        }
-        span{
-          font-size: 32px;
-        }
-        
-      }
-    }
 
     ul, li {
       margin: 0;

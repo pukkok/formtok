@@ -4,7 +4,7 @@ import SideBar from "../MainPageRoutes/SideBar";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { gridAtom, isSideOpenAtom } from "../Recoils/screenAtom";
-
+import { Icon } from "../Components/Icons";
 import classNames from "classnames";
 
 const MainPageWrapper = styled.section`
@@ -13,6 +13,38 @@ const MainPageWrapper = styled.section`
     width: 100vw;
     height: 100vh;
     transition: .5s;
+
+    .side-close-btn{
+        position: absolute;
+        border-radius: 50%;
+        background-color: var(--pk-light-grey);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        left: 304px;
+        /* top: 50%;
+        transform: translateY(-50%); */
+        top: 100px;
+        z-index: 1000;
+        opacity: 0;
+
+        &.show{
+            opacity: 1;
+            transition: opacity .5s;
+            transition-delay: .8s;
+            display: flex;
+        }
+
+        span{
+            font-size: 28px;
+            font-weight: 600;
+            padding-right: 2px;
+            color: var(--pk-deep-dark);
+        }
+    }
+
     // 컬러
     color: var(--white-font-color);
     // 사이드, 메인, 헤더
@@ -191,10 +223,14 @@ function MainPage({ mode, logo }) {
 
     const [grid, setGrid] = useRecoilState(gridAtom)
 
-    const isSideOpen = useRecoilValue(isSideOpenAtom)
+    const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
 
     const screenRatio = {
         gridTemplateColumns : `${grid}px 1fr`
+    }
+
+    const sideOpener = () => {
+        setIsSideOpen(prev => !prev)
     }
 
     useEffect(() => {
@@ -202,9 +238,11 @@ function MainPage({ mode, logo }) {
     }, [isSideOpen, setGrid])
 
     return <MainPageWrapper style={screenRatio}
-    className={classNames({'darkmode': mode === 'dark'})} 
-    >
+    className={classNames({'darkmode': mode === 'dark'})}>
         <SideBar logo={logo}/>
+        {<button 
+            className={classNames("side-close-btn", {show: isSideOpen})} 
+            onClick={sideOpener}><Icon code={'chevron_left'}/></button>}
         <ViewerWrapper>
             <Outlet/>
         </ViewerWrapper>
