@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
+import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
@@ -16,7 +16,6 @@ function FormViewer() {
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
-    const surveyListStyle = useRecoilValue(surveyListStyleAtom)
     const getListStyle = useRecoilValue(surveyListStyleSelector)
     
 

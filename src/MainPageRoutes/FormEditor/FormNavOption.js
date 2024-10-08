@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import ToggleButton from "../../Components/ToggleButton";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import DropDown from "../../Components/DropDown";
-import { useRecoilState } from "recoil";
-import { surveyListStyleAtom, surveyOptionsAtom } from "../../Recoils/surveyAtoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { surveyListStyleAtom, surveyListStyleTextSelector, surveyOptionsAtom } from "../../Recoils/surveyAtoms";
 
 const FormOptionWrapper = styled.div`
     width: 100%;
@@ -74,15 +74,49 @@ function FormOption () {
 
     const [surveyListStyle, setSurveyListStyle] = useRecoilState(surveyListStyleAtom)
     const [surveyOptions, setSurveyOptions] = useRecoilState(surveyOptionsAtom)
+    const surveyListStyleText = useRecoilValue(surveyListStyleTextSelector)
 
     const changeOptions = (option) => {
+        const {isUseStartPeriod, isUseEndPeriod, startDate, endDate} = surveyOptions
+        if(option === 'isUseStartPeriod'){
+            if(isUseStartPeriod){
+                return setSurveyOptions(prev => prev = {...prev, isUseStartPeriod: false, startDate : '', isUseEndPeriod : false, endDate: ''})
+            }
+        }
+        if(option === 'isUseEndPeriod'){
+            if(!isUseEndPeriod){
+                return setSurveyOptions(prev => prev = {...prev, isUseStartPeriod: true, startDate: '', isUseEndPeriod: true, endDate: ''})
+            }
+        }
         setSurveyOptions(prev => {
             return prev = {...prev, [option] : !prev[option]}
         })
     }
 
-    const getPeriod = () => {
+    useEffect(() => {
+        // const {isUseStartPeriod, isUseEndPeriod, startDate, endDate} = surveyOptions
+        // if(!isUseStartPeriod && startDate !== '' || isUseEndPeriod){
+        //     setSurveyOptions(prev => prev = {...prev, startDate : '', isUseEndPeriod : false, endDate: ''})
+        // }
+        // if(!isUseEndPeriod && endDate !== '') setSurveyOptions(prev => prev = {...prev, endDate : ''})
 
+    },[surveyOptions])
+    
+    const getOptionValue = (e) => {
+        const {name, value} = e.target
+        setSurveyOptions(prev => {
+            return prev = {...prev, [name] : value}
+        })
+    }
+
+    const dateCheck = () => {
+        const {startDate, endDate} = surveyOptions
+        if(startDate === '' || endDate === '') return
+        if(endDate <= startDate){
+            alert('종료일은 시작일보다 이후여야 합니다.')
+            setSurveyOptions(prev => prev = {...prev, endDate : startDate})
+            // return // 유효하지 않은 경우 변경하지 않음
+        }
     }
 
     const listStyles = [
@@ -95,9 +129,9 @@ function FormOption () {
     return (
     <FormOptionWrapper>
         <h4>문항 스타일</h4>
-        <DropDown initialItem={surveyListStyle.text}>
+        <DropDown initialItem={surveyListStyleText}>
         {listStyles.map(item => {
-            return <li key={item.text}><button onClick={() => setSurveyListStyle(item)}>{item.text}</button></li>
+            return <li key={item.text}><button onClick={() => setSurveyListStyle(item.style)}>{item.text}</button></li>
         })}
         </DropDown>
 
@@ -105,12 +139,22 @@ function FormOption () {
         <p>시작일 설정 <ToggleButton onClick={() => changeOptions('isUseStartPeriod')} isOn={surveyOptions.isUseStartPeriod}/></p>
         {surveyOptions.isUseStartPeriod &&
         <div className="option-box">
-            <input type="datetime-local" onChange={() => getPeriod()} value={surveyOptions.startDate} defaultValue={today}/>
+            <input 
+                type="datetime-local" 
+                name="startDate" 
+                onBlur={dateCheck}
+                onChange={e => getOptionValue(e)} 
+                value={surveyOptions.startDate || ''} />
         </div>}
         <p>종료일 설정 <ToggleButton onClick={() => changeOptions('isUseEndPeriod')} isOn={surveyOptions.isUseEndPeriod}/></p>
         {surveyOptions.isUseEndPeriod &&
         <div className="option-box">
-            <input type="datetime-local" onChange={() => getPeriod()} value={surveyOptions.endDate}/>
+            <input 
+                type="datetime-local" 
+                name="endDate"
+                onBlur={dateCheck}
+                onChange={e => getOptionValue(e)} 
+                value={surveyOptions.endDate || ''}/>
         </div>}
 
         <h4>설문 참여 설정</h4>
@@ -118,7 +162,12 @@ function FormOption () {
         <p>최대 참여 수 설정 <ToggleButton onClick={() => changeOptions('isUseMaximum')} isOn={surveyOptions.isUseMaximum}/></p>
         {surveyOptions.isUseMaximum && 
         <div className="option-box">
-            <input type="number" placeholder="0"/>
+            <input 
+            type="number" 
+            name="maximumCount"
+            onChange={e => getOptionValue(e)} 
+            value={surveyOptions.maximumCount || undefined} 
+            placeholder="0"/>
         </div>}
         <p>설문 대상 설정 <ToggleButton /></p>
 

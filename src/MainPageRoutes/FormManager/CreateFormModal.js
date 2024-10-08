@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import styled from "styled-components";
 import useAxios from "../../Hooks/useAxios";
 import usePageActions from "../../Hooks/usePageActions";
-import { endingMentAtom, randomUrl, surveyTitleAtom } from "../../Recoils/surveyAtoms";
+import { endingMentAtom, randomUrl, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
@@ -72,7 +72,9 @@ const CreateFormModalWrapper = styled.dialog`
 function CreateFormModal ({token}, ref) {
     const setTitle = useSetRecoilState(surveyTitleAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
-    
+    const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
+    const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
+
     const naviate = useNavigate()
     const [createTitle, setCreateTitle] = useState('')
     
@@ -83,12 +85,27 @@ function CreateFormModal ({token}, ref) {
     const goToCreateForm = async () => {
         const url = randomUrl()
         const newPages = createPage()
-        const success = await createForm(url, createTitle, newPages, token) // 설문지 데이터 저장
+        const newListStyle = null
+        const newOptions = {
+            isUseStartPeriod : false,
+            startDate: '',
+            isUseEndPeriod : false,
+            endDate: '',
+            isNeedLogin : false,
+            isUseMaximum : false,
+            maximumCount : null,
+            isAllowConfirmation : false,
+            isAllowModify: false,
+            isRevealTheResult: false,
+        }
+        const success = await createForm(url, createTitle, newPages, newListStyle, newOptions, token) // 설문지 데이터 저장
         if(success){
             alert('새로운 설문지가 생성되었습니다.')
             setTitle(createTitle)
             loadPages(newPages)
             setEndingMent({title: '', description: ''})
+            setSurveyListStyle(null)
+            setSurveyOptions(newOptions)
             naviate(`/my-form/edit/${url}`)
         }else{
             alert('로그인 후 사용이 필요합니다.')

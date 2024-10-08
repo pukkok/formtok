@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, Icon } from "../../Components/Icons";
-import { surveyTitleAtom, endingMentAtom } from "../../Recoils/surveyAtoms";
+import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledFormManager";
 import SearchForm from "../../Components/SearchForm";
@@ -13,7 +13,9 @@ import CreateFormModal from "./CreateFormModal";
 function FormManager () {
     const setTitle = useSetRecoilState(surveyTitleAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
-    
+    const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
+    const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
+
     const naviate = useNavigate()
     const token = localStorage.getItem('token')
 
@@ -27,6 +29,7 @@ function FormManager () {
     useEffect(() => {
         const getForms = async () => {
             const forms = await getMyFormList(token)
+            console.log(forms)
             setSerachedForms(forms)
             setMyForms(forms)
         }
@@ -40,10 +43,12 @@ function FormManager () {
     }
 
     // 불러온 폼으로 이동
-    const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}) => {
+    const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}, listStyle, options) => {
         setTitle(title)
         loadPages(pages)
         setEndingMent(endingMent)
+        setSurveyListStyle(listStyle)
+        setSurveyOptions(options)
         naviate(`/my-form/edit/${url}`)
     }
     
@@ -108,11 +113,11 @@ function FormManager () {
                 </div>
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
                     
-                    const {title, url, pages, endingMent} = form
+                    const {title, url, pages, endingMent, listStyle, options} = form
                     //임시
                     const {count, full, startDate, endDate, light} = testlayouts[idx]
                     return <div key={url} className="card">
-                        <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent)}>
+                        <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent, listStyle, options)}>
                             <div className="form-status">
                                 <span className={classNames("light", light)}></span>
                                 <button title="복사" onClick={e=>copyFormAction(e, url, token)}><Icon code={'content_copy'}/></button>

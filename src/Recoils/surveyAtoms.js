@@ -47,15 +47,33 @@ const pagesAtom = atom({ // 설문지 생성할때 초기에 만들기
 
 const surveyListStyleAtom = atom({
     key: 'survey-list-style',
-    default: {style: null, text: '없음'}
+    default: null
+})
+
+const surveyListStyleTextSelector = selector({
+    key: 'surveyListStyleTextSelector',
+    get: ({ get }) => {
+        const style = get(surveyListStyleAtom)
+        switch (style) {
+            case 'N':
+                return '1. 2. 3.'
+            case 'Q':
+                return 'Q. Q. Q.' 
+            case 'QN':
+                return 'Q1. Q2. Q3.' 
+            case null:
+            default:
+                return '없음' 
+        }
+    }
 })
 
 const surveyListStyleSelector = selector({
     key: 'surveyListStyleSelector',
     get: ({ get }) => {
-      const surveyListStyle = get(surveyListStyleAtom);
+      const surveyListStyle = get(surveyListStyleAtom)
       return (qi) => {
-        switch (surveyListStyle.style) {
+        switch (surveyListStyle) {
             case 'N': 
                 return (qi + 1) + '.'
             case 'Q': 
@@ -74,9 +92,9 @@ const surveyOptionsAtom = atom({
     key: 'survey-option',
     default : {
         isUseStartPeriod : false,
-        startDate: null,
+        startDate: '',
         isUseEndPeriod : false,
-        endDate: null,
+        endDate: '',
         isNeedLogin : false,
         isUseMaximum : false,
         maximumCount : null,
@@ -114,7 +132,7 @@ const AnswerBoxAtom = atom({
 
 export {
     randomKey, randomUrl,
-    surveyListStyleAtom, surveyListStyleSelector,
+    surveyListStyleAtom, surveyListStyleTextSelector, surveyListStyleSelector,
     surveyOptionsAtom,
     urlAtom, surveyTitleAtom, 
     activeCardAtom, 

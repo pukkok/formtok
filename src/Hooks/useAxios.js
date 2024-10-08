@@ -118,10 +118,10 @@ const useAxios = () => {
         }
     }
 
-    const createForm = async (url, title, pages, token) => {
+    const createForm = async (url, title, pages, listStyle, options, token) => {
         try {
             const { data } = await axios.post("/form/create", 
-            { url, title, pages },
+            { url, title, pages, listStyle, options },
             {headers : {'Authorization' : `Bearer ${token}`}} // 헤더
             )
             if (data.code === 200) {
@@ -135,10 +135,10 @@ const useAxios = () => {
         }
     }
 
-    const saveForm = async (url, title, pages, endingMent, token) => {
+    const saveForm = async (url, title, pages, endingMent, listStyle, options, token) => {
         try{
             const { data } = await axios.post('/form/edit', 
-            { url, title, endingMent, pages},
+            { url, title, endingMent, pages, listStyle, options},
             {headers : {'Authorization' : `Bearer ${token}`}}
             )
             if(data.code === 200) {

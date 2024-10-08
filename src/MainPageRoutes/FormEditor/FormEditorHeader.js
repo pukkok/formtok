@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { endingMentAtom, pagesAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
+import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../../Hooks/useAxios";
 
@@ -51,6 +51,8 @@ function FormHeader ({token}) {
     const { surveyId } = useParams()
     const pages = useRecoilValue(pagesAtom)
     const [title, setTitle] = useRecoilState(surveyTitleAtom)
+    const surveyListStyle = useRecoilValue(surveyListStyleAtom)
+    const surveyOptions = useRecoilValue(surveyOptionsAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     const { saveForm } = useAxios() 
     const navigate = useNavigate()
@@ -58,7 +60,7 @@ function FormHeader ({token}) {
     return <FormHeaderWrapper>
         <input onChange={e =>setTitle(e.target.value)} placeholder="제목없는 설문지" value={title}/>
         <button onClick={()=>navigate(`/my-form/preview/${surveyId}`)}>미리보기</button>
-        <button onClick={()=>saveForm(surveyId, title, pages, endingMent, token)}>저장</button>        
+        <button onClick={()=>saveForm(surveyId, title, pages, endingMent, surveyListStyle, surveyOptions, token)}>저장</button>        
     </FormHeaderWrapper>
 }
 

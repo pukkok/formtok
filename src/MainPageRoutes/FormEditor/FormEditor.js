@@ -56,29 +56,29 @@ function FormEditor () {
         <main>
             <FormHeader token={token}/>
             <div className="card-box">
-            {pages.map((page, idx) => {
+            {pages.map((page, pi) => {
                 const {id, questions} = page
                 return (
                 <React.Fragment key={id}>
-                <PageCard pi={idx}/> 
+                <PageCard pi={pi}/> 
                     
-                {questions.map((question, idx2) => {
-                    return <QuestionCard key={question.id} pi={idx} qi={idx2}/>
+                {questions.map((question, qi) => {
+                    return <QuestionCard key={question.id} pi={pi} qi={qi}/>
                 })}
 
-                {pages.length-1 !== idx ?
+                {pages.length-1 !== pi ?
                 <div className="page-move">
                     <p>답변 후</p>
                     <DropDown initialItem={nextPageText(page) || '다음페이지로 이동'} style={{minWidth : '320px'}}>
-                        <li><button onClick={()=>{whereIsNextPage(idx, null)}}>다음페이지로 이동</button></li>
-                        {pages.filter((_, cnt) => cnt>idx).map((page, cnt) => {
+                        <li><button onClick={()=>{whereIsNextPage(pi, null)}}>다음페이지로 이동</button></li>
+                        {pages.filter((_, cnt) => cnt>pi).map((page, cnt) => {
                             const { title, id } = page
                             let text = title.length > 8 ? title.slice(0, 8) + '...' : title ? title : '제목 없음' 
                             return <li key={id}>
-                                <button onClick={()=>whereIsNextPage(idx, idx + cnt+1)}>{idx+1 + cnt+1}페이지({text})로 이동</button>
+                                <button onClick={()=>whereIsNextPage(pi, pi + cnt+1)}>{pi+1 + cnt+1}페이지({text})로 이동</button>
                             </li>
                         })}
-                        <li><button onClick={()=>whereIsNextPage(idx, 'end')}>설문지 제출</button></li>
+                        <li><button onClick={()=>whereIsNextPage(pi, 'end')}>설문지 제출</button></li>
                     </DropDown>
                 </div> : 
                 <EndingCard />
