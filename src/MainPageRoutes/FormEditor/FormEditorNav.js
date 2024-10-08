@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import classNames from "classnames"
-import FormSummary from "./FormSummary"
-import SurveyOption from "./FormOption"
+import FormSummary from "./FormNavSummary"
+import SurveyOption from "./FormNavOption"
 import styled from "styled-components"
 
 const FormEditorNavWrapper = styled.div`

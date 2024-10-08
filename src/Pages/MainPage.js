@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../MainPageRoutes/SideBar";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { gridAtom, isSideOpenAtom } from "../Recoils/screenAtom";
 import { Icon } from "../Components/Icons";
 import classNames from "classnames";
@@ -17,7 +17,7 @@ const MainPageWrapper = styled.section`
     .side-close-btn{
         position: absolute;
         border-radius: 50%;
-        background-color: var(--pk-light-grey);
+        background-color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -27,7 +27,7 @@ const MainPageWrapper = styled.section`
         /* top: 50%;
         transform: translateY(-50%); */
         top: 100px;
-        z-index: 1000;
+        z-index: 200;
         opacity: 0;
 
         &.show{

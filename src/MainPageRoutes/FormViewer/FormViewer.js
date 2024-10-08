@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { AnswerBoxAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
@@ -16,6 +16,9 @@ function FormViewer() {
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
+    const surveyListStyle = useRecoilValue(surveyListStyleAtom)
+    const getListStyle = useRecoilValue(surveyListStyleSelector)
+    
 
     useEffect(() => {
         let newAnswerBox = pages.reduce((acc, page) => {
@@ -35,9 +38,8 @@ function FormViewer() {
             acc[id] = {...newQuestions}
             return acc
         }, {})
-        // console.log(newAnswerBox)
         setAnswerBox(newAnswerBox)
-    },[pages])
+    },[pages, setAnswerBox])
 
     const [currentIdx, setCurrentIdx] = useState(0)
     const moveLogs = useRef([0]) // 움직인 기록 남기기
@@ -98,22 +100,24 @@ function FormViewer() {
                 </div>
             </FormCardWrapper>
 
-            {pages[currentIdx].questions.map(question => { // 질문
+            {pages[currentIdx].questions.map((question, qi) => { // 질문
                 const {id, q, d, options, type, scoreRanges, essential, setPeriod} = question
+                const listStyle = getListStyle(qi)
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
-                        <div className={classNames({essential})}>
+                        <div className={classNames('question-title-box', {essential})}>
+                            {listStyle && <span>{listStyle}</span>}
                             <p className="title-B">{q || '제목 없는 질문'}</p>
                         </div>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
-                    <ViewerQuestionForm
-                        type={type}
-                        options={options}
-                        scoreRanges={scoreRanges} 
-                        setPeriod={setPeriod}
-                        pageId={pages[currentIdx].id} questionId={id} 
-                    />
+                        <ViewerQuestionForm
+                            type={type}
+                            options={options}
+                            scoreRanges={scoreRanges} 
+                            setPeriod={setPeriod}
+                            pageId={pages[currentIdx].id} questionId={id} 
+                        />
                     
                     </div>
                 </FormCardWrapper>

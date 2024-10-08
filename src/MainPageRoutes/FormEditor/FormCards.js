@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useRecoilValue, useRecoilState } from "recoil";
-import { pagesAtom, endingMentAtom, activeCardAtom, surveyListStyleAtom } from "../../Recoils/surveyAtoms";
+import { pagesAtom, endingMentAtom, activeCardAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
 
 import usePageActions from "../../Hooks/usePageActions";
 import classNames from "classnames";
@@ -52,22 +52,11 @@ function QuestionCard ({pi, qi}) {
     const pages = useRecoilValue(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
     const {changeQTitle, changeQDescription, changeQType, usedOptionCheck} = usePageActions()
-    const surveyListStyle = useRecoilValue(surveyListStyleAtom)
-
+    
     const selectedQuestion = pages[pi].questions[qi]
-
-    const [listStyle, setListStyle] = useState('')
-    useEffect(() => {
-        let style = ''
-        switch(surveyListStyle.style) {
-            case 'N' : style = (qi+1)+'.'; break;
-            case 'Q' : style = 'Q.'; break;
-            case 'QN' : style = 'Q' + (qi+1) + '.'; break;
-            case null : style = ''; break;
-            default : style = ''; break;
-        }
-        setListStyle(style)
-    }, [surveyListStyle, pages])
+    
+    const getListStyle = useRecoilValue(surveyListStyleSelector)
+    const listStyle = getListStyle(qi) // 리스트 스타일을 가져와서 변경함
 
     // 질문 타입 변경
     const [typeIcon, setTypeIcon] = useState('format_list_numbered')

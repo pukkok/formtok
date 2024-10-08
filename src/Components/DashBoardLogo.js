@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
 import useAxios from "../Hooks/useAxios";
 import { Icon } from "./Icons";
+import { useNavigate } from "react-router-dom";
 
 const StyledLogo = styled.div`
     width: 280px;
@@ -63,6 +64,8 @@ function Logo({src, isExpiredToken}) {
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
     const token = localStorage.getItem('token')
     const [warningAlert, setWarningAlert] = useState(true)
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         const startTimer = (expTime) => {
@@ -79,6 +82,7 @@ function Logo({src, isExpiredToken}) {
                     setTimeLeft("만료 됨")
                     isExpiredToken(true)
                     localStorage.clear()
+                    navigate('/')
                 }else{
                     updateTimeLeft(remainingMs)
                 }
@@ -100,7 +104,7 @@ function Logo({src, isExpiredToken}) {
                 clearInterval(intervalRef.current)
             }
         }
-    }, [token, warningAlert])
+    }, [token, warningAlert, isExpiredToken, navigate])
 
     const updateTimeLeft = (remainingMs) => {
         const seconds = Math.floor(remainingMs / 1000)

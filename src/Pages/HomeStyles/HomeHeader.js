@@ -91,8 +91,6 @@ const StyledHeader = styled.header`
 
 function HomeHeader() {
     const navigate = useNavigate()
-    const token = localStorage.getItem('token')
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     // console.log(userInfo)
     return (
         <StyledHeader>
@@ -103,7 +101,6 @@ function HomeHeader() {
                 </div>
                 <ul>
                     <li><Link to="/contact">문의하기</Link></li>
-                    {/* <li>{token ? userInfo.name : ''}</li> */}
                     <li className='login'><Link to="/user/login">로그인</Link></li>
                 </ul>
             </nav>

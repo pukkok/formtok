@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 function randomKey(){
     let newKey = ''
@@ -30,8 +30,6 @@ function randomUrl() {
     return newUrl
 }
 
-
-
 const surveyTitleAtom = atom({
     key: 'survey-title',
     default: ''
@@ -52,13 +50,36 @@ const surveyListStyleAtom = atom({
     default: {style: null, text: '없음'}
 })
 
-const surveyOptionAtom = atom({
+const surveyListStyleSelector = selector({
+    key: 'surveyListStyleSelector',
+    get: ({ get }) => {
+      const surveyListStyle = get(surveyListStyleAtom);
+      return (qi) => {
+        switch (surveyListStyle.style) {
+            case 'N': 
+                return (qi + 1) + '.'
+            case 'Q': 
+                return 'Q.'
+            case 'QN': 
+                return 'Q' + (qi + 1) + '.'
+            case null: 
+        default: 
+            return ''
+        }
+      }
+    },
+})
+
+const surveyOptionsAtom = atom({
     key: 'survey-option',
     default : {
-        isUsePeriod : false,
-        period : {start: null, end: null},
+        isUseStartPeriod : false,
+        startDate: null,
+        isUseEndPeriod : false,
+        endDate: null,
         isNeedLogin : false,
         isUseMaximum : false,
+        maximumCount : null,
         isAllowConfirmation : false,
         isAllowModify: false,
         isRevealTheResult: false,
@@ -93,7 +114,8 @@ const AnswerBoxAtom = atom({
 
 export {
     randomKey, randomUrl,
-    surveyListStyleAtom, surveyOptionAtom,
+    surveyListStyleAtom, surveyListStyleSelector,
+    surveyOptionsAtom,
     urlAtom, surveyTitleAtom, 
     activeCardAtom, 
     pagesAtom, endingMentAtom, surveyPeriodAtom, 

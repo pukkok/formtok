@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import ToggleButton from "../../Components/ToggleButton";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import DropDown from "../../Components/DropDown";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { surveyListStyleAtom } from "../../Recoils/surveyAtoms";
+import { useRecoilState } from "recoil";
+import { surveyListStyleAtom, surveyOptionsAtom } from "../../Recoils/surveyAtoms";
 
 const FormOptionWrapper = styled.div`
     width: 100%;
@@ -71,10 +71,20 @@ const FormOptionWrapper = styled.div`
 
 function FormOption () {
     const today = dayjs().format('YYYY-MM-DDTHH:mm')
-    const periodRef = useRef({start:null, end: null})
 
     const [surveyListStyle, setSurveyListStyle] = useRecoilState(surveyListStyleAtom)
-    
+    const [surveyOptions, setSurveyOptions] = useRecoilState(surveyOptionsAtom)
+
+    const changeOptions = (option) => {
+        setSurveyOptions(prev => {
+            return prev = {...prev, [option] : !prev[option]}
+        })
+    }
+
+    const getPeriod = () => {
+
+    }
+
     const listStyles = [
         {style: 'N', text : '1. 2. 3.'}, 
         {style: 'Q', text : 'Q. Q. Q.'}, 
@@ -92,27 +102,30 @@ function FormOption () {
         </DropDown>
 
         <h4>설문 기간 설정</h4>
-        <p>시작일 설정 <ToggleButton/></p>
+        <p>시작일 설정 <ToggleButton onClick={() => changeOptions('isUseStartPeriod')} isOn={surveyOptions.isUseStartPeriod}/></p>
+        {surveyOptions.isUseStartPeriod &&
         <div className="option-box">
-            <input type="datetime-local" ref={el => periodRef.current.start = el} defaultValue={today}/>
-        </div>
-        <p>종료일 설정 <ToggleButton/></p>
+            <input type="datetime-local" onChange={() => getPeriod()} value={surveyOptions.startDate} defaultValue={today}/>
+        </div>}
+        <p>종료일 설정 <ToggleButton onClick={() => changeOptions('isUseEndPeriod')} isOn={surveyOptions.isUseEndPeriod}/></p>
+        {surveyOptions.isUseEndPeriod &&
         <div className="option-box">
-            <input type="datetime-local" ref={el => periodRef.current.end = el}/>
-        </div>
+            <input type="datetime-local" onChange={() => getPeriod()} value={surveyOptions.endDate}/>
+        </div>}
 
         <h4>설문 참여 설정</h4>
-        <p>로그인 필수 <ToggleButton/></p>
-        <p>최대 참여 수 설정 <ToggleButton/></p>
+        <p>로그인 필수 <ToggleButton onClick={() => changeOptions('isNeedLogin')} isOn={surveyOptions.isNeedLogin}/></p>
+        <p>최대 참여 수 설정 <ToggleButton onClick={() => changeOptions('isUseMaximum')} isOn={surveyOptions.isUseMaximum}/></p>
+        {surveyOptions.isUseMaximum && 
         <div className="option-box">
             <input type="number" placeholder="0"/>
-        </div>
-        <p>설문 대상 설정 <ToggleButton/></p>
+        </div>}
+        <p>설문 대상 설정 <ToggleButton /></p>
 
         <h4>참여자 권한 설정</h4>
-        <p>답변 확인 허용 <ToggleButton/></p>
-        <p>답변 수정 허용 <ToggleButton/></p>
-        <p>설문 결과 공개 <ToggleButton/></p>
+        <p>답변 확인 허용 <ToggleButton onClick={() => changeOptions('isAllowConfirmation')} isOn={surveyOptions.isAllowConfirmation}/></p>
+        <p>답변 수정 허용 <ToggleButton onClick={() => changeOptions('isAllowModify')} isOn={surveyOptions.isAllowModify}/></p>
+        <p>설문 결과 공개 <ToggleButton onClick={() => changeOptions('isRevealTheResult')} isOn={surveyOptions.isRevealTheResult}/></p>
 
     </FormOptionWrapper>)
 }
