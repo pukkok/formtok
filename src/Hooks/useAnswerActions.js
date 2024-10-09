@@ -21,13 +21,15 @@ function useAnswerActions () {
     }
 
     const extraPick = (pageId, questionId, isMultiple=false) => {
+        const {answer, useExtra, extra} = answerBox[pageId][questionId]
         setAnswerBox({...answerBox, 
             [pageId] : {
                 ...answerBox[pageId],
                 [questionId]: {
                     ...answerBox[pageId][questionId],
-                    answer: isMultiple ? answerBox[pageId][questionId].answer : '',
-                    useExtra: !answerBox[pageId][questionId].useExtra,
+                    answer: isMultiple ? answer : '',
+                    useExtra: !useExtra,
+                    extra : useExtra ? extra : '' // 기타옵션을 취소한다면 답변 초기화
                 }
             }
         })
@@ -70,12 +72,12 @@ function useAnswerActions () {
         })
     }
 
-    const answerInHTML = (e, pageId, questionId) => {
+    const answerInHTML = (e, pageId, questionId, reset=false) => {
         setAnswerBox(prevBox => {
             return { ...prevBox,
                 [pageId]: {
                     ...prevBox[pageId],
-                    [questionId]: e.target.innerHTML
+                    [questionId]: reset ? '' : e.target.innerHTML
                 }
             }
         })

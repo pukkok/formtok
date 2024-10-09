@@ -120,6 +120,7 @@ function ViewerQuestionForm ({ type, options=[], hasExtraOption, scoreRanges, se
 
         {(type === '드롭다운' && options.length > 0) && 
         <DropDown initialItem={answerBox[pageId]?.[questionId] || '옵션을 선택해주세요'} style={{width: '260px'}}>
+            <li><button onClick={e => answerInHTML(e, pageId, questionId, true)}>옵션을 선택해주세요</button></li>
             {options.map((option, idx) => {
                 return (option.answer && 
                 <li key={option.id}>
