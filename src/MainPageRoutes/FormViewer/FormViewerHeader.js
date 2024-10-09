@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { surveyTitleAtom } from "../../Recoils/surveyAtoms";
 
 const StyledFormViewerHeader = styled.header`
     position: sticky;
@@ -48,10 +50,12 @@ const StyledFormViewerHeader = styled.header`
 
 function FormViewerHeader ({surveyId, current, max}) {
 
+    const title = useRecoilValue(surveyTitleAtom)
+    
     return (
         <StyledFormViewerHeader>
             <div>
-                <p>진행 상황</p>
+                <p>{title || '제목없는 설문지'}</p>
                 <Link to={`/my-form/edit/${surveyId}`}>돌아가기</Link>
             </div>
             <p className="line">

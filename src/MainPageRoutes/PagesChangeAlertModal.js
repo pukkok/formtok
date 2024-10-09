@@ -43,7 +43,7 @@ const StyledModal = styled.dialog`
     }
 `
 
-function PagesChangeAlertModal ({}, ref) {
+function PagesChangeAlertModal ({next}, ref) {
 
     return (
         <StyledModal ref={ref}>
@@ -52,7 +52,7 @@ function PagesChangeAlertModal ({}, ref) {
                 저장 하지 않고 나가시겠습니까? </h5>
                 <div className="btns">
                     <button style={{backgroundColor: '#c30928'}} onClick={() => ref.current.close()}>아니오</button>
-                    <button>예</button>
+                    <button onClick={next || null}>예</button>
                 </div>
             </div>
         </StyledModal>

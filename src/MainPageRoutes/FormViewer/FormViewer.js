@@ -141,8 +141,7 @@ function FormViewer() {
                     {endingMent.description && <DescriptionEditor value={endingMent.description} isReadOnly={true} />}
                 </div>
             </FormCardWrapper>
-            
-            <Link to={pathname.includes('preview') ? '/my-form' : '/survey-answer'}>다른 설문 참여<Icon code={'arrow_right_alt'}/></Link>
+            <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/survey-answer'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
             </>}
         </main>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, Icon } from "../../Components/Icons";
-import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalPagesAtom } from "../../Recoils/surveyAtoms";
+import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalDataAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledFormManager";
 import SearchForm from "../../Components/SearchForm";
@@ -15,7 +15,7 @@ function FormManager () {
     const setEndingMent = useSetRecoilState(endingMentAtom)
     const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
     const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
-    const setOriginalPages = useSetRecoilState(originalPagesAtom)
+    const setOriginalData = useSetRecoilState(originalDataAtom)
     const naviate = useNavigate()
     const token = localStorage.getItem('token')
 
@@ -29,7 +29,6 @@ function FormManager () {
     useEffect(() => {
         const getForms = async () => {
             const forms = await getMyFormList(token)
-            console.log(forms)
             setSerachedForms(forms)
             setMyForms(forms)
         }
@@ -46,10 +45,11 @@ function FormManager () {
     const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}, listStyle, options) => {
         setTitle(title)
         loadPages(pages)
-        setOriginalPages(pages) // 처음 데이터 저장
         setEndingMent(endingMent)
         setSurveyListStyle(listStyle)
         setSurveyOptions(options)
+
+        setOriginalData({title, pages, endingMent, listStyle, options}) // 불러온 처음 데이터 저장
         naviate(`/my-form/edit/${url}`)
     }
     
@@ -84,7 +84,7 @@ function FormManager () {
         }
     }
 
-    const testlayouts = [
+    const testlayouts = [ // 임시 틀 데이터
         {count: '응답 72', full: '응답제한 200', startDate: '2024.05.12', endDate: '2024.05.24', light: 'stop'},
         {count: '응답 10', full: '응답제한 없음', startDate: '2024.05.24', endDate: '2024.05.30', light: 'making'},
         {count: '응답 100', full: '응답제한 100', startDate: '2024.06.30', endDate: '2024.07.15', light: 'stop'},

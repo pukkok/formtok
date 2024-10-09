@@ -9,7 +9,7 @@ import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";
 import SwitchScreenModeBtn from "../Components/SwitchScreenModeBtn";
 import useSwitchPage from "../Hooks/useSwitchPage";
-import { originalPagesAtom, pagesAtom } from "../Recoils/surveyAtoms";
+import { endingMentAtom, originalDataAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../Recoils/surveyAtoms";
 import _ from 'lodash'
 import PagesChangeAlertModal from "./PagesChangeAlertModal";
 
@@ -20,8 +20,16 @@ function SideBar ({logo}) {
     const [isExpiredToken, setIsExpiredToken] = useState(false)
     const navigate = useNavigate()
     const modalRef = useRef(null)
+
+    const [temporary, setTemporary] = useState({depth1: null, depth2: null, path: null})
+
     const pages = useRecoilValue(pagesAtom)
-    const originPages = useRecoilValue(originalPagesAtom)
+    const title = useRecoilValue(surveyTitleAtom)
+    const endingMent = useRecoilValue(endingMentAtom)
+    const listStyle = useRecoilValue(surveyListStyleAtom)
+    const options = useRecoilValue(surveyOptionsAtom)
+
+    const [originalData, setOriginalData] = useRecoilState(originalDataAtom)
 
     // 사이드바 열고 닫기
     const sideOpener = () => {
@@ -38,29 +46,63 @@ function SideBar ({logo}) {
     const [openDepth2, setOpenDepth2] = useState([1])
     const {goToPage} = useSwitchPage()
 
-
-    const pagesChangeValueCheck = () => { // 객체의 데이터가 같은지 다른지 확인
-        return _.isEqual(pages, originPages)
+    const pagesChangeValueCheck = () => { // 가장 많이 변할것 같은 데이터 우선순위로 비교
+        if(!originalData) return false // 들어가기 전
+        // pages 비교
+        if (!_.isEqual(pages, originalData.pages)) return true // 변경된 경우 바로 true 리턴
+        // title 비교
+        if (!_.isEqual(title, originalData.title)) return true
+        // endingMent 비교
+        if (!_.isEqual(endingMent, originalData.endingMent)) return true
+        // listStyle 비교
+        if (!_.isEqual(listStyle, originalData.listStyle)) return true
+        // options 비교
+        if (!_.isEqual(options, originalData.options)) return true
+        // 모든 항목이 동일한 경우 false 리턴
+        return false
     }
 
-    const depth1Click = (idx, path) => {
-        // 페이지의 데이터가 다르다면 저장 선택 모달 띄우기
-        if(!pagesChangeValueCheck()) return modalRef.current.showModal()
+    const depth1Next = (idx, path) => {
+        setOriginalData(null)
         if(idx === 0) return goToPage(path) // 홈 <-> 대시보드 페이지 이동
         setActive({depth1 : idx, depth2: null})
         if(path) return navigate(path)
             
-        if(openDepth2.includes(idx)){
+        if(openDepth2.includes(idx)){ // 폴더
             setOpenDepth2(prev => prev = prev.filter(openIdx => openIdx !== idx))
         }else{
             setOpenDepth2([...openDepth2, idx])
         }
     }
 
-    const depth2Click = (idx2, path) => {
-        if(!pagesChangeValueCheck()) return modalRef.current.showModal()
+    const depth2Next = (idx2, path) => {
+        setOriginalData(null)
         setActive({depth1: null, depth2: idx2})
         navigate(path)
+    }
+
+    const depth1Click = async (idx, path) => {
+        // 페이지의 데이터가 다르다면 저장 선택 모달 띄우기
+        if(pagesChangeValueCheck()) {
+            setTemporary({depth1: idx, depth2: null, path})
+            return modalRef.current.showModal()
+        }
+        depth1Next(idx, path)
+    }
+
+    const depth2Click = (idx2, path) => {
+        if(pagesChangeValueCheck()){
+            setTemporary({depth1: null, depth2: idx2, path})
+            return modalRef.current.showModal()
+        } 
+        depth2Next(idx2, path)
+    }
+
+    const next = () => {
+        const {depth1, depth2, path} = temporary
+        modalRef.current.close()
+        if(depth1) depth1Next(depth1, path)
+        if(depth2) depth2Next(depth2, path)
     }
 
     const logout = () => {
@@ -133,7 +175,7 @@ function SideBar ({logo}) {
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
 
-        <PagesChangeAlertModal ref={modalRef}/>
+        <PagesChangeAlertModal next={next} ref={modalRef}/>
 
     </SideBarWrapper>)
 }
