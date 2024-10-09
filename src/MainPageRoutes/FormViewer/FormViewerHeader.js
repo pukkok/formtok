@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { surveyTitleAtom } from "../../Recoils/surveyAtoms";
@@ -51,12 +51,12 @@ const StyledFormViewerHeader = styled.header`
 function FormViewerHeader ({surveyId, current, max}) {
 
     const title = useRecoilValue(surveyTitleAtom)
-    
+
     return (
         <StyledFormViewerHeader>
             <div>
                 <p>{title || '제목없는 설문지'}</p>
-                <Link to={`/my-form/edit/${surveyId}`}>돌아가기</Link>
+                <Link to={-1}>돌아가기</Link>
             </div>
             <p className="line">
                 <span style={{width : ((current / max) * 100) + '%'}}></span>

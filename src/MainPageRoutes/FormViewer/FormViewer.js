@@ -83,6 +83,12 @@ function FormViewer() {
         setCurrentIdx(pages[currentIdx].next || currentIdx+1)
     }
 
+    const submitAnswer = () => {
+        
+        alert('제출이 완료되었습니다.')
+        moveToNextPage()
+    }
+
     return (
     <FormViewerWrapper>
         <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
@@ -128,7 +134,7 @@ function FormViewer() {
                 {currentIdx !== pages.length - 1 ?
                     <button className="next" 
                     onClick={moveToNextPage}>다음페이지 <Icon code={'arrow_right_alt'}/></button>
-                    : <button className="next" onClick={moveToNextPage}>제출 <Icon code={'arrow_right_alt'}/></button>
+                    : <button className="next" onClick={submitAnswer}>제출 <Icon code={'arrow_right_alt'}/></button>
                 }
             </div>
 
@@ -141,7 +147,7 @@ function FormViewer() {
                     {endingMent.description && <DescriptionEditor value={endingMent.description} isReadOnly={true} />}
                 </div>
             </FormCardWrapper>
-            <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/survey-answer'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
+            <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/form-list'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
             </>}
         </main>
 

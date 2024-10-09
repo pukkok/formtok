@@ -47,6 +47,10 @@ const MainPageWrapper = styled.section`
 
     // 컬러
     color: var(--white-font-color);
+    --pk-low-emphasis : #333;
+    
+    --pk-option-nav-bg: #333;
+    
     // 사이드, 메인, 헤더
     --pk-first-background: var(--white-first-background);
     --pk-second-background: var(--white-second-background);
@@ -109,7 +113,7 @@ const MainPageWrapper = styled.section`
 
     // ck-editor
     --pk-ck-editor-bg: var(--pk-lightest-white);
-    --pk-ck-editor-color: #555;
+    --pk-ck-editor-color: #444;
     --pk-ck-editor-tool-color: var(--white-font-color);
     --pk-ck-editor-tool-on-bg: var(--pk-weak-purple);
     --pk-ck-editor-tool-on-color: var(--pk-light-grey); 
@@ -129,6 +133,10 @@ const MainPageWrapper = styled.section`
     &.darkmode{
         // 컬러
         color: var(--pk-light-grey);
+        --pk-low-emphasis : #dedede;
+
+        // 옵션 호버시 말풍선
+        --pk-option-nav-bg: var(--pk-deep-dark);
 
         // 사이드, 메인, 헤더
         --pk-first-background: var(--pk-dark);
@@ -189,7 +197,7 @@ const MainPageWrapper = styled.section`
         --pk-standard-btn-bg: var(--pk-charcoal);
         // ck-editor
         --pk-ck-editor-bg: var(--pk-dark);
-        --pk-ck-editor-color: var(--pk-medium-emphasis);
+        --pk-ck-editor-color: #c0c0c0;
         --pk-ck-editor-tool-color: var(--pk-light-grey);
         --pk-ck-editor-tool-on-bg: var(--pk-charcoal);
         --pk-ck-editor-tool-on-color: var(--pk-point);

@@ -96,6 +96,9 @@ const surveyListStyleSelector = selector({
 const surveyOptionsAtom = atom({
     key: 'survey-option',
     default : {
+        isOpen: false,
+        isEnd: false,
+        isPublic: false,
         isUseStartPeriod : false,
         startDate: '',
         isUseEndPeriod : false,

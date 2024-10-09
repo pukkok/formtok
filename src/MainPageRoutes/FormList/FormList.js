@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchForm from "../../Components/SearchForm";
 import axios from "axios";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
 
 const StyledFormList = styled.section`
     padding: var(--pk-viewer-padding);
@@ -63,14 +67,22 @@ const StyledFormList = styled.section`
 `
 
 function FormList () {
+    const setTitle = useSetRecoilState(surveyTitleAtom)
+    const setPages = useSetRecoilState(pagesAtom)
+    const setEndingMent = useSetRecoilState(endingMentAtom)
+    const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
+    const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
 
     const [searchedForms, setSerachedForms] = useState([])
     const [loadForms, setLoadForms] = useState([])
+
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
         const loadAllForms = async () => {
             const {data} = await axios.get('/form/all-forms')
             if(data.code === 200){
+                console.log(data.forms)
                 setLoadForms(data.forms)
                 setSerachedForms(data.forms)
             }
@@ -96,6 +108,26 @@ function FormList () {
     //     {count: '응답 80', full: '응답제한 120', startDate: '2024.10.12', endDate: '2024.10.19', light: 'green'},
     //     {count: '응답 20', full: '응답제한 100', startDate: '2024.10.12', endDate: null},
     // ]
+    const naviate = useNavigate()
+
+    const goToView = (url, title, pages, endingMent, listStyle, options) => {
+        const {isNeedLogin, startDate, endDate} = options
+        if(isNeedLogin){
+            if(!token) return alert('로그인이 필요한 설문지 입니다.')
+        }
+        if(dayjs(startDate) >= dayjs()){
+            return alert('참여할 수 있는 기간이 아닙니다.')
+        }
+        if(dayjs(endDate) <= dayjs()){
+            return alert('종료된 설문지입니다.')
+        }
+        setTitle(title)
+        setPages(pages)
+        setEndingMent(endingMent)
+        setSurveyListStyle(listStyle)
+        setSurveyOptions(options)
+        naviate(`/view/${url}`)
+    }
 
     return (
         <StyledFormList>
@@ -103,18 +135,25 @@ function FormList () {
 
             <div className="template-box">
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
-                    const {title, url} = form
-                    // console.log(pages, endingMent)
-                    // console.log(testlayouts[idx])
-                    //임시
-                    // const {count, full, startDate, endDate} = testlayouts[idx]
+                    const {title, url, pages, endingMent, listStyle, options} = form
+                    const allQuetinoCount = pages.reduce((acc, currentPage) => acc += currentPage.questions.length, 0)
+                    const {startDate, endDate, maximumCount, isNeedLogin} = options
+
                     return <div key={url} className="card">
-                        <div className="form-box" onClick={() => {}}>
+                        <div className="form-box" onClick={() => goToView(url, title, pages, endingMent, listStyle, options)}>
                             <h4>{title}</h4>
                             <div className="info">
-                                <p>준비중</p>
-                                {/* <p>{count} | {full}</p>
-                                <p>{startDate} ~ {endDate || ''}</p> */}
+                                <p>로그인 : {isNeedLogin ? '필요' : '필요 없음'}</p>
+                                <p>총 문항 수 : {allQuetinoCount}</p>
+                                <p>인원 : {0} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
+                                <p>기간 : {startDate ? <> 
+                                    {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
+                                    <span> ~ </span>  
+                                    {endDate && dayjs(endDate).format('YYYY-MM-DD') || '제한 없음'}
+                                    </> :
+                                    '기간 제한 없음'
+                                    }
+                                </p>
                             </div>
                         </div>
                     </div>

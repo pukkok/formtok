@@ -9,6 +9,7 @@ import useAxios from "../../Hooks/useAxios";
 import classNames from "classnames";
 import usePageActions from "../../Hooks/usePageActions";
 import CreateFormModal from "./CreateFormModal";
+import dayjs from "dayjs";
 
 function FormManager () {
     const setTitle = useSetRecoilState(surveyTitleAtom)
@@ -29,6 +30,7 @@ function FormManager () {
     useEffect(() => {
         const getForms = async () => {
             const forms = await getMyFormList(token)
+            // console.log(forms)
             setSerachedForms(forms)
             setMyForms(forms)
         }
@@ -85,22 +87,20 @@ function FormManager () {
     }
 
     const testlayouts = [ // 임시 틀 데이터
-        {count: '응답 72', full: '응답제한 200', startDate: '2024.05.12', endDate: '2024.05.24', light: 'stop'},
-        {count: '응답 10', full: '응답제한 없음', startDate: '2024.05.24', endDate: '2024.05.30', light: 'making'},
-        {count: '응답 100', full: '응답제한 100', startDate: '2024.06.30', endDate: '2024.07.15', light: 'stop'},
-        {count: '응답 25', full: '응답제한 50', startDate: '2024.07.11', endDate: null, light: 'ready' },
-        {count: '응답 80', full: '응답제한 200', startDate: '2024.07.24', endDate: '2024.08.02', light: 'ready'},
-        {count: '응답 120', full: '응답제한 없음', startDate: '2024.08.03', endDate: null, light: 'working'},
-        {count: '응답 110', full: '응답제한 200', startDate: '2024.08.08', endDate: null, light: 'working'},
-        {count: '응답 60', full: '응답제한 300', startDate: '2024.08.13', endDate: '2024.09.12', light: 'green'},
-        {count: '응답 40', full: '응답제한 100', startDate: '2024.09.27', endDate: '2024.09.28', light: 'green'},
-        {count: '응답 80', full: '응답제한 120', startDate: '2024.10.12', endDate: '2024.10.19', light: 'green'},
-        {count: '응답 20', full: '응답제한 100', startDate: '2024.10.12', endDate: null},
+        {count: '응답 72', light: 'stop'},
+        {count: '응답 10', light: 'making'},
+        {count: '응답 100', light: 'stop'},
+        {count: '응답 25', light: 'ready' },
+        {count: '응답 80', light: 'ready'},
+        {count: '응답 120', light: 'working'},
+        {count: '응답 110', light: 'working'},
+        {count: '응답 60',   light: 'green'},
+        {count: '응답 40',   light: 'green'},
+        {count: '응답 80',   light: 'green'},
+        {count: '응답 20',  },
     ]
 
-    // const allQuetinoCount = pages.reduce((acc, currentPage) => {
-    //     return acc += currentPage.questions.length
-    // }, 0)
+    
 
     return (
         <SurveyManagerWrapper>
@@ -113,10 +113,10 @@ function FormManager () {
                     </button>
                 </div>
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
-                    
                     const {title, url, pages, endingMent, listStyle, options} = form
+                    const {startDate, endDate, maximumCount} = options
                     //임시
-                    const {count, full, startDate, endDate, light} = testlayouts[idx]
+                    const {count, light} = testlayouts[idx]
                     return <div key={url} className="card">
                         <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent, listStyle, options)}>
                             <div className="form-status">
@@ -126,8 +126,15 @@ function FormManager () {
                             </div>
                             <h4>{title}</h4>
                             <div className="info">
-                                <p>{count} | {full}</p>
-                                <p>{startDate} ~ {endDate || ''}</p>
+                                <p>{count} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
+                                <p>{startDate ? <> 
+                                    {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
+                                    <span> ~ </span>  
+                                    {endDate && dayjs(endDate).format('YYYY-MM-DD') || '제한 없음'}
+                                    </> :
+                                    '기간 제한 없음'
+                                    }
+                                </p>
                             </div>
                         </div>
                     </div>
