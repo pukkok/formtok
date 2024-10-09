@@ -26,7 +26,10 @@ function FormViewer() {
                     qAcc[question.id] = {start:'', end:''}
                 }
                 else if(question.type ==='객관식(복수 선택)'){
-                    qAcc[question.id] = []
+                    qAcc[question.id] = {answer: [], useExtra: false, extra: ''}
+                }
+                else if(question.type ==='객관식'){
+                    qAcc[question.id] = {answer: '', useExtra: false, extra: ''}
                 }
                 else{
                     qAcc[question.id] = null
@@ -105,7 +108,7 @@ function FormViewer() {
             </FormCardWrapper>
 
             {pages[currentIdx].questions.map((question, qi) => { // 질문
-                const {id, q, d, options, type, scoreRanges, essential, setPeriod} = question
+                const {id, q, d, options, type, scoreRanges, hasExtraOption, essential, setPeriod} = question
                 const listStyle = getListStyle(qi)
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
@@ -118,6 +121,7 @@ function FormViewer() {
                         <ViewerQuestionForm
                             type={type}
                             options={options}
+                            hasExtraOption={hasExtraOption}
                             scoreRanges={scoreRanges} 
                             setPeriod={setPeriod}
                             pageId={pages[currentIdx].id} questionId={id} 

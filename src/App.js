@@ -32,7 +32,7 @@ function App() {
         <Route path='/' element={<HomePage/>}/>
         <Route element={<MainPage mode={mode} logo={logo}/>}>
           <Route path='my-form'>
-            <Route path='' element={<FormManager/>}/>
+            <Route path='manager' element={<FormManager/>}/>
             <Route path='edit/:surveyId' element={<FormEditor/>}/>
             <Route path='preview/:surveyId' element={<FormViewer/>}/>
             <Route path='questions' element={<MyQuestions/>}/>

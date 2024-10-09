@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isSideOpenAtom } from "../Recoils/screenAtom";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/DashBoardLogo";
 import { Icon } from "../Components/Icons";
@@ -42,6 +42,21 @@ function SideBar ({logo}) {
         }
     }, [isExpiredToken])
 
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            if (pagesChangeValueCheck()) {
+                event.preventDefault()
+                event.returnValue = '' // 브라우저에서 기본 경고 메시지를 표시하도록 함
+            }
+        }
+
+        window.addEventListener('beforeunload', handleBeforeUnload)
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload)
+        }
+    }, [pages, title, endingMent, listStyle, options, originalData])
+
     const [active, setActive] = useState({depth1 : null, depth2: 0})
     const [openDepth2, setOpenDepth2] = useState([1])
     const {goToPage} = useSwitchPage()
@@ -63,26 +78,24 @@ function SideBar ({logo}) {
     }
 
     const depth1Next = (idx, path) => {
-        setOriginalData(null)
         if(idx === 0) return goToPage(path) // 홈 <-> 대시보드 페이지 이동
-        setActive({depth1 : idx, depth2: null})
-        if(path) return navigate(path)
-            
         if(openDepth2.includes(idx)){ // 폴더
             setOpenDepth2(prev => prev = prev.filter(openIdx => openIdx !== idx))
         }else{
             setOpenDepth2([...openDepth2, idx])
         }
+        setActive({depth1 : idx, depth2: null})
+        if(path) return navigate(path)
     }
 
     const depth2Next = (idx2, path) => {
-        setOriginalData(null)
-        setActive({depth1: null, depth2: idx2})
         navigate(path)
+        setActive({depth1: null, depth2: idx2})
     }
 
     const depth1Click = async (idx, path) => {
         // 페이지의 데이터가 다르다면 저장 선택 모달 띄우기
+        if(!path) return depth1Next(idx, path)
         if(pagesChangeValueCheck()) {
             setTemporary({depth1: idx, depth2: null, path})
             return modalRef.current.showModal()
@@ -94,15 +107,16 @@ function SideBar ({logo}) {
         if(pagesChangeValueCheck()){
             setTemporary({depth1: null, depth2: idx2, path})
             return modalRef.current.showModal()
-        } 
+        }
         depth2Next(idx2, path)
     }
 
     const next = () => {
         const {depth1, depth2, path} = temporary
-        modalRef.current.close()
         if(depth1) depth1Next(depth1, path)
-        if(depth2) depth2Next(depth2, path)
+        else depth2Next(depth2, path)
+        setOriginalData(null)
+        modalRef.current.close()
     }
 
     const logout = () => {

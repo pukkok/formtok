@@ -9,8 +9,8 @@ const StyledModal = styled.dialog`
     background-color: var(--pk-modal-background);
     color: var(--pk-modal-font);
     & > div{
-        width: 300px;
-        height: 130px;
+        width: 340px;
+        height: 140px;
 
         display: flex;
         flex-direction: column;

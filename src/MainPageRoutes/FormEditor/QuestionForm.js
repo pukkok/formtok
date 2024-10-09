@@ -13,13 +13,12 @@ const StyledQuestionForm = styled.div`
 
 function QuestionForm ({pi, qi}){
     const pages = useRecoilValue(pagesAtom)
-    const style = pages[pi].questions[qi].type || '객관식'
-    // const {setNextToPage, setPeriod} = pages[pi].questions[qi]
+    const {type: style} = pages[pi].questions[qi]
     const {setPeriod} = pages[pi].questions[qi]
     return <StyledQuestionForm>
         {style === '서술형' && <LongText />}
         {style === '단답형' && <ShortText />}
-        {['객관식', '객관식(복수 선택)', '드롭다운'].includes(style) && <Multiple pages={pages} pi={pi} qi={qi}/>}
+        {['객관식', '객관식(복수 선택)', '드롭다운'].includes(style) && <Multiple style={style} pages={pages} pi={pi} qi={qi}/>}
         {['날짜', '시간', '날짜 + 시간'].includes(style) && <DateTypeInput style={style} setPeriod={setPeriod}/>}
         {/* {style === '표형' && <TableCanvas/>} */}
         {style === '점수 선택형' &&<SelectScore pages={pages} pi={pi} qi={qi}/>}
@@ -51,7 +50,7 @@ const StyledMultiple = styled.div`
     }
 `
 
-function Multiple ({pages, pi, qi}) {
+function Multiple ({style, pages, pi, qi}) {
     
     const { addOption, toggleEXtraOption, changeOption, deleteOption } = usePageActions()
 
@@ -65,6 +64,7 @@ function Multiple ({pages, pi, qi}) {
             isNotUseBtn={pages[pi].questions[qi].options.length===1 && idx3===0}
             />
         })}
+        {style !== '드롭다운' ? <>
         {pages[pi].questions[qi].hasExtraOption && 
         <AddAnswer defaultValue={'기타'} disabled={true} buttonClick={()=>toggleEXtraOption(pi, qi, false)}/>}
         <div className="add-btns">
@@ -74,6 +74,11 @@ function Multiple ({pages, pi, qi}) {
             <button className="add-extra-btn"onClick={()=>toggleEXtraOption(pi, qi, true)}>'기타' 추가</button>
             </>}
         </div>
+        </> :
+        <div className="add-btns">
+            <button className="add-answer-btn" onClick={()=>addOption(pi, qi)}>항목 추가</button>
+        </div>
+        }
     </StyledMultiple>)
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { RadioButton, CheckBoxButton } from "../../Components/MultipleButton";
 import DropDown from "../../Components/DropDown";
@@ -59,32 +59,65 @@ const StyledViewerQuestionForm = styled.div`
     }
 `
 
-function ViewerQuestionForm ({ type, options=[], scoreRanges, setPeriod, pageId, questionId }) {
-    const { answerPick, answerPicks, answerInValue, answerInHTML, answerDateType, answerPeriodValueReset } = useAnswerActions()
+function ViewerQuestionForm ({ type, options=[], hasExtraOption, scoreRanges, setPeriod, pageId, questionId }) {
+    const { answerPick, extraPick, extraInValue,
+         answerPicks, answerInValue, answerInHTML, answerDateType, answerPeriodValueReset } = useAnswerActions()
     const answerBox = useRecoilValue(AnswerBoxAtom)
 
     return (
     <StyledViewerQuestionForm>
-        {(type === '객관식' && options.length > 0) && 
-            options.map(option => {
+        {(type === '객관식' && options.length > 0) && <>
+            {options.map(option => {
                 return (option.answer && <RadioButton 
                     key={option.id} 
                     onClick={() => answerPick(option.answer, pageId, questionId)}
-                    pick={answerBox[pageId]?.[questionId] || ''}
+                    pick={answerBox[pageId][questionId].answer || ''}
                     >
                     {option.answer}</RadioButton>)
-            })
-        }
-        {(type === '객관식(복수 선택)' && options.length > 0) && 
-            options.map(option => {
+            })}
+
+            {hasExtraOption && <>
+                <RadioButton
+                onClick={() => extraPick(pageId, questionId)} pick={answerBox[pageId][questionId].useExtra && '기타'}
+                >기타</RadioButton>
+            
+                {answerBox[pageId][questionId].useExtra &&
+                <div className="input-wrapper">
+                    <input 
+                    onChange={e => extraInValue(e, pageId, questionId)} 
+                    value={answerBox[pageId][questionId].extra || ''}
+                    placeholder="내용을 입력해 주세요."
+                    />
+                </div>}
+            </>}
+        </>}
+
+        {(type === '객관식(복수 선택)' && options.length > 0) && <>
+            {options.map(option => {
                 return (option.answer && <CheckBoxButton 
                     key={option.id}
                     onClick={() => answerPicks(option.answer, pageId, questionId)}
-                    picks={answerBox[pageId]?.[questionId] || []}
+                    picks={answerBox[pageId]?.[questionId].answer || []}
                     >
                     {option.answer}</CheckBoxButton>)
-            })
-        }
+            })}
+
+            {hasExtraOption && <>
+                <RadioButton
+                onClick={() => extraPick(pageId, questionId, true)} pick={answerBox[pageId][questionId].useExtra && '기타'}
+                >기타</RadioButton>
+            
+                {answerBox[pageId][questionId].useExtra &&
+                <div className="input-wrapper">
+                    <input 
+                    onChange={e => extraInValue(e, pageId, questionId)} 
+                    value={answerBox[pageId][questionId].extra || ''}
+                    placeholder="내용을 입력해 주세요."
+                    />
+                </div>}
+            </>}
+        </>}
+
         {(type === '드롭다운' && options.length > 0) && 
         <DropDown initialItem={answerBox[pageId]?.[questionId] || '옵션을 선택해주세요'} style={{width: '260px'}}>
             {options.map((option, idx) => {

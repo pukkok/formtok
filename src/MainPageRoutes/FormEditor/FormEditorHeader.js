@@ -18,7 +18,7 @@ const FormHeaderWrapper = styled.header`
     padding: 0 20px;
     z-index: 100;
     input{
-        width: 220px;
+        width: 300px;
         font-size: 18px;
         margin-right: auto;
         padding: 6px 10px 2px;
@@ -30,9 +30,6 @@ const FormHeaderWrapper = styled.header`
             overflow: none;
             border: 2px solid var(--pk-point);
             border-radius: 12px;
-            /* box-shadow: inset 0 2px 15px rgba(30,30,46, .2),
-            inset 0 2px 2px rgba(30,30,46, .4),
-            inset 0 -1px 1px rgba(30,30,46, .4); */
         }
     }
 
