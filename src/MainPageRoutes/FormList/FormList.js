@@ -136,7 +136,7 @@ function FormList () {
                                 <p>기간 : {startDate ? <> 
                                     {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
                                     <span> ~ </span>  
-                                    {endDate && dayjs(endDate).format('YYYY-MM-DD') || '제한 없음'}
+                                    {endDate ? dayjs(endDate).format('YYYY-MM-DD') : '제한 없음'}
                                     </> :
                                     '기간 제한 없음'
                                     }

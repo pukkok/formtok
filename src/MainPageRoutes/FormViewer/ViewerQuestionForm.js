@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { RadioButton, CheckBoxButton } from "../../Components/MultipleButton";
 import DropDown from "../../Components/DropDown";

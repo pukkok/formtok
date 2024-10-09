@@ -10,14 +10,14 @@ function useSwitchPage () {
         setSwitchTheScreen('go')
         setTimeout(() => {
             navigate(path)
-        }, 500);
+        }, 500)
     }
 
-    useEffect(() => {
+    useEffect(() => { // 애니메이션 종료
         if(switchTheScreen==='go'){
             setTimeout(() => {
                 setSwitchTheScreen('')
-            }, 1000);
+            }, 1000)
         }
     }, [switchTheScreen, setSwitchTheScreen])
 

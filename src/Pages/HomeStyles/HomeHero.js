@@ -88,12 +88,10 @@ const HeroWrapper = styled.section`
     @keyframes heroUp {
         0%{
             top: 100vh;
-            /* transform: scaleX(-1) translateY(-50%) rotateY(45deg); */
             transform: translateY(-50%);
         }
         100%{
             top: 30%;
-            /* transform: scaleX(-1) translateY(-50%) rotateY(45deg); */
             transform: translateY(-50%);
         }
     }
@@ -114,7 +112,7 @@ function HeroSection () {
                     <h4>조사, 분석, 자료정리까지 쉽고 빠르게 설문지를 만들어 보세요 <br/>
                     대시보드를 사용해 응답받은 자료를 정리해보세요  
                     </h4>
-                    <button onClick={()=>goToPage('/my-form')}>시작하기</button>
+                    <button onClick={()=>goToPage('/my-form/manager')}>시작하기</button>
                 </div>
 
                 <img className='hero' src={hero} alt='히어로 이미지'/>

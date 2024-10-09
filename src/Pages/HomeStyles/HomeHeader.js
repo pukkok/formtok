@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../../Imgs/formtok-logo-white.png'
 import { Link, useNavigate } from 'react-router-dom';
+import useSwitchPage from '../../Hooks/useSwitchPage';
 
 const StyledHeader = styled.header`
     width: 100%;
@@ -51,7 +52,7 @@ const StyledHeader = styled.header`
             align-items: center;
         }
         li{
-            a{
+            a, button{
                 cursor: pointer;
                 padding: 8px;
                 font-size: 17px;
@@ -91,7 +92,7 @@ const StyledHeader = styled.header`
 
 function HomeHeader() {
     const navigate = useNavigate()
-    // console.log(userInfo)
+    const { goToPage } = useSwitchPage()
     return (
         <StyledHeader>
             <nav>
@@ -100,7 +101,7 @@ function HomeHeader() {
                     <h1>폼톡</h1>
                 </div>
                 <ul>
-                    <li><Link to="/contact">문의하기</Link></li>
+                    <li><button onClick={()=>goToPage("/form-list")}>문의하기</button></li>
                     <li className='login'><Link to="/user/login">로그인</Link></li>
                 </ul>
             </nav>

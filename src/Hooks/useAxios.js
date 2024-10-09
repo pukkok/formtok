@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useRecoilValue, useSetRecoilState } from "recoil"
-import { originalDataAtom, originalPagesAtom, pagesAtom, randomKey } from "../Recoils/surveyAtoms"
-// import { useNavigate } from "react-router-dom"
+import { originalDataAtom, pagesAtom, randomKey } from "../Recoils/surveyAtoms"
 
 axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` : process.env.REACT_APP_RESTAPI_URL
 

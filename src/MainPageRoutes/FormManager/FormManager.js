@@ -35,7 +35,7 @@ function FormManager () {
             setMyForms(forms)
         }
         if(token && myForms.length === 0) getForms()
-    }, [token, getMyFormList])
+    }, [token, getMyFormList, myForms])
 
     // 모달 열고 닫기
     const createFormModalRef = useRef(null)
@@ -130,7 +130,7 @@ function FormManager () {
                                 <p>{startDate ? <> 
                                     {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
                                     <span> ~ </span>  
-                                    {endDate && dayjs(endDate).format('YYYY-MM-DD') || '제한 없음'}
+                                    {endDate ? dayjs(endDate).format('YYYY-MM-DD') : '제한 없음'}
                                     </> :
                                     '기간 제한 없음'
                                     }

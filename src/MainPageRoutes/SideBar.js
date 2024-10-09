@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isSideOpenAtom } from "../Recoils/screenAtom";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/DashBoardLogo";
 import { Icon } from "../Components/Icons";
@@ -14,23 +14,31 @@ import _ from 'lodash'
 import PagesChangeAlertModal from "./PagesChangeAlertModal";
 
 function SideBar ({logo}) {
+    const {pathname} = useResolvedPath()
 
     const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
     const [isExpiredToken, setIsExpiredToken] = useState(false)
     const navigate = useNavigate()
-    const modalRef = useRef(null)
 
+    // 모달 사용할때 임시로 저장
     const [temporary, setTemporary] = useState({depth1: null, depth2: null, path: null})
-
+    const modalRef = useRef(null)
+    
+    // 오리지널에 저장할 데이터
     const pages = useRecoilValue(pagesAtom)
     const title = useRecoilValue(surveyTitleAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     const listStyle = useRecoilValue(surveyListStyleAtom)
     const options = useRecoilValue(surveyOptionsAtom)
 
+    // 변경사항을 확인하기위한 박스
     const [originalData, setOriginalData] = useRecoilState(originalDataAtom)
 
+    const [active, setActive] = useState(pathname === '/form-list' ? {depth1: 2, depth2: null} : {depth1: null, depth2: 0})
+
+    const [openDepth2, setOpenDepth2] = useState([1])
+    const { goToPage } = useSwitchPage()
     // 사이드바 열고 닫기
     const sideOpener = () => {
         setIsSideOpen(prev => !prev)
@@ -41,6 +49,19 @@ function SideBar ({logo}) {
             setUserInfo(null)
         }
     }, [isExpiredToken])
+
+    
+    const pagesChangeValueCheck = useCallback( () => { // 가장 많이 변할것 같은 데이터 우선순위로 비교
+        if(!originalData) return false // 들어가기 전
+        // 변경된 경우 바로 true 리턴
+        if (!_.isEqual(pages, originalData.pages)) return true // pages 비교
+        if (!_.isEqual(title, originalData.title)) return true // title 비교
+        if (!_.isEqual(endingMent, originalData.endingMent)) return true // endingMent 비교
+        if (!_.isEqual(listStyle, originalData.listStyle)) return true // listStyle 비교
+        if (!_.isEqual(options, originalData.options)) return true // options 비교
+        // 모든 항목이 동일한 경우 false 리턴
+        return false
+    }, [pages, title, endingMent, listStyle, options, originalData])
 
     useEffect(() => {
         const handleBeforeUnload = (event) => {
@@ -55,27 +76,9 @@ function SideBar ({logo}) {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload)
         }
-    }, [pages, title, endingMent, listStyle, options, originalData])
+    }, [pagesChangeValueCheck])
 
-    const [active, setActive] = useState({depth1 : null, depth2: 0})
-    const [openDepth2, setOpenDepth2] = useState([1])
-    const {goToPage} = useSwitchPage()
-
-    const pagesChangeValueCheck = () => { // 가장 많이 변할것 같은 데이터 우선순위로 비교
-        if(!originalData) return false // 들어가기 전
-        // pages 비교
-        if (!_.isEqual(pages, originalData.pages)) return true // 변경된 경우 바로 true 리턴
-        // title 비교
-        if (!_.isEqual(title, originalData.title)) return true
-        // endingMent 비교
-        if (!_.isEqual(endingMent, originalData.endingMent)) return true
-        // listStyle 비교
-        if (!_.isEqual(listStyle, originalData.listStyle)) return true
-        // options 비교
-        if (!_.isEqual(options, originalData.options)) return true
-        // 모든 항목이 동일한 경우 false 리턴
-        return false
-    }
+    
 
     const depth1Next = (idx, path) => {
         if(idx === 0) return goToPage(path) // 홈 <-> 대시보드 페이지 이동

@@ -38,7 +38,7 @@ function App() {
             <Route path='questions' element={<MyQuestions/>}/>
           </Route>
           <Route path='view/:surveyId' element={<FormViewer/>}/>
-          <Route path='form-list' element={<FormList/>}/>
+          <Route path='/form-list' element={<FormList/>}/>
           <Route path='setting' element={<Setting/>}/>
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
