@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, Icon } from "../../Components/Icons";
-import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom } from "../../Recoils/surveyAtoms";
+import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalPagesAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { SurveyManagerWrapper } from "./_StyledFormManager";
 import SearchForm from "../../Components/SearchForm";
@@ -15,7 +15,7 @@ function FormManager () {
     const setEndingMent = useSetRecoilState(endingMentAtom)
     const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
     const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
-
+    const setOriginalPages = useSetRecoilState(originalPagesAtom)
     const naviate = useNavigate()
     const token = localStorage.getItem('token')
 
@@ -46,6 +46,7 @@ function FormManager () {
     const goToLoadForm = (title, url, pages, endingMent={title: '', description: ''}, listStyle, options) => {
         setTitle(title)
         loadPages(pages)
+        setOriginalPages(pages) // 처음 데이터 저장
         setEndingMent(endingMent)
         setSurveyListStyle(listStyle)
         setSurveyOptions(options)

@@ -40,6 +40,11 @@ const urlAtom = atom({
     default: ''
 })
 
+const originalPagesAtom = atom({
+    key: 'origin-pages',
+    default: []
+})
+
 const pagesAtom = atom({ // 설문지 생성할때 초기에 만들기
     key: 'pages',
     default : []
@@ -136,6 +141,7 @@ export {
     surveyOptionsAtom,
     urlAtom, surveyTitleAtom, 
     activeCardAtom, 
-    pagesAtom, endingMentAtom, surveyPeriodAtom, 
+    originalPagesAtom, pagesAtom, 
+    endingMentAtom, surveyPeriodAtom, 
     AnswerBoxAtom, 
 }

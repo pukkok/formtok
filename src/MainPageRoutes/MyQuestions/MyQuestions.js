@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import questionForms from "../../Datas/questionForms";
 import MyQuestionsWrapper from "./_StyledMyQuestions";
 import { Icon } from "../../Components/Icons";
-import ModalWrapper from "../../Components/StyledModal";
+// import ModalWrapper from "../../Components/StyledModal";
 import { RadioButton } from "../../Components/MultipleButton";
 import useAxios from "../../Hooks/useAxios";
 import SearchForm from "../../Components/SearchForm";
+import ReadMoreModal from "./ReadMoreModal";
 
 function MyQuestions(){
     const modalRef = useRef()
@@ -47,11 +48,6 @@ function MyQuestions(){
         })
         setSerachedFAQs(filteredFAQs)
     }
-
-    const closeModal = () => {
-        modalRef.current.close()
-    }
-    
     
     const checkedRef = useRef([])
     const takeQuestion = () => {
@@ -102,25 +98,7 @@ function MyQuestions(){
         }) : token ? <p>검색 결과가 없습니다.</p> : <p>해당 탭은 로그인 후 사용 가능합니다.</p>}
         </div>
 
-        <ModalWrapper ref={modalRef} className="modal-wrapper">
-            {readMore && <div>
-                <header>Q. {readMore.q}
-                    <p><Icon code={readMore.code}/>{readMore.type}</p>
-                </header>
-                <main>
-                {readMore.options && readMore.options.map((option, key) => {
-                    return <h5 key={key} className="line-up"
-                    ><RadioButton disabled={true}>{option.answer}</RadioButton></h5>
-                })}
-                </main>
-                <footer className="btns">
-                    <button onClick={()=>{}}>사용</button>
-                    <button style={{backgroundColor: '#c30928'}} onClick={()=>{}}>삭제</button>
-                    <button onClick={closeModal}>닫기</button>
-                </footer>
-            </div>
-            }
-        </ModalWrapper>
+        <ReadMoreModal readMore={readMore} ref={modalRef}/>
     </MyQuestionsWrapper>
     )
 }

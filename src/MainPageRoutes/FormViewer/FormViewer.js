@@ -18,7 +18,6 @@ function FormViewer() {
     const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
     const getListStyle = useRecoilValue(surveyListStyleSelector)
     
-
     useEffect(() => {
         let newAnswerBox = pages.reduce((acc, page) => {
             const {id, questions} = page
@@ -143,7 +142,7 @@ function FormViewer() {
                 </div>
             </FormCardWrapper>
             
-            <Link to={pathname.includes('preview') ? '/my-form' : '/survey-answer'}>나가기</Link>
+            <Link to={pathname.includes('preview') ? '/my-form' : '/survey-answer'}>다른 설문 참여<Icon code={'arrow_right_alt'}/></Link>
             </>}
         </main>
 

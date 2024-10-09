@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import React, { useEffect, useRef, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { isSideOpenAtom } from "../Recoils/screenAtom";
 import { useNavigate } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
@@ -9,6 +9,9 @@ import classNames from "classnames";
 import sidebarNavs from "../Datas/sidebarNavs";
 import SwitchScreenModeBtn from "../Components/SwitchScreenModeBtn";
 import useSwitchPage from "../Hooks/useSwitchPage";
+import { originalPagesAtom, pagesAtom } from "../Recoils/surveyAtoms";
+import _ from 'lodash'
+import PagesChangeAlertModal from "./PagesChangeAlertModal";
 
 function SideBar ({logo}) {
 
@@ -16,6 +19,9 @@ function SideBar ({logo}) {
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
     const [isExpiredToken, setIsExpiredToken] = useState(false)
     const navigate = useNavigate()
+    const modalRef = useRef(null)
+    const pages = useRecoilValue(pagesAtom)
+    const originPages = useRecoilValue(originalPagesAtom)
 
     // 사이드바 열고 닫기
     const sideOpener = () => {
@@ -32,8 +38,15 @@ function SideBar ({logo}) {
     const [openDepth2, setOpenDepth2] = useState([1])
     const {goToPage} = useSwitchPage()
 
+
+    const pagesChangeValueCheck = () => { // 객체의 데이터가 같은지 다른지 확인
+        return _.isEqual(pages, originPages)
+    }
+
     const depth1Click = (idx, path) => {
-        if(idx === 0) return goToPage(path) 
+        // 페이지의 데이터가 다르다면 저장 선택 모달 띄우기
+        if(!pagesChangeValueCheck()) return modalRef.current.showModal()
+        if(idx === 0) return goToPage(path) // 홈 <-> 대시보드 페이지 이동
         setActive({depth1 : idx, depth2: null})
         if(path) return navigate(path)
             
@@ -45,6 +58,7 @@ function SideBar ({logo}) {
     }
 
     const depth2Click = (idx2, path) => {
+        if(!pagesChangeValueCheck()) return modalRef.current.showModal()
         setActive({depth1: null, depth2: idx2})
         navigate(path)
     }
@@ -118,6 +132,8 @@ function SideBar ({logo}) {
             
         </div> :
         <button className="open-tab" onClick={sideOpener}></button>}
+
+        <PagesChangeAlertModal ref={modalRef}/>
 
     </SideBarWrapper>)
 }

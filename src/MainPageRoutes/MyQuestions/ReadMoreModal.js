@@ -1,21 +1,19 @@
+import React, { forwardRef } from "react";
 import styled from "styled-components";
+import { RadioButton } from "../../Components/MultipleButton";
+import { Icon } from "../../Components/Icons";
 
-const ModalWrapper = styled.dialog`
+const StyledModal = styled.dialog`
     box-sizing: border-box;
     padding: 20px;
     border-radius: 12px;
     border: solid 2px var(--pk-point);
     background-color: var(--pk-modal-background);
     color: var(--pk-modal-font);
-    
-    h4{font-size: 18px;}
+
     h5{
         font-size: 16px;
         font-weight: 500;
-    }
-    p{font-size:14px;}
-
-    .line-up{ // 정렬
         display: flex;
         align-items: center;
         gap: 10px;
@@ -23,6 +21,8 @@ const ModalWrapper = styled.dialog`
             margin-bottom: 5px;
         }
     }
+    p{font-size:14px;}
+
     & > div{ // 박스
         display: flex;
         flex-direction: column;
@@ -71,15 +71,36 @@ const ModalWrapper = styled.dialog`
                 }
             }
         }
-
-        input{
-            font-weight: bold;
-            font-size: 18px;
-            width: 100%;
-            border-bottom: none;
-        }
     }
-    
 `
 
-export default ModalWrapper
+function ReadMoreModal ({readMore}, ref) {
+
+    const closeModal = () => {
+        ref.current.close()
+    }
+
+    return (
+        <StyledModal ref={ref}>
+            {readMore && <div>
+                <header>Q. {readMore.q}
+                    <p><Icon code={readMore.code}/>{readMore.type}</p>
+                </header>
+                <main>
+                {readMore.options && readMore.options.map((option, key) => {
+                    return <h5 key={key} className="line-up"
+                    ><RadioButton disabled={true}>{option.answer}</RadioButton></h5>
+                })}
+                </main>
+                <footer className="btns">
+                    <button onClick={()=>{}}>사용</button>
+                    <button style={{backgroundColor: '#c30928'}} onClick={()=>{}}>삭제</button>
+                    <button onClick={closeModal}>닫기</button>
+                </footer>
+            </div>
+            }
+        </StyledModal>
+    )
+}
+
+export default forwardRef(ReadMoreModal)

@@ -28,6 +28,18 @@ const FormViewerWrapper = styled.section`
             color: var(--pk-light-grey);
         }
     }
+
+    a{
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        padding: 6px 8px;
+        border-radius: 8px;
+        gap: 10px;
+        background-color: var(--pk-point);
+        color: var(--pk-light-grey);
+        cursor: pointer;
+    }
 `
 
 export default FormViewerWrapper

@@ -1,12 +1,13 @@
 import axios from "axios"
-import { useRecoilValue } from "recoil"
-import { pagesAtom, randomKey } from "../Recoils/surveyAtoms"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { originalPagesAtom, pagesAtom, randomKey } from "../Recoils/surveyAtoms"
 // import { useNavigate } from "react-router-dom"
 
 axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` : process.env.REACT_APP_RESTAPI_URL
 
 const useAxios = () => {
     const pages = useRecoilValue(pagesAtom)
+    const setOriginalPages = useSetRecoilState(originalPagesAtom)
 
     const refreshAuthToken = async (oldToken) => {
         try {
@@ -142,6 +143,7 @@ const useAxios = () => {
             {headers : {'Authorization' : `Bearer ${token}`}}
             )
             if(data.code === 200) {
+                setOriginalPages(pages)
                 alert('성공적으로 저장 되었습니다.')
             }else{
                 console.log(data.msg)
