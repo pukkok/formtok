@@ -8,6 +8,12 @@ const FormViewerWrapper = styled.section`
         margin-bottom: 10vh;
     }
 
+    h1{
+        font-size: 26px;
+        width: 500px;
+        margin: 40vh auto;
+    }
+
     .btns{
         display: flex;
         button{

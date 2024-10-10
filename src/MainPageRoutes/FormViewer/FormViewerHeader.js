@@ -38,7 +38,7 @@ const StyledFormViewerHeader = styled.header`
             content: '';
             display: block;
             left: 0;
-            width: 100%;
+            width: 0;
             position: absolute;
             height: 2px;
             background-color: var(--pk-point);
@@ -48,7 +48,7 @@ const StyledFormViewerHeader = styled.header`
 
 `
 
-function FormViewerHeader ({surveyId, current, max}) {
+function FormViewerHeader ({current=0, max=1}) {
 
     const title = useRecoilValue(surveyTitleAtom)
 

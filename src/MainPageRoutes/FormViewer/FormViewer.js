@@ -10,6 +10,7 @@ import { Icon } from "../../Components/Icons";
 import FormViewerHeader from "./FormViewerHeader";
 import classNames from "classnames";
 import useAxios from "../../Hooks/useAxios";
+import FormTokLoading from "../../Components/FormTokLoading";
 
 function FormViewer() {
     const {surveyId} = useParams()
@@ -25,6 +26,8 @@ function FormViewer() {
     const endingMent = useRecoilValue(endingMentAtom)
     const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
     const getListStyle = useRecoilValue(surveyListStyleSelector)
+
+    const [isLoadingEnd, setIsLoadingEnd] = useState(false)
 
     const { loadSubmitForm } = useAxios()
 
@@ -160,8 +163,10 @@ function FormViewer() {
     return (
     <FormViewerWrapper>
         <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
-
         {pages.length > 0 ? 
+
+        !isLoadingEnd ? <FormTokLoading setFinish={setIsLoadingEnd} width={window.innerWidth - 300} height={500}/> :
+
         <main>
             {pages[currentIdx] && <>
             <FormCardWrapper className="card viewer active">
@@ -225,9 +230,9 @@ function FormViewer() {
             </>}
         </main> :
         <main>
-            <p>사용할 수 없음.</p>
+            <h1>참여할 수 없는 설문입니다.</h1>
         </main>
-        }
+        } 
 
     </FormViewerWrapper>)
 }
