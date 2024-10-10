@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchForm from "../../Components/SearchForm";
-import axios from "axios";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
+import useAxios from "../../Hooks/useAxios";
 
 const StyledFormList = styled.section`
     padding: var(--pk-viewer-padding);
@@ -73,21 +73,21 @@ function FormList () {
     const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
     const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
 
+    const { loadAllForms } = useAxios()
     const [searchedForms, setSerachedForms] = useState([])
     const [loadForms, setLoadForms] = useState([])
 
     const token = localStorage.getItem('token')
 
     useEffect(() => {
-        const loadAllForms = async () => {
-            const {data} = await axios.get('/form/all-forms')
-            if(data.code === 200){
-                console.log(data.forms)
-                setLoadForms(data.forms)
-                setSerachedForms(data.forms)
+        const loadAllFormAction = async () => {
+            const forms = await loadAllForms()
+            if(forms){
+                setLoadForms(forms)
+                setSerachedForms(forms)
             }
         }
-        loadAllForms()
+        loadAllFormAction()
     }, [])
 
     const search = (word) =>{
@@ -102,10 +102,10 @@ function FormList () {
         if(isNeedLogin){
             if(!token) return alert('로그인이 필요한 설문지 입니다.')
         }
-        if(dayjs(startDate) >= dayjs()){
+        if(startDate && dayjs(startDate) >= dayjs()){
             return alert('참여할 수 있는 기간이 아닙니다.')
         }
-        if(dayjs(endDate) <= dayjs()){
+        if(endDate && dayjs(endDate) <= dayjs()){
             return alert('종료된 설문지입니다.')
         }
         setTitle(title)

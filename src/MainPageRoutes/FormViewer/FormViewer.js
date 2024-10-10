@@ -1,46 +1,82 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleSelector, surveyTitleAtom, surveyListStyleAtom, surveyOptionsAtom } from "../../Recoils/surveyAtoms";
 import {FormCardWrapper} from "../FormEditor/_StyledFormCard"
 import DescriptionEditor from '../../Components/DescriptionEditor'
 import FormViewerWrapper from './_StyledFomViewer'
-import { Link, useParams, useResolvedPath } from "react-router-dom";
+import { Link, useNavigate, useParams, useResolvedPath } from "react-router-dom";
 import ViewerQuestionForm from "./ViewerQuestionForm";
 import { Icon } from "../../Components/Icons";
 import FormViewerHeader from "./FormViewerHeader";
 import classNames from "classnames";
+import useAxios from "../../Hooks/useAxios";
 
 function FormViewer() {
     const {surveyId} = useParams()
     const {pathname} = useResolvedPath()
+
+    const token = localStorage.getItem('token')
+
+    const setTitle = useSetRecoilState(surveyTitleAtom)
+    const setPages = useSetRecoilState(pagesAtom)
+    const setEndingMent = useSetRecoilState(endingMentAtom)
+    const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
+    const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
+
     const pages = useRecoilValue(pagesAtom)
     const endingMent = useRecoilValue(endingMentAtom)
     const [answerBox, setAnswerBox] = useRecoilState(AnswerBoxAtom)
     const getListStyle = useRecoilValue(surveyListStyleSelector)
-    
+
+    const { loadSubmitForm } = useAxios()
+
+    const naviate = useNavigate()
+
     useEffect(() => {
-        let newAnswerBox = pages.reduce((acc, page) => {
-            const {id, questions} = page
-            const newQuestions = questions.reduce((qAcc, question) => {
-                if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
-                    qAcc[question.id] = {start:'', end:''}
+        const loadSubmitFormAction = async () => {
+            const form = await loadSubmitForm(surveyId)
+            if(form.options.isNeedLogin){
+                if(!token){
+                    alert('로그인 후 이용 가능한 설문지 입니다.')
+                    console.log(pages)
+                    return naviate('/form-list')
                 }
-                else if(question.type ==='객관식(복수 선택)'){
-                    qAcc[question.id] = {answer: [], useExtra: false, extra: ''}
-                }
-                else if(question.type ==='객관식'){
-                    qAcc[question.id] = {answer: '', useExtra: false, extra: ''}
-                }
-                else{
-                    qAcc[question.id] = null
-                }
-                return qAcc
-            }, {})
-            acc[id] = {...newQuestions}
-            return acc
-        }, {})
-        setAnswerBox(newAnswerBox)
-    },[pages, setAnswerBox])
+            }
+            if(form){
+                const {title, pages, endingMent, listStyle, options} = form
+                setTitle(title)
+                setPages(pages)
+                setEndingMent(endingMent)
+                setSurveyListStyle(listStyle)
+                setSurveyOptions(options)
+                const newAnswerBox = pages.reduce((acc, page) => {
+                    const {id, questions} = page
+                    const newQuestions = questions.reduce((qAcc, question) => {
+                        if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
+                            qAcc[question.id] = {start:'', end:''}
+                        }
+                        else if(question.type ==='객관식(복수 선택)'){
+                            qAcc[question.id] = {answer: [], useExtra: false, extra: ''}
+                        }
+                        else if(question.type ==='객관식'){
+                            qAcc[question.id] = {answer: '', useExtra: false, extra: ''}
+                        }
+                        else{
+                            qAcc[question.id] = {answer: ''}
+                        }
+                        return qAcc
+                    }, {})
+                    acc[id] = {...newQuestions}
+                    return acc
+                }, {})
+                setAnswerBox(newAnswerBox)  
+            }else{
+                return
+            }
+        }
+
+        loadSubmitFormAction()
+    }, [surveyId, setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions])
 
     const [currentIdx, setCurrentIdx] = useState(0)
     const moveLogs = useRef([0]) // 움직인 기록 남기기
@@ -86,16 +122,24 @@ function FormViewer() {
         setCurrentIdx(pages[currentIdx].next || currentIdx+1)
     }
 
-    const submitAnswer = () => {
-        
-        alert('제출이 완료되었습니다.')
-        moveToNextPage()
+    const { submitAnswer } = useAxios()
+
+    const submitAnswerAction = async () => {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        const userId = userInfo ? userInfo.userId : ''
+        const success = await submitAnswer(userId, surveyId, answerBox)
+
+        if(success){
+            moveToNextPage()
+            setAnswerBox({})
+        }
     }
 
     return (
     <FormViewerWrapper>
         <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
 
+        {pages.length > 0 ? 
         <main>
             {pages[currentIdx] && <>
             <FormCardWrapper className="card viewer active">
@@ -109,15 +153,20 @@ function FormViewer() {
 
             {pages[currentIdx].questions.map((question, qi) => { // 질문
                 const {id, q, d, options, type, scoreRanges, hasExtraOption, essential, setPeriod} = question
+
                 const listStyle = getListStyle(qi)
                 return <FormCardWrapper className="card viewer active" key={id}>
                     <div>
                         <div className={classNames('question-title-box', {essential})}>
                             {listStyle && <span>{listStyle}</span>}
-                            <p className="title-B">{q || '제목 없는 질문'}</p>
+                            <p className="title-B">
+                                {q || '제목 없는 질문'} {type ==='객관식(복수 선택)' && '(복수 선택)'}
+                                </p>
+                            {/* <span>{type ==='객관식(복수 선택)' && '(복수 선택)'}</span> */}
                         </div>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
+                        {Object.keys(answerBox).length > 0 && 
                         <ViewerQuestionForm
                             type={type}
                             options={options}
@@ -125,7 +174,7 @@ function FormViewer() {
                             scoreRanges={scoreRanges} 
                             setPeriod={setPeriod}
                             pageId={pages[currentIdx].id} questionId={id} 
-                        />
+                        />}
                     
                     </div>
                 </FormCardWrapper>
@@ -138,7 +187,7 @@ function FormViewer() {
                 {currentIdx !== pages.length - 1 ?
                     <button className="next" 
                     onClick={moveToNextPage}>다음페이지 <Icon code={'arrow_right_alt'}/></button>
-                    : <button className="next" onClick={submitAnswer}>제출 <Icon code={'arrow_right_alt'}/></button>
+                    : <button className="next" onClick={submitAnswerAction}>제출 <Icon code={'arrow_right_alt'}/></button>
                 }
             </div>
 
@@ -153,7 +202,11 @@ function FormViewer() {
             </FormCardWrapper>
             <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/form-list'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
             </>}
+        </main> :
+        <main>
+            <p>사용할 수 없음.</p>
         </main>
+        }
 
     </FormViewerWrapper>)
 }

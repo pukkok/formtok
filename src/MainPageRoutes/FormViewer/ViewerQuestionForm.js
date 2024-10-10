@@ -64,6 +64,10 @@ function ViewerQuestionForm ({ type, options=[], hasExtraOption, scoreRanges, se
          answerPicks, answerInValue, answerInHTML, answerDateType, answerPeriodValueReset } = useAnswerActions()
     const answerBox = useRecoilValue(AnswerBoxAtom)
 
+    if (!answerBox[pageId]) { // 불러오기 전
+        return <></>
+    }
+
     return (
     <StyledViewerQuestionForm>
         {(type === '객관식' && options.length > 0) && <>
@@ -71,7 +75,7 @@ function ViewerQuestionForm ({ type, options=[], hasExtraOption, scoreRanges, se
                 return (option.answer && <RadioButton 
                     key={option.id} 
                     onClick={() => answerPick(option.answer, pageId, questionId)}
-                    pick={answerBox[pageId][questionId].answer || ''}
+                    pick={answerBox[pageId]?.[questionId]?.answer || ''}
                     >
                     {option.answer}</RadioButton>)
             })}
@@ -121,28 +125,30 @@ function ViewerQuestionForm ({ type, options=[], hasExtraOption, scoreRanges, se
         {(type === '드롭다운' && options.length > 0) && 
         <DropDown initialItem={answerBox[pageId]?.[questionId] || '옵션을 선택해주세요'} style={{width: '260px'}}>
             <li><button onClick={e => answerInHTML(e, pageId, questionId, true)}>옵션을 선택해주세요</button></li>
-            {options.map((option, idx) => {
+            {options.map(option => {
                 return (option.answer && 
                 <li key={option.id}>
                     <button onClick={e => answerInHTML(e, pageId, questionId)}>{option.answer}</button>
                 </li>)
             })}
-        </DropDown>
-        }
+        </DropDown>}
+
         {type === '단답형' && 
         <div className="input-wrapper">
             <input 
             placeholder="답변 입력" 
             onChange={e => answerInValue(e, pageId, questionId)} 
-            value={answerBox[pageId]?.[questionId] || ""}/>
+            value={answerBox[pageId]?.[questionId].answer || ""}/>
         </div>}
+
         {type === '서술형' && 
         <div 
             contentEditable 
             placeholder={'답변 입력(최대 1000자)'}
             onBlur={e => answerInHTML(e, pageId, questionId)} // 입력을 벗어났을때 데이터 저장
-            dangerouslySetInnerHTML={{ __html : answerBox[pageId]?.[questionId] || ""}}
+            dangerouslySetInnerHTML={{ __html : answerBox[pageId]?.[questionId].answer || ""}}
         />}
+        
         {['날짜', '시간', '날짜 + 시간'].includes(type) && 
         <DateTypeInput 
             style={type}
@@ -153,6 +159,7 @@ function ViewerQuestionForm ({ type, options=[], hasExtraOption, scoreRanges, se
             value={answerBox[pageId]?.[questionId]?.start || ""}
             secondValue={answerBox[pageId]?.[questionId]?.end || ""}
         />}
+
         {type === '점수 선택형' && 
         <SelectScore 
             scoreRanges={scoreRanges} 
@@ -342,7 +349,7 @@ function SelectScore ({scoreRanges, pageId, questionId, getScore}) {
                     </li>
                 ))}
                 <span className="ball" 
-                style={{width: (answerBox[pageId]?.[questionId] ? ((answerBox[pageId]?.[questionId] - min) / (max - min) * 100) : 0) + '%'}}></span>
+                style={{width: (answerBox[pageId]?.[questionId].answer ? ((answerBox[pageId]?.[questionId].answer - min) / (max - min) * 100) : 0) + '%'}}></span>
             </ul>
         </StyledSelcetScore>
     )

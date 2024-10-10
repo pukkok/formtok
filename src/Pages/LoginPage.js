@@ -54,7 +54,7 @@ function LoginPage () {
         e.preventDefault()
         const {userId, password} = loginInputs
         const result = await login(userId, password)
-        if(result) navigate('/my-form')
+        if(result) navigate('/my-form/manager')
     }
 
     const idDupCheckAction = async (id) => { // 아이디 중복체크

@@ -52,7 +52,7 @@ function SideBar ({logo}) {
 
     
     const pagesChangeValueCheck = useCallback( () => { // 가장 많이 변할것 같은 데이터 우선순위로 비교
-        if(!originalData) return false // 들어가기 전
+        if(originalData === null) return false // 들어가기 전
         // 변경된 경우 바로 true 리턴
         if (!_.isEqual(pages, originalData.pages)) return true // pages 비교
         if (!_.isEqual(title, originalData.title)) return true // title 비교
@@ -88,11 +88,13 @@ function SideBar ({logo}) {
             setOpenDepth2([...openDepth2, idx])
         }
         setActive({depth1 : idx, depth2: null})
+        setOriginalData(null)
         if(path) return navigate(path)
     }
 
     const depth2Next = (idx2, path) => {
         navigate(path)
+        setOriginalData(null)
         setActive({depth1: null, depth2: idx2})
     }
 
@@ -116,8 +118,11 @@ function SideBar ({logo}) {
 
     const next = () => {
         const {depth1, depth2, path} = temporary
-        if(depth1) depth1Next(depth1, path)
-        else depth2Next(depth2, path)
+        if(depth1){
+            depth1Next(depth1, path)
+        }else{
+            depth2Next(depth2, path)
+        } 
         setOriginalData(null)
         modalRef.current.close()
     }

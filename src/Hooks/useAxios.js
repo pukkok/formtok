@@ -25,24 +25,13 @@ const useAxios = () => {
         }
     }
 
-    // const navigate = useNavigate()
-    // 사용중일 때 토큰 만료시 로그인 페이지로 이동
-    // const expiredTokenCheck = (err) => { 
-    //     if(err.response.data.errName === 'TokenExpiredError'){
-    //         alert('세션이 만료되었습니다. 로그인 페이지로 이동합니다.')
-    //         localStorage.clear()
-    //         console.clear()
-    //         navigate('/user/login')
-    //     }
-    // }
-
     /** 아이디, 패스워드 */
     const login = async (userId, password) => {
         try {
             const { data } = await axios.post("/user/login", { userId, password })
             if (data.code === 200) {
                 const {name, email, userId, token} = data.data
-                console.log(`${name} 로그인`)
+                // console.log(`${name} 로그인`)
                 localStorage.setItem("token", token)
                 localStorage.setItem('userInfo', JSON.stringify({name, email, userId}))
                 return data.data
@@ -227,11 +216,60 @@ const useAxios = () => {
         }
     }
 
+    const loadAllForms = async () => {
+        try{
+            const {data} = await axios.get('/form/all-forms')
+            if(data.code === 200){
+                return data.forms
+            }else{
+                alert('불러올 데이터가 없습니다.')
+                return false
+            }
+        }catch(err){
+            return console.log('전체 설문지 불러오기 실패')
+        }
+    }
+
+    const loadSubmitForm = async (url) => {
+        try{
+            const {data} = await axios.get(`/form/submit-form/?url=${url}`)
+            if(data.code === 200){
+                return data.form
+            }else{
+                alert('설문지 불러오기에 실패했습니다.')
+                return false
+            }
+
+        }catch(err){
+            return console.log('선택한 설문지 불러오기 실패')
+        }
+    }
+
+    const submitAnswer = async (userId, url, answer) => {
+        try{
+            const {data} = await axios.post('/answer/submit', {
+                userId, url, answer
+            })
+            if(data.code === 200){
+                alert(data.msg)
+                return true
+            }else{
+                alert(data.msg)
+                return false
+            }
+        }catch(err){
+            return console.log('설문지 제출 오류')
+        }
+    }
+
     return { 
-        refreshAuthToken,
+        refreshAuthToken, 
         login, join, idDupCheck, sendOtp, verifyOtp,
         createForm, saveForm, copyForm, deleteForm,
         saveQ, 
-        getMyFormList, getMyQuestionList }
+        getMyFormList, getMyQuestionList,
+        loadAllForms, loadSubmitForm,
+        submitAnswer,
+    }
 }
 export default useAxios
