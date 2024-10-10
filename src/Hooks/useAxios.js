@@ -8,6 +8,8 @@ const useAxios = () => {
     const pages = useRecoilValue(pagesAtom)
     const setOriginalData = useSetRecoilState(originalDataAtom)
 
+    const token = localStorage.getItem('token') || ''
+
     const refreshAuthToken = async (oldToken) => {
         try {
             const { data } = await axios.post('/refresh-token', {}, 
@@ -31,7 +33,6 @@ const useAxios = () => {
             const { data } = await axios.post("/user/login", { userId, password })
             if (data.code === 200) {
                 const {name, email, userId, token} = data.data
-                // console.log(`${name} 로그인`)
                 localStorage.setItem("token", token)
                 localStorage.setItem('userInfo', JSON.stringify({name, email, userId}))
                 return data.data
@@ -167,7 +168,7 @@ const useAxios = () => {
             {headers : {'Authorization' : `Bearer ${token}`}}
             )
             if(data.code === 200){
-                console.log('삭제 완료')
+                console.log('설문지 삭제 완료')
                 return true
             }else{
                 console.log(data.msg)
@@ -232,11 +233,13 @@ const useAxios = () => {
 
     const loadSubmitForm = async (url) => {
         try{
-            const {data} = await axios.get(`/form/submit-form/?url=${url}`)
+            const {data} = await axios.post(`/form/submit-form/?url=${url}`, {},
+                {headers : {'Authorization' : `Bearer ${token}`}}
+            )
             if(data.code === 200){
-                return data.form
+                return data
             }else{
-                alert('설문지 불러오기에 실패했습니다.')
+                alert(data.msg)
                 return false
             }
 
@@ -245,11 +248,11 @@ const useAxios = () => {
         }
     }
 
-    const submitAnswer = async (userId, url, answer) => {
+    const submitAnswer = async (url, answer) => {
         try{
-            const {data} = await axios.post('/answer/submit', {
-                userId, url, answer
-            })
+            const {data} = await axios.post(`/answer/submit/?url=${url}`, 
+                {answer},
+                {headers : {'Authorization' : `Bearer ${token}`}})
             if(data.code === 200){
                 alert(data.msg)
                 return true

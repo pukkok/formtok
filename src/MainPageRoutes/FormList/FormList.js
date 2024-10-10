@@ -3,9 +3,10 @@ import styled from "styled-components";
 import SearchForm from "../../Components/SearchForm";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
 import useAxios from "../../Hooks/useAxios";
+import { Icon } from "../../Components/Icons";
+import { useSetRecoilState } from "recoil";
+import { pagesAtom } from "../../Recoils/surveyAtoms";
 
 const StyledFormList = styled.section`
     padding: var(--pk-viewer-padding);
@@ -38,7 +39,7 @@ const StyledFormList = styled.section`
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-
+            position: relative;
             &:hover{
                 background-color: var(--pk-survey-card-hover);
             }
@@ -62,27 +63,43 @@ const StyledFormList = styled.section`
                 }
             }
 
+            button{
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                padding: 5px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover{
+                    background-color: var(--pk-point);
+                    span{
+                        color: #fff;
+                    }
+                }
+                span{
+                    color: var(--pk-modal-font);
+                }
+            }
         }
     }
 `
 
 function FormList () {
-    const setTitle = useSetRecoilState(surveyTitleAtom)
-    const setPages = useSetRecoilState(pagesAtom)
-    const setEndingMent = useSetRecoilState(endingMentAtom)
-    const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
-    const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
 
     const { loadAllForms } = useAxios()
     const [searchedForms, setSerachedForms] = useState([])
     const [loadForms, setLoadForms] = useState([])
-
+    const setPages = useSetRecoilState(pagesAtom)
     const token = localStorage.getItem('token')
+    const naviate = useNavigate()
 
     useEffect(() => {
         const loadAllFormAction = async () => {
             const forms = await loadAllForms()
             if(forms){
+                setPages([]) // 초기화
                 setLoadForms(forms)
                 setSerachedForms(forms)
             }
@@ -95,25 +112,18 @@ function FormList () {
         setSerachedForms(filteredForms)
     }
 
-    const naviate = useNavigate()
-
-    const goToView = (url, title, pages, endingMent, listStyle, options) => {
-        const {isNeedLogin, startDate, endDate} = options
+    const goToView = (url, options) => {
+        const {isNeedLogin} = options
         if(isNeedLogin){
             if(!token) return alert('로그인이 필요한 설문지 입니다.')
         }
-        if(startDate && dayjs(startDate) >= dayjs()){
-            return alert('참여할 수 있는 기간이 아닙니다.')
-        }
-        if(endDate && dayjs(endDate) <= dayjs()){
-            return alert('종료된 설문지입니다.')
-        }
-        setTitle(title)
-        setPages(pages)
-        setEndingMent(endingMent)
-        setSurveyListStyle(listStyle)
-        setSurveyOptions(options)
         naviate(`/view/${url}`)
+    }
+
+    const linkOpen = (e, url) => {
+        e.stopPropagation()
+        navigator.clipboard.writeText(`${origin}/view/${url}`)
+        alert('링크가 복사되었습니다.')
     }
 
     return (
@@ -122,17 +132,17 @@ function FormList () {
 
             <div className="template-box">
                 {searchedForms.length > 0 && searchedForms.map((form, idx) => {
-                    const {title, url, pages, endingMent, listStyle, options} = form
+                    const {title, url, pages, options, numberOfResponses} = form
                     const allQuetinoCount = pages.reduce((acc, currentPage) => acc += currentPage.questions.length, 0)
                     const {startDate, endDate, maximumCount, isNeedLogin} = options
 
                     return <div key={url} className="card">
-                        <div className="form-box" onClick={() => goToView(url, title, pages, endingMent, listStyle, options)}>
+                        <div className="form-box" onClick={() => goToView(url, options)}>
                             <h4>{title}</h4>
                             <div className="info">
                                 <p>로그인 : {isNeedLogin ? '필요' : '필요 없음'}</p>
                                 <p>총 문항 수 : {allQuetinoCount}</p>
-                                <p>인원 : {0} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
+                                <p>참여 : {numberOfResponses.length || 0} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
                                 <p>기간 : {startDate ? <> 
                                     {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
                                     <span> ~ </span>  
@@ -142,6 +152,7 @@ function FormList () {
                                     }
                                 </p>
                             </div>
+                        <button className="link" onClick={e => linkOpen(e, url)}><Icon code={'share'}/></button>
                         </div>
                     </div>
                 })}

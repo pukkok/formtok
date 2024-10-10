@@ -15,8 +15,6 @@ function FormViewer() {
     const {surveyId} = useParams()
     const {pathname} = useResolvedPath()
 
-    const token = localStorage.getItem('token')
-
     const setTitle = useSetRecoilState(surveyTitleAtom)
     const setPages = useSetRecoilState(pagesAtom)
     const setEndingMent = useSetRecoilState(endingMentAtom)
@@ -30,18 +28,35 @@ function FormViewer() {
 
     const { loadSubmitForm } = useAxios()
 
-    const naviate = useNavigate()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        if(pathname.includes('preview')){
+            const newAnswerBox = pages.reduce((acc, page) => {
+                const {id, questions} = page
+                const newQuestions = questions.reduce((qAcc, question) => {
+                    if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
+                        qAcc[question.id] = {start:'', end:''}
+                    }
+                    else if(question.type ==='객관식(복수 선택)'){
+                        qAcc[question.id] = {answer: [], useExtra: false, extra: ''}
+                    }
+                    else if(question.type ==='객관식'){
+                        qAcc[question.id] = {answer: '', useExtra: false, extra: ''}
+                    }
+                    else{
+                        qAcc[question.id] = {answer: ''}
+                    }
+                    return qAcc
+                }, {})
+                acc[id] = {...newQuestions}
+                return acc
+            }, {})
+            return setAnswerBox(newAnswerBox)  
+        }
         const loadSubmitFormAction = async () => {
-            const form = await loadSubmitForm(surveyId)
-            if(form.options.isNeedLogin){
-                if(!token){
-                    alert('로그인 후 이용 가능한 설문지 입니다.')
-                    console.log(pages)
-                    return naviate('/form-list')
-                }
-            }
+            const {form, submittedAnswer} = await loadSubmitForm(surveyId)
+            
             if(form){
                 const {title, pages, endingMent, listStyle, options} = form
                 setTitle(title)
@@ -49,6 +64,9 @@ function FormViewer() {
                 setEndingMent(endingMent)
                 setSurveyListStyle(listStyle)
                 setSurveyOptions(options)
+                if(submittedAnswer){
+                    return setAnswerBox(submittedAnswer)
+                }
                 const newAnswerBox = pages.reduce((acc, page) => {
                     const {id, questions} = page
                     const newQuestions = questions.reduce((qAcc, question) => {
@@ -71,7 +89,7 @@ function FormViewer() {
                 }, {})
                 setAnswerBox(newAnswerBox)  
             }else{
-                return
+                return navigate('/form-list')
             }
         }
 
@@ -124,11 +142,15 @@ function FormViewer() {
 
     const { submitAnswer } = useAxios()
 
-    const submitAnswerAction = async () => {
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-        const userId = userInfo ? userInfo.userId : ''
-        const success = await submitAnswer(userId, surveyId, answerBox)
+    const submitAnswerAction = async () => { // 답변 제출
+        if(pathname.includes('preview')){
+            alert('설문이 제출되었습니다.(미리보기 종료)')
+            moveToNextPage()
+            setAnswerBox({})
+            return 
+        } 
 
+        const success = await submitAnswer(surveyId, answerBox)
         if(success){
             moveToNextPage()
             setAnswerBox({})
@@ -162,7 +184,6 @@ function FormViewer() {
                             <p className="title-B">
                                 {q || '제목 없는 질문'} {type ==='객관식(복수 선택)' && '(복수 선택)'}
                                 </p>
-                            {/* <span>{type ==='객관식(복수 선택)' && '(복수 선택)'}</span> */}
                         </div>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
