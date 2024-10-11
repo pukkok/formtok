@@ -214,6 +214,29 @@
        },
    })
    ```
+
+### 5. 로그인 페이지로 바로접속시 페이지를 벗어나는 문제
+   - 처음엔 navigate(-1)을 사용하고있었다.
+   - 만약에 로그인페이지로 갑자기 들어오는 경우의 수가 떠올랐다.
+   - 이문제를 해결하기위해 useNavigate와 useLocation을 사용하여 구현하였다.
+
+   #### 로그인 페이지로 이동하는 곳에서의 함수
+   ```
+   ()=>navigate('/user/login', {state : { from: location.pathname }})
+   ```
+
+   #### 로그인 후 이동하는 페이지의 함수
+   ```
+   const loginAction = async (e) => { // 로그인
+        e.preventDefault()
+        const {userId, password} = loginInputs
+        const result = await login(userId, password)
+        if (result) {
+            location.state?.from ? navigate(location.state?.from) : navigate('/')
+        }
+    }
+   ```
+
 <br>
 
 ## 서버는?
