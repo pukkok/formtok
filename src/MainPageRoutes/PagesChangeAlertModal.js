@@ -36,7 +36,7 @@ const StyledModal = styled.dialog`
                 &:nth-child(1){
                     background-color: #ff6961;
                 }
-                background-color: #77dd77;
+                background-color: var(--pk-point-hover);
 
                 &:hover{
                     background-image: linear-gradient(rgba(0,0,0, .1), rgba(0,0,0, .1));
