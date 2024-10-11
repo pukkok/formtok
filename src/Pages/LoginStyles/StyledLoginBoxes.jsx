@@ -16,14 +16,18 @@ const StyledLargeBox = styled.div`
     border-top: 5px solid var(--pk-point);
     z-index: 1;
 
-    button.home{
-        &:hover{
-            transition: .2s;
-            scale: 1.1;
-        }
-        span{
-            color: var(--pk-point);
-            font-size: 28px;
+    header{
+        display: flex;
+        justify-content: space-between;
+        button.home, button.back{
+            &:hover{
+                transition: .2s;
+                scale: 1.1;
+            }
+            span{
+                color: var(--pk-point);
+                font-size: 28px;
+            }
         }
     }
 
@@ -175,9 +179,14 @@ function LargeBox ({className, children}) {
     const navigate = useNavigate()
     return(
         <StyledLargeBox className={className}>
-            <button className="home" onClick={()=>navigate('/')}>
-                <Icon code={'home'}/>
-            </button>
+            <header>
+                <button className="back" onClick={()=>navigate(-1)}>
+                    <Icon code={'arrow_back'}/>
+                </button>
+                <button className="home" onClick={()=>navigate('/')}>
+                    <Icon code={'home'}/>
+                </button>
+            </header>
             {children}
         </StyledLargeBox>
     )

@@ -23,6 +23,7 @@ function FormManager () {
     const [myForms, setMyForms] = useState([]) // 전체 데이터
     const [searchedForms, setSerachedForms] = useState([]) // 초기 데이터
 
+
     // custom hooks
     const { getMyFormList, copyForm, deleteForm } = useAxios()
     const { loadPages } = usePageActions() 
@@ -55,10 +56,7 @@ function FormManager () {
         naviate(`/my-form/edit/${url}`)
     }
     
-    const search = (word) =>{
-        const filteredForms = myForms.filter(form => form.title.includes(word))
-        setSerachedForms(filteredForms)
-    }
+    
 
     const copyFormAction = async (e, url, token) => {
         e.stopPropagation()
@@ -86,37 +84,71 @@ function FormManager () {
         }
     }
 
-    const testlayouts = [ // 임시 틀 데이터
-        {count: '응답 72', light: 'stop'},
-        {count: '응답 10', light: 'making'},
-        {count: '응답 100', light: 'stop'},
-        {count: '응답 25', light: 'ready' },
-        {count: '응답 80', light: 'ready'},
-        {count: '응답 120', light: 'working'},
-        {count: '응답 110', light: 'working'},
-        {count: '응답 60',   light: 'green'},
-        {count: '응답 40',   light: 'green'},
-        {count: '응답 80',   light: 'green'},
-        {count: '응답 20',  },
-    ]
+    const lightCheck = (isOpen, isEnd, isUseStartPeriod, startDate, endDate ) => {
+        const now = dayjs()
+        const start = startDate ? dayjs(startDate) : null
+        const end = endDate ? dayjs(endDate) : null
+        if(isEnd) return 'stop' // 설문 종료
+        if(!isOpen) return 'making' // 설문게시 전
+        if(!isUseStartPeriod || start?.isBefore(now) && end?.isAfter(now)) return 'working'
+        if(start?.isAfter(now)) return 'ready'
+        if(end?.isBefore(now)) return 'stop'
+        return ''
+    }
 
-    
+    const [active, setActive] = useState(null)
+    const search = (word) =>{
+        const filteredForms = myForms.filter(form => form.title.includes(word))
+        setActive(null)
+        setSerachedForms(filteredForms)
+    }
+
+    const filtering = (work) => {
+        setActive(work)
+        if(!work) return setSerachedForms(myForms)
+        const filteredForms = myForms.filter(form => {
+            const { isOpen, isEnd, isUseStartPeriod, startDate, endDate } = form.options
+            return work === lightCheck(isOpen, isEnd, isUseStartPeriod, startDate, endDate)
+        })
+        setSerachedForms(filteredForms)
+    }
+
+    const filters = [
+        {work : null, text: '전체'},
+        {work : 'making', text: '작성 중'},
+        {work : 'ready', text: '설문 시작 전'},
+        {work : 'working', text: '설문 진행 중'},
+        {work : 'stop', text: '설문 종료'}
+    ]
 
     return (
         <SurveyManagerWrapper>
-            <SearchForm placeholder="제목으로 검색" handleClick={search}/>
             
+            <header>
+            <SearchForm placeholder="제목으로 검색" handleClick={search}/>
+
+            <div>
+                {filters.map(filter => {
+                    const {work, text} = filter
+                    return <button 
+                        key={text} 
+                        className={classNames(work, {active: active === work})}
+                        onClick={() => filtering(work)}
+                    >{text}</button>
+                })}
+            </div>
+            </header>
+
             <div className="template-box">
                 <div className="card">
                     <button className="create-survey-button" onClick={openModal}>
                         <AddCircleIcon/>
                     </button>
                 </div>
-                {searchedForms.length > 0 && searchedForms.map((form, idx) => {
-                    const {title, url, pages, endingMent, listStyle, options} = form
-                    const {startDate, endDate, maximumCount} = options
-                    //임시
-                    const {count, light} = testlayouts[idx]
+                {searchedForms.length > 0 && searchedForms.map(form => {
+                    const {title, url, pages, endingMent, listStyle, options, numberOfResponses} = form
+                    const {isOpen, isEnd, isUseStartPeriod, startDate, endDate, maximumCount} = options
+                    const light = lightCheck(isOpen, isEnd, isUseStartPeriod, startDate, endDate)
                     return <div key={url} className="card">
                         <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent, listStyle, options)}>
                             <div className="form-status">
@@ -126,7 +158,7 @@ function FormManager () {
                             </div>
                             <h4>{title}</h4>
                             <div className="info">
-                                <p>{count} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
+                                <p>참여 {numberOfResponses.length || 0} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
                                 <p>{startDate ? <> 
                                     {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
                                     <span> ~ </span>  

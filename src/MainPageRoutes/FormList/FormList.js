@@ -7,11 +7,48 @@ import useAxios from "../../Hooks/useAxios";
 import { Icon } from "../../Components/Icons";
 import { useSetRecoilState } from "recoil";
 import { pagesAtom } from "../../Recoils/surveyAtoms";
+import classNames from "classnames";
 
 const StyledFormList = styled.section`
     padding: var(--pk-viewer-padding);
     margin: 0 auto;
-    max-width: var(--pk-board-container);
+    /* max-width: var(--pk-board-container); */
+
+    header{
+        div{
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            
+            button {
+                padding: 8px 16px;
+                border-radius: 12px;
+                background-color: var(--pk-charcoal);
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                color: var(--pk-dark-grey);
+
+                &:hover, &.active {
+                    background-color: var(--pk-point);
+                    color: #fff;
+                    &.stop{
+                        background-color: #ff6961;
+                    }
+                    &.noLogin{
+                        background-color: #ffd700;
+                    }
+                    &.working{
+                        background-color: #77dd77;
+                    }
+                    &.faq{
+                        background-color: #779ecb;
+                    }
+                }
+            }
+        }
+    }
+
 
     .template-box{
         margin-top: 30px;
@@ -108,10 +145,7 @@ function FormList () {
         loadAllFormAction()
     }, [])
 
-    const search = (word) =>{
-        const filteredForms = loadForms.filter(form => form.title.includes(word))
-        setSerachedForms(filteredForms)
-    }
+    
 
     const goToView = (url, options) => {
         const {isNeedLogin} = options
@@ -127,12 +161,71 @@ function FormList () {
         alert('링크가 복사되었습니다.')
     }
 
+    const [active, setActive] = useState('working')
+    const search = (word) =>{
+        const filteredForms = loadForms.filter(form => form.title.includes(word))
+        setActive(null)
+        setSerachedForms(filteredForms)
+    }
+
+    const filtering = (work) => {
+        setActive(work)
+        if(!work) return setSerachedForms(loadForms)
+        if(work==='faq') return setSerachedForms([loadForms.find(form => form.title === '문의하기')])
+
+        const now = dayjs()
+        const filteredForms = loadForms.filter(form => {
+            const {isNeedLogin, isEnd, isuseStartPeriod, startDate, endDate} = form.options
+            const start = startDate ? dayjs(startDate) : null
+            const end = endDate ? dayjs(endDate) : null
+            switch (work) {
+                case 'stop':
+                    // 종료된 설문 (설문이 끝났거나, 종료일이 현재보다 이전인 경우)
+                    return isEnd || (end && end.isBefore(now))
+    
+                case 'working':
+                    // 진행 중인 설문 (시작일이 현재보다 이전이고, 종료일이 현재보다 이후인 경우)
+                    return !isEnd && (!isuseStartPeriod || (start?.isBefore(now) && end?.isAfter(now)))
+    
+                case 'noLogin':
+                    // 비로그인 가능 설문
+                    return !isNeedLogin
+    
+                default:
+                    return false
+            }
+        })
+        setSerachedForms(filteredForms)
+    }
+
+    const filters = [
+        {work : null, text: '전체'},
+        {work : 'faq', text: 'FAQ'},
+        {work : 'noLogin', text: '비로그인'},
+        {work : 'working', text: '진행중인 설문'},
+        {work : 'stop', text: '종료된 설문'}
+    ]
+    
+
     return (
         <StyledFormList>
+            <header>
             <SearchForm placeholder="제목으로 검색" handleClick={search}/>
+            <div>
+                {filters.map(filter => {
+                    const {work, text} = filter
+                    return <button 
+                        key={text} 
+                        className={classNames(work, {active: active === work})}
+                        onClick={() => filtering(work)}
+                    >{text}</button>
+                })}
+            </div>
+            </header>
+
 
             <div className="template-box">
-                {searchedForms.length > 0 && searchedForms.map((form, idx) => {
+                {searchedForms.length > 0 && searchedForms.map(form => {
                     const {title, url, pages, options, numberOfResponses} = form
                     const allQuetinoCount = pages.reduce((acc, currentPage) => acc += currentPage.questions.length, 0)
                     const {startDate, endDate, maximumCount, isNeedLogin} = options

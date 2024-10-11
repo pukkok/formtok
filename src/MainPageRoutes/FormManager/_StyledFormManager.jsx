@@ -3,6 +3,42 @@ import styled from "styled-components";
 const SurveyManagerWrapper = styled.section`
     padding: var(--pk-viewer-padding);
     margin: 0px auto;
+
+    header{
+        div{
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            
+            button {
+                padding: 8px 16px;
+                border-radius: 12px;
+                background-color: var(--pk-charcoal);
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                color: var(--pk-dark-grey);
+
+                &:hover, &.active {
+                    background-color: var(--pk-point);
+                    color: #fff;
+                    &.stop{
+                        background-color: #ff6961;
+                    }
+                    &.ready{
+                        background-color: #ffd700;
+                    }
+                    &.working{
+                        background-color: #77dd77;
+                    }
+                    &.making{
+                        background-color: #779ecb;
+                    }
+                }
+            }
+        }
+    }
+
     .template-box{
         margin-top: 30px;
         display: grid;
@@ -48,18 +84,17 @@ const SurveyManagerWrapper = styled.section`
                     border-radius: 50%;
 
                     &.stop{
-                        background-color: #d1180b;
+                        background-color: #ff6961;
                     }
                     &.ready{
-                        background-color: #ffd900;
+                        background-color: #ffd700;
                     }
                     &.working{
-                        background-color: #599468;
+                        background-color: #77dd77;
                     }
                     &.making{
-                        background-color: #0020c2;
+                        background-color: #779ecb;
                     }
-                    background-color: #666a73;
                 }
 
                 button{

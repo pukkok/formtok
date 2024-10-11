@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import styled from "styled-components";
 import useAxios from "../../Hooks/useAxios";
 import usePageActions from "../../Hooks/usePageActions";
-import { endingMentAtom, randomUrl, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
+import { endingMentAtom, originalDataAtom, randomUrl, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
@@ -74,6 +74,7 @@ function CreateFormModal ({token}, ref) {
     const setEndingMent = useSetRecoilState(endingMentAtom)
     const setSurveyListStyle = useSetRecoilState(surveyListStyleAtom)
     const setSurveyOptions = useSetRecoilState(surveyOptionsAtom)
+    const setOriginalData = useSetRecoilState(originalDataAtom)
 
     const naviate = useNavigate()
     const [createTitle, setCreateTitle] = useState('')
@@ -106,6 +107,13 @@ function CreateFormModal ({token}, ref) {
             setEndingMent({title: '', description: ''})
             setSurveyListStyle(null)
             setSurveyOptions(newOptions)
+            setOriginalData({
+                title: createTitle, 
+                pages: newPages, 
+                endingMent: {title: '', description: ''}, 
+                listStyle: null, 
+                options: newOptions
+            })
             naviate(`/my-form/edit/${url}`)
         }
 
