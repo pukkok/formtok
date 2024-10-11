@@ -164,8 +164,9 @@ function FormViewer() {
     <FormViewerWrapper>
         <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
         {pages.length > 0 ? 
-
-        !isLoadingEnd ? <FormTokLoading setFinish={setIsLoadingEnd} width={window.innerWidth - 300} height={500}/> :
+        
+        !isLoadingEnd ? 
+        <FormTokLoading setFinish={setIsLoadingEnd} width={window.innerWidth - 300} height={500}/> :
 
         <main>
             {pages[currentIdx] && <>
@@ -229,9 +230,7 @@ function FormViewer() {
             <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/form-list'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
             </>}
         </main> :
-        <main>
-            <h1>참여할 수 없는 설문입니다.</h1>
-        </main>
+        <main></main>
         } 
 
     </FormViewerWrapper>)
