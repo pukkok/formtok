@@ -1,4 +1,3 @@
-// src/components/Footer.js
 import React from 'react';
 import styled from 'styled-components';
 
@@ -30,18 +29,18 @@ const StyledFooter = styled.footer`
             }
         }
     }
-`;
+`
 
 function HomeFooter() {
     return (
         <StyledFooter>
-            <p>&copy; {new Date().getFullYear()} Whale Form. Powered By Pukkok.</p>
+            <p>&copy; {new Date().getFullYear()} FormTok. Powered By Pukkok.</p>
             <div className="social-links">
                 <a href="https://github.com/pukkok" target="_blank" rel="noopener noreferrer">Github</a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
             </div>
         </StyledFooter>
-    );
+    )
 }
 
-export default HomeFooter;
+export default HomeFooter

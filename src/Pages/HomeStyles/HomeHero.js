@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import hero from '../../Imgs/billboard-character - copy.png'
 import hero from '../../Imgs/second-board.png'
 import cloud from '../../Imgs/clouds.png'
 import useSwitchPage from '../../Hooks/useSwitchPage';
