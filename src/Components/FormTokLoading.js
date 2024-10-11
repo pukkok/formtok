@@ -57,6 +57,7 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
         }
 
         let animationFrameId
+        let accel = 0
         let isCollision = false
         let smallBarStarted = false
         let midBarStarted = false
@@ -78,13 +79,16 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
             const { size, color } = balloon
             let currentX = balloon.x
             if (balloon.x < canvas.width / 2) {
-                balloon.x += balloon.speed
+                balloon.x += accel
                 balloon.size += 0.5
+                if(accel < 10){
+                    accel+= 0.4
+                }
             }
             if(currentX === balloon.x) {
                 setTimeout(() => {
                     isCollision = true
-                }, 200)
+                }, 500)
             }
 
             ctx.fillStyle = color
@@ -104,8 +108,8 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
         function drawSmallBalloon(balloon) {
             const { size, color } = balloon
             if (balloon.x > canvas.width / 2) {
-                balloon.x -= balloon.speed
-                balloon.size += 1
+                balloon.x -= accel 
+                balloon.size += .8
             }
 
             ctx.fillStyle = color
@@ -174,6 +178,8 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
             if(isFinish){
                 cancelAnimationFrame(animationFrameId)
                 setFinish && setFinish(true)
+
+                console.log(bigBalloon.x, smallBalloon.x)
             }
         }
 

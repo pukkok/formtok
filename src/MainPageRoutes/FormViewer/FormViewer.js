@@ -11,6 +11,7 @@ import FormViewerHeader from "./FormViewerHeader";
 import classNames from "classnames";
 import useAxios from "../../Hooks/useAxios";
 import FormTokLoading from "../../Components/FormTokLoading";
+import { gridAtom } from "../../Recoils/screenAtom";
 
 function FormViewer() {
     const {surveyId} = useParams()
@@ -28,10 +29,11 @@ function FormViewer() {
     const getListStyle = useRecoilValue(surveyListStyleSelector)
 
     const [isLoadingEnd, setIsLoadingEnd] = useState(false)
+    const grid = useRecoilValue(gridAtom) // 화면 비율에 맞춰서 로딩 이미지 중앙에 배치
 
     const { loadSubmitForm } = useAxios()
-
     const navigate = useNavigate()
+
 
     useEffect(() => {
         if(pathname.includes('preview')){
@@ -160,6 +162,8 @@ function FormViewer() {
         }
     }
 
+
+
     return (
     <FormViewerWrapper>
         <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
@@ -167,7 +171,7 @@ function FormViewer() {
         
         !pathname.includes('preview') &&
         !isLoadingEnd ? 
-        <FormTokLoading setFinish={setIsLoadingEnd} width={window.innerWidth - 300} height={500}/> :
+        <FormTokLoading setFinish={setIsLoadingEnd} width={window.innerWidth - grid} height={500}/> :
 
         <main>
             {pages[currentIdx] && <>

@@ -90,7 +90,7 @@ function FormManager () {
         const end = endDate ? dayjs(endDate) : null
         if(isEnd) return 'stop' // 설문 종료
         if(!isOpen) return 'making' // 설문게시 전
-        if(!isUseStartPeriod || start?.isBefore(now) && end?.isAfter(now)) return 'working'
+        if(!isUseStartPeriod || start?.isBefore(now) && end?.isAfter(now) || !end) return 'working'
         if(start?.isAfter(now)) return 'ready'
         if(end?.isBefore(now)) return 'stop'
         return ''
@@ -146,9 +146,11 @@ function FormManager () {
                     </button>
                 </div>
                 {searchedForms.length > 0 && searchedForms.map(form => {
-                    const {title, url, pages, endingMent, listStyle, options, numberOfResponses} = form
+                    const {title, url, pages, endingMent, listStyle, options, numberOfResponses, createdAt, lastModifiedAt} = form
+                    // console.log(form)
                     const {isOpen, isEnd, isUseStartPeriod, startDate, endDate, maximumCount} = options
                     const light = lightCheck(isOpen, isEnd, isUseStartPeriod, startDate, endDate)
+                    
                     return <div key={url} className="card">
                         <div className="form-box" onClick={() => goToLoadForm(title, url, pages, endingMent, listStyle, options)}>
                             <div className="form-status">
@@ -158,7 +160,9 @@ function FormManager () {
                             </div>
                             <h4>{title}</h4>
                             <div className="info">
-                                <p>참여 {numberOfResponses.length || 0} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
+                                <p>생성일 | {dayjs(createdAt).format('YYYY-MM-DD')} </p>
+                                <p>마지막 수정일 | {dayjs(lastModifiedAt).format('YYYY-MM-DD')}</p>
+                                {/* <p>참여 {numberOfResponses.length || 0} | {maximumCount ? `최대 ${maximumCount}`: '제한 없음' }</p>
                                 <p>{startDate ? <> 
                                     {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '기간 제한 없음'}
                                     <span> ~ </span>  
@@ -166,7 +170,7 @@ function FormManager () {
                                     </> :
                                     '기간 제한 없음'
                                     }
-                                </p>
+                                </p> */}
                             </div>
                         </div>
                     </div>

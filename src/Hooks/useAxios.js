@@ -136,6 +136,7 @@ const useAxios = () => {
                     return prev = {...prev, title, endingMent, pages, listStyle, options}
                 })
                 alert('성공적으로 저장 되었습니다.')
+                return true
             }else{
                 console.log(data.msg)
             }
