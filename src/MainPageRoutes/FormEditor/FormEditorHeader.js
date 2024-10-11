@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../../Hooks/useAxios";
+import MoveToLoginPageModal from "./MoveToLoginPageModal";
 
 const FormHeaderWrapper = styled.header`
     position: sticky;
@@ -33,7 +34,7 @@ const FormHeaderWrapper = styled.header`
         }
     }
 
-    button{
+    & > button{
         background-color: var(--pk-point);
         color: var(--pk-light-grey);
 
@@ -44,7 +45,8 @@ const FormHeaderWrapper = styled.header`
     }
 `
 
-function FormHeader ({token}) {
+
+function FormHeader () {
     const { surveyId } = useParams()
     const pages = useRecoilValue(pagesAtom)
     const [title, setTitle] = useRecoilState(surveyTitleAtom)
@@ -54,10 +56,21 @@ function FormHeader ({token}) {
     const { saveForm } = useAxios() 
     const navigate = useNavigate()
 
+    const modalRef = useRef(null)
+
+    const saveFormAction = async () => {
+        let success = await saveForm(surveyId, title, pages, endingMent, surveyListStyle, surveyOptions)
+        if(!success){
+            modalRef.current.showModal()
+        }
+    }
+
     return <FormHeaderWrapper>
         <input onChange={e =>setTitle(e.target.value)} placeholder="제목없는 설문지" value={title}/>
         <button onClick={()=>navigate(`/my-form/preview/${surveyId}`)}>미리보기</button>
-        <button onClick={()=>saveForm(surveyId, title, pages, endingMent, surveyListStyle, surveyOptions, token)}>저장</button>        
+        <button onClick={saveFormAction}>저장</button>        
+
+        <MoveToLoginPageModal ref={modalRef}/>
     </FormHeaderWrapper>
 }
 

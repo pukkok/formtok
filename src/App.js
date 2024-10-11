@@ -17,6 +17,7 @@ import whiteModeLogo from './Imgs/formtok-logo.png'
 import darkModeLogo from './Imgs/formtok-logo-white.png'
 import { useState, useEffect } from 'react';
 import FormTokLoading from './Components/FormTokLoading';
+import FormResult from './MainPageRoutes/FormResult/FormResult';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
             <Route path='edit/:surveyId' element={<FormEditor/>}/>
             <Route path='preview/:surveyId' element={<FormViewer/>}/>
             <Route path='questions' element={<MyQuestions/>}/>
+            <Route path='result' element={<FormResult/>}/>
           </Route>
           <Route path='view/:surveyId' element={<FormViewer/>}/>
           <Route path='/form-list' element={<FormList/>}/>

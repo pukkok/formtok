@@ -33,7 +33,6 @@ const FormEditorWrapper = styled.section`
 function FormEditor () {
     const pages = useRecoilValue(pagesAtom)
     const activeCard = useRecoilValue(activeCardAtom)
-    const token = localStorage.getItem('token')
     const { whereIsNextPage } = usePageActions()
 
     useEffect(() => {
@@ -54,7 +53,7 @@ function FormEditor () {
     <FormEditorWrapper>
         {/* 상단 헤더 */}
         <main>
-            <FormHeader token={token}/>
+            <FormHeader />
             <div className="card-box">
             {pages.map((page, pi) => {
                 const {id, questions} = page
@@ -90,7 +89,7 @@ function FormEditor () {
         </main>
 
         {/* 오른쪽 네비게이션 */}
-        <FormNav token={token}/>
+        <FormNav/>
     </FormEditorWrapper>)
 }
 

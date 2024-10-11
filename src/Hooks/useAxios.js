@@ -125,7 +125,7 @@ const useAxios = () => {
         }
     }
 
-    const saveForm = async (url, title, pages, endingMent, listStyle, options, token) => {
+    const saveForm = async (url, title, pages, endingMent, listStyle, options) => {
         try{
             const { data } = await axios.post('/form/edit', 
             { url, title, endingMent, pages, listStyle, options},
@@ -140,7 +140,10 @@ const useAxios = () => {
                 console.log(data.msg)
             }
         } catch (error) {
-            console.log('설문지 저장 오류 발생')
+            // console.log('설문지 저장 오류 발생')
+            if(error.response.status === 401){ // 권한 없음
+                return false
+            }
         }
     }
 
@@ -178,7 +181,7 @@ const useAxios = () => {
         }
     }
 
-    const saveQ = async (pi, qi, token) => {
+    const saveQ = async (pi, qi) => { // 질문 저장
         const question = pages[pi].questions[qi]
         const id = randomKey()
         const {q, d: description, type, options, hasExtraOption} = question

@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledModal = styled.dialog`
@@ -14,7 +15,7 @@ const StyledModal = styled.dialog`
 
         display: flex;
         flex-direction: column;
-    
+
         h5{
             font-size: 17px;
             line-height: 1.6;
@@ -31,7 +32,7 @@ const StyledModal = styled.dialog`
             button{
                 border-radius: 8px;
                 padding: 6px 16px;
-                color: #fff;
+                color: var(--pk-light-grey);
                 font-weight: bold;
                 &:nth-child(1){
                     background-color: #ff6961;
@@ -43,24 +44,24 @@ const StyledModal = styled.dialog`
                 }
             }
         }
-    
     }
 `
 
-function PagesChangeAlertModal ({next}, ref) {
+function MoveToLoginPageModal({}, ref) {
+    const naviate = useNavigate()
 
     return (
-        <StyledModal ref={ref}>
-            <div>  
-                <h5>작성 중 변경된 사항이 있습니다. <br/>
-                저장 하지 않고 나가시겠습니까? </h5>
-                <div className="btns">
-                    <button onClick={() => ref.current.close()}>아니오</button>
-                    <button onClick={next || null}>예</button>
-                </div>
+    <StyledModal ref={ref}>
+        <div>
+            <h5>로그인 후 이용 가능합니다. <br/>
+            로그인 페이지로 이동하시겠습니까?</h5>
+            <div className="btns">
+                <button onClick={() => ref.current.close()}>아니오</button>
+                <button onClick={()=>naviate('/user/login')}>예</button>
             </div>
-        </StyledModal>
+        </div>
+    </StyledModal>
     )
 }
 
-export default forwardRef(PagesChangeAlertModal)
+export default forwardRef(MoveToLoginPageModal)

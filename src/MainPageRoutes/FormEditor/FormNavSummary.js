@@ -10,7 +10,7 @@ import useAxios from "../../Hooks/useAxios"
 import { modeAtom } from "../../Recoils/screenAtom"
 
 /** 문항관리 탭 */
-function FormSummary({token}) {
+function FormSummary() {
     const pages = useRecoilValue(pagesAtom)
     const mode = useRecoilValue(modeAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
@@ -136,7 +136,7 @@ function FormSummary({token}) {
                                             {question.q ? <p>{question.q}</p> : <p className="placeholder">{`${idx2 + 1}번 문항`}</p>}
                                             {`Q-${idx}-${idx2}` === activeCard && 
                                             <MoreVert >
-                                                <button onClick={() => saveQ(idx, idx2, token)}>저장</button>
+                                                <button onClick={() => saveQ(idx, idx2)}>저장</button>
                                                 <button onClick={() => copyQ(idx, idx2)}>복사</button>
                                                 <button className="remove" onClick={() => deleteQ(idx, idx2)}>삭제</button>
                                             </MoreVert>}
