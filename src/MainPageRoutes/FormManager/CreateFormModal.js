@@ -87,6 +87,8 @@ function CreateFormModal ({token}, ref) {
         const newPages = createPage()
         const newListStyle = null
         const newOptions = {
+            isPublic: false,
+            isOpen: false,
             isUseStartPeriod : false,
             startDate: '',
             isUseEndPeriod : false,
@@ -98,18 +100,24 @@ function CreateFormModal ({token}, ref) {
             isAllowModify: false,
             isRevealTheResult: false,
         }
-        const success = await createForm(url, createTitle, newPages, newListStyle, newOptions, token) // 설문지 데이터 저장
-        if(success){
-            alert('새로운 설문지가 생성되었습니다.')
+        function setting () {
             setTitle(createTitle)
             loadPages(newPages)
             setEndingMent({title: '', description: ''})
             setSurveyListStyle(null)
             setSurveyOptions(newOptions)
             naviate(`/my-form/edit/${url}`)
-        }else{
-            alert('로그인 후 사용이 필요합니다.')
-            naviate('/user/login')
+        }
+
+        if(!token){
+            setting()
+            return alert('새로운 설문지가 생성되었습니다. \n저장 기능은 회원만 가능합니다.')
+        }
+        const success = await createForm(url, createTitle, newPages, newListStyle, newOptions, token) // 설문지 데이터 저장
+        if(success){
+            alert('새로운 설문지가 생성되었습니다.')
+            setting()
+            naviate(`/my-form/edit/${url}`)
         }
     }
     const enterClick = (e) => {

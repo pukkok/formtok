@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxios from "../Hooks/useAxios";
 import { LoginForms, JoinForms } from "../Datas/loginForms";
 import LoginPageWrapper from "./LoginStyles/StyledLoginPageWrapper";
@@ -9,6 +9,8 @@ import { LoginForm } from "./LoginStyles/StyledLoginForm";
 
 function LoginPage () {
     const navigate = useNavigate()
+    const location = useLocation()
+    
     const [loginInputs, setLoginInputs] = useState({userId: '', password: ''})
     const [joinInputs, setJoinInputs] = useState({name: '', userId: '', email: '', otp:'', phone: '', password: '', confirmPassword : ''})
     const [capsLockActive, setCapsLockActive] = useState(false) // Caps Lock 상태
@@ -54,7 +56,9 @@ function LoginPage () {
         e.preventDefault()
         const {userId, password} = loginInputs
         const result = await login(userId, password)
-        if(result) navigate('/my-form/manager')
+        if (result) {
+            location.state?.from ? navigate(location.state?.from) : navigate('/')
+        }
     }
 
     const idDupCheckAction = async (id) => { // 아이디 중복체크

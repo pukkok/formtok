@@ -79,6 +79,7 @@ const StyledFormList = styled.section`
                     }
                 }
                 span{
+                    rotate: -45deg;
                     color: var(--pk-modal-font);
                 }
             }
@@ -152,7 +153,7 @@ function FormList () {
                                     }
                                 </p>
                             </div>
-                        <button className="link" onClick={e => linkOpen(e, url)}><Icon code={'share'}/></button>
+                        <button className="link" onClick={e => linkOpen(e, url)}><Icon code={'link'}/></button>
                         </div>
                     </div>
                 })}

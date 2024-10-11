@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isSideOpenAtom } from "../Recoils/screenAtom";
-import { useNavigate, useResolvedPath } from "react-router-dom";
+import { useLocation, useNavigate, useResolvedPath } from "react-router-dom";
 import SideBarWrapper from "./_StyledSideBar";
 import Logo from "../Components/DashBoardLogo";
 import { Icon } from "../Components/Icons";
@@ -20,6 +20,7 @@ function SideBar ({logo}) {
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
     const [isExpiredToken, setIsExpiredToken] = useState(false)
     const navigate = useNavigate()
+    const location = useLocation()
 
     // 모달 사용할때 임시로 저장
     const [temporary, setTemporary] = useState({depth1: null, depth2: null, path: null})
@@ -189,7 +190,7 @@ function SideBar ({logo}) {
                 
                 {userInfo ? 
                 <button onClick={logout}><Icon code={'logout'}/></button> :
-                <button onClick={()=>navigate('/user/login')}><Icon code={'login'}/></button>
+                <button onClick={()=>navigate('/user/login', {state : { from: location.pathname }})}><Icon code={'login'}/></button>
                 }
             </div>
             </footer>

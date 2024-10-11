@@ -165,6 +165,7 @@ function FormViewer() {
         <FormViewerHeader surveyId={surveyId} current={currentIdx} max={pages.length}/>
         {pages.length > 0 ? 
         
+        !pathname.includes('preview') &&
         !isLoadingEnd ? 
         <FormTokLoading setFinish={setIsLoadingEnd} width={window.innerWidth - 300} height={500}/> :
 
