@@ -90,7 +90,7 @@ function FormManager () {
         const end = endDate ? dayjs(endDate) : null
         if(isEnd) return 'stop' // 설문 종료
         if(!isOpen) return 'making' // 설문게시 전
-        if(!isUseStartPeriod || start?.isBefore(now) && end?.isAfter(now) || !end) return 'working'
+        if(!isUseStartPeriod || start?.isBefore(now) && (end?.isAfter(now) || !end)) return 'working'
         if(start?.isAfter(now)) return 'ready'
         if(end?.isBefore(now)) return 'stop'
         return ''

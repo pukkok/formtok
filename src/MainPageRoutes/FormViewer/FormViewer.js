@@ -92,14 +92,16 @@ function FormViewer() {
                     acc[id] = {...newQuestions}
                     return acc
                 }, {})
-                setAnswerBox(newAnswerBox)  
+                return setAnswerBox(newAnswerBox)
             }else{
                 return navigate('/form-list')
             }
         }
 
         loadSubmitFormAction()
-    }, [surveyId, setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions])
+    }, [surveyId, navigate, pages, pathname,
+        setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions
+    ])
 
     const [currentIdx, setCurrentIdx] = useState(0)
     const moveLogs = useRef([0]) // 움직인 기록 남기기

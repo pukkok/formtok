@@ -128,6 +128,13 @@ const StyledCKEdtiorWrapper = styled.div`
     }
   } // ck가 disabled면 밑줄이 생기지 않음
 
+  .ck.ck-editor__editable.ck-read-only .ck-widget.ck-widget_with-selection-handle .ck-widget__selection-handle, 
+  .ck.ck-editor__editable.ck-read-only .ck-widget.ck-widget_with-selection-handle .ck-widget__selection-handle:hover{
+    display: none;
+    // 표형 제작후 볼때 호버기능 삭제
+  }
+  
+
 `
 
 export { StyledCKEdtiorWrapper as CKEditorWrapper }

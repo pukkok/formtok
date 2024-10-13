@@ -84,7 +84,7 @@ function FormResult () {
                 </div>
                 {searchedForms.length > 0 && searchedForms.map(form => {
                     const {title, url, options, numberOfResponses} = form
-                    const {isOpen, isEnd, isUseStartPeriod, isPublic, isNeedLogin, startDate, endDate, maximumCount} = options
+                    const {isOpen, isEnd, isPublic, isNeedLogin, startDate, endDate, maximumCount} = options
                     
                     const start = startDate ? dayjs(startDate).format('YYYY-MM-DD') : null
                     const end = endDate ? dayjs(endDate).format('YYYY-MM-DD') : null

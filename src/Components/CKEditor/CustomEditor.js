@@ -64,7 +64,7 @@ function CustomEditor({value, onChange, placeholder, isReadOnly=false}) {
 				// 'fontColor',
 				// 'fontBackgroundColor',
 				// '|',
-				// 'insertTable',
+				'insertTable',
 				'insertImage',
 				'link',				
 			],

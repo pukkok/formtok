@@ -16,8 +16,8 @@ import { modeAtom } from './Recoils/screenAtom';
 import whiteModeLogo from './Imgs/formtok-logo.png'
 import darkModeLogo from './Imgs/formtok-logo-white.png'
 import { useState, useEffect } from 'react';
-import FormTokLoading from './Components/FormTokLoading';
 import FormResult from './MainPageRoutes/FormResult/FormResult';
+import TableCanvas from './MainPageRoutes/FormEditor/TableForm';
 
 function App() {
 
@@ -48,7 +48,7 @@ function App() {
         <Route path='user'>
           <Route path='login' element={<LoginPage/>}/>
         </Route>
-        <Route path='test' element={<FormTokLoading />}></Route>
+        <Route path='test' element={<TableCanvas />}></Route>
       </Routes>
     </>
   )
