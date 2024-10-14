@@ -47,6 +47,7 @@ const MainPageWrapper = styled.section`
 
     // 컬러
     color: var(--white-font-color);
+    --pk-mode-color: var(--white-font-color);
     --pk-low-emphasis : #333;
     
     --pk-option-nav-bg: #333;
@@ -133,6 +134,7 @@ const MainPageWrapper = styled.section`
     &.darkmode{
         // 컬러
         color: var(--pk-light-grey);
+        --pk-mode-color: var(--pk-light-grey);
         --pk-low-emphasis : #dedede;
 
         // 옵션 호버시 말풍선

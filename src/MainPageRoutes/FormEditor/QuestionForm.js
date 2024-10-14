@@ -1,11 +1,12 @@
 // import React, { useEffect, useState, useRef } from "react"
 import React, { useState } from "react"
 import { useRecoilValue } from "recoil"
-import { pagesAtom } from "../../Recoils/surveyAtoms"
+import { pagesAtom, randomKey } from "../../Recoils/surveyAtoms"
 import AddAnswer from '../../Components/AddAnswer'
 import usePageActions from "../../Hooks/usePageActions"
 import DropDown from "../../Components/DropDown"
 import styled from "styled-components"
+import { Icon, TableIcon } from "../../Components/Icons"
 
 const StyledQuestionForm = styled.div`
     margin-bottom: 20px;
@@ -20,7 +21,7 @@ function QuestionForm ({pi, qi}){
         {style === '단답형' && <ShortText />}
         {['객관식', '객관식(복수 선택)', '드롭다운'].includes(style) && <Multiple style={style} pages={pages} pi={pi} qi={qi}/>}
         {['날짜', '시간', '날짜 + 시간'].includes(style) && <DateTypeInput style={style} setPeriod={setPeriod}/>}
-        {/* {style === '표형' && <TableCanvas/>} */}
+        {style === '표형' && <TableEditor/>}
         {style === '점수 선택형' &&<SelectScore pages={pages} pi={pi} qi={qi}/>}
     </StyledQuestionForm>
 }
@@ -320,129 +321,102 @@ function SelectScore ({pages, pi, qi}) {
 }
 
 
-// const TableCanvas = () => {
-//   const canvasRef = useRef(null);
-//   const [cells, setCells] = useState([
-//     { row: 0, col: 0, x: 0, y: 0, width: 100, height: 50 },
-//     { row: 0, col: 1, x: 100, y: 0, width: 100, height: 50 },
-//     { row: 0, col: 2, x: 200, y: 0, width: 100, height: 50 },
-//     { row: 1, col: 0, x: 0, y: 50, width: 100, height: 50 },
-//     { row: 1, col: 1, x: 100, y: 50, width: 100, height: 50 },
-//     { row: 1, col: 2, x: 200, y: 50, width: 100, height: 50 }
-//   ]);
-//   const [selectedCells, setSelectedCells] = useState([]);
-//   const [isDragging, setIsDragging] = useState(false);
-//   const [dragStart, setDragStart] = useState(null);
+const StyledTableEditor = styled.div`
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    & > div{
+        width: 100%;
+        p{
+            padding-left: 10px;
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            font-weight: 800;
 
-//   useEffect(() => {
-//     const canvas = canvasRef.current;
-//     const ctx = canvas.getContext("2d");
-//     drawTable(ctx);
-//     console.log(cells)
-//   }, [cells, selectedCells]);
+        }
+        & > div{
+            display: flex;
+            width: 100%;
+            height: 40px;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background-color: var(--pk-question-form-bg);
+            margin-top: 10px;
+            input{
+                width: 100%;
+            }
+            button{
+                display: none;
+            }
+            &:hover button{
+                display: block;
+            }
+        }
+    }
+`
 
-//   const drawTable = (ctx) => {
-//     ctx.clearRect(0, 0, 300, 150); // Clear the canvas
+const TableEditor = () => {
+    const [rows, setRows] = useState([
+        {id: 'R'+randomKey(), value: ''}, 
+        {id: 'R'+randomKey(), value: ''}
+    ])
 
-//     cells.forEach((cell) => {
-//       ctx.beginPath();
+    const [cols, setCols] = useState([
+        {id: 'C'+randomKey(), value: ''}, 
+        {id: 'C'+randomKey(), value: ''}
+    ])
 
-//       // If the cell is selected, fill it with a background color
-//       if (selectedCells.includes(cell)) {
-//         ctx.fillStyle = "rgba(0, 128, 255, 0.3)"; // Light blue background for selected cells
-//         ctx.fillRect(cell.x, cell.y, cell.width, cell.height);
-//       }
+    // 행, 열 추가
+    const addTable = (rowOrCol) => {
+        if(rowOrCol === 'row'){
+            setRows([...rows, {id: 'R'+randomKey(), value: ''}])
+        }else{
+            setCols([...cols, {id: 'C'+randomKey(), value: ''}])
+        }
+    }
 
-//       // Draw cell borders
-//       ctx.strokeStyle = "black"; // Border color for cells
-//       ctx.rect(cell.x, cell.y, cell.width, cell.height);
-//       ctx.stroke();
-//     });
-//   };
+    // 행 또는 열의 값 변경 처리 함수
+    const tableValueChange = (e, id, rowOrCol) => {
+        const { value } = e.target
+        if (rowOrCol === 'row') {
+        setRows(rows.map(row => row.id === id ? { ...row, value } : row))
+        } else {
+        setCols(cols.map(col => col.id === id ? { ...col, value } : col))
+        }
+    }
 
-//   const getCellAtPosition = (x, y) => {
-//     return cells.find(
-//       (cell) =>
-//         x >= cell.x && x < cell.x + cell.width && y >= cell.y && y < cell.y + cell.height
-//     );
-//   };
-
-//   const handleMouseDown = (e) => {
-//     const rect = canvasRef.current.getBoundingClientRect();
-//     const x = e.clientX - rect.left;
-//     const y = e.clientY - rect.top;
-
-//     const startCell = getCellAtPosition(x, y);
-//     if (startCell) {
-//       setIsDragging(true);
-//       setDragStart(startCell); // Store the start cell
-//       setSelectedCells([startCell]); // Reset selection to the initial cell
-//     }
-//   };
-
-//   const handleMouseMove = (e) => {
-//     if (!isDragging || !dragStart) return;
-
-//     const rect = canvasRef.current.getBoundingClientRect();
-//     const x = e.clientX - rect.left;
-//     const y = e.clientY - rect.top;
-
-//     const endCell = getCellAtPosition(x, y);
-//     if (endCell) {
-//       const startRow = Math.min(dragStart.row, endCell.row);
-//       const endRow = Math.max(dragStart.row, endCell.row);
-//       const startCol = Math.min(dragStart.col, endCell.col);
-//       const endCol = Math.max(dragStart.col, endCell.col);
-
-//       // Select all cells within the rectangle defined by drag start and end
-//       const newSelectedCells = cells.filter(
-//         (cell) =>
-//           cell.row >= startRow &&
-//           cell.row <= endRow &&
-//           cell.col >= startCol &&
-//           cell.col <= endCol
-//       );
-//       setSelectedCells(newSelectedCells);
-//     }
-//   };
-
-//   const handleMouseUp = () => {
-//     setIsDragging(false);
-//   };
-
-//   const mergeCells = () => {
-//     if (selectedCells.length > 1) {
-//         console.log('셀렉티드셀',selectedCells)
-//       const mergedCell = {
-//         row: selectedCells[0].row,
-//         col: selectedCells[selectedCells.length - 1].col,
-//         x: selectedCells[0].x,
-//         y: selectedCells[0].y,
-//         width: selectedCells.reduce((acc, cell) => acc + cell.width, 0),
-//         height: selectedCells.reduce((acc, cell) => acc + cell.height, 0)
-//       };
-
-//       const remainingCells = cells.filter(
-//         (cell) => !selectedCells.includes(cell)
-//       );
-//       setCells([...remainingCells, mergedCell]);
-//       setSelectedCells([]);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <canvas
-//         ref={canvasRef}
-//         width={300}
-//         height={150}
-//         onMouseDown={handleMouseDown}
-//         onMouseMove={handleMouseMove}
-//         onMouseUp={handleMouseUp}
-//         style={{ border: "1px solid black" }}
-//       ></canvas>
-//       <button onClick={mergeCells}>Merge Cells</button>
-//     </div>
-//   );
-// };
+    return (
+        <StyledTableEditor>
+            <div>
+                <p><TableIcon/><button onClick={() => addTable('row')}>행 추가</button></p>
+                {rows.map((row, idx) => {
+                    return (
+                        <div key={row.id}>
+                            <input 
+                                onChange={(e) => tableValueChange(e, row.id, 'row')}
+                                placeholder={(idx+1)+' 행'} 
+                                value={row.value}/>
+                            <button><Icon code={'close'}/></button>
+                        </div>
+                    )
+                })}
+            </div>
+            <div>
+                <p><TableIcon rowOrCol="col"/><button onClick={() => addTable('col')}>열 추가</button></p>
+                {cols.map((col, idx) => {
+                    return (
+                        <div key={col.id}>
+                            <input 
+                            onChange={(e) => tableValueChange(e, col.id, 'col')}
+                            placeholder={(idx+1)+' 열'} 
+                            value={col.value}/>
+                        </div>
+                    )
+                })}
+            </div>
+        </StyledTableEditor>
+    )
+}
 

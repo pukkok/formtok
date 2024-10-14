@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { modeAtom } from "../Recoils/screenAtom";
 
 function Icon ({ code, handleclick, className }) {
     return <span 
@@ -17,4 +19,71 @@ function AddCircleIcon() {
 
 }
 
-export { Icon, AddCircleIcon }
+function TableIcon ({width= 20, height=20, rowOrCol = 'row'}) {
+    const mode = useRecoilValue(modeAtom)
+    // const [color, setColor] = useState(mode === 'dark' ? '#EDEDED' : '#111')
+    const [color, setColor] = useState('#aaa')
+    const canvasRef = useRef(null)
+
+    // useEffect(() => {
+    //     setColor(mode === 'dark' ? '#EDEDED' : '#111')
+    // }, [mode])
+
+    useEffect(() => {
+        const canvas = canvasRef.current
+        const ctx = canvas.getContext('2d')
+
+        // const color = '#aaa'
+
+        canvas.width = width
+        canvas.height = height
+
+        function drawRowLine () {
+            ctx.fillStyle = color
+            ctx.fillRect(0, 0, canvas.width, 2)
+            ctx.fillRect(0, 6, canvas.width, 2)
+            ctx.fillRect(0, 13, canvas.width / 2, 2)
+        }
+
+        function drawRowArrow () {
+            ctx.strokeStyle = color
+            ctx.beginPath()
+            ctx.moveTo(canvas.width / 2 + 4, 10)
+            ctx.lineTo(canvas.width, 14)
+            ctx.lineTo(canvas.width / 2 + 4, 18)
+            ctx.fill()
+        }
+
+        function drawColLine () {
+            ctx.fillStyle = color
+            ctx.fillRect(2, 0, 2.4, canvas.height - 1)
+            ctx.fillRect(8, 0, 2.4, canvas.height - 1)
+            ctx.fillRect(15, 0, 2.4, canvas.height / 2 - 1)
+        }
+
+        function drawColArrow () {
+            ctx.strokeStyle = color
+            ctx.lineWidth = 2
+            ctx.beginPath()
+            ctx.moveTo(12, canvas.height / 2 + 2)
+            ctx.lineTo(16, canvas.height - 2)
+            ctx.lineTo(20, canvas.height / 2 + 2)
+            ctx.fill()
+        }
+        
+        function start(){
+            if(rowOrCol === 'row'){
+                drawRowLine()
+                drawRowArrow()
+            }else{
+                drawColLine()
+                drawColArrow()
+            }
+        }
+        start()
+    }, [color, height, width])
+
+    return <canvas ref={canvasRef}></canvas>
+}
+
+export { Icon, AddCircleIcon, TableIcon }
