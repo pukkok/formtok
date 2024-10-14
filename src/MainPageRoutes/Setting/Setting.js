@@ -39,7 +39,7 @@ const SettingsWrapper = styled.section`
     flex-direction: column;
     align-items: center;
     padding: 40px;
-    background-color: #f4f7fa;
+    /* background-color: #f4f7fa; */
     height: 100vh;
 `;
 
@@ -56,7 +56,7 @@ const CardGrid = styled.div`
 `;
 
 const SettingsCard = styled.div`
-    background-color: white;
+    background-color: var(--pk-third-background);
     padding: 20px;
     flex: 1 1 45%; /* 너비를 45%로 설정해 2개씩 배치 */
     min-width: 280px; /* 최소 너비 설정 */
@@ -76,7 +76,8 @@ const SettingsCard = styled.div`
     }
 
     input {
-        width: 100%;
+        min-width: 300px;
+        /* width: 100%; */
         padding: 8px;
         margin-bottom: 15px;
         border: 1px solid #ccc;

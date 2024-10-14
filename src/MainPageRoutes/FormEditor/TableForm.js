@@ -24,8 +24,8 @@ const StyledTableEditor = styled.div`
 
 const TableEditor = () => {
   const [tableData, setTableData] = useState([
-    [{ id: '1-1', content: 'A', colspan: 0, rowspan: 0 }, { id: '1-2', content: 'B', colspan: 0, rowspan: 0 }],
-    [{ id: '2-1', content: 'C', colspan: 0, rowspan: 0 }, { id: '2-2', content: 'D', colspan: 0, rowspan: 0 }],
+    [{ id: '1-1', content: 'A', colspan: 1, rowspan: 1 }, { id: '1-2', content: 'B', colspan: 1, rowspan: 1 }],
+    [{ id: '2-1', content: 'C', colspan: 1, rowspan: 1 }, { id: '2-2', content: 'D', colspan: 1, rowspan: 1 }],
   ])
 
   const [selectedCells, setSelectedCells] = useState([])
@@ -70,7 +70,7 @@ const TableEditor = () => {
     if (selectedCells.length > 1) {
       const start = selectedCells[0]
       const end = selectedCells[selectedCells.length - 1]
-  
+      
       const newTableData = [...tableData]
       const rowspan = Math.abs(end.row - start.row) + 1
       const colspan = Math.abs(end.col - start.col) + 1
@@ -79,7 +79,7 @@ const TableEditor = () => {
       newTableData[start.row][start.col].rowspan = rowspan
       newTableData[start.row][start.col].colspan = colspan
   
-      // 병합된 셀들 삭제
+      // 선택된 셀들 삭제
       for (let row = start.row; row <= end.row; row++) {
         for (let col = start.col; col <= end.col; col++) {
           if (row !== start.row || col !== start.col) {
@@ -97,72 +97,97 @@ const TableEditor = () => {
     setShowDialog(true)// 분할 다이얼로그 표시
   }
 
+  const adjustColspanRowspan = (newTableData) => {
+    // 각 셀에 대해 colspan과 rowspan 조정을 진행
+    for (let row = 0; row < newTableData.length; row++) {
+      for (let col = 0; col < newTableData[row].length; col++) {
+        const cell = newTableData[row][col];
+        if (!cell) continue;
+  
+        // 오른쪽의 colspan이 적용된 셀 조정
+        if (cell.colspan > 1) {
+          for (let c = 1; c < cell.colspan; c++) {
+            if (newTableData[row][col + c]) {
+              newTableData[row][col + c].colspan -= 1;
+            }
+          }
+        }
+  
+        // 아래쪽의 rowspan이 적용된 셀 조정
+        if (cell.rowspan > 1) {
+          for (let r = 1; r < cell.rowspan; r++) {
+            if (newTableData[row + r] && newTableData[row + r][col]) {
+              newTableData[row + r][col].rowspan -= 1;
+            }
+          }
+        }
+      }
+    }
+    return newTableData;
+  }
+  
   const handleConfirmSplit = () => {
-    const newTableData = [...tableData]
+    const newTableData = [...tableData];
   
     selectedCells.forEach(({ row, col }) => {
-      const cell = newTableData[row][col]
+      const cell = newTableData[row][col];
   
       if (splitDirection === 'horizontal') {
-        // 가로로 분할
+        // 가로 분할
         const newCells = Array(splitCount).fill(null).map((_, idx) => ({
           id: `${row}-${col}-${idx}`,
-          content: cell.content,  // 셀 내용을 복사
-          colspan: 1,  // 분할했으니 colspan을 1로 설정
+          content: `${cell.content}${idx + 1}`,
+          colspan: 1,
           rowspan: cell.rowspan,
-        }))
-        
-        // 선택된 셀을 가로로 나누고 새로 추가
+        }));
+  
+        // 셀을 가로로 나누고 새 셀 추가
         newTableData[row] = [
           ...newTableData[row].slice(0, col),
           ...newCells,
           ...newTableData[row].slice(col + 1),
-        ]
+        ];
   
-        // 아래에 있는 셀들도 분할된 셀의 colspan에 맞게 크기 조정
-        for (let r = row + 1; r < tableData.length; r++) {
-          const belowCell = newTableData[r][col]
-          if (belowCell) {
-            belowCell.colspan = splitCount  // 아래 셀들의 colspan 맞추기
+        // 인접한 셀의 colspan 조정
+        for (let r = 0; r < tableData.length; r++) {
+          for (let c = 0; c < col; c++) {
+            if (newTableData[r][c]) {
+              newTableData[r][c].colspan += (splitCount - 1);
+            }
           }
         }
   
       } else if (splitDirection === 'vertical') {
-        // 세로로 분할
-        const newRows = []
-        for (let i = 0; i < splitCount - 1; i++) {
-          const newRow = [...newTableData[row]]
+        // 세로 분할
+        const newRows = Array(splitCount - 1).fill(null).map((_, idx) => {
+          const newRow = [...newTableData[row]];
           newRow[col] = {
-            id: `${row + i + 1}-${col}`,
-            content: cell.content,  // 셀 내용을 복사
+            id: `${row + idx + 1}-${col}`,
+            content: `${cell.content}${idx + 1}`,
             colspan: cell.colspan,
-            rowspan: 1,  // 세로로 분할하면 rowspan을 1로 설정
-          }
-          newRows.push(newRow)
-        }
-        
+            rowspan: 1,
+          };
+          return newRow;
+        });
+  
         // 새로운 행 추가
-        newTableData.splice(row + 1, 0, ...newRows)
+        newTableData.splice(row + 1, 0, ...newRows);
   
-        // 기존 셀의 rowspan 조정
-        newTableData[row][col].rowspan = splitCount
-  
-        // 오른쪽에 있는 셀들의 rowspan도 동일하게 맞춰야 함
-        for (let c = col + 1; c < tableData[row].length; c++) {
-          const rightCell = newTableData[row][c]
-          if (rightCell) {
-            rightCell.rowspan = splitCount  // 오른쪽 셀들의 rowspan 맞추기
+        // 인접한 셀의 rowspan 조정
+        for (let r = 0; r < row; r++) {
+          if (newTableData[r][col]) {
+            newTableData[r][col].rowspan += (splitCount - 1);
           }
         }
       }
-    })
+    });
   
-    setTableData(newTableData)  // 테이블 데이터 업데이트
-    setShowDialog(false)  // 다이얼로그 닫기
+    setTableData(adjustColspanRowspan(newTableData)); // 인접 셀 조정 로직 적용
+    setShowDialog(false);  // 다이얼로그 닫기
   }
   
   
-
+  
   return (
     <StyledTableEditor>
       <table border="1" >
@@ -202,13 +227,13 @@ const TableEditor = () => {
             <label>
               Split Direction:
               <select value={splitDirection} onChange={(e) => setSplitDirection(e.target.value)}>
-                <option value="horizontal">Horizontal</option>
-                <option value="vertical">Vertical</option>
+                <option value="horizontal">행</option>
+                <option value="vertical">열</option>
               </select>
             </label>
             <br />
             <label>
-              Split Count:
+              개수:
               <input
                 type="number"
                 value={splitCount}
@@ -217,8 +242,8 @@ const TableEditor = () => {
               />
             </label>
             <br />
-            <button onClick={handleConfirmSplit}>Confirm</button>
-            <button onClick={() => setShowDialog(false)}>Cancel</button>
+            <button onClick={handleConfirmSplit}>확인</button>
+            <button onClick={() => setShowDialog(false)}>취소</button>
           </div>
         </dialog>
       )}
