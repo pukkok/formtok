@@ -324,18 +324,52 @@ function SelectScore ({pages, pi, qi}) {
 const StyledTableEditor = styled.div`
     margin-top: 15px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    & > div{
+    grid-template-areas: 
+    'prevbtn prevbtn'
+    'boxA boxB';
+    column-gap: 10px;
+    & > .prev-box{
+        grid-area: prevbtn;
+        text-align: center;
         width: 100%;
-        p{
-            padding-left: 10px;
+        margin-top: 10px;
+        button{
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-weight: 700;
+            &:hover{
+                background-color: var(--pk-charcoal);
+            }
+        }
+    }
+    & > .table-edit{
+        width: 100%;
+        &.rowBox{
+            grid-area: boxA;
+        }
+        &.colBox{
+            grid-area: boxB;
+        }
+        & > button{
+            padding: 4px 6px;
+            border-radius: 8px;
             display: flex;
             align-items: flex-end;
+            align-items: center;
             gap: 5px;
             font-weight: 800;
+            
+            &:hover{
+                background-color: var(--pk-point);
+                color: var(--pk-light-grey);
+            }
 
+            &.col-add-btn{
+                margin-left: auto;
+            }
+        
         }
+
         & > div{
             display: flex;
             width: 100%;
@@ -344,13 +378,14 @@ const StyledTableEditor = styled.div`
             border-radius: 12px;
             background-color: var(--pk-question-form-bg);
             margin-top: 10px;
-            input{
+            & > input{
                 width: 100%;
+                border-bottom: none;
             }
             button{
                 display: none;
             }
-            &:hover button{
+            input:focus + button, &:hover button{
                 display: block;
             }
         }
@@ -381,37 +416,63 @@ const TableEditor = () => {
     const tableValueChange = (e, id, rowOrCol) => {
         const { value } = e.target
         if (rowOrCol === 'row') {
-        setRows(rows.map(row => row.id === id ? { ...row, value } : row))
+            setRows(rows.map(row => row.id === id ? { ...row, value } : row))
         } else {
-        setCols(cols.map(col => col.id === id ? { ...col, value } : col))
+            setCols(cols.map(col => col.id === id ? { ...col, value } : col))
+        }
+    }
+
+    // 행 또는 열 삭제 함수
+    const removeTable = (id, rowOrCol) => {
+        if (rowOrCol === 'row') {
+            setRows(rows.filter(row => row.id !== id))
+        } else {
+            setCols(cols.filter(col => col.id !== id))
         }
     }
 
     return (
         <StyledTableEditor>
-            <div>
-                <p><TableIcon/><button onClick={() => addTable('row')}>행 추가</button></p>
+            <div className="prev-box">
+                <button>표 미리보기</button>
+            </div>
+            <div className="table-edit row-box">
+                <button 
+                onClick={() => addTable('row')}>
+                    <TableIcon/>행 추가
+                </button>
                 {rows.map((row, idx) => {
                     return (
                         <div key={row.id}>
                             <input 
+                                className="nbb"
                                 onChange={(e) => tableValueChange(e, row.id, 'row')}
                                 placeholder={(idx+1)+' 행'} 
                                 value={row.value}/>
-                            <button><Icon code={'close'}/></button>
+                            {rows.length > 2 && (
+                                <button onClick={() => removeTable(row.id, 'row')}><Icon code={'close'}/></button>
+                            )}
                         </div>
                     )
                 })}
             </div>
-            <div>
-                <p><TableIcon rowOrCol="col"/><button onClick={() => addTable('col')}>열 추가</button></p>
+            <div className="table-edit col-box">
+                <button
+                    className="col-add-btn" 
+                    onClick={() => addTable('col')}>
+                    <TableIcon rowOrCol="col"/>열 추가
+                </button>
                 {cols.map((col, idx) => {
                     return (
                         <div key={col.id}>
                             <input 
-                            onChange={(e) => tableValueChange(e, col.id, 'col')}
-                            placeholder={(idx+1)+' 열'} 
-                            value={col.value}/>
+                                className="nbb"
+                                onChange={(e) => tableValueChange(e, col.id, 'col')}
+                                placeholder={(idx+1)+' 열'} 
+                                value={col.value}/>
+                            {cols.length > 2 && (
+                                <button onClick={() => removeTable(col.id, 'col')}><Icon code={'close'}/></button>
+                            )}
                         </div>
                     )
                 })}
@@ -419,4 +480,5 @@ const TableEditor = () => {
         </StyledTableEditor>
     )
 }
+
 

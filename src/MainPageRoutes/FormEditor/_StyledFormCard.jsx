@@ -75,9 +75,9 @@ const FormCardWrapper = styled.div`
 
     &.active:not(.viewer) {
         border: 2px solid var(--pk-point);
-
+        // 사용하기 싫을땐 .nbb를 쓰자
         input:not([type='date'], [type="time"], [type="datetime-local"], .nbb):focus {
-            border-bottom: 2px solid var(--pk-point);  // 포커스 시 민트색으로 강조
+            border-bottom: 2px solid var(--pk-point);
         }
     }
 
