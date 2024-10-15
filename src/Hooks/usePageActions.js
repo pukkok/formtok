@@ -18,6 +18,8 @@ function usePageActions () {
                     options: [{id : 'O'+randomKey(), answer: ''}],
                     hasExtraOption: false,
                     scoreRanges : {min:1, max:5, minText: '', maxText: ''},
+                    tableRows: [],
+                    tableCols: [],
                     hasDescription : false,
                     period: {start: '', end: null},
                     setPeriod : false, // 날짜 타입일때 사용
@@ -38,6 +40,8 @@ function usePageActions () {
             options: [{id:'O' + randomKey(), answer:''}], 
             hasExtraOption: false,
             scoreRanges : {min:1, max:5, minText: '', maxText: ''},
+            tableRows: [],
+            tableCols: [],
             hasDescription : false,
             period: {start: '', end: null},
             setPeriod : false, // 날짜 타입일때 사용
@@ -108,12 +112,47 @@ function usePageActions () {
             })
         })
     }
+    // 페이지 디스크립션 변경하기
+    const changePDescription = (html, pi) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi){
+                    page = {...page,
+                        description : html
+                    }
+                }
+                return page
+            })
+        })
+    }
 
     // 페이지 추가하기
     const addPage = () => {
         const id = 'P' + randomKey()
         setPages([...pages, { id, title: '', description: '', questions: [] }])
         setActiveCard(`P-${pages.length}`)
+    }
+    // 페이지 복사
+    const copyP = (pi) => {
+        const id = 'P' + randomKey()
+        let copyPages = [...pages]
+        let copyPage = {...copyPages[pi], id, 
+            title: copyPages[pi].title ? copyPages[pi].title+'(사본)' : ''}
+        copyPage = {...copyPage, 
+            questions: copyPage.questions.map((question, idx) => {
+            const id = 'Q' + randomKey() + idx
+            return question = {...question, id}
+        })}
+        copyPages.splice(pi+1, 0, copyPage)
+        setPages(copyPages)
+    }
+    // 페이지 삭제
+    const deleteP = (pi) => {
+        setPages(pages=> {
+            return pages.filter((_, idx) => {
+                return idx !== pi
+            })
+        })
     }
 
     // 질문 추가하기
@@ -139,6 +178,38 @@ function usePageActions () {
 
         setActiveCard(`Q-${pageCnt}-${length}`)
     }
+    // 질문 복사하기
+    const copyQ = (pi, qi) => {
+        const id = 'Q' + randomKey()
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi){
+                    let [addQuestions] = page.questions.filter((_, idx) => qi === idx)
+                    addQuestions = {...addQuestions, 
+                        id, 
+                        q: addQuestions.q ? addQuestions.q+'(사본)' : addQuestions.q,
+                        d: addQuestions.d
+                    }
+                    const updateQuestions = [...page.questions]
+                    updateQuestions.splice(qi+1, 0, addQuestions)
+                    return page = {...page, questions : updateQuestions}
+                }
+                return page
+            })
+        })
+    }
+    // 질문 삭제하기
+    const deleteQ = (pi, qi) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi){
+                    const updateQuestions = page.questions.filter((_, idx) => qi !== idx)
+                    return page = {...page, questions : updateQuestions}
+                }
+                return page
+            })
+        })
+    }
 
     // 질문 제목 바꾸기
     const changeQTitle = (e, pi, qi) => {
@@ -150,20 +221,6 @@ function usePageActions () {
                         return question
                     })
                     page = { ...page, questions: updateQuestions }
-                }
-                return page
-            })
-        })
-    }
-
-    // 페이지 디스크립션 변경하기
-    const changePDescription = (html, pi) => {
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if(idx === pi){
-                    page = {...page,
-                        description : html
-                    }
                 }
                 return page
             })
@@ -202,62 +259,8 @@ function usePageActions () {
             })
         })
     }
-    // 페이지 복사
-    const copyP = (pi) => {
-        const id = 'P' + randomKey()
-        let copyPages = [...pages]
-        let copyPage = {...copyPages[pi], id, 
-            title: copyPages[pi].title ? copyPages[pi].title+'(사본)' : ''}
-        copyPage = {...copyPage, 
-            questions: copyPage.questions.map((question, idx) => {
-            const id = 'Q' + randomKey() + idx
-            return question = {...question, id}
-        })}
-        copyPages.splice(pi+1, 0, copyPage)
-        setPages(copyPages)
-    }
-    // 페이지 삭제
-    const deleteP = (pi) => {
-        setPages(pages=> {
-            return pages.filter((_, idx) => {
-                return idx !== pi
-            })
-        })
-    }
-
-    // 질문 복사하기
-    const copyQ = (pi, qi) => {
-        const id = 'Q' + randomKey()
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if(idx === pi){
-                    let [addQuestions] = page.questions.filter((_, idx) => qi === idx)
-                    addQuestions = {...addQuestions, 
-                        id, 
-                        q: addQuestions.q ? addQuestions.q+'(사본)' : addQuestions.q,
-                        d: addQuestions.d
-                    }
-                    const updateQuestions = [...page.questions]
-                    updateQuestions.splice(qi+1, 0, addQuestions)
-                    return page = {...page, questions : updateQuestions}
-                }
-                return page
-            })
-        })
-    }
-    // 질문 삭제하기
-    const deleteQ = (pi, qi) => {
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if(idx === pi){
-                    const updateQuestions = page.questions.filter((_, idx) => qi !== idx)
-                    return page = {...page, questions : updateQuestions}
-                }
-                return page
-            })
-        })
-    }
-    // 옵션 추가하기
+    
+    // 옵션 추가하기(객관식, 복수선택, 드롭다운일때)
     const addOption = (pi, qi) => {
         const id = 'O' + randomKey()
         setPages(pages => {
@@ -322,7 +325,6 @@ function usePageActions () {
             })
         })
     }
-
     /** '기타' 항목 추가/제거 */ 
     const toggleEXtraOption = (pi, qi, has) => {
         setPages(pages => {
@@ -335,6 +337,150 @@ function usePageActions () {
                         return question
                     })
                     return { ...page, questions: updateQuestions }
+                }
+                return page
+            })
+        })
+    }
+
+    // 테이블타입으로 진입시 생성
+    const initialTable = (pi, qi) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi) {
+                    const updateTable = page.questions.map((question, idx2) => {
+                        if(idx2 === qi) {
+                            return {...question, 
+                                tableRows : [
+                                    {id: 'R'+randomKey(), value: ''},
+                                    {id: 'R'+randomKey(), value: ''}
+                                ],
+                                tableCols : [
+                                    {id: 'C'+randomKey(), value: ''},
+                                    {id: 'C'+randomKey(), value: ''}
+                                ],
+                            }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updateTable }
+                }
+                return page
+            })
+        })
+    }
+    // 테이블 초기화
+    const resetTable = (pi, qi) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if(idx === pi) {
+                    const resetTable = page.questions.map((question, idx2) => {
+                        if(idx2 === qi) {
+                            return {...question, tableCols : [], tableRows : []}
+                        }
+                        return question
+                    })
+                    return { ...page, questions: resetTable }
+                }
+                return page
+            })
+        })
+    }
+
+    // 행과 열 추가
+    const addTableRowOrCol = (pi, qi, rowOrCol) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if (idx === pi) {
+                    const updatedQuestions = page.questions.map((question, idx2) => {
+                        if (idx2 === qi) {
+                            if (rowOrCol === 'row') {
+                                // 행 추가
+                                return {
+                                    ...question,
+                                    tableRows: [
+                                        ...question.tableRows,
+                                        { id: 'R' + randomKey(), value: '' }
+                                    ]
+                                }
+                            } else if (rowOrCol === 'col') {
+                                // 열 추가
+                                return {
+                                    ...question,
+                                    tableCols: [
+                                        ...question.tableCols,
+                                        { id: 'C' + randomKey(), value: '' }
+                                    ]
+                                }
+                            }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        })
+    }
+
+    // 행과 열을 삭제하는 함수
+    const deleteTableRowOrCol = (pi, qi, id, rowOrCol) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if (idx === pi) {
+                    const updatedQuestions = page.questions.map((question, idx2) => {
+                        if (idx2 === qi) {
+                            if (rowOrCol === 'row' && question.tableRows.length > 2) {
+                                // 행 삭제
+                                return {
+                                    ...question,
+                                    tableRows: question.tableRows.filter(row => row.id !== id)
+                                }
+                            } else if (rowOrCol === 'col' && question.tableCols.length > 2) {
+                                // 열 삭제
+                                return {
+                                    ...question,
+                                    tableCols: question.tableCols.filter(col => col.id !== id)
+                                }
+                            }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updatedQuestions }
+                }
+                return page
+            })
+        })
+    }
+
+    // 행 또는 열의 값을 업데이트하는 함수
+    const updateTableValue = (pi, qi, id, value, rowOrCol) => {
+        setPages(pages => {
+            return pages.map((page, idx) => {
+                if (idx === pi) {
+                    const updatedQuestions = page.questions.map((question, idx2) => {
+                        if (idx2 === qi) {
+                            if (rowOrCol === 'row') {
+                                // 행 값 업데이트
+                                return {
+                                    ...question,
+                                    tableRows: question.tableRows.map(row => 
+                                        row.id === id ? { ...row, value: value } : row
+                                    )
+                                }
+                            } else if (rowOrCol === 'col') {
+                                // 열 값 업데이트
+                                return {
+                                    ...question,
+                                    tableCols: question.tableCols.map(col => 
+                                        col.id === id ? { ...col, value: value } : col
+                                    )
+                                }
+                            }
+                        }
+                        return question
+                    })
+                    return { ...page, questions: updatedQuestions }
                 }
                 return page
             })
@@ -409,6 +555,7 @@ function usePageActions () {
         usedOptionCheck, // 부가옵션 설정
         periodSetting, // 날짜 타입 기간으로 설정할 경우
         whereIsNextPage,
+        initialTable, resetTable, addTableRowOrCol, deleteTableRowOrCol, updateTableValue,
         changeEndingTitle, changeEndingDescription
     }
 }

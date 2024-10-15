@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 
-import {PageCard, QuestionCard, EndingCard} from "./FormCards";
+import PageCard from "./Card/PageCard";
+import QuestionCard from "./Card/QuestionCard";
+import EndingCard from "./Card/EndingCard";
 
 import FormNav from "./FormEditorNav";
 import { useRecoilValue } from "recoil";
-import { activeCardAtom, pagesAtom } from "../../Recoils/surveyAtoms";
-import DropDown from "../../Components/DropDown";
-import usePageActions from "../../Hooks/usePageActions";
+import { activeCardAtom, pagesAtom } from "../Recoils/surveyAtoms";
+import DropDown from "../Components/DropDown";
+import usePageActions from "../Hooks/usePageActions";
 import styled from "styled-components";
 import FormHeader from "./FormEditorHeader";
 

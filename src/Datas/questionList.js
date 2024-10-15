@@ -1,4 +1,4 @@
-const questionForms = [
+const questionList = [
     {code : 'notes', form : '서술형'},
     {code : 'short_text', form : '단답형'},
     {code : 'format_list_numbered', form : '객관식'},
@@ -11,4 +11,4 @@ const questionForms = [
     {code : 'commit', form : '점수 선택형'},
 ]
 
-export default questionForms
+export default questionList

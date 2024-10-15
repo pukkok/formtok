@@ -3,8 +3,8 @@ import LoginPage from './Pages/LoginPage';
 import './App.css';
 import MainPage from './Pages/MainPage'
 import FormManager from './MainPageRoutes/FormManager/FormManager';
-import FormEditor from './MainPageRoutes/FormEditor/FormEditor';
-import FormViewer from './MainPageRoutes/FormViewer/FormViewer';
+import FormEditor from './FormEditor/FormEditor';
+import FormViewer from './FormViewer/FormViewer';
 import Setting from './MainPageRoutes/Setting/Setting';
 import NotFoundPage from './Pages/NotFoundPage';
 import HomePage from './Pages/HomePage';
@@ -17,7 +17,6 @@ import whiteModeLogo from './Imgs/formtok-logo.png'
 import darkModeLogo from './Imgs/formtok-logo-white.png'
 import { useState, useEffect } from 'react';
 import FormResult from './MainPageRoutes/FormResult/FormResult';
-import TableCanvas from './MainPageRoutes/FormEditor/TableForm';
 
 function App() {
 
@@ -48,7 +47,7 @@ function App() {
         <Route path='user'>
           <Route path='login' element={<LoginPage/>}/>
         </Route>
-        <Route path='test' element={<TableCanvas />}></Route>
+        {/* <Route path='test' element={<TableCanvas />}></Route> */}
       </Routes>
     </>
   )

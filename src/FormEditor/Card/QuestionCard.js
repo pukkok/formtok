@@ -1,52 +1,16 @@
-import React, { useState, useEffect } from "react";
-
-import { useRecoilValue, useRecoilState } from "recoil";
-import { pagesAtom, endingMentAtom, activeCardAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
-
+import React, { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { activeCardAtom, pagesAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
 import usePageActions from "../../Hooks/usePageActions";
+import { FormCardWrapper, QuestionOptionsWrapper } from "./FormCards.styled";
 import classNames from "classnames";
-import { FormCardWrapper, QuestionOptionsWrapper } from "./_StyledFormCard";
-import questionForms from '../../Datas/questionList'
-
-import QuestionForm from "./QuestionForm";
-
-import DescriptionEditor from "../../Components/DescriptionEditor";
-import ToggleButton from '../../Components/ToggleButton'
 import DropDown from "../../Components/DropDown";
-import MoreVert from "../../Components/MoreVert";
 import { Icon } from "../../Components/Icons";
-
-function PageCard({pi}) {
-    const pages = useRecoilValue(pagesAtom)
-    const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-
-    const [pageCnt, setPageCnt] = useState('1/1')
-    useEffect(() => {
-        setPageCnt(`${pi+1}/${pages.length}`)
-    }, [pages, pi])
-
-    const {changePTitle, changePDescription} = usePageActions()
-    
-    return (
-        <FormCardWrapper 
-        className={classNames("card", {active : `P-${pi}` === activeCard})}
-        onClick={()=>setActiveCard(`P-${pi}`)}>
-            <h4>{pageCnt} 페이지</h4>
-            <div>
-                <input className="title-A" 
-                placeholder="페이지 제목" 
-                onChange={e=>changePTitle(e, pi)} value={pages[pi].title}/>
-                
-                <DescriptionEditor
-                value={pages[pi].description}
-                pi={pi}
-                placeholder={'페이지 설명'}
-                handleChange={changePDescription}
-                />
-            </div>
-        </FormCardWrapper>
-    )
-}
+import ToggleButton from "../../Components/ToggleButton";
+import MoreVert from "../../Components/MoreVert";
+import DescriptionEditor from "../../Components/DescriptionEditor";
+import questionList from "../../Datas/questionList";
+import QuestionForm from "../QuestionForm";
 
 function QuestionCard ({pi, qi}) {
     const pages = useRecoilValue(pagesAtom)
@@ -80,7 +44,7 @@ function QuestionCard ({pi, qi}) {
     
             <QuestionOptionsWrapper className="question-options-wrapper">
                 <DropDown initialItem={<><Icon code={typeIcon}/>{selectedQuestion.type}</>} style={{minWidth : '230px'}}>
-                {questionForms.map(qs => {
+                {questionList.map(qs => {
                     return <li key={qs.form}>
                         <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.code)}>
                         <Icon code={qs.code}/>{qs.form}
@@ -124,35 +88,4 @@ function QuestionCard ({pi, qi}) {
         
 }
 
-function EndingCard () {
-
-    const endingMent = useRecoilValue(endingMentAtom)
-    const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-
-    const { changeEndingTitle, changeEndingDescription } = usePageActions()
-
-    return (
-    <FormCardWrapper className={classNames("card ending-field", 
-    {active : `end` === activeCard})}
-    onClick={()=>setActiveCard(`end`)}>
-        <h4>엔딩 메세지</h4>
-        <div>
-            <input className="title-B"
-            value={endingMent.title}
-            placeholder="응답해 주셔서 감사합니다." 
-            onChange={e=>changeEndingTitle(e)}
-            />
-            
-            <DescriptionEditor
-            value={endingMent.description}
-            placeholder={'추가 설명'}
-            handleChange={changeEndingDescription}
-            />
-        </div>
-
-    </FormCardWrapper>
-    )
-    
-}
-
-export {PageCard, QuestionCard, EndingCard}
+export default QuestionCard

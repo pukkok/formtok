@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { activeCardAtom, endingMentAtom, pagesAtom } from "../../Recoils/surveyAtoms"
 import MoreVert from "../../Components/MoreVert"
 import usePageActions from "../../Hooks/usePageActions"
-import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./_StyledFormSummary"
+import {SurveySummaryTab, SummaryScrollBox, SurveySummaryWrapper, PageSummaryListWrapper, PageSummaryWrapper, QuestionSummaryListWrapper, QuestionSummaryWrapper } from "./FormNavSummary.styled"
 import useAxios from "../../Hooks/useAxios"
 import { modeAtom } from "../../Recoils/screenAtom"
 

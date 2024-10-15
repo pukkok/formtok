@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../Recoils/surveyAtoms";
+import { endingMentAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../Recoils/surveyAtoms";
 import { useNavigate, useParams } from "react-router-dom";
-import useAxios from "../../Hooks/useAxios";
+import useAxios from "../Hooks/useAxios";
 import MoveToLoginPageModal from "./MoveToLoginPageModal";
 
 const FormHeaderWrapper = styled.header`

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import questionForms from "../../Datas/questionForms";
+import questionForms from "../../Datas/questionList";
 import MyQuestionsWrapper from "./_StyledMyQuestions";
 import { Icon } from "../../Components/Icons";
 import useAxios from "../../Hooks/useAxios";

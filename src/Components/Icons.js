@@ -19,14 +19,15 @@ function AddCircleIcon() {
 
 }
 
-function TableIcon ({width= 20, height=18, rowOrCol = 'row'}) {
+function TableIcon ({width= 16, height=14, rowOrCol = 'row'}) {
     const mode = useRecoilValue(modeAtom)
-    const [color, setColor] = useState(mode === 'dark' ? '#EDEDED' : '#111')
+    // const [color, setColor] = useState(mode === 'dark' ? '#EDEDED' : '#111')
+    const color = '#af7eff'
     const canvasRef = useRef(null)
 
-    useEffect(() => {
-        setColor(mode === 'dark' ? '#EDEDED' : '#111')
-    }, [mode])
+    // useEffect(() => {
+    //     setColor(mode === 'dark' ? '#EDEDED' : '#111')
+    // }, [mode])
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -34,39 +35,35 @@ function TableIcon ({width= 20, height=18, rowOrCol = 'row'}) {
 
         canvas.width = width
         canvas.height = height
+        ctx.fillStyle = color
 
         function drawRowLine () {
-            ctx.fillStyle = color
-            ctx.fillRect(0, 9, canvas.width, 2.5)
-            ctx.fillRect(0, 15, canvas.width , 2.5)
+            ctx.fillRect(0, 8, canvas.width, 2)
+            ctx.fillRect(0, 12, canvas.width , 2)
         }
 
         function drawRowArrow () {
-            ctx.fillStyle = color
             ctx.beginPath()
             ctx.moveTo(0, 6)
             ctx.lineTo(canvas.width, 6)
             ctx.lineTo(canvas.width -8, 0)
-            ctx.lineTo(canvas.width -8, 3)
-            ctx.lineTo(0, 3)
+            ctx.lineTo(canvas.width -8, 4)
+            ctx.lineTo(0, 4)
             ctx.fill()
         }
 
         function drawColLine () {
-            ctx.fillStyle = color
-            ctx.fillRect(0, 0, 3, canvas.height)
-            ctx.fillRect(6, 0, 3, canvas.height)
+            ctx.fillRect(2, 0, 2.5, canvas.height)
+            ctx.fillRect(6.5, 0, 2.5, canvas.height)
         }
 
         function drawColArrow () {
-            ctx.fillStyle = color
             ctx.beginPath()
-            ctx.moveTo(12, 0)
-            ctx.lineTo(12, canvas.height)
-            ctx.lineTo(18, canvas.height - 8)
-            ctx.lineTo(15, canvas.height - 8)
-            ctx.lineTo(15, 0)
-
+            ctx.moveTo(11, 0)
+            ctx.lineTo(11, canvas.height)
+            ctx.lineTo(16, canvas.height - 6)
+            ctx.lineTo(13, canvas.height - 6)
+            ctx.lineTo(13, 0)
             ctx.fill()
         }
         

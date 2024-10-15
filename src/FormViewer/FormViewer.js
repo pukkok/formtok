@@ -1,17 +1,59 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleSelector, surveyTitleAtom, surveyListStyleAtom, surveyOptionsAtom } from "../Recoils/surveyAtoms";
-import {FormCardWrapper} from "../MainPageRoutes/FormEditor/_StyledFormCard"
+import {FormCardWrapper} from "../FormEditor/Card/FormCards.styled"
 import DescriptionEditor from '../Components/DescriptionEditor'
-import FormViewerWrapper from './_StyledFomViewer'
 import { Link, useNavigate, useParams, useResolvedPath } from "react-router-dom";
-import ViewerQuestionForm from "./ViewerQuestionForm";
+import ViewerQuestionForm from "./ViewerAnswerForm";
 import { Icon } from "../Components/Icons";
 import FormViewerHeader from "./FormViewerHeader";
 import classNames from "classnames";
 import useAxios from "../Hooks/useAxios";
 import FormTokLoading from "../Components/FormTokLoading";
 import { gridAtom } from "../Recoils/screenAtom";
+import styled from "styled-components";
+
+const FormViewerWrapper = styled.section`
+
+    main{
+        max-width: 700px;
+        margin: 0 auto;
+        margin-bottom: 10vh;
+    }
+
+    .btns{
+        display: flex;
+        button{
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            border-radius: 8px;
+            gap: 10px
+        }
+    
+        button.prev{
+            background-color: var(--pk-standard-btn-bg);
+            color: var(--pk-light-grey);
+            margin-right: 12px;
+        }
+        button.next{
+            background-color: var(--pk-point);
+            color: var(--pk-light-grey);
+        }
+    }
+
+    a{
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        padding: 6px 8px;
+        border-radius: 8px;
+        gap: 10px;
+        background-color: var(--pk-point);
+        color: var(--pk-light-grey);
+        cursor: pointer;
+    }
+`
 
 function FormViewer() {
     const {surveyId} = useParams()
@@ -204,6 +246,7 @@ function FormViewer() {
                         <ViewerQuestionForm
                             type={type}
                             options={options}
+                            answerBox={answerBox}
                             hasExtraOption={hasExtraOption}
                             scoreRanges={scoreRanges} 
                             setPeriod={setPeriod}

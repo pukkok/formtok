@@ -66,7 +66,7 @@ function useAnswerActions () {
             return { ...prevBox,
                 [pageId]: {
                     ...prevBox[pageId],
-                    [questionId]: e.target.value
+                    [questionId]: {answer : e.target.value}
                 }
             }
         })
@@ -77,7 +77,7 @@ function useAnswerActions () {
             return { ...prevBox,
                 [pageId]: {
                     ...prevBox[pageId],
-                    [questionId]: reset ? '' : e.target.innerHTML
+                    [questionId]: {answer : reset ? '' : e.target.innerHTML}
                 }
             }
         })

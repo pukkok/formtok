@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { RadioButton, CheckBoxButton } from "../../Components/MultipleButton";
-import DropDown from "../../Components/DropDown";
-import useAnswerActions from "../../Hooks/useAnswerActions";
+import { RadioButton, CheckBoxButton } from "../Components/MultipleButton";
+import DropDown from "../Components/DropDown";
+import useAnswerActions from "../Hooks/useAnswerActions";
 import { useRecoilValue } from "recoil";
-import { AnswerBoxAtom } from "../../Recoils/surveyAtoms";
+import { AnswerBoxAtom } from "../Recoils/surveyAtoms";
 
 const StyledViewerQuestionForm = styled.div`
     margin-top: 12px;
