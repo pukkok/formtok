@@ -1,22 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
-import LoginPage from './Pages/LoginPage';
 import './App.css';
-import MainPage from './Pages/MainPage'
-import FormManager from './MainPageRoutes/FormManager/FormManager';
-import FormEditor from './FormEditor/FormEditor';
-import FormViewer from './FormViewer/FormViewer';
-import Setting from './MainPageRoutes/Setting/Setting';
-import NotFoundPage from './Pages/NotFoundPage';
-import HomePage from './Pages/HomePage';
-import MyQuestions from './MainPageRoutes/MyQuestions/MyQuestions';
-import FormList from './MainPageRoutes/FormList/FormList';
-import PageSwitcher from './Components/PageSwitcher';
+import LoginPage from './D-Pages/LoginPage';
+import MainPage from './D-Pages/MainPage'
+import FormManager from './B-FormManager/FormManager';
+import FormEditor from './B-FormEditor/FormEditor';
+import FormViewer from './B-FormViewer/FormViewer';
+import Setting from './B-Setting/Setting';
+import NotFoundPage from './D-Pages/NotFoundPage';
+import HomePage from './D-Pages/HomePage';
+import MyQuestions from './B-MyQuestions/MyQuestions';
+import FormList from './B-FormList/FormList';
+import PageSwitcher from './A-Components/PageSwitcher';
 import { useRecoilValue } from 'recoil';
-import { modeAtom } from './Recoils/screenAtom';
-import whiteModeLogo from './Imgs/formtok-logo.png'
-import darkModeLogo from './Imgs/formtok-logo-white.png'
+import { modeAtom } from './C-Recoils/screenAtom';
+import whiteModeLogo from './A-Imgs/formtok-logo.png'
+import darkModeLogo from './A-Imgs/formtok-logo-white.png'
 import { useState, useEffect } from 'react';
-import FormResult from './MainPageRoutes/FormResult/FormResult';
+import FormResult from './B-FormResult/FormResult';
 
 function App() {
 
