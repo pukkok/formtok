@@ -17,6 +17,7 @@ import whiteModeLogo from './A-Imgs/formtok-logo.png'
 import darkModeLogo from './A-Imgs/formtok-logo-white.png'
 import { useState, useEffect } from 'react';
 import FormResult from './B-FormResult/FormResult';
+import BarChartExample from './B-FormResult/BarChart';
 
 function App() {
 
@@ -47,7 +48,7 @@ function App() {
         <Route path='user'>
           <Route path='login' element={<LoginPage/>}/>
         </Route>
-        {/* <Route path='test' element={<TableCanvas />}></Route> */}
+        <Route path='test' element={<BarChartExample />}></Route>
       </Routes>
     </>
   )

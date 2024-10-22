@@ -141,8 +141,9 @@ function FormViewer() {
         }
 
         loadSubmitFormAction()
-    }, [surveyId, navigate, pages, pathname,
-        setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions
+    }, [
+        // surveyId, navigate, pages, pathname,
+        // setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions
     ])
 
     const [currentIdx, setCurrentIdx] = useState(0)

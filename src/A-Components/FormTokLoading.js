@@ -20,7 +20,7 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
         const smallBalloon = {
             x: canvas.width / 2 + 160,
             y: canvas.height / 2,
-            size: 70,
+            size: 75,
             // color: "#E8E8EC",
             color: "#fefefe",
             speed: 8,
@@ -109,7 +109,7 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
             const { size, color } = balloon
             if (balloon.x > canvas.width / 2) {
                 balloon.x -= accel 
-                balloon.size += .8
+                balloon.size += .5
             }
 
             ctx.fillStyle = color
@@ -126,7 +126,7 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
         }
 
         function drawBars() {
-            // Small bar animation
+
             if (!smallBarStarted) {
                 smallBarStarted = true
             }
@@ -135,7 +135,6 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
                 samllBar.height += 2
             }
 
-            // Delay for medium bar (0.1초)
             if (samllBar.height >= 10 && !midBarStarted) {
                 setTimeout(() => {
                     midBarStarted = true
@@ -146,7 +145,6 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
                 midiumBar.height += 3
             }
 
-            // Delay for big bar (0.2초)
             if (midiumBar.height >= 10 && !bigBarStarted) {
                 setTimeout(() => {
                     bigBarStarted = true
@@ -179,7 +177,7 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
                 cancelAnimationFrame(animationFrameId)
                 setFinish && setFinish(true)
 
-                console.log(bigBalloon.x, smallBalloon.x)
+                // console.log(bigBalloon.x, smallBalloon.x)
             }
         }
 

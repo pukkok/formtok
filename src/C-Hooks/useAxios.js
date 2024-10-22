@@ -252,10 +252,10 @@ const useAxios = () => {
         }
     }
 
-    const submitAnswer = async (url, answer) => {
+    const submitAnswer = async (url, answers) => {
         try{
             const {data} = await axios.post(`/answer/submit/?url=${url}`, 
-                {answer},
+                {answers},
                 {headers : {'Authorization' : `Bearer ${token}`}})
             if(data.code === 200){
                 alert(data.msg)
