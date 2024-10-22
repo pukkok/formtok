@@ -29,6 +29,8 @@ function BarChart({values={}}) {
 
 
     const data = {
+        responsive: true, // 반응형으로 차트를 설정
+        maintainAspectRatio: false, // 부모 요소에 맞게 크기 비율을 유지하지 않음
         labels: labels,
         datasets: [
             {
@@ -75,9 +77,7 @@ function BarChart({values={}}) {
     }
 
     return (
-        <div>
         <Bar data={data} options={options} />
-        </div>
     )
 }
 

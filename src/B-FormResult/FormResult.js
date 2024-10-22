@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import classNames from "classnames";
 import axios from "axios";
 import BarChart from "./BarChart";
+import PieChart from "./PieChart";
 
 const StyledFormResult = styled.section`
     /* padding: var(--pk-viewer-padding); */
@@ -16,6 +17,7 @@ const StyledFormResult = styled.section`
     main{
         width: calc(100% - 400px);
         height: 100%;
+        overflow: scroll;
         header{
             position: sticky;
             top: 0;
@@ -42,7 +44,25 @@ const StyledFormResult = styled.section`
                 font-weight: bold;
             }
         }
+        .report{
+            max-width: 1240px;
+            margin : 0 auto;
+            padding: var(--pk-viewer-padding);
+            height: calc(100% - 60px);
 
+            .report-result{
+                padding: 10px;
+                border: solid 1px var(--pk-dark);
+                margin-bottom: 20px;
+                
+                .chart-box{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    max-height: 550px;
+                }
+            }
+        }
     }
 
     aside{ // 오른쪽 사이드 바 전체 화면
@@ -138,22 +158,22 @@ const StyledFormResult = styled.section`
 `
 
 function FormResult () {
-    
-    const token = localStorage.getItem('token')
 
     const [myResults, setMyResults] = useState([]) // 전체 데이터
+    const [chartType, setChartType] = useState('pie')
     const [searchedResults, setSearchedResults] = useState([]) // 초기 데이터
     const [currentForm, setCurrentForm] = useState([])
     const [currentAnswers, setCurrentAnswers] = useState([])
     const [isResultOpen, setISResultOpen] = useState(false)
 
     const resultOpen = async (pages, url) => {
-        setCurrentForm(pages)
-        setISResultOpen(true)
         const { data } = await axios.get(`/answer/form-result?url=${url}`)
         if(data.code === 200){
-            // console.log(data.list)
+            setISResultOpen(true)
+            setCurrentForm(pages)
             setCurrentAnswers(data.list)
+        }else{
+            alert('잘못 됨')
         }
     }
 
@@ -168,16 +188,16 @@ function FormResult () {
 
     useEffect(() => {
         const getForms = async () => {
-            const forms = await getMyFormList(token)
+            const forms = await getMyFormList()
 
-            const openendForms = forms.filter(form => {
+            const openForm = forms.filter(form => {
                 return form.options.isOpen
             })
-            setSearchedResults(openendForms)
-            setMyResults(openendForms)
+            setSearchedResults(openForm)
+            setMyResults(openForm)
         }
-        if(token && myResults.length === 0) getForms()
-    }, [token, myResults])
+        if(myResults.length === 0) getForms()
+    }, [myResults])
 
     return(
     <StyledFormResult>
@@ -191,12 +211,14 @@ function FormResult () {
                 >닫기</button>
             </header>
 
-            <div>
-            {currentForm.map(page => {
-                const {title, id: pid, questions } = page
+            <div className="report">
+            {currentForm.length > 0 && currentForm.map(page => {
+                const { title, id: pid, questions } = page
                 return <div key={pid}>
-                    <h1>{title}</h1>    
-                    {questions.map(question => {
+                    <div>
+                        <h1>{title}</h1>
+                    </div>
+                    {questions.map((question, qi) => {
                         const { q, id: qid, type, options, hasExtraOption } = question
                         
                         let list = options.reduce((acc, cur) => acc = {...acc, [cur.answer] : 0}, {})
@@ -218,17 +240,35 @@ function FormResult () {
                             }, {...list})
                         }
 
-
                         return (
-                            <div key={qid}>
-                                <h3>{q} 
-                                    {/* <span> | 응답 수: {currentAnswers.length}</span> */}
-                                    <span> | 타입 : {type}</span>
-                                </h3>
-                                
+                            <div key={qid} className="report-result">
                                 <div>
-                                    {['객관식', '객관식(복수 선택)'].includes(type) && <BarChart values={values}/>}
+                                    <h3>{qi+1}. {q} 
+                                        {/* <span> | 응답 수: {currentAnswers.length}</span> */}
+                                        <span> | 타입 : {type}</span>
+                                    </h3>
+                                    <button onClick={() => setChartType('bar')}>표</button>
+                                    <button onClick={() => setChartType('pie')}>파이</button>
                                 </div>
+                               
+                                <div className="chart-box">
+                                    {['객관식', '객관식(복수 선택)'].includes(type) && 
+                                    chartType === 'bar' && <BarChart values={values}/>}
+                                    {['객관식', '객관식(복수 선택)'].includes(type) && 
+                                    chartType === 'pie' && <PieChart values={values}/>}
+                                </div>
+
+                                <div>
+                                    {['서술형', '단답형'].includes(type) && 
+                                    currentAnswers.map((result, idx) => {
+                                        const answer = result.answers?.[pid]?.[qid].answer
+                                        return answer ? <p key={qid}>응답{idx+1} - {answer}</p> : <p>응답이 없습니다.</p>
+                                    })
+                                    }
+                                </div>
+
+                            
+                                
                             </div>
                         )
                     })}

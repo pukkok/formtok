@@ -195,7 +195,7 @@ const useAxios = () => {
         }
     }
 
-    const getMyFormList = async (token) => {
+    const getMyFormList = async () => {
         try{
             const {data} = await axios.post('/form/my-form/load', {},
                 {headers : {'Authorization' : `Bearer ${token}`}}
