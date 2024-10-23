@@ -10,7 +10,7 @@ function LongTextAnswer ({ ...props }) {
             contentEditable 
             placeholder={'답변 입력(최대 1000자)'}
             onBlur={e => answerInHTML(e, pageId, questionId)} // 입력을 벗어났을때 데이터 저장
-            dangerouslySetInnerHTML={{ __html : answerBox[pageId]?.[questionId].answer || ""}}
+            dangerouslySetInnerHTML={{ __html : answerBox[pageId][questionId].answer || ""}}
         />
     )
 }

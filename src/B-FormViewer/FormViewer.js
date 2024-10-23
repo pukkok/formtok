@@ -78,8 +78,8 @@ function FormViewer() {
 
 
     useEffect(() => {
-        if(pathname.includes('preview')){
-            const newAnswerBox = pages.reduce((acc, page) => {
+        function newAnswerBoxBuilder (pages) {
+            return pages.reduce((acc, page) => {
                 const {id, questions} = page
                 const newQuestions = questions.reduce((qAcc, question) => {
                     if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
@@ -99,6 +99,10 @@ function FormViewer() {
                 acc[id] = {...newQuestions}
                 return acc
             }, {})
+        }
+
+        if(pathname.includes('preview')){
+            const newAnswerBox = newAnswerBoxBuilder(pages)
             return setAnswerBox(newAnswerBox)  
         }
         const loadSubmitFormAction = async () => {
@@ -114,26 +118,7 @@ function FormViewer() {
                 if(submittedAnswer){
                     return setAnswerBox(submittedAnswer)
                 }
-                const newAnswerBox = pages.reduce((acc, page) => {
-                    const {id, questions} = page
-                    const newQuestions = questions.reduce((qAcc, question) => {
-                        if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
-                            qAcc[question.id] = {start:'', end:''}
-                        }
-                        else if(question.type ==='객관식(복수 선택)'){
-                            qAcc[question.id] = {answer: [], useExtra: false, extra: ''}
-                        }
-                        else if(question.type ==='객관식'){
-                            qAcc[question.id] = {answer: '', useExtra: false, extra: ''}
-                        }
-                        else{
-                            qAcc[question.id] = {answer: ''}
-                        }
-                        return qAcc
-                    }, {})
-                    acc[id] = {...newQuestions}
-                    return acc
-                }, {})
+                const newAnswerBox = newAnswerBoxBuilder(pages)
                 return setAnswerBox(newAnswerBox)
             }else{
                 return navigate('/form-list')
@@ -142,8 +127,9 @@ function FormViewer() {
 
         loadSubmitFormAction()
     }, [
+        surveyId,
         // surveyId, navigate, pages, pathname,
-        // setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions
+        setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions
     ])
 
     const [currentIdx, setCurrentIdx] = useState(0)
@@ -160,20 +146,20 @@ function FormViewer() {
 
         const essentialCheck = currentPage.questions.every(question => {
             const {id : questionId, essential, type, setPeriod} = question
-            const answer = answerBox[pageId][questionId]
+            const box = answerBox[pageId][questionId]
             if(essential){
                 if(['날짜', '시간', '날짜 + 시간'].includes(type)){
                     if(setPeriod){
-                        return answer.start !== '' && answer.end !== ''
+                        return box.start !== '' && box.end !== ''
                     }else{
-                        return answer.start !== ''
+                        return box.start !== ''
                     }
                 }
                 else if(type ==='객관식(복수 선택)'){
-                    return answer.length > 0
+                    return box.answer.length > 0
                 }
                 else{
-                    return answer
+                    return box.answer
                 }
             }else{
                 return true
@@ -243,7 +229,6 @@ function FormViewer() {
                         </div>
                         {d && <DescriptionEditor value={d} isReadOnly={true}/>} 
                     
-                        {Object.keys(answerBox).length > 0 && 
                         <ViewerQuestionForm
                             type={type}
                             options={options}
@@ -252,7 +237,7 @@ function FormViewer() {
                             scoreRanges={scoreRanges} 
                             setPeriod={setPeriod}
                             pageId={pages[currentIdx].id} questionId={id} 
-                        />}
+                        />
                     
                     </div>
                 </FormCardWrapper>

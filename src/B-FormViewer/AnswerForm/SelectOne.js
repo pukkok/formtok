@@ -11,7 +11,7 @@ function SelectOne ({ ...props }) {
             return (option.answer && <RadioButton 
                 key={option.id} 
                 onClick={() => answerPick(option.answer, pageId, questionId)}
-                pick={answerBox[pageId]?.[questionId]?.answer || ''}
+                pick={answerBox[pageId][questionId].answer || ''}
                 >
                 {option.answer}</RadioButton>)
         })}

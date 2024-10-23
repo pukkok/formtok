@@ -12,7 +12,7 @@ function SelectMultiple ({ ...props }) {
                 return (option.answer && <CheckBoxButton 
                     key={option.id}
                     onClick={() => answerPicks(option.answer, pageId, questionId)}
-                    picks={answerBox[pageId]?.[questionId].answer || []}
+                    picks={answerBox[pageId][questionId].answer || []}
                     >
                     {option.answer}</CheckBoxButton>)
             })}

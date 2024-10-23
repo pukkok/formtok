@@ -62,8 +62,8 @@ const StyledViewerQuestionForm = styled.div`
 `
 /** props answerBox, options=[], pageId, questionId, hasExtraOption, scoreRanges, setPeriod */
 function ViewerQuestionForm ({ type, ...props }) {
-    const {answerBox, options=[], pageId} = props
-    if (!answerBox[pageId]) { // 불러오기 전
+    const {answerBox, options=[], pageId, questionId} = props
+    if (!answerBox[pageId] || !answerBox[pageId][questionId]) { // 불러오기 전
         return <></>
     }
 

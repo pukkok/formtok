@@ -9,7 +9,7 @@ function ShortTextAnswer ({ ...props }) {
             <input 
             placeholder="답변 입력" 
             onChange={e => answerInValue(e, pageId, questionId)} 
-            value={answerBox[pageId]?.[questionId].answer || ""}/>
+            value={answerBox[pageId][questionId].answer || ""}/>
         </div>
     )
 }

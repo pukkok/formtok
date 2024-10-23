@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-function BarChart({values={}}) {
+function BarChart({isHorizontal = false ,values={}}) {
     const labels = Object.keys(values)
     const datas = Object.values(values)
 
@@ -30,7 +30,6 @@ function BarChart({values={}}) {
 
     const data = {
         responsive: true, // 반응형으로 차트를 설정
-        maintainAspectRatio: false, // 부모 요소에 맞게 크기 비율을 유지하지 않음
         labels: labels,
         datasets: [
             {
@@ -43,19 +42,9 @@ function BarChart({values={}}) {
         ],
     }
 
-    // const data = {
-    //     labels: labels,
-    //     datasets: labels.map((label, idx) => ({
-    //         label: label, // 각 항목의 라벨
-    //         data: [datas[idx]], // 각 항목에 해당하는 데이터 (단일 값 배열로 감쌈)
-    //         backgroundColor: backgroundColors[idx % backgroundColors.length], // 랜덤 색상
-    //         borderColor: borderColors[idx % borderColors.length],
-    //         borderWidth: 1,
-    //     }))
-    // }
-
     const options = {
         responsive: true,
+        indexAxis : isHorizontal ? 'y' : 'x',
         plugins: {
             legend: {
                 display: false,
