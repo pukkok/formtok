@@ -143,7 +143,7 @@ function FormList () {
             }
         }
         loadAllFormAction()
-    }, [setPages])
+    }, [setPages, loadAllForms])
 
     
 

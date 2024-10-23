@@ -85,7 +85,7 @@ const TableEditor = ({pages, pi, qi}) => {
             setStart(false)
             initialTable(pi, qi)
         }
-    }, [start, pi, qi])
+    }, [start, pi, qi, initialTable])
 
     const modalOpen = () => {
         if (modalRef.current) {

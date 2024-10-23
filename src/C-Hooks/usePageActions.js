@@ -1,5 +1,6 @@
 import { useRecoilState, useSetRecoilState } from "recoil"
 import { activeCardAtom, endingMentAtom, pagesAtom, randomKey } from "../C-Recoils/surveyAtoms"
+import { useCallback } from "react"
 
 function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
@@ -344,7 +345,7 @@ function usePageActions () {
     }
 
     // 테이블타입으로 진입시 생성
-    const initialTable = (pi, qi) => {
+    const initialTable = useCallback((pi, qi) => {
         setPages(pages => {
             return pages.map((page, idx) => {
                 if(idx === pi) {
@@ -368,9 +369,10 @@ function usePageActions () {
                 return page
             })
         })
-    }
+    }, [setPages])
+
     // 테이블 초기화
-    const resetTable = (pi, qi) => {
+    const resetTable = useCallback((pi, qi) => {
         setPages(pages => {
             return pages.map((page, idx) => {
                 if(idx === pi) {
@@ -385,7 +387,7 @@ function usePageActions () {
                 return page
             })
         })
-    }
+    }, [setPages])
 
     // 행과 열 추가
     const addTableRowOrCol = (pi, qi, rowOrCol) => {

@@ -186,7 +186,7 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
         return () => {
             cancelAnimationFrame(animationFrameId)
         }
-    }, [])
+    }, [height, setFinish, width])
 
     return <canvas ref={canvasRef}></canvas>
 }

@@ -85,6 +85,10 @@ const StyledRightSidebar = styled.aside`
                 text-align: center;
                 font-size: 14px;
             }
+
+            &.empty{
+                justify-content: center;
+            }
         }
         & > div:not(.head){
             cursor: pointer;
@@ -139,7 +143,7 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
                     <p>상태</p>
                 </div>
 
-                {searchedResults.length > 0 && searchedResults.map(form => {
+                {searchedResults.length > 0 ? searchedResults.map(form => {
                     const { title, url, options, numberOfResponses, pages } = form
                     const {isOpen, isEnd, isPublic, isNeedLogin, startDate, endDate, maximumCount} = options
                     
@@ -154,12 +158,11 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
                         <p className="start-date">{start ? start : '무제한'}</p>                                 
                         <p className="end-date">{end ? end : '-'}</p>    
                         <p>{isPublic ? '전체' : '-'}</p>
-
-                        {/* 나중에 수정할 부분 */}
                         <p>{isEnd ? '종료' : isOpen ? '진행 중' : '-'}</p>
-
                     </div>
-                })}
+                })
+                : <div className="empty">진행 중이거나, 종료된 설문이 없습니다.</div>
+                }
                 </>
                 }
             </div>

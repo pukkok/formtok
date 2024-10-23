@@ -47,7 +47,7 @@ const StyledModal = styled.dialog`
     }
 `
 
-function MoveToLoginPageModal({}, ref) {
+function MoveToLoginPageModal(_, ref) {
     const naviate = useNavigate()
 
     return (

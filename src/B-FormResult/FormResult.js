@@ -98,15 +98,19 @@ function FormResult () {
     useEffect(() => {
         const getForms = async () => {
             const forms = await getMyFormList()
-
-            const openForm = forms.filter(form => {
-                return form.options.isOpen
-            })
-            setSearchedResults(openForm)
-            setMyResults(openForm)
+            if(forms){
+                const openForm = forms.filter(form => {
+                    return form.options.isOpen
+                })
+                setSearchedResults(openForm)
+                setMyResults(openForm)
+            }else{
+                setSearchedResults([])
+                setMyResults([])
+            }
         }
-        if(myResults.length === 0) getForms()
-    }, [myResults])
+        getForms()
+    }, [getMyFormList])
 
     const chartTypeSelector = (qid, type) => {
         setChartTypes(prev => ({ ...prev, [qid]: type }))
@@ -114,10 +118,10 @@ function FormResult () {
 
     useEffect(() => {
         if (currentForm.length > 0) {
-            const initialChartTypes = {};
+            const initialChartTypes = {}
             currentForm.forEach(page => {
                 page.questions.forEach(question => {
-                    initialChartTypes[question.id] = 'bar-vertical'; // 모든 질문을 'bar'로 초기화
+                    initialChartTypes[question.id] = 'bar-vertical' // 모든 질문을 'bar'로 초기화
                 })
             })
             setChartTypes(initialChartTypes)
@@ -141,7 +145,7 @@ function FormResult () {
                 const { title, id: pid, questions } = page
                 return <div key={pid}>
                     <div>
-                        <h1>{title}</h1>
+                        <h1>{title || '제목 없는 설문지'}</h1>
                     </div>
                     {questions.map((question, qi) => {
                         const { q, id: qid, type, options, hasExtraOption } = question
@@ -166,7 +170,7 @@ function FormResult () {
                             values = currentAnswers.reduce((acc, cur) => {
                                 const answers = cur.answers?.[pid]?.[qid].answer
                                 answers.forEach(answer => {
-                                    acc = {... acc, [answer] : acc[answer] + 1}
+                                    acc = {...acc, [answer] : acc[answer] + 1}
                                 })
                                 return acc
                             }, {...list})
@@ -175,7 +179,7 @@ function FormResult () {
                         return (
                             <div key={qid} className="report-result">
                                 <div>
-                                    <h3>{qi+1}. {q} 
+                                    <h3>{qi+1}. {q || '제목없는 질문'} 
                                         {/* <span> | 응답 수: {currentAnswers.length}</span> */}
                                         <span> | 타입 : {type}</span>
                                     </h3>

@@ -21,7 +21,7 @@ function QuestionForm ({pi, qi}){
     const { resetTable } = usePageActions()
     useEffect(() => {
         style !== '표형' && resetTable(pi, qi)
-    }, [style])
+    }, [style, pi, qi, resetTable])
 
     return <StyledQuestionForm>
         {style === '서술형' && <LongText />}

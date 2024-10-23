@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useRecoilValue } from "recoil";
-import { modeAtom } from "../C-Recoils/screenAtom";
 
 function Icon ({ code, handleclick, className }) {
     return <span 
@@ -20,14 +18,8 @@ function AddCircleIcon() {
 }
 
 function TableIcon ({width= 16, height=14, rowOrCol = 'row'}) {
-    const mode = useRecoilValue(modeAtom)
-    // const [color, setColor] = useState(mode === 'dark' ? '#EDEDED' : '#111')
     const color = '#af7eff'
     const canvasRef = useRef(null)
-
-    // useEffect(() => {
-    //     setColor(mode === 'dark' ? '#EDEDED' : '#111')
-    // }, [mode])
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -77,7 +69,7 @@ function TableIcon ({width= 16, height=14, rowOrCol = 'row'}) {
             }
         }
         start()
-    }, [color, height, width])
+    }, [color, height, width, rowOrCol])
 
     return <canvas ref={canvasRef}></canvas>
 }
@@ -88,10 +80,6 @@ function PieIcon () {
     useEffect(() => {
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
-
-        // 배경
-        ctx.fillStyle = '#2A2A40'
-        ctx.fillRect(0, 0, 24, 24)
 
         // 원형 파이차트
         ctx.beginPath()
@@ -126,10 +114,6 @@ function BarIcon () {
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
 
-        // 배경
-        ctx.fillStyle = '#2A2A40'
-        ctx.fillRect(0, 0, 24, 24)
-
         // 막대들
         ctx.fillStyle = '#F44336'
         ctx.fillRect(5, 10, 4, 10)
@@ -149,10 +133,6 @@ function BarIconHorizontal() {
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
 
-        // 배경
-        ctx.fillStyle = '#2A2A40'
-        ctx.fillRect(0, 0, 24, 24)
-
         // 가로 막대들 (y 좌표 고정, x 좌표가 변하면서 가로로 막대 그림)
         ctx.fillStyle = '#F44336'
         ctx.fillRect(3, 3, 10, 4) // 첫 번째 막대
@@ -171,10 +151,6 @@ function DoughnutIcon () {
     useEffect(() => {
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
-
-        // 배경
-        ctx.fillStyle = '#2A2A40'
-        ctx.fillRect(0, 0, 24, 24)
 
         ctx.lineWidth = 4
 
@@ -206,10 +182,6 @@ function LineIcon() {
     useEffect(() => {
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
-
-        // 배경
-        ctx.fillStyle = '#2A2A40'
-        ctx.fillRect(0, 0, 24, 24)
 
         // 라인 스타일
         ctx.strokeStyle = '#F44336'

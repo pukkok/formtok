@@ -1,13 +1,13 @@
 import axios from "axios"
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import { originalDataAtom, pagesAtom, randomKey } from "../C-Recoils/surveyAtoms"
+import { useCallback } from "react"
 
 axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` : process.env.REACT_APP_RESTAPI_URL
 
 const useAxios = () => {
     const pages = useRecoilValue(pagesAtom)
     const setOriginalData = useSetRecoilState(originalDataAtom)
-
     const token = localStorage.getItem('token') || ''
 
     const refreshAuthToken = async (oldToken) => {
@@ -195,7 +195,8 @@ const useAxios = () => {
         }
     }
 
-    const getMyFormList = async () => {
+    const getMyFormList = useCallback(async () => {
+        if(!token) return []
         try{
             const {data} = await axios.post('/form/my-form/load', {},
                 {headers : {'Authorization' : `Bearer ${token}`}}
@@ -203,10 +204,9 @@ const useAxios = () => {
             if(data.code === 200) return data.forms
             else return []
         }catch (error){
-            console.log(error)
             return []
         }
-    }
+    }, [token])
 
     const getMyQuestionList = async (token) => {
         try{
@@ -221,7 +221,7 @@ const useAxios = () => {
         }
     }
 
-    const loadAllForms = async () => {
+    const loadAllForms = useCallback(async () => {
         try{
             const {data} = await axios.get('/form/all-forms')
             if(data.code === 200){
@@ -233,9 +233,9 @@ const useAxios = () => {
         }catch(err){
             return console.log('전체 설문지 불러오기 실패')
         }
-    }
+    }, [])
 
-    const loadSubmitForm = async (url) => {
+    const loadSubmitForm = useCallback(async (url) => {
         try{
             const {data} = await axios.post(`/form/submit-form/?url=${url}`, {},
                 {headers : {'Authorization' : `Bearer ${token}`}}
@@ -250,7 +250,7 @@ const useAxios = () => {
         }catch(err){
             return console.log('선택한 설문지 불러오기 실패')
         }
-    }
+    },[token])
 
     const submitAnswer = async (url, answers) => {
         try{

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleSelector, surveyTitleAtom, surveyListStyleAtom, surveyOptionsAtom } from "../C-Recoils/surveyAtoms";
 import {FormCardWrapper} from "../B-FormEditor/Card/FormCards.styled"
@@ -76,61 +76,63 @@ function FormViewer() {
     const { loadSubmitForm } = useAxios()
     const navigate = useNavigate()
 
+    const newAnswerBoxBuilder = (pages) => {
+        return pages.reduce((acc, page) => {
+            const { id, questions } = page
+            const newQuestions = questions.reduce((qAcc, question) => {
+                if (['날짜', '시간', '날짜 + 시간'].includes(question.type)) {
+                    qAcc[question.id] = { start: '', end: '' }
+                } else if (question.type === '객관식(복수 선택)') {
+                    qAcc[question.id] = { answer: [], useExtra: false, extra: '' }
+                } else if (question.type === '객관식') {
+                    qAcc[question.id] = { answer: '', useExtra: false, extra: '' }
+                } else {
+                    qAcc[question.id] = { answer: '' }
+                }
+                return qAcc
+            }, {})
+            acc[id] = { ...newQuestions }
+            return acc
+        }, {})
+    }
+
+    const memoizedNewAnswerBox = useMemo(() => newAnswerBoxBuilder(pages), [pages])
 
     useEffect(() => {
-        function newAnswerBoxBuilder (pages) {
-            return pages.reduce((acc, page) => {
-                const {id, questions} = page
-                const newQuestions = questions.reduce((qAcc, question) => {
-                    if(['날짜', '시간', '날짜 + 시간'].includes(question.type)){
-                        qAcc[question.id] = {start:'', end:''}
-                    }
-                    else if(question.type ==='객관식(복수 선택)'){
-                        qAcc[question.id] = {answer: [], useExtra: false, extra: ''}
-                    }
-                    else if(question.type ==='객관식'){
-                        qAcc[question.id] = {answer: '', useExtra: false, extra: ''}
-                    }
-                    else{
-                        qAcc[question.id] = {answer: ''}
-                    }
-                    return qAcc
-                }, {})
-                acc[id] = {...newQuestions}
-                return acc
-            }, {})
+        if (pathname.includes('preview')) {
+            setAnswerBox(memoizedNewAnswerBox)
+            return
         }
-
-        if(pathname.includes('preview')){
-            const newAnswerBox = newAnswerBoxBuilder(pages)
-            return setAnswerBox(newAnswerBox)  
-        }
+    
         const loadSubmitFormAction = async () => {
-            const {form, submittedAnswer} = await loadSubmitForm(surveyId)
-            
-            if(form){
-                const {title, pages, endingMent, listStyle, options} = form
+            const { form, submittedAnswer } = await loadSubmitForm(surveyId)
+    
+            if (form) {
+                const { title, pages, endingMent, listStyle, options } = form
                 setTitle(title)
                 setPages(pages)
                 setEndingMent(endingMent)
                 setSurveyListStyle(listStyle)
                 setSurveyOptions(options)
-                if(submittedAnswer){
+    
+                if (submittedAnswer) {
                     return setAnswerBox(submittedAnswer)
                 }
-                const newAnswerBox = newAnswerBoxBuilder(pages)
-                return setAnswerBox(newAnswerBox)
-            }else{
-                return navigate('/form-list')
+    
+                // const newAnswerBox = newAnswerBoxBuilder(pages)
+                return setAnswerBox(memoizedNewAnswerBox)
+            } else {
+                navigate('/form-list')
             }
         }
-
         loadSubmitFormAction()
     }, [
-        surveyId,
-        // surveyId, navigate, pages, pathname,
-        setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions
+        surveyId, navigate, pathname,
+        setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions,
+        loadSubmitForm // 의존성 배열에 추가된 loadSubmitForm
     ])
+    
+    
 
     const [currentIdx, setCurrentIdx] = useState(0)
     const moveLogs = useRef([0]) // 움직인 기록 남기기
@@ -266,7 +268,7 @@ function FormViewer() {
             <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/form-list'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
             </>}
         </main> :
-        <main></main>
+        <main></main> // 아무것도 없을 때
         } 
 
     </FormViewerWrapper>)
