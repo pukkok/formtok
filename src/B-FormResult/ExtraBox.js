@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledExtraBox = styled.details`
-    border-top: 1px solid var(--pk-light-grey);
-    margin-top: 20px;
+    border-top: 1px solid var(--pk-charcoal);
+    margin-top: 30px;
     padding: 20px 10px 0px 10px;
     summary{
         cursor: pointer;

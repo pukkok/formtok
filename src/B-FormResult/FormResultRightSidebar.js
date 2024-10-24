@@ -20,6 +20,8 @@ const StyledRightSidebar = styled.aside`
         margin-bottom: 30px;
     }
 
+    
+
     &.side-bar-mode{ // 오른쪽 사이드 바
         transition: left .6s;
         transition-delay: 0s;
@@ -90,6 +92,11 @@ const StyledRightSidebar = styled.aside`
                 justify-content: center;
             }
         }
+
+        .active{
+            background-color: var(--pk-point);
+        }
+
         & > div:not(.head){
             cursor: pointer;
         }
@@ -97,8 +104,8 @@ const StyledRightSidebar = styled.aside`
     }
 `
 
-function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, search } ) {
-    
+function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, search, active } ) {
+
     return (
     <StyledRightSidebar className={classNames({'side-bar-mode' : isResultOpen})}>
         <div className="action-box">
@@ -115,7 +122,10 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
                     const start = startDate ? dayjs(startDate).format('YYYY-MM-DD') : null
                     const end = endDate ? dayjs(endDate).format('YYYY-MM-DD') : null
 
-                    return <div key={url} onClick={()=>resultOpen(pages, url)}>
+                    return <div  
+                        className={classNames('list-card', {active: active === url})}
+                        key={url} 
+                        onClick={()=>resultOpen(pages, url)}>
                         <h4>{title}</h4>
                         <p>
                         <span>로그인 : {isNeedLogin ? '필요' : '-'}</span>
@@ -150,7 +160,10 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
                     const start = startDate ? dayjs(startDate).format('YYYY-MM-DD') : null
                     const end = endDate ? dayjs(endDate).format('YYYY-MM-DD') : null
 
-                    return <div key={url} onClick={()=>resultOpen(pages, url)}>
+                    return <div 
+                        className={classNames('list-card', {active: active === url})}    
+                        key={url} 
+                        onClick={()=>resultOpen(pages, url)}>
                         <h4>{title}</h4>
                         <p>{numberOfResponses.length || 0}</p>
                         <p>{maximumCount ? maximumCount : '-' }</p>

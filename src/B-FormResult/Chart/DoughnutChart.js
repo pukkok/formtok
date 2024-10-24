@@ -45,7 +45,7 @@ function DoughnutChart({values = {}}) {
 			datalabels : {
 				color: '#fff', // 데이터 레이블 텍스트 색상
                 font: {
-                    size: 14, // 폰트 크기
+                    size: 15, // 폰트 크기
                 },
                 // formatter: (value, context) => {
                 //     return `${value}`

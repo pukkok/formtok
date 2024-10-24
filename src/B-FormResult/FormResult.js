@@ -7,6 +7,11 @@ import { BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon, PieIcon } from "../
 import FormResultRightSidebar from "./FormResultRightSidebar";
 import ListBox from "./ListBox";
 import ExtraBox from "./ExtraBox";
+import classNames from "classnames";
+import DateBox from "./DateBox";
+import RadarChart from "./Chart/RadarChart";
+import LineChart from "./Chart/LineChart";
+import { constant } from "lodash";
 
 const StyledFormResult = styled.section`
     margin: 0px auto;
@@ -16,7 +21,6 @@ const StyledFormResult = styled.section`
     main{
         width: calc(100% - 400px);
         height: 100%;
-        overflow: scroll;
         header{
             position: sticky;
             top: 0;
@@ -28,20 +32,40 @@ const StyledFormResult = styled.section`
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 10px;
 
             background-color: var(--pk-form-header-bg);  
             border-bottom: 1px solid var(--pk-form-header-border-bottom);
 
-            .close-btn{
-                margin-left: auto;
-                background-color: var(--pk-point);
-                color: var(--pk-light-grey);
+            div{
+                display: flex;
+                gap: 12px;
 
-                padding: 6px 12px;
-                border-radius: 8px;
-                font-weight: bold;
+                &.tabs{
+                    button{
+                        &.active{
+                            font-weight: 800;
+                            color: var(--pk-point);
+                        }
+                    }
+                }
+
+                &.btns{
+                    margin-left: auto;
+
+                    button{
+                        background-color: var(--pk-point);
+                        color: var(--pk-light-grey);
+
+                        padding: 6px 12px;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    }
+                }
             }
+        }
+        .report-scroll-wrapper{
+            height: calc(100% - 60px);
+            overflow: scroll;
         }
         .report{
             max-width: 1240px;
@@ -64,13 +88,13 @@ const StyledFormResult = styled.section`
                         padding: 2px 4px;
                         border: solid 1px var(--pk-charcoal);
                     }
-                    margin-bottom: 20px;
+                    margin-bottom: 30px;
                 }
                 
                 .chart-btns{
                     display: flex;
                     justify-content: flex-start;
-                    gap: 10px;
+                    gap: 6px;
                     button{
                         width: 24px;
                         height: 24px;
@@ -78,7 +102,7 @@ const StyledFormResult = styled.section`
                     p{
                         margin-left: auto;
                     }
-                    margin-bottom: 16px;
+                    margin-bottom: 12px;
                 }
             }
         }
@@ -95,6 +119,8 @@ function FormResult () {
     const [currentForm, setCurrentForm] = useState([])
     const [currentAnswers, setCurrentAnswers] = useState([])
     const [isResultOpen, setISResultOpen] = useState(false)
+    const [active, setActive] = useState(null)
+    const [activeHeaderTab, setActiveHeaderTab] = useState('combined')
 
     const resultOpen = async (pages, url) => {
         const { data } = await axios.get(`/answer/form-result?url=${url}`)
@@ -102,6 +128,7 @@ function FormResult () {
             setISResultOpen(true)
             setCurrentForm(pages)
             setCurrentAnswers(data.list)
+            setActive(url)
         }else{
             alert('잘못 됨')
         }
@@ -110,13 +137,13 @@ function FormResult () {
         setISResultOpen(false)
         setCurrentForm([])
         setCurrentAnswers([])
+        setActive(null)
     }
     
     const search = (word) => {
         const filteredResult = myResults.filter(form => form.title.includes(word))
         setSearchedResults(filteredResult)
     }
-
 
     // custom hooks
     const { getMyFormList } = useAxios()
@@ -154,28 +181,49 @@ function FormResult () {
         }
     }, [currentForm])
 
+    function createRangeObj (min, max) {
+        const result = {}
+        for(let i=min; i<= max; i++){
+            result[i] = 0
+        }
+
+        return result
+    }
+
     return(
     <StyledFormResult>
         <main>
             <header>
-                <button>종합 결과</button>
-                <button>참여자별 결과</button>
-                <button
-                className="close-btn"
-                onClick={resultClose}
-                >닫기</button>
+                <div className="tabs">
+                    <button 
+                    className={classNames({active : activeHeaderTab === 'combine'})}
+                    onClick={() => setActiveHeaderTab('combine')}>종합 결과</button>
+                    <button 
+                    className={classNames({active : activeHeaderTab === 'individual'})}
+                    onClick={() => setActiveHeaderTab('individual')}>참여자별 결과</button>
+                </div>
+                <div className="btns">
+                    <button>저장</button>
+                    <button onClick={resultClose}>닫기</button>
+                </div>
             </header>
 
+            <div className="report-scroll-wrapper">
+
+            
+
             <div className="report">
-            {currentForm.length > 0 && currentForm.map(page => {
+            {currentForm.length > 0 && currentForm.map((page, pi) => {
                 const { title, id: pid, questions } = page
                 return <div key={pid}>
                     <div>
-                        <h1>{title || '제목 없는 설문지'}</h1>
+                        <h1>{pi+1}페이지 - {title || '제목 없는 설문지'}</h1>
                     </div>
                     {questions.map((question, qi) => {
-                        const { q, id: qid, type, options, hasExtraOption } = question
+                        const { q, id: qid, type, options, hasExtraOption, scoreRanges } = question
                         
+                        
+                        // console.log(rangeObj, '1')
                         let list = options.reduce((acc, cur) => acc = {...acc, [cur.answer] : 0}, {})
                         if(hasExtraOption) list = {...list, '기타': 0}
                         let values = null
@@ -203,6 +251,14 @@ function FormResult () {
                                 return acc
                             }, {...list})
                         }
+                        if(type === '점수 선택형'){
+                            const {min, max} = scoreRanges
+                            const rangeObj = createRangeObj(min, max)
+                            values = currentAnswers.reduce((acc, cur) => {
+                                const answer = cur.answers?.[pid]?.[qid].answer
+                                return acc = { ...acc, [answer] : acc[answer]+1}
+                            }, {...rangeObj})
+                        }
 
                         return (
                             <div key={qid} className="report-result">
@@ -212,7 +268,7 @@ function FormResult () {
                                         <span>{type}</span>
                                     </h3>
                                     <div className="chart-btns">
-                                    {['객관식', '객관식(복수 선택)', '드롭다운'].includes(type) 
+                                    {['객관식', '객관식(복수 선택)', '드롭다운', '점수 선택형'].includes(type) 
                                     &&<>
                                     <button onClick={() => chartTypeSelector(qid, 'bar-vertical')}><BarIcon/></button>
                                     <button onClick={() => chartTypeSelector(qid, 'bar-horizontal')}><BarIconHorizontal/></button>
@@ -224,29 +280,33 @@ function FormResult () {
                                     </div>
                                 </div>
 
-                                {['객관식', '객관식(복수 선택)', '드롭다운'].includes(type) &&
-                                <ChartBox 
-                                    chartType={chartTypes[qid]}
-                                    values={values}
-                                />
-                                }
+                                {['객관식', '객관식(복수 선택)', '드롭다운', '점수 선택형'].includes(type) &&
+                                <ChartBox chartType={chartTypes[qid]} values={values}/>}
+                                
+                                {/* {type === '점수 선택형' &&
+                                <LineChart values={values}/>
+                                } */}
 
                                 {['서술형', '단답형'].includes(type) && 
-                                <ListBox 
-                                    answers={currentAnswers}
-                                    pid={pid}
-                                    qid={qid}
-                                />}
-                                {extras.length > 0 && <ExtraBox extras={extras}/>}
+                                <ListBox answers={currentAnswers} pid={pid} qid={qid}/>}
+
+                                {['날짜', '시간', '날짜 + 시간'].includes(type) &&
+                                <DateBox dateType={type} answers={currentAnswers} pid={pid} qid={qid}/>}
+
+                                {extras.length > 0 && 
+                                <ExtraBox extras={extras}/>}
                             </div>
                         )
                     })}
                 </div>
             })}
             </div>
+
+            </div>
         </main>
 
         <FormResultRightSidebar
+            active={active}
             search={search}
             isResultOpen={isResultOpen} 
             searchedResults={searchedResults}

@@ -22,9 +22,9 @@ function ListBox ({ answers, pid, qid }) {
     {answers.length > 0 ? answers.map((result, idx) => {
         const answer = result.answers?.[pid]?.[qid].answer
         return (
-        answer ? 
-        <p key={qid + idx}>참여 {idx+1} - {answer}</p>
-        : <React.Fragment key={qid}></React.Fragment>
+            answer ? 
+            <p key={qid + idx}>참여 {idx+1} | {answer}</p>
+            : <React.Fragment key={qid + idx}></React.Fragment>
         )
     })
     :
