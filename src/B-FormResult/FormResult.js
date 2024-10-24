@@ -9,9 +9,6 @@ import ListBox from "./ListBox";
 import ExtraBox from "./ExtraBox";
 import classNames from "classnames";
 import DateBox from "./DateBox";
-import RadarChart from "./Chart/RadarChart";
-import LineChart from "./Chart/LineChart";
-import { constant } from "lodash";
 
 const StyledFormResult = styled.section`
     margin: 0px auto;
@@ -81,29 +78,33 @@ const StyledFormResult = styled.section`
 
                 h3{
                     display: flex;
-                    align-items: center;
-                    span{
+                    align-items: flex-start;
+                    p{
                         margin-left: auto;
+                        font-size: 15px;
+                    }
+                    span{
+                        margin-left: 2px;
                         font-size: 14px;
                         padding: 2px 4px;
                         border: solid 1px var(--pk-charcoal);
                     }
                     margin-bottom: 30px;
                 }
-                
-                .chart-btns{
-                    display: flex;
-                    justify-content: flex-start;
-                    gap: 6px;
-                    button{
-                        width: 24px;
-                        height: 24px;
-                    }
-                    p{
-                        margin-left: auto;
-                    }
-                    margin-bottom: 12px;
+            }
+
+            .chart-btns{
+                display: flex;
+                justify-content: flex-end;
+                gap: 6px;
+                button{
+                    width: 24px;
+                    height: 24px;
                 }
+                p{
+                    margin-left: auto;
+                }
+                margin-bottom: 12px;
             }
         }
     }
@@ -210,20 +211,16 @@ function FormResult () {
 
             <div className="report-scroll-wrapper">
 
-            
-
             <div className="report">
             {currentForm.length > 0 && currentForm.map((page, pi) => {
                 const { title, id: pid, questions } = page
                 return <div key={pid}>
-                    <div>
-                        <h1>{pi+1}페이지 - {title || '제목 없는 설문지'}</h1>
-                    </div>
+                  
+                    <h1>{pi+1}페이지 - {title || '제목 없는 설문지'}</h1>
+                    
                     {questions.map((question, qi) => {
                         const { q, id: qid, type, options, hasExtraOption, scoreRanges } = question
                         
-                        
-                        // console.log(rangeObj, '1')
                         let list = options.reduce((acc, cur) => acc = {...acc, [cur.answer] : 0}, {})
                         if(hasExtraOption) list = {...list, '기타': 0}
                         let values = null
@@ -262,30 +259,23 @@ function FormResult () {
 
                         return (
                             <div key={qid} className="report-result">
-                                <div>
-                                    <h3>{qi+1}. {q || '제목없는 질문'} 
-                                        {/* <span> | 응답 수: {currentAnswers.length}</span> */}
-                                        <span>{type}</span>
-                                    </h3>
-                                    <div className="chart-btns">
-                                    {['객관식', '객관식(복수 선택)', '드롭다운', '점수 선택형'].includes(type) 
-                                    &&<>
-                                    <button onClick={() => chartTypeSelector(qid, 'bar-vertical')}><BarIcon/></button>
-                                    <button onClick={() => chartTypeSelector(qid, 'bar-horizontal')}><BarIconHorizontal/></button>
-                                    <button onClick={() => chartTypeSelector(qid, 'pie')}><PieIcon/></button>
-                                    <button onClick={() => chartTypeSelector(qid, 'doughnut')}><DoughnutIcon/></button>
-                                    <button onClick={() => chartTypeSelector(qid, 'line')}><LineIcon/></button>
-                                    </>}
-                                    <p>응답 인원 {count}</p>
-                                    </div>
-                                </div>
+                                <h3>{qi+1}. {q || '제목없는 질문'} 
+                                    <p>응답 인원 {count} <span>{type}</span></p>
+                                </h3>
 
                                 {['객관식', '객관식(복수 선택)', '드롭다운', '점수 선택형'].includes(type) &&
-                                <ChartBox chartType={chartTypes[qid]} values={values}/>}
+                                <div>
+                                    <div className="chart-btns">
+                                        <p>차트</p>
+                                        <button onClick={() => chartTypeSelector(qid, 'bar-vertical')}><BarIcon/></button>
+                                        <button onClick={() => chartTypeSelector(qid, 'bar-horizontal')}><BarIconHorizontal/></button>
+                                        <button onClick={() => chartTypeSelector(qid, 'pie')}><PieIcon/></button>
+                                        <button onClick={() => chartTypeSelector(qid, 'doughnut')}><DoughnutIcon/></button>
+                                        <button onClick={() => chartTypeSelector(qid, 'line')}><LineIcon/></button>
+                                    </div>
+                                    <ChartBox qid={qid} chartType={chartTypes[qid]} values={values}/>
+                                </div>}
                                 
-                                {/* {type === '점수 선택형' &&
-                                <LineChart values={values}/>
-                                } */}
 
                                 {['서술형', '단답형'].includes(type) && 
                                 <ListBox answers={currentAnswers} pid={pid} qid={qid}/>}

@@ -44,4 +44,80 @@ const borderColors = [
     'rgba(121, 85, 72, 1)'     // 갈색
 ]
 
-export { backgroundColors, borderColors }
+const commonCircleOptions = {
+    responsive: true,
+    plugins: {
+		legend: {
+			position: 'right',
+			labels: {
+				font: {
+					size: 14,
+				},
+				color: '#fff'
+			}
+		},
+		title: {
+			display: false,
+		},
+		datalabels : {
+			display: true,
+			color: '#fff', // 데이터 레이블 텍스트 색상
+			font: {
+				size: 15, // 폰트 크기
+			},
+			formatter: (value, context) => {
+				return value === 0 ? ' ' : `${value}`
+			},
+		}
+    },
+}
+
+const commonLineBarOptions = (max, isHorizontal = false) => {
+    return {
+        responsive: true,
+        // maintainAspectRatio: false, // 부모 요소에 맞게 크기를 조정
+        plugins: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: false,
+            },
+            datalabels: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                max: isHorizontal ? undefined : Math.ceil(max * 3 / 2),
+                beginAtZero: true,
+                ticks : {
+                    stepSize : 1,
+                    color: '#eee',
+                    font: {
+                        size: 16
+                    }
+                },
+                grid: {
+                    color: '#666', 
+                },
+            },
+            x: {
+                max: isHorizontal ? Math.ceil(max * 3 / 2) : undefined,
+                ticks : {
+                    stepSize : 1,
+                    color: '#eee',
+                    font: {
+                        size: 15
+                    }
+                },
+                grid: {
+                    color: '#888', // x축 그리드 라인 색상 설정
+                },
+            }
+        }
+    }
+}
+
+
+export { backgroundColors, borderColors, commonCircleOptions, commonLineBarOptions }

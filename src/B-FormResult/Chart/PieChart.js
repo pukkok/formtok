@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { backgroundColors, borderColors } from '../../A-Datas/chartColors';
+import { backgroundColors, borderColors, commonCircleOptions } from '../../A-Datas/chartOptions';
 import chartDataLabels from 'chartjs-plugin-datalabels'
 
 ChartJS.register(ArcElement, Tooltip, Legend, chartDataLabels)
@@ -15,7 +15,7 @@ function PieChart({values = {}}) {
 		labels: labels,
 		datasets: [
 			{
-				label: [labels],
+				label: ' ',
 				data: datas,
 				backgroundColor: backgroundColors,
 				borderColor: borderColors,
@@ -24,33 +24,7 @@ function PieChart({values = {}}) {
 		],
 	}
 
-  const options = {
-    responsive: true,
-    plugins: {
-		legend: {
-			position: 'right',
-			labels: {
-				font: {
-					size: 14,
-				},
-				color: '#fff'
-			}
-		},
-		title: {
-			display: false,
-		},
-		datalabels : {
-			display: true,
-			color: '#fff', // 데이터 레이블 텍스트 색상
-			font: {
-				size: 15, // 폰트 크기
-			},
-			formatter: (value, context) => {
-				return `${value}` // 레이블 포맷 (예: 50%)
-			},
-		}
-    },
-  }
+  const options = {...commonCircleOptions}
 
   return (
       <Pie data={data} options={options} />
