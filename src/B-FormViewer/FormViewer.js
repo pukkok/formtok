@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { AnswerBoxAtom, endingMentAtom, pagesAtom, surveyListStyleSelector, surveyTitleAtom, surveyListStyleAtom, surveyOptionsAtom } from "../C-Recoils/surveyAtoms";
 import {FormCardWrapper} from "../B-FormEditor/Card/FormCards.styled"
@@ -96,44 +96,39 @@ function FormViewer() {
         }, {})
     }
 
-    const memoizedNewAnswerBox = useMemo(() => newAnswerBoxBuilder(pages), [pages])
-
     useEffect(() => {
-        if (pathname.includes('preview')) {
-            setAnswerBox(memoizedNewAnswerBox)
-            return
-        }
-    
-        const loadSubmitFormAction = async () => {
-            const { form, submittedAnswer } = await loadSubmitForm(surveyId)
-    
-            if (form) {
-                const { title, pages, endingMent, listStyle, options } = form
-                setTitle(title)
-                setPages(pages)
-                setEndingMent(endingMent)
-                setSurveyListStyle(listStyle)
-                setSurveyOptions(options)
-    
-                if (submittedAnswer) {
-                    return setAnswerBox(submittedAnswer)
+        if(pathname.includes('preview')){
+            const newAnswerBox = newAnswerBoxBuilder(pages)
+            setAnswerBox(newAnswerBox)
+        } else { 
+            const loadSubmitFormAction = async () => {
+                const { form, submittedAnswer } = await loadSubmitForm(surveyId)
+        
+                if (form) {
+                    const { title, pages, endingMent, listStyle, options } = form
+                    setTitle(title)
+                    setPages(pages)
+                    setEndingMent(endingMent)
+                    setSurveyListStyle(listStyle)
+                    setSurveyOptions(options)
+        
+                    if (submittedAnswer) {
+                        return setAnswerBox(submittedAnswer)
+                    }
+                    const newAnswerBox = newAnswerBoxBuilder(pages)
+                    return setAnswerBox(newAnswerBox)
+                } else {
+                    navigate('/form-list')
                 }
-    
-                // const newAnswerBox = newAnswerBoxBuilder(pages)
-                return setAnswerBox(memoizedNewAnswerBox)
-            } else {
-                navigate('/form-list')
             }
+            loadSubmitFormAction()
         }
-        loadSubmitFormAction()
-    }, [
-        surveyId, navigate, pathname,
+
+    }, [surveyId, navigate, pathname,
         setAnswerBox, setTitle, setPages, setEndingMent, setSurveyListStyle, setSurveyOptions,
-        loadSubmitForm // 의존성 배열에 추가된 loadSubmitForm
+        loadSubmitForm
     ])
     
-    
-
     const [currentIdx, setCurrentIdx] = useState(0)
     const moveLogs = useRef([0]) // 움직인 기록 남기기
     const moveToPrevPage = () => {

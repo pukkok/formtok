@@ -6,9 +6,9 @@ import ChartBox from "./ChartBox";
 import { BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon, PieIcon } from "../A-Components/Icons";
 import FormResultRightSidebar from "./FormResultRightSidebar";
 import ListBox from "./ListBox";
+import ExtraBox from "./ExtraBox";
 
 const StyledFormResult = styled.section`
-    /* padding: var(--pk-viewer-padding); */
     margin: 0px auto;
     position: relative;
     height: 100%;
@@ -50,10 +50,36 @@ const StyledFormResult = styled.section`
             height: calc(100% - 60px);
 
             .report-result{
-                padding: 10px;
+                padding: 20px;
                 border: solid 1px var(--pk-dark);
                 border-radius: 12px;
                 margin-bottom: 40px;
+
+                h3{
+                    display: flex;
+                    align-items: center;
+                    span{
+                        margin-left: auto;
+                        font-size: 14px;
+                        padding: 2px 4px;
+                        border: solid 1px var(--pk-charcoal);
+                    }
+                    margin-bottom: 20px;
+                }
+                
+                .chart-btns{
+                    display: flex;
+                    justify-content: flex-start;
+                    gap: 10px;
+                    button{
+                        width: 24px;
+                        height: 24px;
+                    }
+                    p{
+                        margin-left: auto;
+                    }
+                    margin-bottom: 16px;
+                }
             }
         }
     }
@@ -154,9 +180,11 @@ function FormResult () {
                         if(hasExtraOption) list = {...list, '기타': 0}
                         let values = null
                         let extras = []
+                        let count = 0
                         if(['객관식', '드롭다운'].includes(type)){
                             values = currentAnswers.reduce((acc, cur) => {
-                                const { answer, useExtra, extra } = cur.answers?.[pid]?.[qid]
+                                const { answer, useExtra, extra } = cur.answers[pid]?.[qid]
+                                count++
                                 if(useExtra){
                                     acc = {...acc, '기타' : acc['기타']+1}
                                     extras = [...extras, extra]
@@ -181,8 +209,9 @@ function FormResult () {
                                 <div>
                                     <h3>{qi+1}. {q || '제목없는 질문'} 
                                         {/* <span> | 응답 수: {currentAnswers.length}</span> */}
-                                        <span> | 타입 : {type}</span>
+                                        <span>{type}</span>
                                     </h3>
+                                    <div className="chart-btns">
                                     {['객관식', '객관식(복수 선택)', '드롭다운'].includes(type) 
                                     &&<>
                                     <button onClick={() => chartTypeSelector(qid, 'bar-vertical')}><BarIcon/></button>
@@ -191,7 +220,10 @@ function FormResult () {
                                     <button onClick={() => chartTypeSelector(qid, 'doughnut')}><DoughnutIcon/></button>
                                     <button onClick={() => chartTypeSelector(qid, 'line')}><LineIcon/></button>
                                     </>}
+                                    <p>응답 인원 {count}</p>
+                                    </div>
                                 </div>
+
                                 {['객관식', '객관식(복수 선택)', '드롭다운'].includes(type) &&
                                 <ChartBox 
                                     chartType={chartTypes[qid]}
@@ -205,13 +237,7 @@ function FormResult () {
                                     pid={pid}
                                     qid={qid}
                                 />}
-                                
-                                <div>
-                                    {extras.map((extra, idx) => {
-                                        return <p key={idx}>{extra}</p>
-                                    })}
-                                </div>
-                                        
+                                {extras.length > 0 && <ExtraBox extras={extras}/>}
                             </div>
                         )
                     })}
