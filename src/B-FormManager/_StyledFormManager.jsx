@@ -13,7 +13,7 @@ const SurveyManagerWrapper = styled.section`
             button {
                 padding: 8px 16px;
                 border-radius: 12px;
-                background-color: var(--pk-charcoal);
+                background-color: var(--pk-survey-card);
                 border: none;
                 cursor: pointer;
                 font-size: 14px;

@@ -23,7 +23,8 @@ const StyledFormList = styled.section`
             button {
                 padding: 8px 16px;
                 border-radius: 12px;
-                background-color: var(--pk-charcoal);
+                background-color: var(--pk-survey-card);
+                box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
                 border: none;
                 cursor: pointer;
                 font-size: 14px;

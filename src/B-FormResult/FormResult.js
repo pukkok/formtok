@@ -71,6 +71,7 @@ const StyledFormResult = styled.section`
             height: calc(100% - 60px);
 
             .report-result{
+                /* background-color: var(--pk-survey-card); */
                 padding: 20px;
                 border: solid 1px var(--pk-dark);
                 border-radius: 12px;

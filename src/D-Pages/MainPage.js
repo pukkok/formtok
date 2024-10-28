@@ -225,7 +225,9 @@ const ViewerWrapper = styled.div`
     transition: background-color .3s;
     background-color: var(--pk-second-background);
     overflow: scroll;  
-
+    &::-webkit-scrollbar{
+        display:none;
+    }
     --pk-viewer-padding: 20px 40px;
 `
 

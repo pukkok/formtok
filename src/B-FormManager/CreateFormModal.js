@@ -6,7 +6,7 @@ import { endingMentAtom, originalDataAtom, randomUrl, surveyListStyleAtom, surve
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
-const CreateFormModalWrapper = styled.dialog`
+const StyledCreateFormModal = styled.dialog`
     box-sizing: border-box;
     padding: 20px;
     border-radius: 12px;
@@ -142,7 +142,7 @@ function CreateFormModal ({token}, ref) {
     }
     
     return (
-    <CreateFormModalWrapper ref={ref} onKeyDown={enterClick} onClose={escCloseModal}>
+    <StyledCreateFormModal ref={ref} onKeyDown={enterClick} onClose={escCloseModal}>
         <div className="modal-content">
             <header>
                 <input placeholder="설문지 제목" 
@@ -161,7 +161,7 @@ function CreateFormModal ({token}, ref) {
                 <button onClick={closeModal}>닫기</button>
             </footer>
         </div>
-    </CreateFormModalWrapper>
+    </StyledCreateFormModal>
     )
 }
 

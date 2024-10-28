@@ -7,7 +7,7 @@ import SearchForm from "../A-Components/SearchForm";
 const StyledRightSidebar = styled.aside`
     transition: left .7s;
     transition-delay: .3s;
-    background-color: var(--pk-deep-dark);
+    background-color: var(--pk-second-background);
 
     width: 100%;
     height: 100vh;
@@ -20,14 +20,12 @@ const StyledRightSidebar = styled.aside`
         margin-bottom: 30px;
     }
 
-    
-
     &.side-bar-mode{ // 오른쪽 사이드 바
         transition: left .6s;
         transition-delay: 0s;
         left: calc(100% - 400px);
         padding: 0;
-        border-left: 1px solid var(--pk-charcoal);
+        border-left: 1px solid var(--pk-third-background);
         .action-box{
             padding: 10px 20px;
             width: 400px;
@@ -74,7 +72,7 @@ const StyledRightSidebar = styled.aside`
             padding: 16px 20px;
             border-radius: 8px;
             align-items: center;
-            background-color: var(--pk-dark);
+            background-color: var(--pk-survey-card);
             margin-bottom: 16px;
             gap: 20px;
 
@@ -95,6 +93,7 @@ const StyledRightSidebar = styled.aside`
 
         .active{
             background-color: var(--pk-point);
+            color: var(--pk-light-grey);
         }
 
         & > div:not(.head){
