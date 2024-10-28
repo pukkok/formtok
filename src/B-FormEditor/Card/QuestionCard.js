@@ -5,7 +5,6 @@ import usePageActions from "../../C-Hooks/usePageActions";
 import { FormCardWrapper, QuestionOptionsWrapper } from "./FormCards.styled";
 import classNames from "classnames";
 import DropDown from "../../A-Components/DropDown";
-import { Icon } from "../../A-Components/Icons";
 import ToggleButton from "../../A-Components/ToggleButton";
 import MoreVert from "../../A-Components/MoreVert";
 import DescriptionEditor from "../../A-Components/DescriptionEditor";
@@ -23,10 +22,28 @@ function QuestionCard ({pi, qi}) {
     const listStyle = getListStyle(qi) // 리스트 스타일을 가져와서 변경함
 
     // 질문 타입 변경
-    const [typeIcon, setTypeIcon] = useState('format_list_numbered')
+
+    const typeIconSelector = (type) => {
+        switch(type) {
+            case '서술형' : return 0
+            case '단답형' : return 1
+            case '객관식' : return 2
+            case '객관식(복수 선택)' : return 3
+            case '드롭다운' : return 4
+            case '날짜' : return 5
+            case '시간' : return 6
+            case '날짜 + 시간' : return 7
+            case '표형' : return 8
+            case '점수 선택형' : return 9
+            default : return 2
+        }
+    }
+
+    const [typeIconIdx, setTypeIconIdx] = useState(typeIconSelector(selectedQuestion.type))
+
     const changeQTypeAction = (pi, qi, style, icon) => {
         changeQType(pi, qi, style)
-        setTypeIcon(icon)
+        setTypeIconIdx(icon)
     }
 
     const usedCheck = (toggle, pi, qi) => {
@@ -43,11 +60,11 @@ function QuestionCard ({pi, qi}) {
         onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}>
     
             <QuestionOptionsWrapper className="question-options-wrapper">
-                <DropDown initialItem={<><Icon code={typeIcon}/>{selectedQuestion.type}</>} style={{minWidth : '230px'}}>
-                {questionList.map(qs => {
-                    return <li key={qs.form}>
-                        <button onClick={()=>changeQTypeAction(pi, qi, qs.form, qs.code)}>
-                        <Icon code={qs.code}/>{qs.form}
+                <DropDown initialItem={<>{questionList[typeIconIdx].icon}{selectedQuestion.type}</>} style={{minWidth : '230px'}}>
+                {questionList.map((qs, idx) => {
+                    return <li key={qs.type}>
+                        <button onClick={()=>changeQTypeAction(pi, qi, qs.type, idx)}>
+                        {qs.icon}{qs.type}
                         </button>
                     </li>
                 })}

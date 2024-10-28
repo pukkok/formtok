@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { AddCircleIcon, Icon } from "../A-Components/Icons"
+import { Icon } from "../A-Components/Icons"
 import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalDataAtom } from "../C-Recoils/surveyAtoms"
 import { useSetRecoilState } from "recoil"
 import { SurveyManagerWrapper } from "./_StyledFormManager"
@@ -10,6 +10,8 @@ import classNames from "classnames"
 import usePageActions from "../C-Hooks/usePageActions"
 import CreateFormModal from "./CreateFormModal"
 import dayjs from "dayjs"
+
+import { IoMdAddCircle } from "react-icons/io";
 
 function FormManager() {
     const navigate = useNavigate()
@@ -155,7 +157,7 @@ function FormManager() {
                 {/* 설문 생성 버튼 */}
                 <div className="card">
                     <button className="create-survey-button" onClick={openModal}>
-                        <AddCircleIcon />
+                        <IoMdAddCircle />
                     </button>
                 </div>
 

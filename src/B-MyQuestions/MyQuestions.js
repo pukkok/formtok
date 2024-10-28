@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import questionForms from "../A-Datas/questionList";
+import questionList from "../A-Datas/questionList";
 import MyQuestionsWrapper from "./_StyledMyQuestions";
 import { Icon } from "../A-Components/Icons";
 import useAxios from "../C-Hooks/useAxios";
@@ -70,7 +70,7 @@ function MyQuestions(){
         {searchedFAQs.length > 0 ? 
         searchedFAQs.map((faq, idx) => {
             const {q, options, type} = faq
-            const form = questionForms.find(x => x.form === type)
+            const form = questionList.find(x => x.type === type)
             return (
             <label key={idx} className="card">
                 <div className="check-box">

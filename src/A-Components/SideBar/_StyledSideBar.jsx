@@ -48,10 +48,13 @@ const SideBarWrapper = styled.aside`
         }
 
         .arrow{ // 화살표 아이콘
+          display: flex;
+          justify-content: center;
+          align-items: center;
           margin-left: auto;
           transition: all .2s;
           &.open{
-            rotate: -180deg;
+            rotate: 180deg;
           }
         }
 
@@ -114,9 +117,6 @@ const SideBarWrapper = styled.aside`
         display: flex;
         gap: 12px;
         align-items: center;
-        span {
-          font-size: 44px;
-        }
 
         & > div {
           h4 {

@@ -142,8 +142,7 @@ const SurveyManagerWrapper = styled.section`
             }
         }
         svg{
-            width: 56px;
-            height: 56px;
+            font-size: 60px;
 
             path{
                 fill: #CDCDCD;

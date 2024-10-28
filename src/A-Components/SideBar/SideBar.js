@@ -12,7 +12,8 @@ import useSwitchPage from "../../C-Hooks/useSwitchPage";
 import { endingMentAtom, originalDataAtom, pagesAtom, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../C-Recoils/surveyAtoms";
 import _ from 'lodash'
 import PagesChangeAlertModal from "./PagesChangeAlertModal";
-
+import { FaAngleDown } from "react-icons/fa";
+import { VscAccount } from "react-icons/vsc";
 function SideBar ({logo}) {
     const {pathname} = useResolvedPath()
 
@@ -144,16 +145,16 @@ function SideBar ({logo}) {
             </div>
             <ul className="depth1">
             {sidebarNavs.map((list, idx) => {
-                const {text, code, path, depth2} = list
+                const {text, icon, path, depth2} = list
                 return <li key={text}
                 className={classNames({
                 toggle : depth2 && openDepth2.includes(idx), 
                 active : active['depth1'] === idx})}>
-                    <button onClick={()=>depth1Click(idx, path)}>
-                    <Icon code={code}/>{text}
-                    
-                    {depth2 && //애로우 버튼
-                    <Icon className={classNames('arrow', {open : openDepth2.includes(idx)})} code={'keyboard_arrow_up'}/>}
+                    <button onClick={() => depth1Click(idx, path)}>
+                        {icon} {text}
+                        {depth2 && <span className={classNames('arrow', {open : openDepth2.includes(idx)})}>
+                        <FaAngleDown />
+                        </span>}
                     </button>
                     
                     {depth2 &&
@@ -162,13 +163,15 @@ function SideBar ({logo}) {
                         (depth2.length * 40 + (depth2.length-1) * 5)+'px' : 0}}
                     >
                         {depth2.map((item, idx2) => {
-                            const {text, path, code} = item
-                            return <li key={text} 
-                            className={classNames({active : active['depth2'] === idx2})}>
-                                <button onClick={()=>depth2Click(idx2, path)}>
-                                    <Icon code={code}/>{text}
-                                </button>
+                            const {text, path, icon} = item
+                            return (
+                                <li key={text} 
+                                className={classNames({active : active['depth2'] === idx2})}>
+                                    <button onClick={()=>depth2Click(idx2, path)}>
+                                    {icon} {text}
+                                    </button>
                                 </li>
+                            )
                         })}
                     </ul>}
                 </li>
@@ -181,7 +184,7 @@ function SideBar ({logo}) {
             </div>
             <div className="user-info-wrapper">
                 <div className="user-info">
-                    <Icon code={'account_circle'}/>
+                    <VscAccount fontSize={'34px'}/>
                     <div>
                         <h4>{userInfo ? userInfo.userId : '비회원'}</h4>
                         <p>{userInfo ? userInfo.email && userInfo.email : '이메일 없음'}</p>

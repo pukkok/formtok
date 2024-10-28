@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { jwtDecode } from "jwt-decode";
 import useAxios from "../C-Hooks/useAxios";
-import { Icon } from "./Icons";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineCached } from "react-icons/md";
 
 const StyledLogo = styled.div`
     width: 280px;
@@ -137,7 +137,7 @@ function Logo({src, isExpiredToken}) {
                 </p>
             </div>
             <button className="renew" onClick={() => refreshAuthToken(token)}>
-            <Icon code={'cached'}/>    
+            <MdOutlineCached />
             </button>
         </StyledLogo>
     )
