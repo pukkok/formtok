@@ -169,7 +169,7 @@ function SideBar () {
           <div className="switch-box">
               <SwitchScreenModeBtn />
           </div>
-        <UserInfo />
+        <UserInfo userInfo={userInfo}/>
         </footer>
           
       </main> :

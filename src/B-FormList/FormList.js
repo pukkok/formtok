@@ -7,49 +7,12 @@ import { useNavigate } from "react-router-dom";
 import useAxios from "../C-Hooks/useAxios";
 import { useSetRecoilState } from "recoil";
 import { pagesAtom } from "../C-Recoils/surveyAtoms";
-import classNames from "classnames";
+import SearchFilter from "../A-Components/SearchFilter";
 
 const StyledFormList = styled.section`
     padding: var(--pk-viewer-padding);
     margin: 0 auto;
     /* max-width: var(--pk-board-container); */
-
-    header{
-        div{
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-            
-            button {
-                padding: 8px 16px;
-                border-radius: 12px;
-                background-color: var(--pk-survey-card);
-                box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-                border: none;
-                cursor: pointer;
-                font-size: 14px;
-                color: var(--pk-dark-grey);
-
-                &:hover, &.active {
-                    background-color: var(--pk-point);
-                    color: #fff;
-                    &.stop{
-                        background-color: #ff6961;
-                    }
-                    &.noLogin{
-                        background-color: #ffd700;
-                    }
-                    &.working{
-                        background-color: #77dd77;
-                    }
-                    &.faq{
-                        background-color: #779ecb;
-                    }
-                }
-            }
-        }
-    }
-
 
     .template-box{
         margin-top: 30px;
@@ -124,7 +87,7 @@ const StyledFormList = styled.section`
         }
     }
 `
-
+/** 결과 확인 */
 function FormList () {
 
     const { loadAllForms } = useAxios()
@@ -201,27 +164,17 @@ function FormList () {
 
     const filters = [
         {work : null, text: '전체'},
-        {work : 'faq', text: 'FAQ'},
-        {work : 'noLogin', text: '비로그인'},
-        {work : 'working', text: '진행중인 설문'},
-        {work : 'stop', text: '종료된 설문'}
+        {work : 'faq', text: 'FAQ', bgColor: "#779ecb"},
+        {work : 'noLogin', text: '비로그인', bgColor: "#ffd700"},
+        {work : 'working', text: '진행중인 설문', bgColor: "#77dd77"},
+        {work : 'stop', text: '종료된 설문', bgColor: "#ff6961"}
     ]
-    
 
     return (
         <StyledFormList>
             <header>
             <SearchForm placeholder="제목으로 검색" handleClick={search}/>
-            <div>
-                {filters.map(filter => {
-                    const {work, text} = filter
-                    return <button 
-                        key={text} 
-                        className={classNames(work, {active: active === work})}
-                        onClick={() => filtering(work)}
-                    >{text}</button>
-                })}
-            </div>
+            <SearchFilter filters={filters} fitering={filtering} active={active} />
             </header>
 
 

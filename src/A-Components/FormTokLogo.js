@@ -119,7 +119,7 @@ function FormTokLogo ({boxSize = 200, modeFix=null}) {
     }
 
     start()
-  },[boxSize, mode])
+  },[boxSize, mode, modeFix])
 
   return <canvas ref={canvasRef}></canvas>
 }

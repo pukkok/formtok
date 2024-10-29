@@ -12,6 +12,7 @@ import CreateFormModal from "./CreateFormModal"
 import dayjs from "dayjs"
 
 import { IoMdAddCircle } from "react-icons/io";
+import SearchFilter from "../A-Components/SearchFilter"
 
 function FormManager() {
     const navigate = useNavigate()
@@ -126,30 +127,17 @@ function FormManager() {
     // 필터 옵션
     const filters = [
         { work: null, text: '전체' },
-        { work: 'making', text: '작성 중' },
-        { work: 'ready', text: '설문 시작 전' },
-        { work: 'working', text: '설문 진행 중' },
-        { work: 'stop', text: '설문 종료' }
+        { work: 'making', text: '작성 중', bgColor: '#779ecb' },
+        { work: 'ready', text: '설문 시작 전', bgColor: '#ffd700'},
+        { work: 'working', text: '설문 진행 중', bgColor: '#77dd77' },
+        { work: 'stop', text: '설문 종료', bgColor: '#ff6961' }
     ]
 
     return (
         <SurveyManagerWrapper>
             <header>
-                {/* 검색창 */}
                 <SearchForm placeholder="제목으로 검색" handleClick={search} />
-
-                {/* 필터 버튼 */}
-                <div>
-                    {filters.map(({ work, text }) => (
-                        <button
-                            key={text}
-                            className={classNames(work, { active: active === work })}
-                            onClick={() => filtering(work)}
-                        >
-                            {text}
-                        </button>
-                    ))}
-                </div>
+                <SearchFilter filters={filters} fitering={filtering} active={active}/>
             </header>
 
             {/* 설문 목록 표시 */}

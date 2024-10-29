@@ -36,15 +36,13 @@ const StyledUserInfo = styled.div`
   }
 `
 
-function UserInfo () {
+function UserInfo ({userInfo}) {
 
-  const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
   const navigate = useNavigate()
   const location = useLocation()
   const logout = () => {
     alert('로그아웃 되었습니다.')
     localStorage.clear()
-    setUserInfo(null)
     navigate('/')
   }
 
