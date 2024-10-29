@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { switchTheScreenAtom } from "../C-Recoils/screenAtom";
 import classNames from "classnames";
+import FormTokLogo from "./FormTokLogo";
 
 const PageSwitcherWrapper = styled.section`
     position: fixed;
@@ -58,11 +59,11 @@ const PageSwitcherWrapper = styled.section`
 `
 
 
-function PageSwitcher ({ mode, logo }) {
+function PageSwitcher ({ mode }) {
     const switchTheScreen = useRecoilValue(switchTheScreenAtom)
 
     return <PageSwitcherWrapper className={classNames({dark : mode === 'dark', switching: switchTheScreen==='go'})}>
-        <img src={logo} alt="로고"/>
+        <FormTokLogo boxSize={180}/>
     </PageSwitcherWrapper>
 }
 

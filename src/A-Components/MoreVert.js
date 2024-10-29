@@ -4,7 +4,7 @@ import classNames from "classnames"
 import { Icon } from "./Icons"
 import styled from "styled-components"
 
-const StyledMoreVertWrapper = styled.div`
+const StyledMoreVert = styled.div`
     &.more-vert-wrapper{
         z-index: 10;
         position: relative;
@@ -59,7 +59,7 @@ function MoreVert({ children, autoClose=true, addOptionClass }) {
     const { isOpen, setIsOpen, ref } = useOutsideClick(false)
 
     return (
-        <StyledMoreVertWrapper className="more-vert-wrapper" ref={ref}>
+        <StyledMoreVert className="more-vert-wrapper" ref={ref}>
             <button onClick={() => setIsOpen(!isOpen)}>
                 <Icon code={'more_vert'}/>
             </button>
@@ -68,7 +68,7 @@ function MoreVert({ children, autoClose=true, addOptionClass }) {
             className={classNames({ on: isOpen }, {[addOptionClass] : addOptionClass}, 'options')}>
                 {children}
             </div>
-        </StyledMoreVertWrapper>
+        </StyledMoreVert>
     )
 }
 

@@ -13,25 +13,19 @@ import FormList from './B-FormList/FormList';
 import PageSwitcher from './A-Components/PageSwitcher';
 import { useRecoilValue } from 'recoil';
 import { modeAtom } from './C-Recoils/screenAtom';
-import whiteModeLogo from './A-Imgs/formtok-logo.png'
-import darkModeLogo from './A-Imgs/formtok-logo-white.png'
-import { useState, useEffect } from 'react';
 import FormResult from './B-FormResult/FormResult';
+import FormTokLogo from './A-Components/FormTokLogo';
 
 function App() {
 
   const mode = useRecoilValue(modeAtom)
-  const [logo, setLogo] = useState(darkModeLogo)
-  useEffect(() => {
-      mode === 'dark' ? setLogo(darkModeLogo) : setLogo(whiteModeLogo)
-  }, [mode])
 
   return (
     <>
-      <PageSwitcher mode={mode} logo={logo}/>
+      <PageSwitcher mode={mode} />
       <Routes>
         <Route path='/' element={<HomePage/>}/>
-        <Route element={<MainPage mode={mode} logo={logo}/>}>
+        <Route element={<MainPage mode={mode} />}>
           <Route path='my-form'>
             <Route path='manager' element={<FormManager/>}/>
             <Route path='edit/:surveyId' element={<FormEditor/>}/>
@@ -47,7 +41,7 @@ function App() {
         <Route path='user'>
           <Route path='login' element={<LoginPage/>}/>
         </Route>
-        {/* <Route path='test' element={<BarChartExample />}></Route> */}
+        <Route path='test' element={<FormTokLogo />}></Route>
       </Routes>
     </>
   )

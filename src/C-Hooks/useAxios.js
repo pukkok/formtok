@@ -13,7 +13,7 @@ const useAxios = () => {
     const refreshAuthToken = async (oldToken) => {
         try {
             const { data } = await axios.post('/refresh-token', {}, 
-                {headers : {'Authorization' : `Bearer ${oldToken}`}} // 헤더
+                {headers : {'Authorization' : `Bearer ${oldToken}`}} 
             )
             const newToken = data.token
             // 새로운 토큰을 로컬 스토리지에 저장하거나 다른 방식으로 관리
@@ -22,8 +22,6 @@ const useAxios = () => {
             return newToken
         } catch (error) {
             alert('로그인 상태가 아닙니다.')
-            // console.error('토큰 갱신 실패', error)
-            // localStorage.clear()
         }
     }
 
@@ -186,12 +184,16 @@ const useAxios = () => {
         const question = pages[pi].questions[qi]
         const id = randomKey()
         const {q, d: description, type, options, hasExtraOption} = question
-        const { data } = await axios.post('/form/question/save', 
-            { id, q, description, type, options, hasExtraOption},
-            {headers : {'Authorization' : `Bearer ${token}`}}
-        )
-        if(data.code === 200){
-            console.log('문항 저장 성공')
+        try{
+            const { data } = await axios.post('/form/question/save', 
+                { id, q, description, type, options, hasExtraOption},
+                {headers : {'Authorization' : `Bearer ${token}`}}
+            )
+            if(data.code === 200){
+                console.log('문항 저장 성공')
+            }
+        } catch (error) {
+
         }
     }
 
@@ -230,7 +232,7 @@ const useAxios = () => {
                 alert('불러올 데이터가 없습니다.')
                 return false
             }
-        }catch(err){
+        }catch(error){
             return console.log('전체 설문지 불러오기 실패')
         }
     }, [])
@@ -240,15 +242,10 @@ const useAxios = () => {
             const {data} = await axios.post(`/form/submit-form/?url=${url}`, {},
                 {headers : {'Authorization' : `Bearer ${token}`}}
             )
-            if(data.code === 200){
-                return data
-            }else{
-                alert(data.msg)
-                return false
-            }
-
-        }catch(err){
-            return console.log('선택한 설문지 불러오기 실패')
+            return data
+        }catch(error){
+            alert(error.response.data.msg)
+            return false
         }
     },[token])
 

@@ -13,7 +13,7 @@ import PagesChangeAlertModal from "./PagesChangeAlertModal";
 import { FaAngleDown } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import SideBarHeader from "./SidebarHeader";
-function SideBar ({logo}) {
+function SideBar () {
   const {pathname} = useResolvedPath()
 
   const [isSideOpen, setIsSideOpen] = useRecoilState(isSideOpenAtom)
@@ -128,7 +128,7 @@ function SideBar ({logo}) {
     <SideBarWrapper>
       {isSideOpen ? 
       <main className="tabs">
-        <SideBarHeader src={logo} isExpiredToken={setIsExpiredToken}/>
+        <SideBarHeader isExpiredToken={setIsExpiredToken}/>
         
           <ul className="depth1">
           {sidebarNavs.map((list, idx) => {

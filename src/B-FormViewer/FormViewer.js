@@ -103,7 +103,7 @@ function FormViewer() {
         } else { 
             const loadSubmitFormAction = async () => {
                 const { form, submittedAnswer } = await loadSubmitForm(surveyId)
-                console.log('e')
+
                 if (form) {
                     const { title, pages, endingMent, listStyle, options } = form
                     setTitle(title)

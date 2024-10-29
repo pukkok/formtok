@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import useAxios from "../../C-Hooks/useAxios";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCached } from "react-icons/md";
+import FormTokLogo from "../FormTokLogo";
 
 const StyledSidebarHeader = styled.header`
   width: 280px;
@@ -59,7 +60,7 @@ const StyledSidebarHeader = styled.header`
   }
 `
 
-function SideBarHeader({src, isExpiredToken}) {
+function SideBarHeader({isExpiredToken}) {
     const [timeLeft, setTimeLeft] = useState("0시간 00분")
     const intervalRef = useRef(null) // setInterval의 ID를 저장하는 ref
     const token = localStorage.getItem('token')
@@ -127,9 +128,7 @@ function SideBarHeader({src, isExpiredToken}) {
 
     return (
         <StyledSidebarHeader>
-            <div className="img-box">
-                <img src={src} alt="" />
-            </div>
+            <FormTokLogo boxSize={48}/>
             <div className="timer">
                 <h1>폼톡</h1>
                 <p>만료 시간: {timeLeft}

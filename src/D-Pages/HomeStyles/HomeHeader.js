@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from '../../A-Imgs/formtok-logo-white.png'
 import { Link, useNavigate } from 'react-router-dom';
 import useSwitchPage from '../../C-Hooks/useSwitchPage';
+import FormTokLogo from '../../A-Components/FormTokLogo';
 
 const StyledHeader = styled.header`
     width: 100%;
@@ -32,12 +32,7 @@ const StyledHeader = styled.header`
     .logo {
         display: flex;
         align-items: center;
-        img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-            filter: drop-shadow(0 0 24px var(--pk-charcoal));
-        }
+        gap: 10px;
         h1 {
             font-size: 28px;
             color: var(--pk-light-grey);
@@ -97,7 +92,7 @@ function HomeHeader() {
         <StyledHeader>
             <nav>
                 <div className="logo" onClick={()=>navigate('/')}>
-                    <img src={logo} alt="폼톡 로고" />
+                    <FormTokLogo boxSize={40} modeFix={'white'}/>
                     <h1>폼톡</h1>
                 </div>
                 <ul>

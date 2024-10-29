@@ -176,8 +176,6 @@ function FormTokLoading({width = window.innerWidth, height = window.innerHeight,
             if(isFinish){
                 cancelAnimationFrame(animationFrameId)
                 setFinish && setFinish(true)
-
-                // console.log(bigBalloon.x, smallBalloon.x)
             }
         }
 
