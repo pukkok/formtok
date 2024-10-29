@@ -2,9 +2,11 @@ import React from "react";
 import { RadioButton } from "../../A-Components/MultipleButton";
 import useAnswerActions from "../../C-Hooks/useAnswerActions";
 
+/** 객관식 정답 */
 function SelectOne ({ ...props }) {
 
     const {answerBox, options=[], pageId, questionId, hasExtraOption} = props
+    console.log(answerBox)
     const { answerPick, extraPick, extraInValue } = useAnswerActions()
     return <>
         {options.map(option => {

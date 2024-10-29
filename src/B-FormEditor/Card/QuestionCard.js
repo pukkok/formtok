@@ -22,7 +22,6 @@ function QuestionCard ({pi, qi}) {
     const listStyle = getListStyle(qi) // 리스트 스타일을 가져와서 변경함
 
     // 질문 타입 변경
-
     const typeIconSelector = (type) => {
         switch(type) {
             case '서술형' : return 0

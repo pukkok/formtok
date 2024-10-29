@@ -2,49 +2,47 @@ import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 const StyledModal = styled.dialog`
-    box-sizing: border-box;
-    padding: 20px;
-    border-radius: 12px;
-    border: solid 2px var(--pk-point);
-    background-color: var(--pk-modal-background);
-    color: var(--pk-modal-font);
-    & > div{
-        width: 340px;
-        height: 140px;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 12px;
+  border: solid 2px var(--pk-point);
+  background-color: var(--pk-modal-background);
+  color: var(--pk-modal-font);
+  & > div{
+    width: 340px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
 
-        display: flex;
-        flex-direction: column;
-    
-        h5{
-            font-size: 17px;
-            line-height: 1.6;
-        }
-
-        .btns{
-            border-top: 1px solid var(--pk-modal-border-top);
-            padding-top: 10px;
-            margin-top: auto;
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-
-            button{
-                border-radius: 8px;
-                padding: 6px 16px;
-                color: #fff;
-                font-weight: bold;
-                &:nth-child(1){
-                    background-color: #ff6961;
-                }
-                background-color: var(--pk-point-hover);
-
-                &:hover{
-                    background-image: linear-gradient(rgba(0,0,0, .1), rgba(0,0,0, .1));
-                }
-            }
-        }
-    
+    h5{
+      font-size: 17px;
+      line-height: 1.6;
     }
+
+    .btns{
+      border-top: 1px solid var(--pk-modal-border-top);
+      padding-top: 10px;
+      margin-top: auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+
+      button{
+        border-radius: 8px;
+        padding: 6px 16px;
+        color: #fff;
+        font-weight: bold;
+        &:nth-child(1){
+            background-color: #ff6961;
+        }
+        background-color: var(--pk-point-hover);
+
+        &:hover{
+            background-image: linear-gradient(rgba(0,0,0, .1), rgba(0,0,0, .1));
+        }
+      }
+    }
+  }
 `
 
 function PagesChangeAlertModal ({next}, ref) {

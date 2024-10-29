@@ -105,38 +105,6 @@ const SideBarWrapper = styled.aside`
       & > .switch-box{
         display: flex;
         justify-content: center;
-        /* border: solid 1px red; */
-      }
-    }
-    .user-info-wrapper {
-      border-top: solid 1px var(--pk-user-info-border-top);
-      padding-top: 20px;
-      display: flex;
-
-      & > .user-info {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-
-        & > div {
-          h4 {
-            color: var(--pk-light-grey); // 유저이름
-          }
-          p {
-            font-size: 14px;
-            color: var(--pk-silver); // 이메일
-          }
-        }
-      }
-
-      button {
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        &:hover {
-          color: var(--pk-loginout);  //포인트 컬러
-        }
       }
     }
   }
