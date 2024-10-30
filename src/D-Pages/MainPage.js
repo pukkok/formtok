@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { gridAtom, isSideOpenAtom } from "../C-Recoils/screenAtom";
 import { Icon } from "../A-Components/Icons";
 import classNames from "classnames";
+import { IoIosArrowBack } from "react-icons/io";
 
 const MainPageWrapper = styled.section`
     display: grid;
@@ -216,9 +217,8 @@ const MainPageWrapper = styled.section`
         --pk-dropdown-btn-active-border: var(--pk-silver);
         --pk-dropdown-list-hover-bg: var(--pk-charcoal);
     }
-
-
 `
+
 
 const ViewerWrapper = styled.div`
     grid-area: viewer;
@@ -229,6 +229,21 @@ const ViewerWrapper = styled.div`
         display:none;
     }
     --pk-viewer-padding: 20px 40px;
+`
+
+const sideCloseBtn = styled.button`
+  position: absolute;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  left: 304px;
+  top: 100px;
+  z-index: 200;
+  opacity: 0;
 `
 
 function MainPage({ mode, logo }) {
@@ -252,9 +267,17 @@ function MainPage({ mode, logo }) {
     return <MainPageWrapper style={screenRatio}
     className={classNames({'darkmode': mode === 'dark'})}>
         <SideBar logo={logo}/>
-        {<button 
+        {/* <button 
             className={classNames("side-close-btn", {show: isSideOpen})} 
-            onClick={sideOpener}><Icon code={'chevron_left'}/></button>}
+            onClick={sideOpener}>
+                <IoIosArrowBack />
+        </button> */}
+        <sideCloseBtn 
+            className={classNames("side-close-btn", {show: isSideOpen})} 
+            onClick={sideOpener}>
+                <IoIosArrowBack />
+                {/* <Icon code={'chevron_left'}/> */}
+        </sideCloseBtn>
         <ViewerWrapper>
             <Outlet/>
         </ViewerWrapper>
