@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxios from "../C-Hooks/useAxios";
-import { LoginForms, JoinForms } from "../A-Datas/loginForms";
+
+import { initialLoginInput, initialJoinInput, LoginForms, JoinForms, smallLoginInfos } from "../A-Datas/loginForms";
+
 import LoginPageWrapper from "./LoginStyles/StyledLoginPageWrapper";
-import { LargeBox, SmallBox, SmallBoxWrapper } from "./LoginStyles/StyledLoginBoxes";
+import { LargeBox } from "./LoginStyles/StyledLargeBox";
+import {StyledSmallBox, StyledSmallBoxWrapper } from "./LoginStyles/StyledSmallBox";    
 import { LoginForm } from "./LoginStyles/StyledLoginForm";
 
 function LoginPage () {
     const navigate = useNavigate()
     const location = useLocation()
     
-    const [loginInputs, setLoginInputs] = useState({userId: '', password: ''})
-    const [joinInputs, setJoinInputs] = useState({name: '', userId: '', email: '', otp:'', phone: '', password: '', confirmPassword : ''})
+    const [loginInputs, setLoginInputs] = useState(initialLoginInput)
+    const [joinInputs, setJoinInputs] = useState(initialJoinInput)
     const [capsLockActive, setCapsLockActive] = useState(false) // Caps Lock 상태
     const [focusedInput, setFocusedInput] = useState('') // 포커스 상태
     const { login, join, idDupCheck, sendOtp, verifyOtp } = useAxios()
@@ -23,11 +26,11 @@ function LoginPage () {
     const changeForm = (form) => { // 폼 변형시 입력데이터 초기화
         setActiveForm(form)
         if(form === 'login'){
-            setJoinInputs({name: '', userId: '', email: '', otp:'', phone: '', password: '', confirmPassword : ''})
+            setJoinInputs(initialJoinInput)
             setPass({userId: false, email : false})
             setHideOtp(true)
         }
-        if(form === 'join') setLoginInputs({userId: '', password: ''})
+        if(form === 'join') setLoginInputs(initialLoginInput)
     }
 
     // 타이핑 입력
@@ -182,22 +185,21 @@ function LoginPage () {
             </LoginForm>
         </LargeBox>
 
-        <SmallBoxWrapper>
-            <SmallBox className={classNames(
-                {show: activeForm==='join'},
-                {hide: activeForm==='login'}
-            )}>
-            <p>이미 회원이신가요?</p>
-            <button onClick={()=>changeForm('login')}>로그인</button>
-            </SmallBox>
-            <SmallBox className={classNames(
-                {active: activeForm === 'login'},
-                {hide: activeForm==='join'}
-            )}>
-            <p>아직 회원이 아니신가요?</p>
-            <button onClick={()=>changeForm('join')}>회원가입</button>
-            </SmallBox>
-        </SmallBoxWrapper>
+        <StyledSmallBoxWrapper>
+            {smallLoginInfos.map(info => {
+                const {formType, pText, buttonText} = info
+                return <StyledSmallBox 
+                    key={buttonText}
+                    className={classNames(
+                        {show: activeForm !== formType},
+                        {hide: activeForm === formType}
+                    )}
+                >
+                <p>{pText}</p>
+                <button onClick={()=>changeForm(formType)}>{buttonText}</button>
+                </StyledSmallBox>
+            })}
+        </StyledSmallBoxWrapper>
     </LoginPageWrapper>
     )
 }

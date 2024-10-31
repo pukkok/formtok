@@ -59,7 +59,7 @@ function usePageActions () {
     }
     
     // 페이지 위치변경
-    const changePLocation = (dragPi, dropPi) => {
+    const changePageLocation = (dragPi, dropPi) => {
         let newPages = [...pages]
         const [removedPage] = newPages.splice(dragPi, 1)
         newPages.splice(dropPi, 0, removedPage)
@@ -549,7 +549,7 @@ function usePageActions () {
     return { 
         createPage,
         loadPages, // 설문지 불러오기
-        changePLocation, changeQLocation, // 위치변경 드래그앤드롭
+        changePageLocation, changeQLocation, // 위치변경 드래그앤드롭
         changePTitle, changePDescription, // 페이지 내용변경
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,

@@ -8,7 +8,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, chartDataLabels)
 
 function PieChart({values = {}}) {
 	const labels = Object.keys(values)
-    const datas = Object.values(values)
+	const datas = Object.values(values)
 
 	const data = {
 		responsive: true, // 반응형으로 차트를 설정

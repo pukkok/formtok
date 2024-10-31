@@ -3,25 +3,25 @@ import styled from 'styled-components'
 import { Icon } from '../1-Components/Icons'
 
 const StyledTableEditor = styled.div`
-    table {
-        max-width: 756px;
-        width: 100%;
-        border-collapse: collapse;
-        td, th {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-        }
-        input {
-            max-width: fit-content;
-            width: 100%;
-            border: none;
-            text-align: center;
-        }
+  table {
+    max-width: 756px;
+    width: 100%;
+    border-collapse: collapse;
+    td, th {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center;
     }
-    button {
-        margin: 10px;
+    input {
+      max-width: fit-content;
+      width: 100%;
+      border: none;
+      text-align: center;
     }
+  }
+  button {
+    margin: 10px;
+  }
 `
 
 const TableEditor = () => {
