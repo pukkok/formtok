@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import { useRecoilValue, useRecoilState } from "recoil";
-import { pagesAtom, endingMentAtom, activeCardAtom, surveyListStyleSelector } from "../../Recoils/surveyAtoms";
+import { pagesAtom, activeCardAtom } from "../../Recoils/surveyAtoms";
 
 import usePageActions from "../../Hooks/usePageActions";
 import classNames from "classnames";
-import { FormCardWrapper, QuestionOptionsWrapper } from "./FormCards.styled";
-import questionForms from '../../C3-Datas/questionList'
-
-import QuestionForm from "../QuestionForm";
-
+import { FormCardWrapper } from "./FormCards.styled";
 import DescriptionEditor from "../../1-Components/DescriptionEditor";
-import ToggleButton from '../../1-Components/ToggleButton'
-import DropDown from "../../1-Components/DropDown";
-import MoreVert from "../../1-Components/MoreVert";
-import { Icon } from "../../1-Components/Icons";
 
 function PageCard({pi}) {
     const pages = useRecoilValue(pagesAtom)

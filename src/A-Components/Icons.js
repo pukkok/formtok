@@ -206,5 +206,7 @@ function LineIcon() {
 }
 
 
-export { Icon, TableIcon, 
+export { 
+    Icon, 
+    TableIcon, 
     PieIcon, BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon }

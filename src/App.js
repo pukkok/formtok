@@ -1,16 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import LoginPage from './D-Pages/LoginPage';
-import MainPage from './D-Pages/MainPage'
+import MainPage from './MainPage/MainPage';
+import LoginPage from './LoginPage/LoginPage';
+
+import DashBoardPage from './D-Pages/DashBoardPage'
 import FormManager from './B-FormManager/FormManager';
 import FormEditor from './B-FormEditor/FormEditor';
 import FormViewer from './B-FormViewer/FormViewer';
 import Setting from './B-Setting/Setting';
 import NotFoundPage from './D-Pages/NotFoundPage';
-import HomePage from './D-Pages/HomePage';
 import MyQuestions from './B-MyQuestions/MyQuestions';
 import FormList from './B-FormList/FormList';
-import PageSwitcher from './A-Components/PageSwitcher';
+import PageSwitcher from './A-Components/PageSwitch/PageSwitcher';
 import { useRecoilValue } from 'recoil';
 import { modeAtom } from './C-Recoils/screenAtom';
 import FormResult from './B-FormResult/FormResult';
@@ -24,8 +25,8 @@ function App() {
     <>
       <PageSwitcher mode={mode} />
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route element={<MainPage mode={mode} />}>
+        <Route path='/' element={<MainPage/>}/>
+        <Route element={<DashBoardPage mode={mode} />}>
           <Route path='my-form'>
             <Route path='manager' element={<FormManager/>}/>
             <Route path='edit/:surveyId' element={<FormEditor/>}/>
