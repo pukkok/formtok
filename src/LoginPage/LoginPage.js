@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAxios from "../C-Hooks/useAxios";
+import useLogin from "../C-Hooks/LoginHooks/useLogin";
 
-import { initialLoginInput, initialJoinInput, LoginForms, JoinForms, smallLoginInfos } from "../A-Datas/loginForms";
+import { initialLoginInput, initialJoinInput, LoginForms, JoinForms } from "../A-Datas/loginForms";
 
-import LoginPageWrapper from "./Sections/StyledLoginPageWrapper";
-import { LargeBox } from "./Sections/StyledLargeBox";
-import { StyledSmallBox, StyledSmallBoxWrapper } from "./Sections/StyledSmallBox";
-import { LoginForm } from "./Sections/StyledLoginForm";
+import LoginPageWrapper from "./Sections/LoginSection";
+import LargeBox from "./Sections/LargeBox";
+import { LargeBoxTitle, StyledLargeBoxBtns } from "./Sections/Partials/StyledLargeBox";
+import LargeBoxInput from "./Sections/Partials/LargeBoxInput";
+import LoginForm from "./Sections/StyledLoginForm";
+import JoinPass from "./Sections/Partials/JoinPass";
+import CapsLockMsg from "./Sections/Partials/CapsLockMsg";
+
+import SmallBoxes from "./Sections/SmallBoxes";
 
 function LoginPage() {
 	const navigate = useNavigate()
@@ -18,7 +23,7 @@ function LoginPage() {
 	const [joinInputs, setJoinInputs] = useState(initialJoinInput)
 	const [capsLockActive, setCapsLockActive] = useState(false) // Caps Lock 상태
 	const [focusedInput, setFocusedInput] = useState('') // 포커스 상태
-	const { login, join, idDupCheck, sendOtp, verifyOtp } = useAxios()
+	const { login, join, idDupCheck, sendOtp, verifyOtp } = useLogin()
 	const [pass, setPass] = useState({ userId: false, email: false })
 	const [hideOtp, setHideOtp] = useState(true)
 	const [activeForm, setActiveForm] = useState('')
@@ -60,6 +65,7 @@ function LoginPage() {
 		const { userId, password } = loginInputs
 		const result = await login(userId, password)
 		if (result) {
+			// 이전 경로가 있다면 이전경로로 이동 없다면 홈으로 이동
 			location.state?.from ? navigate(location.state?.from) : navigate('/')
 		}
 	}
@@ -114,97 +120,89 @@ function LoginPage() {
 				{ show: activeForm === 'login' },
 				{ hide: activeForm === 'join' }
 			)}>
-				<h3>로그인</h3>
+				<LargeBoxTitle>로그인</LargeBoxTitle>
 				<LoginForm>
 					{LoginForms.map(form => {
-						const { name, placeholder, type } = form
+						const { name, type } = form
 						return (
 							<p key={name}>
-								<input name={name} autoFocus={name === 'userId'}
-									onKeyUp={name === 'password' ? checkCapsLock : null}
+								<LargeBoxInput
+									onKeyUp={checkCapsLock}
 									onFocus={() => handleFocus(name)} // 포커스 이벤트
-									onBlur={name === 'password' ? handleBlur : null} // 블러 이벤트
-									type={type} placeholder={placeholder}
-									autoComplete={'off'}
+									onBlur={handleBlur} // 블러 이벤트
 									onChange={typingLogin} value={loginInputs[name]}
+									{...form}
 								/>
-								{name === 'password' && <span className={classNames('option', { on: capsLockActive && focusedInput === 'password' })}>캡스락이 켜져있습니다.</span>}
+								{<CapsLockMsg active={
+									type === 'password' &&
+									focusedInput === 'password' &&
+									capsLockActive
+								}/>}
 							</p>
 						)
 					})}
 
-					<div className="btns">
+					<StyledLargeBoxBtns>
 						<div>
 							<button type="button">아이디 찾기</button> |
 							<button type="button">비밀번호 찾기</button>
 						</div>
 						<button className="round-btn" type="submit"
 							onClick={loginAction}>로그인</button>
-					</div>
+					</StyledLargeBoxBtns>
 				</LoginForm>
 			</LargeBox>
+
 			<LargeBox className={classNames('right',
 				{ show: activeForm === 'join' },
 				{ hide: activeForm === 'login' }
 			)}>
-				<h3>회원가입</h3>
+				<LargeBoxTitle>회원가입</LargeBoxTitle>
 				<LoginForm>
 					{JoinForms.map(form => {
-						const { name, placeholder, optionText, type } = form
+						const { name, optionText, type } = form
 						return (
 							<p key={name} className={classNames({ hide: name === 'otp' && hideOtp })}>
-								<input
-									name={name}
-									autoFocus={name === 'userId'}
-									placeholder={placeholder} type={type}
-									autoComplete={"off"}
+								<LargeBoxInput
 									onChange={typingJoin} value={joinInputs[name]}
-									
 									onFocus={() => handleFocus(name)} // 포커스 이벤트
 									// 패스워드 일때 capsLock 체크용도
-									onKeyUp={['password', 'confirmPassword'].includes(name) ? checkCapsLock : null}
-									onBlur={['password', 'confirmPassword'].includes(name) ? handleBlur : null} // 블러 이벤트
+									onKeyUp={checkCapsLock}
+									onBlur={handleBlur}
+									{...form}
 								/>
-								{pass[name] ?
-									<span className={classNames({ pass: pass[name] })}></span> :
-									optionText &&
-									<button type="button"
-										className={"option on"}
+
+								{	optionText &&
+									<JoinPass 
+										isComplete={pass[name]}
 										onClick={
-											name === 'userId' ? () => idDupCheckAction(joinInputs['userId']) :
-											name === 'email' ? () => sendOtpAction(joinInputs['email']) :
-											name === 'otp' ? () => verifyOtpAction(joinInputs['email'], joinInputs['otp']) :
-											null
+										name === 'userId' ? () => idDupCheckAction(joinInputs['userId']) :
+										name === 'email' ? () => sendOtpAction(joinInputs['email']) :
+										name === 'otp' ? () => verifyOtpAction(joinInputs['email'], joinInputs['otp']) :
+										null
 										}
-									>{optionText}</button>
-								}
-								{['password', 'confirmPassword'].includes(name) && <span className={classNames('option', { on: capsLockActive && focusedInput === name })}>캡스락이 켜져있습니다.</span>}
+									>
+									{optionText}
+									</JoinPass> }
+
+								<CapsLockMsg 
+									active = {
+										type === 'password' &&
+										focusedInput === name &&
+										capsLockActive 
+									}
+								/>
 							</p>
 						)
 					})}
-					<div className="btns">
+					<StyledLargeBoxBtns>
 						<button type="submit" className="round-btn"
 							onClick={joinAction}>회원가입</button>
-					</div>
+					</StyledLargeBoxBtns>
 				</LoginForm>
 			</LargeBox>
 
-			<StyledSmallBoxWrapper>
-				{smallLoginInfos.map(info => {
-					const { formType, pText, buttonText } = info
-					return <StyledSmallBox
-						key={buttonText}
-						className={classNames(
-							// 작은 박스는 현재 액티브된 타입과 반대 타입
-							{ show: activeForm !== formType },
-							{ hide: activeForm === formType }
-						)}
-					>
-						<p>{pText}</p>
-						<button onClick={() => changeForm(formType)}>{buttonText}</button>
-					</StyledSmallBox>
-				})}
-			</StyledSmallBoxWrapper>
+			<SmallBoxes onClick={changeForm}/>
 		</LoginPageWrapper>
 	)
 }

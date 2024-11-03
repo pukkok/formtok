@@ -9,9 +9,8 @@ function NavigateButton ({ to='/', handleClick = null, className, children }) {
     if(handleClick) handleClick()
   }
 
-  return <button 
+  return <button type="button"
     className={className}
-    type="button"
     onClick={()=>onClick(to)}
     >{children}</button>
 }

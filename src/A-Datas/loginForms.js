@@ -16,10 +16,6 @@ const JoinForms = [
 	{name : 'confirmPassword', placeholder: '패스워드 확인', type: 'password', essentail : true}
 ]
 
-const largeLoginInfos = [
-
-]
-
 /** [0] : 로그인 [1] : 회원가입 */
 const smallLoginInfos = [
 	{
@@ -37,4 +33,5 @@ const smallLoginInfos = [
 export { 
 	initialLoginInput,
 	initialJoinInput,
-	LoginForms, JoinForms, smallLoginInfos }
+	LoginForms, JoinForms, 
+	smallLoginInfos }

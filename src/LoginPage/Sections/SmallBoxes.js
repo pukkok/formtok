@@ -1,4 +1,30 @@
+import React from "react";
 import styled from "styled-components";
+import { smallLoginInfos } from "../../A-Datas/loginForms";
+import classNames from "classnames";
+
+/** onClick의 첫번째 인자로 formType을 전달받는다. */
+function SmallBoxes ({ activeForm, onClick }) {
+
+  return (
+    <StyledSmallBoxWrapper>
+      {smallLoginInfos.map(info => {
+        const { formType, pText, buttonText} = info
+        return <StyledSmallBox 
+          key={buttonText}
+          className={classNames(
+            // 작은 박스는 현재 액티브된 타입과 반대 타입
+            { show: activeForm !== formType },
+            { hide: activeForm === formType }
+          )}
+        >
+          <p>{pText}</p>
+          <button onClick={() => onClick(formType)}>{buttonText}</button>
+        </StyledSmallBox>
+      })}
+    </StyledSmallBoxWrapper>
+  )
+}
 
 const StyledSmallBoxWrapper = styled.div`
   position: absolute;
@@ -22,14 +48,14 @@ const StyledSmallBox = styled.div`
   align-items: center;
   gap: 20px;
   padding: 30px;
-  width: 400px;
-  height: 50%;
+  width: 420px;
+  height: 100%;
 
   &.show{
-    animation: show-small-box .5s forwards;
+    animation: show-small-box .8s forwards;
   }
   &.hide{
-    animation: hide-small-box .5s forwards;
+    animation: hide-small-box .8s forwards;
   }
   @keyframes hide-small-box {
     0%{
@@ -39,14 +65,14 @@ const StyledSmallBox = styled.div`
     }
     100%{
       opacity: 0;
-      margin-top: 15px;
+      margin-top: 25px;
       visibility: hidden;
     }
   }
   @keyframes show-small-box {
     0%{
       opacity: 0;
-      margin-top: 15px;
+      margin-top: 25px;
       visibility: hidden;
     }
     100%{
@@ -64,8 +90,8 @@ const StyledSmallBox = styled.div`
     &:hover{
       border: solid 2px var(--pk-point);
       font-weight: bold;
-    }
+    } 
   }
 `
 
-export {StyledSmallBoxWrapper, StyledSmallBox}
+export default SmallBoxes

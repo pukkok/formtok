@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import HomeButton from "../../A-Components/Buttons/HomeButton";
-import NavigateButton from "../../A-Components/Buttons/NavigateButton";
-import { BackIcon } from "../../A-Components/Icons/Icons";
 
 const StyledLargeBox = styled.div`
   position: absolute;
@@ -9,23 +6,12 @@ const StyledLargeBox = styled.div`
   left: 0;
   transform: translateY(-50%);
   width: 550px;
-  height: 750px;
+  height: 800px;
   background-color: var(--pk-charcoal);
   padding: 40px;
   box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
   border-top: 5px solid var(--pk-point);
   z-index: 1;
-
-  nav{
-    display: flex;
-    justify-content: space-between;
-  }
-
-  h3{
-    padding-top: 110px;
-    padding-bottom: 70px;
-    color: var(--pk-point);
-  }
 
   &.show{
     animation: show-large-box .3s ease-in forwards;
@@ -94,18 +80,45 @@ const StyledLargeBox = styled.div`
   }
 `
 
-function LargeBox ({className, children}) {
-    
-    return(
-      <StyledLargeBox className={className}>
-        <nav>
-          <NavigateButton to={-1}><BackIcon /></NavigateButton>
-          {/* <BackButton /> */}
-          <HomeButton />
-        </nav>
-        {children}
-      </StyledLargeBox>
-    )
-}
+const LargeBoxTitle = styled.h3`
+  padding-top: 110px;
+  padding-bottom: 70px;
+  color: var(--pk-point);
+`
 
-export { LargeBox }
+const StyledLargeBoxBtns = styled.div`
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  & > div{
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      input:hover{
+          font-weight: bold;
+          cursor: pointer;
+      }
+  }
+
+  .round-btn{
+    margin-left: auto;
+    text-align: center;
+    border-radius: 50px;
+    min-width: 100px;
+    padding: 8px 16px;
+    border: solid 2px transparent;
+    background-color: var(--pk-point);
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover{
+        background-color: var(--pk-point);
+    }
+  }
+`
+
+export {
+  StyledLargeBox,
+  StyledLargeBoxBtns,
+  LargeBoxTitle
+}

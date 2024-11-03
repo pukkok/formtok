@@ -1,7 +1,7 @@
-import { IoIosClose } from "react-icons/io";
+// import { IoIosClose } from "react-icons/io";
 import styled, { css } from "styled-components";
 import { IoArrowBack } from "react-icons/io5";
-
+import { FiHome } from "react-icons/fi";
 
 const strokeStyle = css`
   font-size: 20px;
@@ -9,12 +9,13 @@ const strokeStyle = css`
 `
 
 
-const closeIcon = styled(IoIosClose)`
+// const closeIcon = styled(IoIosClose)`
 
-`
-
+// `
+// 뒤로가기
 const BackIcon = styled(IoArrowBack)`${strokeStyle}`
+// 홈
+const HomeIcon = styled(FiHome)`${strokeStyle}`
 
 
-
-export { BackIcon }
+export { BackIcon, HomeIcon }
