@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Icon } from "./Icons";
+import { SearchIcon } from './Icons/Icons'
 
 const SearchFormWrapper = styled.form`
     & {
@@ -50,7 +50,7 @@ function SearchForm ({placeholder='검색하기', handleClick, width}) {
             <input placeholder={placeholder} 
             onChange={e=>setSearchWord(word => word = e.target.value)} value={searchWord}/>
             <button className="search-btn" onClick={e=>search(e, searchWord)}>
-                <Icon code={'search'}/>
+                <SearchIcon />
             </button>
         </SearchFormWrapper>
     )

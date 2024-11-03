@@ -1,6 +1,6 @@
 import React from "react";
-import { Icon } from "./Icons";
 import styled from "styled-components";
+import { CloseIcon } from "./Icons/Icons";
 
 const StyledAddAnswerWrapper = styled.div`
     display: flex;
@@ -40,7 +40,7 @@ function AddAnswer({type, inputChange, buttonClick, placeholder, defaultValue, v
         <button 
         tabIndex={-1}
         onClick={buttonClick} style={{display: isNotUseBtn ? 'none' : 'block'}}>
-            <Icon code={'close'}/>
+            <CloseIcon style={{fontSize: '26px'}}/>
         </button>
     </StyledAddAnswerWrapper>
 }

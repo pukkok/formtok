@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useAxios from "../C-Hooks/useAxios";
 import axios from "axios";
 import ChartBox from "./ChartBox";
-import { BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon, PieIcon } from "../A-Components/Icons";
+import { BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon, PieIcon } from "../A-Components/Icons/CustomIcons";
 import FormResultRightSidebar from "./FormResultRightSidebar";
 import ListBox from "./ListBox";
 import ExtraBox from "./ExtraBox";

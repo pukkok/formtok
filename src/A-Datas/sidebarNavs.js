@@ -1,26 +1,4 @@
-import { MdOutlineContactPage, MdOutlineFindInPage, MdOutlineInventory, MdEqualizer } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
-import { LuFolderCog, LuSettings } from "react-icons/lu";
-import { FiHome } from "react-icons/fi";
-import styled, { css } from 'styled-components';
-
-const strokeStyle = css`
-  font-size: 20px;
-  stroke-width: 2.3px;
-`
-
-const boxStyle = css`
-  font-size: 22px;
-`
-
-const HomeIcon = styled(FiHome)`${strokeStyle}`
-const MyFormIcon = styled(MdOutlineContactPage)`${boxStyle}`
-const EidtIcon = styled(FaRegEdit)`${strokeStyle}`
-const ResultIcon = styled(MdOutlineFindInPage)`${boxStyle}`
-const QuestionListIcon = styled(LuFolderCog)`${boxStyle}`
-const FormListIcon = styled(MdOutlineInventory)`${boxStyle}`
-const DashBoardIcon = styled(MdEqualizer)`${boxStyle}`
-const SettingIcon = styled(LuSettings)`${boxStyle}`
+import { HomeIcon, MyFormIcon, EidtIcon, ResultIcon, QuestionListIcon, FormListIcon, DashBoardIcon, SettingIcon } from "../A-Components/Icons/Icons"
 
 const sidebarNavs = [
 {   text: '홈', 

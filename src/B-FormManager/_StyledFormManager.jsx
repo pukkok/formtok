@@ -63,7 +63,7 @@ const SurveyManagerWrapper = styled.section`
                 }
 
                 button{
-                    &:hover span{
+                    &:hover{
                         color: var(--pk-point);
                     }
                 }

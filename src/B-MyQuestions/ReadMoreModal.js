@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { RadioButton } from "../A-Components/MultipleButton";
-import { Icon } from "../A-Components/Icons";
 
 const StyledModal = styled.dialog`
     box-sizing: border-box;
@@ -84,7 +83,11 @@ function ReadMoreModal ({readMore}, ref) {
         <StyledModal ref={ref}>
             {readMore && <div>
                 <header>Q. {readMore.q}
-                    <p><Icon code={readMore.code}/>{readMore.type}</p>
+                    <p>
+                        {readMore.icon}
+                        {readMore.type}
+                        {/* <Icon code={readMore.code}/>{readMore.type} */}
+                    </p>
                 </header>
                 <main>
                 {readMore.options && readMore.options.map((option, key) => {

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Icon } from "../A-Components/Icons"
 import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalDataAtom } from "../C-Recoils/surveyAtoms"
 import { useSetRecoilState } from "recoil"
 import { SurveyManagerWrapper } from "./_StyledFormManager"
@@ -13,6 +12,7 @@ import dayjs from "dayjs"
 
 import { IoMdAddCircle } from "react-icons/io";
 import SearchFilter from "../A-Components/SearchFilter"
+import { CopyIcon, DeleteIcon } from "../A-Components/Icons/Icons"
 
 function FormManager() {
     const navigate = useNavigate()
@@ -161,10 +161,10 @@ function FormManager() {
                                     <div className="form-status">
                                         <span className={classNames("light", light)}></span>
                                         <button title="복사" onClick={(e) => copyFormAction(e, url)}>
-                                            <Icon code="content_copy" />
+                                            <CopyIcon />
                                         </button>
                                         <button title="삭제" onClick={(e) => deleteFormAction(e, url)}>
-                                            <Icon code="delete" />
+                                            <DeleteIcon />
                                         </button>
                                     </div>
                                     <h4>{title}</h4>

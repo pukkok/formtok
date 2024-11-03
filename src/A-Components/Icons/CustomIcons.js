@@ -1,13 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function Icon ({ code, handleclick, className }) {
-    return <span 
-    className={`material-symbols-outlined notranslate icon ${className}`}
-    onClick={handleclick}
-    >{code}</span>
-}
-
-function TableIcon ({width= 16, height=14, rowOrCol = 'row'}) {
+function RowColIcon ({width= 16, height=14, rowOrCol = 'row'}) {
     const color = '#af7eff'
     const canvasRef = useRef(null)
 
@@ -207,6 +200,5 @@ function LineIcon() {
 
 
 export { 
-    Icon, 
-    TableIcon, 
+    RowColIcon, 
     PieIcon, BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon }

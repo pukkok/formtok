@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import useOutsideClick from "../C-Hooks/useOutsideClick";
 import styled from "styled-components";
-import { Icon } from "./Icons";
+import { ArrowDownIcon } from "./Icons/Icons";
 
 const DropDownWrapper = styled.div`
 	position: relative;
@@ -23,17 +23,17 @@ const DropDownWrapper = styled.div`
 			border: solid 1px var(--pk-dropdown-btn-active-border);
 		}
 
-		& > span:nth-last-child(1){ 
+		& > svg:nth-last-child(1){ 
+			margin-left: auto;
 			display: inline-block;
 			font-size: 24px;
 			vertical-align: middle; /* 정렬 */
 			transition: .2s;
-			margin-left: auto;
 		}
 		&.open{ 
 			border: solid 1px var(--pk-dropdown-btn-active-border);
 
-			& span:nth-last-child(1){// 애로우 버튼
+			svg:nth-last-child(1){// 애로우 버튼
 				rotate: -180deg;
 			}
 		}
@@ -86,6 +86,8 @@ const DropDownWrapper = styled.div`
 	}
 `
 
+
+
 function DropDown ({initialItem, children, initialState=false, style}) {
 	const {isOpen, setIsOpen, ref} = useOutsideClick(initialState)
 
@@ -95,7 +97,7 @@ function DropDown ({initialItem, children, initialState=false, style}) {
 			className={classNames({open : isOpen})}
 			onClick={()=>{setIsOpen(!isOpen)}}>
 			{initialItem}
-			<Icon code="arrow_drop_up"/>
+			<ArrowDownIcon />
 		</button>
 		
 		<ul className={classNames({open: isOpen})} onClick={()=>setIsOpen(false)}>

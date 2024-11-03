@@ -1,8 +1,8 @@
 import React from "react"
 import useOutsideClick from "../C-Hooks/useOutsideClick"
 import classNames from "classnames"
-import { Icon } from "./Icons"
 import styled from "styled-components"
+import { MoreVerticalIcon } from "./Icons/Icons"
 
 const StyledMoreVert = styled.div`
     &.more-vert-wrapper{
@@ -61,7 +61,8 @@ function MoreVert({ children, autoClose=true, addOptionClass }) {
     return (
         <StyledMoreVert className="more-vert-wrapper" ref={ref}>
             <button onClick={() => setIsOpen(!isOpen)}>
-                <Icon code={'more_vert'}/>
+                {/* <Icon code={'more_vert'}/> */}
+                <MoreVerticalIcon />
             </button>
             
             <div onClick={() => autoClose && setIsOpen(false)}

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Icon, TableIcon } from "../../A-Components/Icons";
 import TablePreviewer from "./TablePreviewer";
 import styled from "styled-components";
 import usePageActions from "../../C-Hooks/usePageActions";
+import { RowColIcon } from "../../A-Components/Icons/CustomIcons";
+import { CloseIcon } from "../../A-Components/Icons/Icons";
 
 const StyledTableEditor = styled.div`
     margin-top: 15px;
@@ -101,7 +102,7 @@ const TableEditor = ({pages, pi, qi}) => {
             <div className="table-edit row-box">
                 <button 
                 onClick={() => addTableRowOrCol(pi, qi, 'row')}>
-                    <TableIcon/>행 추가
+                    <RowColIcon />행 추가
                 </button>
                 {rows.length > 0 && rows.map((row, idx) => {
                     return (
@@ -112,7 +113,7 @@ const TableEditor = ({pages, pi, qi}) => {
                                 placeholder={(idx+1)+' 행'} 
                                 value={row.value}/>
                             {rows.length > 2 && (
-                                <button onClick={() => deleteTableRowOrCol(pi, qi, row.id, 'row')}><Icon code={'close'}/></button>
+                                <button onClick={() => deleteTableRowOrCol(pi, qi, row.id, 'row')}><CloseIcon /></button>
                             )}
                         </div>
                     )
@@ -122,7 +123,7 @@ const TableEditor = ({pages, pi, qi}) => {
                 <button
                     className="col-add-btn" 
                     onClick={() => addTableRowOrCol(pi, qi, 'col')}>
-                    <TableIcon rowOrCol="col"/>열 추가
+                    <RowColIcon rowOrCol="col"/>열 추가
                 </button>
                 {cols.length > 0 && cols.map((col, idx) => {
                     return (
@@ -133,7 +134,7 @@ const TableEditor = ({pages, pi, qi}) => {
                                 placeholder={(idx+1)+' 열'} 
                                 value={col.value}/>
                             {cols.length > 2 && (
-                                <button onClick={() => deleteTableRowOrCol(pi, qi, col.id, 'col')}><Icon code={'close'}/></button>
+                                <button onClick={() => deleteTableRowOrCol(pi, qi, col.id, 'col')}><CloseIcon /></button>
                             )}
                         </div>
                     )

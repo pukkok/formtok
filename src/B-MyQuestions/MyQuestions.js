@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import questionList from "../A-Datas/questionList";
 import MyQuestionsWrapper from "./_StyledMyQuestions";
-import { Icon } from "../A-Components/Icons";
+
 import useAxios from "../C-Hooks/useAxios";
 import SearchForm from "../A-Components/SearchForm";
 import ReadMoreModal from "./ReadMoreModal";
+import { CheckVIcon } from "../A-Components/Icons/Icons";
 
 function MyQuestions(){
     const modalRef = useRef()
@@ -21,8 +22,7 @@ function MyQuestions(){
             case '드롭다운' : color = '#ffd54f' ; break
             default : color = '#7E37ED'
         }
-        // console.log({color})
-        return {color}
+        return {color} // 스아일이기때문에 객체로 리턴
     }
 
     useEffect(() => { // 문항 가져오기
@@ -35,8 +35,8 @@ function MyQuestions(){
         if(token && loadQuestions.length === 0) getQuestions()
     },[token, loadQuestions, getMyQuestionList])
 
-    const readMoreView = (faq, code) => {
-        setReadMore({...faq, code})
+    const readMoreView = (faq, icon) => {
+        setReadMore({...faq, icon})
         modalRef.current.showModal()
     }
 
@@ -76,12 +76,16 @@ function MyQuestions(){
                 <div className="check-box">
                     <input name={idx} type={'checkbox'} 
                     ref={el => checkedRef.current[idx] = el}/>
-                    <Icon code={'check'}/>
+                    <CheckVIcon />
                 </div>
                 <p className="type-text"><span>{type}</span></p>
                 <p className={"type-icon"}
                 style={colorPick(type)}
-                ><Icon code={form.code}/></p>
+                >
+                    {React.cloneElement(form.icon, {
+                        style: { fontSize : '60px'}
+                    })}
+                </p>
                 <h4>Q. {q}</h4>
                 <div className="answer-box">
                     {options.map((option, idx2) => {
@@ -89,7 +93,7 @@ function MyQuestions(){
                     })}
                 </div>
                 <div className="btns">
-                    <button onClick={() => readMoreView(faq, form.code)}>자세히 보기</button>
+                    <button onClick={() => readMoreView(faq, form.icon)}>자세히 보기</button>
                 </div>
             </label>
             )

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchForm from "../A-Components/SearchForm";
-import { Icon } from "../A-Components/Icons";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../C-Hooks/useAxios";
 import { useSetRecoilState } from "recoil";
 import { pagesAtom } from "../C-Recoils/surveyAtoms";
 import SearchFilter from "../A-Components/SearchFilter";
+import { LinkIcon } from "../A-Components/Icons/Icons";
 
 const StyledFormList = styled.section`
     padding: var(--pk-viewer-padding);
@@ -200,7 +200,7 @@ function FormList () {
                                     }
                                 </p>
                             </div>
-                        <button className="link" onClick={e => linkOpen(e, url)}><Icon code={'link'}/></button>
+                        <button className="link" onClick={e => linkOpen(e, url)}><LinkIcon /></button>
                         </div>
                     </div>
                 })}

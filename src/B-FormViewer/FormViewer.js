@@ -5,13 +5,13 @@ import {FormCardWrapper} from "../B-FormEditor/Card/FormCards.styled"
 import { Link, useNavigate, useParams, useResolvedPath } from "react-router-dom";
 import ViewerQuestionForm from "./ViewerAnswerForm";
 import DescriptionEditor from '../A-Components/DescriptionEditor'
-import { Icon } from "../A-Components/Icons";
 import FormViewerHeader from "./FormViewerHeader";
 import classNames from "classnames";
 import useAxios from "../C-Hooks/useAxios";
 import FormTokLoading from "../A-Components/FormTokLoading";
 import { gridAtom } from "../C-Recoils/screenAtom";
 import styled from "styled-components";
+import { ArrowLeftIcon, ArrowRightIcon } from "../A-Components/Icons/Icons";
 
 const FormViewerWrapper = styled.section`
 
@@ -242,12 +242,12 @@ function FormViewer() {
             <div className="btns">
                 {currentIdx !== 0 && 
                 <button className="prev" 
-                onClick={moveToPrevPage}><Icon code={'arrow_left_alt'}/></button>}
+                onClick={moveToPrevPage}><ArrowLeftIcon /></button>}
 
                 {currentIdx !== pages.length - 1 ?
                     <button className="next" 
-                    onClick={moveToNextPage}>다음페이지 <Icon code={'arrow_right_alt'}/></button>
-                    : <button className="next" onClick={submitAnswerAction}>제출 <Icon code={'arrow_right_alt'}/></button>
+                    onClick={moveToNextPage}>다음페이지 <ArrowRightIcon /></button>
+                    : <button className="next" onClick={submitAnswerAction}>제출 <ArrowRightIcon /></button>
                 }
             </div>
 
@@ -260,7 +260,7 @@ function FormViewer() {
                     {endingMent.description && <DescriptionEditor value={endingMent.description} isReadOnly={true} />}
                 </div>
             </FormCardWrapper>
-            <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/form-list'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<Icon code={'arrow_right_alt'}/></Link>
+            <Link to={pathname.includes('preview') ? pathname.replace('preview', 'edit') : '/form-list'}>{pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}<ArrowRightIcon /></Link>
             </>}
         </main> :
         <main></main> // 아무것도 없을 때

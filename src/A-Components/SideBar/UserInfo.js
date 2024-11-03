@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { LuLogIn, LuLogOut } from "react-icons/lu";
 import { VscAccount } from "react-icons/vsc";
 import { useLocation, useNavigate } from "react-router-dom";

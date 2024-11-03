@@ -1,24 +1,4 @@
-import { 
-  MdNotes, MdShortText, MdFormatListNumbered, MdCheckBox, MdArrowDropDownCircle, 
-  MdCalendarToday, MdSchedule, MdDateRange, MdTableChart, MdGrade 
-} from "react-icons/md";
-import styled, {css} from 'styled-components';
-
-// 공통 스타일을 적용한 아이콘 컴포넌트
-const iconStyle = css`
-  font-size: 22px;
-`
-  
-const NotesIcon = styled(MdNotes)`${iconStyle}`
-const ShortTextIcon = styled(MdShortText)`${iconStyle}`
-const NumberedListIcon = styled(MdFormatListNumbered)`${iconStyle}`
-const CheckBoxIcon = styled(MdCheckBox)`${iconStyle}`
-const DropDownIcon = styled(MdArrowDropDownCircle)`${iconStyle}`
-const CalendarIcon = styled(MdCalendarToday)`${iconStyle}`
-const ScheduleIcon = styled(MdSchedule)`${iconStyle}`
-const DateTimeIcon = styled(MdDateRange)`${iconStyle}`
-const TableIcon = styled(MdTableChart)`${iconStyle}`
-const ScoreIcon = styled(MdGrade)`${iconStyle}`
+import { NotesIcon, ShortTextIcon, NumberedListIcon, CheckBoxIcon, DropDownIcon, CalendarIcon, ScheduleIcon, DateTimeIcon, TableIcon, ScoreIcon } from "../A-Components/Icons/Icons";
   
 const questionList = [
   { code: 'notes', type: '서술형', icon: <NotesIcon /> },

@@ -89,10 +89,6 @@ const MyQuestionsWrapper = styled.section`
         }
         
         .type-icon{ // 질문 타입 아이콘
-            span{
-                /* color: var(--pk-point); */
-                font-size: 60px;
-            }
             margin-bottom: 10px;
         }
 
