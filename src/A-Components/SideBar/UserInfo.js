@@ -15,7 +15,7 @@ const StyledUserInfo = styled.div`
     align-items: center;
 
     & > div {
-      h4 {
+      h5 {
         color: var(--pk-light-grey); // 유저이름
       }
       p {
@@ -51,7 +51,7 @@ function UserInfo ({userInfo}) {
     <div className="user-info">
       <VscAccount fontSize={'34px'}/>
       <div>
-        <h4>{userInfo?.userId || '비회원'}</h4>
+        <h5>{userInfo?.userId || '비회원'}</h5>
         <p>{userInfo?.email || '이메일 없음'}</p>
       </div>
     </div>

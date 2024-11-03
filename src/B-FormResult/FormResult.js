@@ -77,7 +77,7 @@ const StyledFormResult = styled.section`
                 border-radius: 12px;
                 margin-bottom: 40px;
 
-                h3{
+                h4{
                     display: flex;
                     align-items: flex-start;
                     p{
@@ -217,7 +217,7 @@ function FormResult () {
                 const { title, id: pid, questions } = page
                 return <div key={pid}>
                   
-                    <h1>{pi+1}페이지 - {title || '제목 없는 설문지'}</h1>
+                    <h3>{pi+1}페이지 - {title || '제목 없는 설문지'}</h3>
                     
                     {questions.map((question, qi) => {
                         const { q, id: qid, type, options, hasExtraOption, scoreRanges } = question
@@ -260,9 +260,9 @@ function FormResult () {
 
                         return (
                             <div key={qid} className="report-result">
-                                <h3>{qi+1}. {q || '제목없는 질문'} 
+                                <h4>{qi+1}. {q || '제목없는 질문'} 
                                     <p>응답 인원 {count} <span>{type}</span></p>
-                                </h3>
+                                </h4>
 
                                 {['객관식', '객관식(복수 선택)', '드롭다운', '점수 선택형'].includes(type) &&
                                 <div>

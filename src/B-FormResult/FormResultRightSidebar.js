@@ -41,8 +41,7 @@ const StyledRightSidebar = styled.aside`
             height: calc(100% - 90px);
             div{
                 display: block;
-                h4{
-                    font-size: 17px;
+                h5{
                     margin-bottom: 20px;
                 }
 
@@ -62,7 +61,7 @@ const StyledRightSidebar = styled.aside`
         .head{
             background-color: transparent;
             margin-bottom: 0;
-            h4, p{
+            h5, p{
                 font-size: 17px;
             }
         }
@@ -76,7 +75,7 @@ const StyledRightSidebar = styled.aside`
             margin-bottom: 16px;
             gap: 20px;
 
-            h4{
+            h5{
                 min-width: 300px;
             }
 
@@ -125,7 +124,7 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
                         className={classNames('list-card', {active: active === url})}
                         key={url} 
                         onClick={()=>resultOpen(pages, url)}>
-                        <h4>{title}</h4>
+                        <h5>{title}</h5>
                         <p>
                         <span>로그인 : {isNeedLogin ? '필요' : '-'}</span>
                         <span>응답 : {numberOfResponses.length || 0} | {maximumCount ? `최대 ${maximumCount}` : '제한 없음' }</span>
@@ -142,7 +141,7 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
 
                 <>
                 <div className="head">
-                    <h4>설문지</h4>
+                    <h5>설문지</h5>
                     <p>응답 수</p>
                     <p>응답 제한</p>
                     <p>로그인 필요</p>
@@ -163,7 +162,7 @@ function FormResultRightSidebar ( { isResultOpen, searchedResults, resultOpen, s
                         className={classNames('list-card', {active: active === url})}    
                         key={url} 
                         onClick={()=>resultOpen(pages, url)}>
-                        <h4>{title}</h4>
+                        <h5>{title}</h5>
                         <p>{numberOfResponses.length || 0}</p>
                         <p>{maximumCount ? maximumCount : '-' }</p>
                         <p>{isNeedLogin? '필요' : '-'}</p>
