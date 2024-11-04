@@ -67,7 +67,7 @@ function usePageActions () {
         setPages(newPages)
     }
     // 질문 위치 변경
-    const changeQLocation = (p1, q1, p2, q2) => {
+    const changeQuestionLocation = (p1, q1, p2, q2) => {
         let newPages = [...pages]
         const dragQ = newPages[p1].questions[q1]
 
@@ -549,7 +549,7 @@ function usePageActions () {
     return { 
         createPage,
         loadPages, // 설문지 불러오기
-        changePageLocation, changeQLocation, // 위치변경 드래그앤드롭
+        changePageLocation, changeQuestionLocation, // 위치변경 드래그앤드롭
         changePTitle, changePDescription, // 페이지 내용변경
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,

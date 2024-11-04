@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalDataAtom } from "../C-Recoils/surveyAtoms"
+import { surveyTitleAtom, endingMentAtom, surveyListStyleAtom, surveyOptionsAtom, originalDataAtom } from "../../C-Recoils/surveyAtoms"
 import { useSetRecoilState } from "recoil"
 import { SurveyManagerWrapper } from "./_StyledFormManager"
-import SearchForm from "../A-Components/SearchForm"
-import useAxios from "../C-Hooks/useAxios"
+import SearchForm from "../../A-Components/SearchForm"
+import useAxios from "../../C-Hooks/useAxios"
 import classNames from "classnames"
-import usePageActions from "../C-Hooks/usePageActions"
+import usePageActions from "../../C-Hooks/usePageActions"
 import CreateFormModal from "./CreateFormModal"
 import dayjs from "dayjs"
 
 import { IoMdAddCircle } from "react-icons/io";
-import SearchFilter from "../A-Components/SearchFilter"
-import { CopyIcon, DeleteIcon } from "../A-Components/Icons/Icons"
+import SearchFilter from "../../A-Components/SearchFilter"
+import { CopyIcon, DeleteIcon } from "../../A-Components/Icons/Icons"
+import FormCardInfo from "./Sections/Parts/FormCardInfo"
 
 function FormManager() {
     const navigate = useNavigate()
@@ -68,6 +69,7 @@ function FormManager() {
         const success = await copyForm(url, token)
         if (success) {
             const forms = await getMyFormList(token)
+            console.log(forms)
             alert('복사되었습니다.')
             setMyForms(forms)
             setSearchedForms(forms)
@@ -90,7 +92,7 @@ function FormManager() {
     }
 
     // 설문의 상태 체크
-    const lightCheck = (isOpen, isEnd, isUseStartPeriod, startDate, endDate) => {
+    const lightCheck = (isOpen=false, isEnd=false, isUseStartPeriod=false, startDate, endDate) => {
         const now = dayjs()
         const start = startDate ? dayjs(startDate) : null
         const end = endDate ? dayjs(endDate) : null
@@ -153,7 +155,7 @@ function FormManager() {
                 {searchedForms.length > 0 &&
                     searchedForms.map((form) => {
                         const { title, url, pages, endingMent, listStyle, options, createdAt, lastModifiedAt } = form
-                        const light = lightCheck(options.isOpen, options.isEnd, options.isUseStartPeriod, options.startDate, options.endDate)
+                        const light = lightCheck(options?.isOpen, options?.isEnd, options?.isUseStartPeriod, options?.startDate, options?.endDate)
 
                         return (
                             <div key={url} className="card">
@@ -167,11 +169,11 @@ function FormManager() {
                                             <DeleteIcon />
                                         </button>
                                     </div>
-                                    <h4>{title}</h4>
-                                    <div className="info">
-                                        <p>생성일 | {dayjs(createdAt).format('YYYY-MM-DD')}</p>
-                                        <p>마지막 수정일 | {dayjs(lastModifiedAt).format('YYYY-MM-DD')}</p>
-                                    </div>
+                                    <FormCardInfo 
+                                        title={title}
+                                        createdAt={createdAt}
+                                        lastModifiedAt={lastModifiedAt}
+                                    />
                                 </div>
                             </div>
                         )

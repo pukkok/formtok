@@ -45,8 +45,7 @@ const StyledFormList = styled.section`
                 background-color: var(--pk-survey-card-hover);
             }
 
-            h4 {
-                font-size: 18px;
+            h5 {
                 margin-bottom: 10px;
                 
                 display: -webkit-box;         /* Flexbox를 사용하여 컨테이너를 만든다 */
@@ -186,7 +185,7 @@ function FormList () {
 
                     return <div key={url} className="card">
                         <div className="form-box" onClick={() => goToView(url, options)}>
-                            <h4>{title}</h4>
+                            <h5>{title}</h5>
                             <div className="info">
                                 <p>로그인 : {isNeedLogin ? '필요' : '필요 없음'}</p>
                                 <p>총 문항 수 : {allQuetinoCount}</p>

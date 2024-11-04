@@ -18,7 +18,7 @@ function FormSummary() {
     
     const { 
         addPage, addQuestion, // 추가
-        changePLocation, changeQLocation, // 내용변경
+        changePageLocation, changeQuestionLocation, // 내용변경
         copyP, copyQ, // 복사
         deleteP, deleteQ // 삭제
     } = usePageActions()
@@ -62,13 +62,13 @@ function FormSummary() {
 
         if (type === "page") {
             // 페이지 위치 변경
-            changePLocation(source.index, destination.index)
+            changePageLocation(source.uestionindex, destination.index)
         } else if (type === "question") {
             const p1 = parseInt(source.droppableId)
             const q1 = source.index
             const p2 = parseInt(destination.droppableId)
             const q2 = destination.index
-            changeQLocation(p1, q1, p2, q2)   
+            changeQuestionLocation(p1, q1, p2, q2)   
         }
     }
 

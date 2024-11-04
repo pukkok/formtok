@@ -1,8 +1,8 @@
 import React, { forwardRef, useState } from "react";
 import styled from "styled-components";
-import useAxios from "../C-Hooks/useAxios";
-import usePageActions from "../C-Hooks/usePageActions";
-import { endingMentAtom, originalDataAtom, randomUrl, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../C-Recoils/surveyAtoms";
+import useAxios from "../../C-Hooks/useAxios";
+import usePageActions from "../../C-Hooks/usePageActions";
+import { endingMentAtom, originalDataAtom, randomUrl, surveyListStyleAtom, surveyOptionsAtom, surveyTitleAtom } from "../../C-Recoils/surveyAtoms";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
