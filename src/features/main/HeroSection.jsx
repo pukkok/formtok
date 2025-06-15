@@ -1,6 +1,6 @@
-import PageSwitchButton from '../../A-Components/PageSwitch/PageSwitchButton'
-import cloud from '../../assets/images/cloud.png'
-import hero from '../../assets/images/hero-image.png'
+import PageSwitchButton from '@/A-Components/PageSwitch/PageSwitchButton'
+import cloud from '@/assets/images/cloud.png'
+import hero from '@/assets/images/hero-image.png'
 
 const CONTENT = {
   summary : '폼톡 - 당신의 의견을 나눠 보세요. 쉽게 사용하는 오픈 설문 플랫폼',
@@ -14,7 +14,7 @@ const HeroSection = () => {
 
   return (
     <section className={` w-full h-[90vh] relative overflow-hidden bg-linear-to-r from-[#5B1FB7] from-60% to-[#f06292]`}>
-      <div className='absolute w-full h-full bg-size-[900px_auto] bg-no-repeat bg-bottom-right' style={{ backgroundImage : `url(${cloud})`}}/>
+      <div className='absolute w-full h-full bg-size-[900px_auto] bg-no-repeat bg-bottom-right' style={{ backgroundImage : `url(${cloud.src})`}}/>
 
       <article className='relative top-1/2 my-0 mx-auto -translate-y-1/2 max-w-main-wrap'>
         <div className='flex flex-col items-start gap-4 whitespace-pre'>
@@ -37,7 +37,7 @@ const HeroSection = () => {
         </div>
 
         <div className={`absolute right-0 top-[100vh] max-w-[780px] h-fit animate-heroUp`}>
-          <img className='drop-shadow-[-2px_8px_14px_#444466]' src={hero} alt='hero'/>
+          <img className='drop-shadow-[-2px_8px_14px_#444466]' src={hero.src} alt='hero'/>
         </div>
       </article>
     </section>

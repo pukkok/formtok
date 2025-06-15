@@ -58,7 +58,6 @@ const PageSwitcherWrapper = styled.section`
     }
 `
 
-
 function PageSwitcher ({ mode }) {
     const switchTheScreen = useRecoilValue(switchTheScreenAtom)
 

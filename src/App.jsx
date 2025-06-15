@@ -1,30 +1,30 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import MainPage from './pages/MainPage';
-import LoginPage from './LoginPage/LoginPage';
+// import { Route, Routes } from 'react-router-dom';
+// import MainPage from './pages/MainPage';
+// import LoginPage from './LoginPage/LoginPage';
 
-import DashBoardPage from './D-Pages/DashBoardPage'
-import FormManager from './B-FormManager/FormManager';
-import FormEditor from './B-FormEditor/FormEditor';
-import FormViewer from './B-FormViewer/FormViewer';
-import Setting from './B-Setting/Setting';
-import NotFoundPage from './D-Pages/NotFoundPage';
-import MyQuestions from './B-MyQuestions/MyQuestions';
-import FormList from './B-FormList/FormList';
-import PageSwitcher from './A-Components/PageSwitch/PageSwitcher';
-import { useRecoilValue } from 'recoil';
-import { modeAtom } from './C-Recoils/screenAtom';
-import FormResult from './B-FormResult/FormResult';
-import FormTokLogo from './A-Components/FormTokLogo';
+// import DashBoardPage from './D-Pages/DashBoardPage'
+// import FormManager from './B-FormManager/FormManager';
+// import FormEditor from './B-FormEditor/FormEditor';
+// import FormViewer from './B-FormViewer/FormViewer';
+// import Setting from './B-Setting/Setting';
+// import NotFoundPage from './D-Pages/NotFoundPage';
+// import MyQuestions from './B-MyQuestions/MyQuestions';
+// import FormList from './B-FormList/FormList';
+// import PageSwitcher from './A-Components/PageSwitch/PageSwitcher';
+// import { useRecoilValue } from 'recoil';
+// import { modeAtom } from './C-Recoils/screenAtom';
+// import FormResult from './B-FormResult/FormResult';
+// import FormTokLogo from './A-Components/FormTokLogo';
 
 function App() {
 
-  const mode = useRecoilValue(modeAtom)
+  // const mode = useRecoilValue(modeAtom)
 
   return (
     <>
-      <PageSwitcher mode={mode} />
-      <Routes>
+      {/* <PageSwitcher mode={mode} /> */}
+      
+      {/* <Routes>
         <Route path='/' element={<MainPage/>}/>
         <Route element={<DashBoardPage mode={mode} />}>
           <Route path='my-form'>
@@ -43,7 +43,7 @@ function App() {
           <Route path='login' element={<LoginPage/>}/>
         </Route>
         <Route path='test' element={<FormTokLogo />}></Route>
-      </Routes>
+      </Routes> */}
     </>
   )
 }

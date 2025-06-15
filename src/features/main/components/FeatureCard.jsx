@@ -1,4 +1,4 @@
-import icons from '../../../assets/images/colorful-icons.png'
+import icons from '@/assets/images/colorful-icons.png'
 
 function FeatureCard ({describe, headLine, content}) {
   
@@ -19,7 +19,7 @@ function FeatureCard ({describe, headLine, content}) {
         className={`w-[110px] h-[110px] mb-2.5
           ${bgPosition} bg-size-[500px] bg-no-repeat
         `}
-        style={{backgroundImage : `url(${icons})`}}
+        style={{backgroundImage : `url(${icons.src})`}}
       ></div>
       <h3 className="text-2xl mb-2.5">{headLine}</h3>
       <p>{content}</p>

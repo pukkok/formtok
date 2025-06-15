@@ -1,7 +1,9 @@
+'use client'
+
 import { useState } from "react"
 import ImgBox from "../../A-Components/ImgBox"
-import darkScreen from '../../assets/images/dark-screen.JPG'
-import whiteScreen from '../../assets/images/white-screen.JPG'
+import darkScreen from '@/assets/images/dark-screen.jpg'
+import whiteScreen from '@/assets/images/white-screen.jpg'
 
 const CONTENT = {
   title: '작업 환경에 맞춰 자유롭게 모드를 선택하세요.',
@@ -35,7 +37,7 @@ function DetailSection () {
       <div className="relative w-main-wrap left-0">
         <ImgBox 
           className={'w-full h-auto rounded-2xl'}
-          src={whiteScreen} alt="라이트 모드"
+          src={whiteScreen.src} alt="라이트 모드"
         />
 
         <div className={`absolute top-0 left-0 rounded-2xl overflow-hidden`}
@@ -43,7 +45,7 @@ function DetailSection () {
         >
           <ImgBox 
             className={'w-main-wrap'}
-            src={darkScreen} alt="다크 모드"
+            src={darkScreen.src} alt="다크 모드"
           />
         </div>
       </div>

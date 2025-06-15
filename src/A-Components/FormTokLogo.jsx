@@ -1,10 +1,11 @@
+'use client'
+
 import React, { useEffect, useRef } from "react";
-import { useRecoilValue } from "recoil";
-import { modeAtom } from "../C-Recoils/screenAtom";
+import { useScreenStore } from "../stores/useScreenStore";
 
 /** modeFix = white, dark */
 function FormTokLogo ({boxSize = 200, modeFix=null}) {
-  const mode = useRecoilValue(modeAtom)
+  const mode = useScreenStore(s => s.mode)
   const canvasRef = useRef(null)
 
   useEffect(() => {

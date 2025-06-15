@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { switchTheScreenAtom } from "../../C-Recoils/screenAtom";
-import { useNavigate } from "react-router-dom";
+'use client'
+
+import React, { useEffect } from "react"
+import { useScreenStore } from "@/stores/useScreenStore"
+import { useRouter } from "next/navigation"
 
 function PageSwitchButton ({to, children, className}) {
-  const [switchTheScreen, setSwitchTheScreen] = useRecoilState(switchTheScreenAtom)
+  const switchTheScreen = useScreenStore(s => s.switchTheScreen)
+  const setSwitchTheScreen = useScreenStore(s => s.setSwitchTheScreen)
+  const router = useRouter()
 
-  const navigate = useNavigate()
   const goToPage = (path) => {
     setSwitchTheScreen('go')
     setTimeout(() => {
-      navigate(path)
+      router.push(path)
     }, 500)
   }
 
@@ -20,7 +22,7 @@ function PageSwitchButton ({to, children, className}) {
         setSwitchTheScreen('')
       }, 1000)
     }
-  }, [switchTheScreen, setSwitchTheScreen])
+  }, [switchTheScreen])
 
   return <button className={className} onClick={()=>goToPage(to)}>{children}</button>
 }

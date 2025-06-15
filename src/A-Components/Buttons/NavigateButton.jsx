@@ -1,10 +1,14 @@
-import { useNavigate } from "react-router-dom";
+'use client'
+
+// import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 function NavigateButton ({ to='/', handleClick = null, className, children }) {
-  const navigate = useNavigate()
+  const router = useRouter()
+  // const navigate = useNavigate()
 
   const onClick = (to) => {
-    navigate(to)
+    router.push(to)
     if(handleClick) handleClick()
   }
 
