@@ -3,7 +3,7 @@ import PageSwitchButton from '../../A-Components/PageSwitch/PageSwitchButton'
 const CONTENT = {
   headLine : '한번 해보는게 빠르죠!',
   content: `폼톡을 사용하여 쉽게 설문조사를 생성하고 데이터를 분석해보세요.`,
-  navigate: '/user/login',
+  navigate: '/login',
   navText: '가입하기'
 }
 

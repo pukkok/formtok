@@ -28,7 +28,7 @@ const MainHeader = () => {
           <li className="text-[17px] font-bold"><PageSwitchButton>문의하기</PageSwitchButton></li>
           <li className="text-[17px] font-bold">
             <PageSwitchButton 
-              to={'/user/login'}
+              to={'/login'}
               className={`
               block
               rounded-[50px] py-2 px-6 box-border
