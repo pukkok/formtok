@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function NavigateButton ({ to='/', handleClick = null, className, children }) {
