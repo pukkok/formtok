@@ -1,13 +1,7 @@
-const heroContent = {
-  summary : '폼톡 - 당신의 의견을 나눠 보세요. 쉽게 사용하는 오픈 설문 플랫폼',
-  headLine : `나만의 대시보드를 \n만들어 보세요`,
-  detail: `조사, 분석, 자료정리까지 쉽고 빠르게 설문지를 만들어 보세요 \n대시보드를 사용해 응답받은 자료를 정리해보세요`,
-  navigate: '/my-form/manager',
-  navText: '시작하기'
-}
+import FeatureCard from './components/FeatureCard'
 
-const featuresContents = [
-  {
+const CONTENTS = [
+	{
     describe: 'write',
     headLine: '간편한 설문지 작성',
     content: `나만의 설문지를 쉽고 빠르게 작성하세요. \n다양한 질문 타입을 지원하며\n 사용자 경험에 맞춘 직관적인 인터페이스로 누구나 설문을 만들 수 있습니다.`
@@ -25,16 +19,23 @@ const featuresContents = [
 ]
 
 
-
-const callToActionContent = {
-  headLine : '한번 해보는게 빠르죠!',
-  content: `폼톡을 사용하여 쉽게 설문조사를 생성하고 데이터를 분석해보세요.`,
-  navigate: '/user/login',
-  navText: '가입하기'
+function FeatureSection() {
+	
+	return (
+		<section className='p-5 bg-[#fff] flex flex-col items-center'>
+			<div className='relative flex justify-end gap-10 w-full max-w-main-wrap'>
+				{CONTENTS.map(item => {
+					const {describe, headLine, content} = item
+					return <FeatureCard 
+						key={describe}
+						describe={describe} 
+						headLine={headLine} 
+						content={content}
+					/>
+				})}
+			</div>
+		</section>
+	)
 }
 
-export { 
-  heroContent, 
-  featuresContents,
-  callToActionContent 
-}
+export default FeatureSection
