@@ -5,12 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // resolve: {
-  //   alias: {
-  //     '@': path.resolve(__dirname, 'src'), // 선택: 절대경로 import 지원
-  //   },
-  // },
   server: {
-    port: 5454,
+    port: 3000,
   },
 })
