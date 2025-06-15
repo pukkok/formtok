@@ -27,7 +27,9 @@ const MainHeader = () => {
         <ul className="ml-auto flex items-center gap-4">
           <li className="text-[17px] font-bold"><PageSwitchButton>문의하기</PageSwitchButton></li>
           <li className="text-[17px] font-bold">
-            <PageSwitchButton className={`
+            <PageSwitchButton 
+              to={'/user/login'}
+              className={`
               block
               rounded-[50px] py-2 px-6 box-border
               bg-gradient-to-r from-[#f06292] from-0% via-[#7E37ED] via-50% to-[#f06292]
