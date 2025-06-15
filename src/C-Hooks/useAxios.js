@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil"
 import { originalDataAtom, pagesAtom, randomKey } from "../C-Recoils/surveyAtoms"
 import { useCallback } from "react"
 
-axios.defaults.baseURL = origin.includes('localhost') ? `http://localhost:5000` : process.env.REACT_APP_RESTAPI_URL
+axios.defaults.baseURL = import.meta.env.VITE_PUBLIC_RESTAPI_URL
 
 const useAxios = () => {
     const pages = useRecoilValue(pagesAtom)
