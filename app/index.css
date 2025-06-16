@@ -9,11 +9,22 @@
   --color-point: #7E37ED;
   --color-point-hover: #9A5BFF;
 
+  --color-light-purple: #AF7EFF;
+
   --color-fold-point: #F06292;
   --color-light-w: #EDEDED;
 
   --animate-heroUp: heroUp 1s .9s forwards;
   --animate-moveToHigh: moveToHigh 1s 1s forwards;
+  --animate-show-large-left-box: show-large-left-box .3s ease-in forwards;
+  --animate-hide-large-left-box: hide-large-left-box .3s ease-in forwards;
+  --animate-show-large-right-box: show-large-right-box .3s ease-in forwards;
+  --animate-hide-large-right-box: hide-large-right-box .3s ease-in forwards;
+  --animate-switching-screen: switching-screen 1s ease-in-out forwards;
+
+  --animate-show-small-box: show-small-box .8s forwards;
+  --animate-hide-small-box: hide-small-box .8s forwards;
+
   --container-main-wrap: 1300px;
   --container-board-wrap: 2100px;
   
@@ -66,6 +77,101 @@
   width: 0;
   height: 0;
   cursor: pointer;
+}
+
+@keyframes show-large-left-box {
+  0%{
+    opacity: 0;
+    margin-left: 10px;
+    visibility: hidden;
+  }
+  100%{
+    opacity: 1;
+    margin-left: 0;
+    visibility: visible;
+  }
+}
+@keyframes hide-large-left-box {
+  0%{
+    opacity: 1;
+    margin-left: 0;
+    visibility: visible;
+  }
+  100%{
+    opacity: 0;
+    margin-left: 10px;
+    visibility: hidden;
+  }
+}
+@keyframes show-large-right-box {
+  0%{
+    opacity: 0;
+    margin-left: -10px;
+    visibility: hidden;
+  }
+  100%{
+    opacity: 1;
+    margin-left: 0;
+    visibility: visible;
+  }
+}
+@keyframes hide-large-right-box {
+  0%{
+    opacity: 1;
+    margin-left: 0;
+    visibility: visible;
+  }
+  100%{
+    opacity: 0;
+    margin-left: -10px;
+    visibility: hidden;
+  }
+}
+@keyframes hide-small-box {
+  0%{
+    opacity: 1;
+    margin-top: 0px;
+    visibility: visible;
+  }
+  100%{
+    opacity: 0;
+    margin-top: 25px;
+    visibility: hidden;
+  }
+}
+@keyframes show-small-box {
+  0%{
+    opacity: 0;
+    margin-top: 25px;
+    visibility: hidden;
+  }
+  100%{
+    opacity: 1;
+    margin-top: 0;
+    visibility: visible;
+  }
+}
+
+@keyframes switching-screen {
+  0%{
+    height: 0;
+    bottom: -100vh;
+  }
+  25%{
+    
+    bottom: 0;
+  }
+  50%{
+    height: 100vh;
+    bottom: 0;
+  }
+  75%{
+    bottom: 0;
+  }
+  100%{
+    bottom: 100vh;
+    
+  }
 }
 
 :root{
@@ -176,12 +282,12 @@ h5{
   all: unset;
 } */
 
-input:not([type=checkbox], [type=range], [type=radio]){
+/* input:not([type=checkbox], [type=range], [type=radio]){
   all: unset;
   line-height: 1.5;
   border-bottom: 1px solid transparent;
   padding-left: 2px;
-}
+} */
 input::placeholder{
   color: #aaa;
 }
