@@ -20,7 +20,7 @@ function PageSwitchButton ({to, children, className}) {
     if(switchTheScreen === 'go'){
       setTimeout(() => {
         setSwitchTheScreen('')
-      }, 1000)
+      }, 1200)
     }
   }, [switchTheScreen])
 
