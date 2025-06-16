@@ -1,4 +1,4 @@
-import icons from '@/assets/images/colorful-icons.png'
+import icons from '@/assets/colorful-icons.png'
 
 function FeatureCard ({describe, headLine, content}) {
   

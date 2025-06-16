@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import ImgBox from "../../A-Components/ImgBox"
-import darkScreen from '@/assets/images/dark-screen.jpg'
-import whiteScreen from '@/assets/images/white-screen.jpg'
+import darkScreen from '@/assets/dark-screen.jpg'
+import whiteScreen from '@/assets/white-screen.jpg'
 
 const CONTENT = {
   title: '작업 환경에 맞춰 자유롭게 모드를 선택하세요.',

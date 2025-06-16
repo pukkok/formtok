@@ -1,6 +1,6 @@
 import PageSwitchButton from '@/A-Components/PageSwitch/PageSwitchButton'
-import cloud from '@/assets/images/cloud.png'
-import hero from '@/assets/images/hero-image.png'
+import cloud from '@/assets/cloud.png'
+import hero from '@/assets/hero-image.png'
 
 const CONTENT = {
   summary : '폼톡 - 당신의 의견을 나눠 보세요. 쉽게 사용하는 오픈 설문 플랫폼',
