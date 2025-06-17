@@ -1,0 +1,31 @@
+.show-large-box {
+  animation: show-large-box .3s ease-in forwards;
+}
+.hide-large-box {
+  animation: hide-large-box .3s ease-in forwards;
+}
+
+@keyframes show-large-box {
+  0%{
+    opacity: 0;
+    margin-left: -10px;
+    visibility: hidden;
+  }
+  100%{
+    opacity: 1;
+    margin-left: 0;
+    visibility: visible;
+  }
+}
+@keyframes hide-large-box {
+  0%{
+    opacity: 1;
+    margin-left: 0;
+    visibility: visible;
+  }
+  100%{
+    opacity: 0;
+    margin-left: -10px;
+    visibility: hidden;
+  }
+}
