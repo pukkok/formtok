@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { useScreenStore } from "../stores/useScreenStore";
 
-/** modeFix = white, dark */
+/** modeFix = light, dark */
 function FormTokLogo ({boxSize = 200, modeFix=null}) {
   const mode = useScreenStore(s => s.mode)
   const canvasRef = useRef(null)
