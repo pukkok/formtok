@@ -1,4 +1,4 @@
-const SubmitButton = ({onClick, type, children}) => {
+const SubmitButton = ({onClick, children}) => {
 
   const handleClick = (e) => {
     e.preventDefault()

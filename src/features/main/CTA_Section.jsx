@@ -1,4 +1,4 @@
-import PageSwitchButton from '../../A-Components/PageSwitch/PageSwitchButton'
+import PageSwitchButton from '@/components/page-switch/PageSwitchButton'
 
 const CONTENT = {
   headLine : '한번 해보는게 빠르죠!',
