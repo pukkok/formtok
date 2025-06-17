@@ -1,5 +1,5 @@
 import ani from '@/animations/SmallBoxes.module.css'
-import { useSignStore } from "@/stores/useSignStore"
+import { useLoginUiStore } from '@/stores/useLoginUiStore'
 
 export const SMALL_LOGIN_INFOS = [
 	{
@@ -15,8 +15,8 @@ export const SMALL_LOGIN_INFOS = [
 ]
 
 const SmallBoxes = () => {
-  const activeForm = useSignStore(s => s.activeForm)
-  const changeActiveForm = useSignStore(s => s.changeActiveForm)
+  const activeForm = useLoginUiStore(s => s.activeForm)
+  const changeActiveForm = useLoginUiStore(s => s.changeActiveForm)
 
   return (
     <div className="absolute w-full h-[580px] top-1/2 left-0 -translate-y-1/2 bg-dark shadow-[0_0px_20px_rgba(22,22,22,0.1)] flex items-center justify-center">

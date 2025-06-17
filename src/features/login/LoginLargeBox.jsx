@@ -4,8 +4,9 @@ import LargeBox from "./components/LargeBox"
 import LargeBoxInput from "./components/LargeBoxInput"
 import CapsLockMessage from "./components/CapsLockMessage"
 import SubmitButton from "./components/SubmitButton"
-import { useSignStore } from "@/stores/useSignStore"
 import { useRouter } from "next/navigation"
+import { useLoginFormStore } from '@/stores/useLoginFormStore'
+import { useLoginUiStore } from '@/stores/useLoginUiStore'
 
 const LOGIN_FORMS = [
   {name : 'userId', placeholder: '아이디', type: 'text'},
@@ -15,18 +16,20 @@ const LOGIN_FORMS = [
 const LoginLargeBox = () => {
 	const router = useRouter()
 
-	const activeForm = useSignStore(s => s.activeForm)
+	const activeForm = useLoginUiStore(s => s.activeForm)
+  const currentFocusedInputName = useLoginUiStore(s => s.currentFocusedInputName)
+  const setCurrentFocusedInputName = useLoginUiStore(s => s.setCurrentFocusedInputName)
+  const isCapsLockActive = useLoginUiStore(s => s.isCapsLockActive)
+  const setIsCapsLockAcive = useLoginUiStore(s => s.setIsCapsLockAcive)
 
-  const loginInputs = useSignStore(s => s.loginInputs)
-  const loginTyping = useSignStore(s => s.loginTyping)
+  const loginInputs = useLoginFormStore(s => s.loginInputs)
+  const setLoginInputs = useLoginFormStore(s => s.setLoginInputs)
+	const loginAction = useLoginFormStore(s => s.loginAction)
 
-  const currentFocusedInputName = useSignStore(s => s.currentFocusedInputName)
-  const setCurrentFocusedInputName = useSignStore(s => s.setCurrentFocusedInputName)
-
-  const isCapsLockActive = useSignStore(s => s.isCapsLockActive)
-  const setIsCapsLockAcive = useSignStore(s => s.setIsCapsLockAcive)
-
-	const loginAction = useSignStore(s => s.loginAction)
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		setLoginInputs({ ...loginInputs, [name]: value })
+	}
 
   const capsLockCheck = (e) => {
     const isCapsLock = e.getModifierState('CapsLock')
@@ -60,7 +63,7 @@ const LoginLargeBox = () => {
 								onKeyUp={capsLockCheck}
 								onFocus={() => setCurrentFocusedInputName(name)} // 포커스 이벤트
 								onBlur={handleBlur}
-								onChange={loginTyping} 
+								onChange={handleChange}
 								value={loginInputs[name]}
 								{...form}
 							/>

@@ -5,8 +5,10 @@ import LargeBoxInput from "./components/LargeBoxInput"
 import JoinPass from "./components/JoinPass"
 import CapsLockMessage from "./components/CapsLockMessage"
 import SubmitButton from "./components/SubmitButton"
-import { useSignStore } from "@/stores/useSignStore"
 import { toast } from "sonner"
+import { useLoginUiStore } from '@/stores/useLoginUiStore'
+import { useJoinFormStore } from '@/stores/useJoinFormStore'
+import { formatPhone } from '@/utils/formatPhone'
 
 export const JOIN_FORMS = [
   {name : 'userId', placeholder: '아이디', type: 'text', optionText: '중복확인', essentail : true},
@@ -19,35 +21,42 @@ export const JOIN_FORMS = [
 ]
 
 const JoinLargeBox = () => {
-	const activeForm = useSignStore(s => s.activeForm)
-	const changeActiveForm = useSignStore(s => s.changeActiveForm)
+	const activeForm = useLoginUiStore(s => s.activeForm)
+	const changeActiveForm = useLoginUiStore(s => s.changeActiveForm)
+  const currentFocusedInputName = useLoginUiStore(s => s.currentFocusedInputName)
+  const setCurrentFocusedInputName = useLoginUiStore(s => s.setCurrentFocusedInputName)
+  const isCapsLockActive = useLoginUiStore(s => s.isCapsLockActive)
+  const setIsCapsLockActive = useLoginUiStore(s => s.setIsCapsLockActive)
 
-  const joinInputs = useSignStore(s => s.joinInputs)
-  const joinTyping = useSignStore(s => s.joinTyping)
+  const joinInputs = useJoinFormStore(s => s.joinInputs)
+	const setJoinInputs = useJoinFormStore(s => s.setJoinInputs)
+  const pass = useJoinFormStore(s => s.pass)
+	const setPass = useJoinFormStore(s => s.setPass)
+	const hideOtp = useJoinFormStore(s => s.hideOtp)
+	const idDuplicateCheckAction = useJoinFormStore(s => s.idDuplicateCheckAction)
+	const sendOtpAction = useJoinFormStore(s => s.sendOtpAction)
+	const verifyOtpAction = useJoinFormStore(s => s.verifyOtpAction)
 
-  const pass = useSignStore(s => s.pass)
-	const hideOtp = useSignStore(s => s.hideOtp)
+	const joinAction = useJoinFormStore(s => s.joinAction)
 
-  const currentFocusedInputName = useSignStore(s => s.currentFocusedInputName)
-  const setCurrentFocusedInputName = useSignStore(s => s.setCurrentFocusedInputName)
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		const newValue = name === 'phone' ? formatPhone(value) : value
 
-  const isCapsLockActive = useSignStore(s => s.isCapsLockActive)
-  const setIsCapsLockAcive = useSignStore(s => s.setIsCapsLockAcive)
+		setJoinInputs({ ...joinInputs, [name]: newValue })
 
-	const idDuplicateCheckAction = useSignStore(s => s.idDuplicateCheckAction)
-	const sendOtpAction = useSignStore(s => s.sendOtpAction)
-	const verifyOtpAction = useSignStore(s => s.verifyOtpAction)
-
-	const joinAction = useSignStore(s => s.joinAction)
+		if (name === 'userId') setPass({ ...pass, userId: false })
+		if (name === 'email') setPass({ ...pass, email: false })
+	}
 
   const capsLockCheck = (e) => {
     const isCapsLock = e.getModifierState('CapsLock')
-    setIsCapsLockAcive(isCapsLock)
+    setIsCapsLockActive(isCapsLock)
   }
 
   const handleBlur = () => {
     setCurrentFocusedInputName('')
-    setIsCapsLockAcive(false)
+    setIsCapsLockActive(false)
   }
 	
 	const handleSubmit = async () => {
@@ -79,7 +88,7 @@ const JoinLargeBox = () => {
 									onFocus={() => setCurrentFocusedInputName(name)}
 									onBlur={handleBlur}
 
-									onChange={joinTyping} value={joinInputs[name]}
+									onChange={handleChange} value={joinInputs[name]}
 									{...form}
 								/>
 
