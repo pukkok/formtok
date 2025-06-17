@@ -60,7 +60,7 @@ const JoinLargeBox = () => {
 				left-[calc(100%-550px)] invisible
 				${activeForm === 'join' ? 'animate-show-large-right-box' : 'animate-hide-large-right-box'}
 				`}>
-				<h3 className="pt-28 pb-18 text-point">회원가입</h3>
+				<h3 className="text-3xl pt-28 pb-18 text-point">회원가입</h3>
 				<form className="text-light-w">
 					{JOIN_FORMS.map(form => {
 						const { name, optionText, type } = form

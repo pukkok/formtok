@@ -43,7 +43,7 @@ const LoginLargeBox = () => {
 
   return (
     <LargeBox className={`${activeForm === 'login' ? 'animate-show-large-left-box' : 'animate-hide-large-left-box'}`}>
-				<h3 className="pt-28 pb-18 text-point">로그인</h3>
+				<h3 className="text-3xl pt-28 pb-18 text-point">로그인</h3>
 				<form className="text-light-w">
 					{LOGIN_FORMS.map(form => {
 						const {name, type} = form

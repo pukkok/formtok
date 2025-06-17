@@ -21,7 +21,7 @@ function DetailSection () {
   return (
   <section className="h-fit py-5 text-[#333]">
     <div className="max-w-main-wrap mx-auto auto-show">
-      <h2>
+      <h2 className="text-3xl">
         {CONTENT.title}
         <span className="ml-2.5 text-base">{CONTENT.description}</span>
       </h2>
