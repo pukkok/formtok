@@ -14,4 +14,17 @@ export const useAuthStore = create((set) => ({
     localStorage.setItem("userInfo", JSON.stringify(userInfo))
     set({ token, userInfo })
   },
+
+  initializeAuth: () => {
+    const token = localStorage.getItem('token')
+    const userInfo = localStorage.getItem('userInfo')
+    if (token && userInfo) {
+      try {
+        set({ token, userInfo: JSON.parse(userInfo) })
+      } catch (err) {
+        console.error('유저 정보 파싱 실패', err)
+        localStorage.clear()
+      }
+    }
+  }
 }))
