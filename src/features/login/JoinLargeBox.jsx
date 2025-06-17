@@ -1,3 +1,5 @@
+
+import ani from '@/animations/JoinLargeBox.module.css'
 import LargeBox from "./components/LargeBox"
 import LargeBoxInput from "./components/LargeBoxInput"
 import JoinPass from "./components/JoinPass"
@@ -58,7 +60,7 @@ const JoinLargeBox = () => {
   return (
     <LargeBox className={`
 				left-[calc(100%-550px)] invisible
-				${activeForm === 'join' ? 'animate-show-large-right-box' : 'animate-hide-large-right-box'}
+				${activeForm === 'join' ? ani['show-large-box'] : ani['hide-large-box']}
 				`}>
 				<h3 className="text-3xl pt-28 pb-18 text-point">회원가입</h3>
 				<form className="text-light-w">

@@ -1,3 +1,4 @@
+import ani from '@/animations/MoveToHigh.module.css'
 import icons from '@/assets/colorful-icons.png'
 
 function FeatureCard ({describe, headLine, content}) {
@@ -9,9 +10,8 @@ function FeatureCard ({describe, headLine, content}) {
   }[describe]
 
   return (
-    <div className={`relative top-[100vh] flex flex-col gap-5 max-w-sm
+    <div className={`${ani['move-to-high']} relative top-[100vh] flex flex-col gap-5 max-w-sm
       bg-charcoal bg-linear-to-r from-charcoal from-20% to-dark
-      animate-moveToHigh
       p-9 rounded-xl transition-[0.3s]
       hover:translate-y-[-10px]
     `}>

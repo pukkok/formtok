@@ -1,4 +1,5 @@
-import PageSwitchButton from '@/A-Components/PageSwitch/PageSwitchButton'
+import ani from '@/animations/HeroUp.module.css'
+import PageSwitchButton from '@/components/page-switch/PageSwitchButton'
 import cloud from '@/assets/cloud.png'
 import hero from '@/assets/hero-image.png'
 
@@ -36,7 +37,7 @@ const HeroSection = () => {
           </PageSwitchButton>
         </div>
 
-        <div className={`absolute right-0 top-[100vh] max-w-[780px] h-fit animate-heroUp`}>
+        <div className={`${ani['hero-up']} absolute right-0 top-[100vh] max-w-[780px] h-fit`}>
           <img className='drop-shadow-[-2px_8px_14px_#444466]' src={hero.src} alt='hero'/>
         </div>
       </article>

@@ -1,3 +1,4 @@
+import ani from '@/animations/SmallBoxes.module.css'
 import { useSignStore } from "@/stores/useSignStore"
 
 export const SMALL_LOGIN_INFOS = [
@@ -25,7 +26,7 @@ const SmallBoxes = () => {
           <div
             key={buttonText} 
             className={`
-              ${activeForm !== formType ? 'animate-show-small-box' : 'animate-hide-small-box'}
+              ${activeForm !== formType ? ani['show-small-box'] : ani['hide-small-box']}
             text-[#aaa] flex flex-col justify-center items-center gap-5 p-[30px] w-[500px] h-full`}>
             <p>{pText}</p>
             <button 
