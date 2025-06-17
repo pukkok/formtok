@@ -1,13 +1,11 @@
 'use client'
 
+import ani from '@/animations/PageSwitching.module.css'
 import React from "react";
-import styled from "styled-components";
-import classNames from "classnames";
 import FormTokLogo from "../FormTokLogo";
 import { useScreenStore } from "@/stores/useScreenStore";
 
 function PageSwitcher () {
-	const mode = useScreenStore(s => s.mode)
 	const switchTheScreen = useScreenStore(s => s.switchTheScreen)
 
 	return (
@@ -18,7 +16,7 @@ function PageSwitcher () {
 				w-full h-screen
 				bg-[#fafbfc] dark:bg-deep-dark
 				text-7xl z-[1000] 
-				${switchTheScreen ? 'animate-switching-screen' : ''}
+				${switchTheScreen === 'go' ? ani['switching-screen'] : ''}
 			`}
 		>
 			<FormTokLogo boxSize={180}/>
