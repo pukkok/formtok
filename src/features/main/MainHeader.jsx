@@ -1,6 +1,6 @@
-import NavigateButton from "../../A-Components/Buttons/NavigateButton"
-import FormTokLogo from "../../A-Components/FormTokLogo"
-import PageSwitchButton from "../../A-Components/PageSwitch/PageSwitchButton"
+import NavigateButton from "@/components/NavigateButton"
+import FormTokLogo from "@/components/FormTokLogo"
+import PageSwitchButton from "@/components/page-switch/PageSwitchButton"
 
 const MainHeader = () => {
 
@@ -22,7 +22,7 @@ const MainHeader = () => {
           to={"/"}  
         >
           <FormTokLogo boxSize={40} madeFix={'white'}/>
-          <h3>폼톡</h3>
+          <h3 className="text-2xl">폼톡</h3>
         </NavigateButton>
         <ul className="ml-auto flex items-center gap-4">
           <li className="text-[17px] font-bold"><PageSwitchButton>문의하기</PageSwitchButton></li>

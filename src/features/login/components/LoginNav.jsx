@@ -1,4 +1,4 @@
-import NavigateButton from "@/A-Components/Buttons/NavigateButton"
+import NavigateButton from "@/components/NavigateButton"
 import { ArrowBackIcon } from "@/components/icons/ArrowBackIcon"
 import { HomeIcon } from "@/components/icons/HomeIcon"
 
