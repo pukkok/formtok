@@ -4,7 +4,7 @@ import Sidebar from "@/features/form-sidebar/Sidebar"
 import { useScreenStore } from "@/stores/useScreenStore"
 import { useEffect } from "react"
 
-const MyFormLayout = ({children}) => {
+const DashboardLayout = ({children}) => {
 
   const resetActiveTab = useScreenStore(s => s.resetActiveTab)
 
@@ -24,4 +24,4 @@ const MyFormLayout = ({children}) => {
   )
 }
 
-export default MyFormLayout
+export default DashboardLayout
