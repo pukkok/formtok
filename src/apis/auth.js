@@ -26,3 +26,10 @@ export const verifyOtp = async (email, otp) => {
   const { data } = await axios.post('/api/confirm/verify-otp', { email, otp })
   return data
 }
+
+export const refreshAuthToken = async (oldToken) => {
+  const { data } = await axios.post('/api/refresh-token', {}, 
+    {headers : {'Authorization' : `Bearer ${oldToken}`}}
+  )
+  return data.token
+}
