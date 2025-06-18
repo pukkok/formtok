@@ -29,7 +29,7 @@ const SidebarHeader = () => {
       const remainingMs = expTime - now
 
       if (remainingMs <= 1000 * 60 * 30 && !warnedRef.current) {
-        toast.warning('30분 남았습니다.')
+        toast.warning('로그인 만료까지 30분 남았습니다.')
         warnedRef.current = true
       }
 
