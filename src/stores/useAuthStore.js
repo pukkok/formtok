@@ -33,9 +33,10 @@ export const useAuthStore = create((set, get) => ({
   refreshAuthTokenAction : async () => {
     const oldToken = get().token
     const newToken = await refreshAuthToken(oldToken)
-
+    
     if(newToken) {
       toast.success('로그인 시간이 연장되었습니다.', {duration : 1000})
+      localStorage.setItem("token", newToken)
       set({token : newToken})
     }
   }
