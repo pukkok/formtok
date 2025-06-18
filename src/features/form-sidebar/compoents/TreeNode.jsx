@@ -27,17 +27,18 @@ const TreeNode = ({node}) => {
     <li className="mt-2">
       <button 
         className={`
-          w-full hover:bg-light-purple dark:hover:bg-charcoal 
+          w-full 
           flex items-center gap-x-3 
           py-2 px-3 
           rounded-lg
           transition-[background-color_0.3s]
-          cursor-pointer
-          ${(hasChildren && isExpanded) ? 'bg-lgith-purple dark:bg-charcoal' : ''}
-          ${
-            activeTab === node.path ? 'bg-point-hover hover:bg-point-hover dark:hover:bg-point-hover' : ''}
-          `}
-        onClick={hasChildren ? toggleOpen : () => goToTab(node)}  
+          cursor-pointer font-bold
+          ${(hasChildren && isExpanded) ? 'bg-point-hover dark:bg-charcoal' : ''}
+          ${ activeTab === node.path ? 
+            'bg-light-purple hover:bg-light-purple dark:bg-point dark:hover:bg-point' : 
+            'hover:bg-point-hover dark:hover:bg-charcoal'}`}
+        onClick={hasChildren ? toggleOpen : () => goToTab(node)}
+        tabIndex={-1}
       >
         {node?.icon} 
         {node?.text}

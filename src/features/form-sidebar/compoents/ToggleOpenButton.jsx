@@ -27,8 +27,10 @@ const ToggleOpenButton = () => {
       className={`${ani['contract-sidebar']} overflow-hidden
         absolute left-[320px] top-[100px] z-20
         -translate-x-1/2 -translate-y-1/2
-        w-0 h-0 rounded-full text-black
-        bg-light-w flex items-center justify-center cursor-pointer font-bold
+        w-0 h-0 rounded-full 
+        bg-white text-deep-dark
+        shadow-lg
+        flex items-center justify-center cursor-pointer font-bold
         hover:scale-105 hover:duration-100
         `}>
       <ArrowIcon size={28} direction='left' className='mr-0.5'/>
@@ -39,8 +41,8 @@ const ToggleOpenButton = () => {
         ${ani['expand-sidebar']}
         w-full h-full flex justify-center items-center
         after:content-[""] after:fixed
-        after:w-1.5 after:h-10 after:bg-light-w
-        after:py-1.5 after:rounded-xl cursor-pointer hover:after:bg-point
+        after:w-1.5 after:h-10 after:bg-light-w 
+        after:py-1.5 after:rounded-xl cursor-pointer
       `}
     >
     </button>
