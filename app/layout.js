@@ -1,4 +1,3 @@
-
 import PageSwitcher from "@/components/page-switch/PageSwitcher";
 import "./index.css"
 import { Toaster } from "sonner";
