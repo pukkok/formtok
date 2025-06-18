@@ -20,7 +20,7 @@ const LoginLargeBox = () => {
   const currentFocusedInputName = useLoginUiStore(s => s.currentFocusedInputName)
   const setCurrentFocusedInputName = useLoginUiStore(s => s.setCurrentFocusedInputName)
   const isCapsLockActive = useLoginUiStore(s => s.isCapsLockActive)
-  const setIsCapsLockAcive = useLoginUiStore(s => s.setIsCapsLockAcive)
+  const setIsCapsLockActive = useLoginUiStore(s => s.setIsCapsLockActive)
 
   const loginInputs = useLoginFormStore(s => s.loginInputs)
   const setLoginInputs = useLoginFormStore(s => s.setLoginInputs)
@@ -33,12 +33,12 @@ const LoginLargeBox = () => {
 
   const capsLockCheck = (e) => {
     const isCapsLock = e.getModifierState('CapsLock')
-    setIsCapsLockAcive(isCapsLock)
+    setIsCapsLockActive(isCapsLock)
   }
 
   const handleBlur = () => {
     setCurrentFocusedInputName('')
-    setIsCapsLockAcive(false)
+    setIsCapsLockActive(false)
   }
 
 	const handleSubmit = async () => {

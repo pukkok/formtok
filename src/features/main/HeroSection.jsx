@@ -7,7 +7,7 @@ const CONTENT = {
   summary : '폼톡 - 당신의 의견을 나눠 보세요. 쉽게 사용하는 오픈 설문 플랫폼',
   headLine : `나만의 대시보드를 \n만들어 보세요`,
   detail: `조사, 분석, 자료정리까지 쉽고 빠르게 설문지를 만들어 보세요 \n대시보드를 사용해 응답받은 자료를 정리해보세요`,
-  navigate: '/my-form/manager',
+  navigate: '/my-form/manage',
   navText: '시작하기'
 }
 
