@@ -45,7 +45,6 @@ export const safeRequest = async (
     if (loadingToastId) {
       setTimeout(() => toast.dismiss(loadingToastId), delay)
     }
-    
     if(result.code === 200) {
       if (successMessage) {
         toast.success(successMessage, {
@@ -65,16 +64,16 @@ export const safeRequest = async (
   // INFO: 서버자체 에러일 때  
   } catch (error) {
     // 로딩 토스트 닫기
-    if (loadingToastId) toast.dismiss(loadingToastId)
+    if (loadingToastId) toast.dismiss(loadingToastId) 
 
-    // 기타 에러
     if (!silent) {
+      if(error === 'tokenless request') {
+        return { result: null, error : null }
+      }
       console.error('API 에러:', error)
       toast.error('⚠️ 에러가 발생했습니다.')
     }
-
     
-
     return { result: null, error }
   }
 }
