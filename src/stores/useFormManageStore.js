@@ -5,6 +5,7 @@ import { create } from "zustand";
 export const useFormManageStore = create((set, get) => ({
   allForms: [],
   searchedForms: [],
+  setSearchedForms: (arr) => set({ searchedForms: arr }),
 
   getMyFormListAction : async () => {
     const { result } = await safeRequest(getMyFormList(), {
