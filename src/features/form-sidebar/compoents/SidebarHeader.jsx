@@ -4,24 +4,27 @@ import { useState, useRef, useEffect } from "react"
 import FormTokLogo from "@/components/FormTokLogo"
 import { MdOutlineCached } from "react-icons/md"
 import { useRouter } from "next/navigation"
-import { jwtDecode } from "jwt-decode"
 import { useAuthStore } from "@/stores/useAuthStore"
 import { toast } from "sonner"
 import { updateTimeLeft } from "@/utils/updateTimeLeft"
 
 const SidebarHeader = () => {
-  const [timeLeft, setTimeLeft] = useState("0시간 00분")
+  const [timeLeftLabel, setTimeLeftLabel] = useState("비회원 이용 중")
   const intervalRef = useRef(null)
-  const warnedRef = useRef(false) // toast 1회 제한용
+  const warnedRef = useRef(false)
+
   const token = useAuthStore(s => s.token)
+  const exp = useAuthStore(s => s.exp)
   const logoutAction = useAuthStore(s => s.logoutAction)
   const refreshAuthTokenAction = useAuthStore(s => s.refreshAuthTokenAction)
   const router = useRouter()
 
   useEffect(() => {
-    if (!token) return setTimeLeft('비회원 이용 중')
+    if (!token) {
+      setTimeLeftLabel("비회원 이용 중")
+      return
+    }
 
-    const { exp } = jwtDecode(token)
     const expTime = exp * 1000
 
     intervalRef.current = setInterval(() => {
@@ -36,11 +39,11 @@ const SidebarHeader = () => {
       if (remainingMs <= 0) {
         clearInterval(intervalRef.current)
         toast.warning('로그인 시간이 만료되었습니다.')
-        setTimeLeft("만료 됨")
+        setTimeLeftLabel("만료시간: 만료됨")
         logoutAction()
         router.replace('/')
       } else {
-        setTimeLeft(updateTimeLeft(remainingMs))
+        setTimeLeftLabel(`만료시간: ${updateTimeLeft(remainingMs)}`)
       }
     }, 1000)
 
@@ -55,7 +58,7 @@ const SidebarHeader = () => {
       <FormTokLogo boxSize={48}/>
       <div>
         <h1 className="text-xl">폼톡</h1>  
-        <p className="text-xs">만료시간: {timeLeft}</p>
+        <p className="text-xs">{timeLeftLabel}</p>
       </div>
       <button className={`
         ml-2.5 p-1 flex justify-center items-center bg-charcoal font-bold rounded-md cursor-pointer
