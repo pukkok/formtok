@@ -21,7 +21,7 @@ const TemplateBox = () => {
   
   useEffect(() => {
     getMyFormListAction()
-  }, [])
+  }, [getMyFormListAction])
 
   const goToEdit = ({title, url, pages, endingMent, listStyle, options}) => {
     loadForm({title, pages, endingMent, listStyle, options})
@@ -47,12 +47,18 @@ const TemplateBox = () => {
                   <Light options={options}/>
 
                   <button className="hover:text-point cursor-pointer"
-                    onClick={() => copyFormAction(url)}  
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      copyFormAction(url)
+                    }}  
                   >
                     <CopyIcon />
                   </button>
                   <button className="hover:text-point cursor-pointer"
-                    onClick={() => deleteFormAction(url)}  
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      deleteFormAction(url)
+                    }}  
                   >
                     <DeleteIcon />
                   </button>

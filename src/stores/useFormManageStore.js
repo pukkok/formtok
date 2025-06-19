@@ -5,17 +5,20 @@ import { create } from "zustand";
 export const useFormManageStore = create((set, get) => ({
   allForms: [],
   searchedForms: [],
+  isFetched: false,
   setSearchedForms: (arr) => set({ searchedForms: arr }),
 
-  getMyFormListAction : async () => {
+  getMyFormListAction : async (force=false) => {
+    if (!force && get().isFetched) return
+
     const { result } = await safeRequest(getMyFormList(), {
       loadingMessage: '설문지 불러오는 중...'
     })
     if(result) {
-      set({searchedForms : [...result.forms], allForms: [...result.forms]})
+      set({searchedForms : [...result.forms], allForms: [...result.forms], isFetched: true})
       return result.forms
     } else {
-      return set({ searchedForms: [], allForms: [] })
+      return set({ searchedForms: [], allForms: [], isFetched: true })
     }
   },
 
@@ -26,7 +29,7 @@ export const useFormManageStore = create((set, get) => ({
     })
 
     if(result) {
-      get().getMyFormListAction()
+      await get().getMyFormListAction(true)
       return true
     }
   },
@@ -38,7 +41,7 @@ export const useFormManageStore = create((set, get) => ({
     })
 
     if(result) {
-      get().getMyFormListAction()
+      await get().getMyFormListAction(true)
       return true
     }
   }
