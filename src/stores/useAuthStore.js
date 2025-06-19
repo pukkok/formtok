@@ -1,11 +1,13 @@
 import { refreshAuthToken } from '@/apis/auth'
 import { toast } from 'sonner'
 import { create } from 'zustand'
+import { jwtDecode } from 'jwt-decode'
 
 export const useAuthStore = create((set, get) => ({
   token: '',
   userInfo: null,
   isHydrated: false,
+  exp: 0,
 
   logoutAction: () => {
     localStorage.clear()
@@ -21,17 +23,28 @@ export const useAuthStore = create((set, get) => ({
   initializeAuth: () => {
     const token = localStorage.getItem('token')
     const userInfo = localStorage.getItem('userInfo')
+
     if (token && userInfo) {
       try {
-        set({ token, userInfo: JSON.parse(userInfo), isHydrated: true })
-      } catch (err) { // INFO: 실패 경우
+        const { exp } = jwtDecode(token)
+        const now = Date.now()
+
+        if (exp * 1000 <= now) {
+          localStorage.clear()
+        } else {
+          set({
+            token,
+            exp: exp,
+            userInfo: JSON.parse(userInfo),
+          })
+        }
+      } catch (err) { // INFO: 파싱 실패 경우
         console.error('유저 정보 파싱 실패', err)
         localStorage.clear()
-        set({ isHydrated : true })
-      } 
-    } else { // INFO: 토큰이 없는 경우
-      set({ isHydrated : true })
+      }
     }
+
+    set({ isHydrated: true }) // INFO: 토큰이 없는 경우
   },
 
   refreshAuthTokenAction : async () => {
