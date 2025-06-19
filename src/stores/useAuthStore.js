@@ -5,6 +5,7 @@ import { create } from 'zustand'
 export const useAuthStore = create((set, get) => ({
   token: '',
   userInfo: null,
+  isHydrated: false,
 
   logoutAction: () => {
     localStorage.clear()
@@ -22,11 +23,14 @@ export const useAuthStore = create((set, get) => ({
     const userInfo = localStorage.getItem('userInfo')
     if (token && userInfo) {
       try {
-        set({ token, userInfo: JSON.parse(userInfo) })
-      } catch (err) {
+        set({ token, userInfo: JSON.parse(userInfo), isHydrated: true })
+      } catch (err) { // INFO: 실패 경우
         console.error('유저 정보 파싱 실패', err)
         localStorage.clear()
-      }
+        set({ isHydrated : true })
+      } 
+    } else { // INFO: 토큰이 없는 경우
+      set({ isHydrated : true })
     }
   },
 
