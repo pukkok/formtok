@@ -14,10 +14,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ThemeObserver>
-          <InitailWork />
-          <PageSwitcher />
-          {children}
-          <Toaster richColors position="top-center" />
+          <InitailWork>
+            <PageSwitcher />
+            {children}
+            <Toaster richColors position="top-center" />
+          </InitailWork>
         </ThemeObserver>
       </body>
     </html>
