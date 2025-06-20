@@ -8,11 +8,6 @@ const UserInfoBox = () => {
   const logoutAction = useAuthStore(s => s.logoutAction)
   const router = useRouter()
 
-  const logout = () => {
-    logoutAction()
-    router.replace('/')
-  }
-
   const goToLoginPage = () => {
     router.push('/login')
   }
@@ -31,7 +26,7 @@ const UserInfoBox = () => {
         className={`ml-auto flex items-center gap-2.5 
         dark:hover:text-light-purple hover:text-[#fff] 
         cursor-pointer`}
-        onClick={ userInfo ? logout : goToLoginPage }  
+        onClick={ userInfo ? logoutAction : goToLoginPage }  
       >
         {userInfo ? <LuLogOut fontSize={22}/> : <LuLogIn fontSize={22} />}
       </button>

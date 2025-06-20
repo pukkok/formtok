@@ -12,12 +12,14 @@ export const useAuthStore = create((set, get) => ({
   logoutAction: () => {
     localStorage.clear()
     set({ token: '', userInfo: null })
+    window.location.href = '/'
   },
 
   setAuth: (token, userInfo) => {
     localStorage.setItem("token", token)
     localStorage.setItem("userInfo", JSON.stringify(userInfo))
-    set({ token, userInfo })
+    const { exp } = jwtDecode(token)
+    set({ token, userInfo, exp })
   },
 
   initializeAuth: () => {

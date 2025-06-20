@@ -41,7 +41,6 @@ const SidebarHeader = () => {
         toast.warning('로그인 시간이 만료되었습니다.')
         setTimeLeftLabel("만료시간: 만료됨")
         logoutAction()
-        router.replace('/')
       } else {
         setTimeLeftLabel(`만료시간: ${updateTimeLeft(remainingMs)}`)
       }
