@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import DescriptionEditor from "@/A-Components/DescriptionEditor"
+import CustomEditor from "@/components/CustomEditor"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 
@@ -25,7 +25,7 @@ const PageCard = ({pi}) => {
       setPages(modifiedPages)
     }
 
-    const changePageDescription = (html, pi) => {
+    const changePageDescription = (html) => {
       const modifiedPages = pages.map((page, idx) => {
         if(idx === pi) {
           page = {...page, description: html}
@@ -34,6 +34,10 @@ const PageCard = ({pi}) => {
       })
       setPages(modifiedPages)
     }
+
+    useEffect(() => {
+      console.log(pages)
+    }, [pages])
     
     return (
       <div 
@@ -48,16 +52,15 @@ const PageCard = ({pi}) => {
           <div className="px-5 py-2.5">
             <input 
             className="pl-0.5 w-full pb-1 text-2xl
-          border-b border-b-transparent hover:border-b-silver 
+            border-b border-b-transparent hover:border-b-silver 
           focus:border-b-point-hover focus:border-b-2" 
             placeholder="페이지 제목" 
             onChange={e=>changePageTitle(e, pi)} value={pages[pi].title}/>
             
-            <DescriptionEditor
-            value={pages[pi].description}
-            pi={pi}
-            placeholder={'페이지 설명'}
-            handleChange={changePageDescription}
+            <CustomEditor
+              content={pages[pi].description}
+              placeholder={'페이지 설명'}
+              onChange={changePageDescription}
             />
           </div>
       </div>
