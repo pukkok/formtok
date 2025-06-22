@@ -1,4 +1,4 @@
-import { copyForm, deleteForm, getMyFormList } from "@/apis/forms";
+import { copyForm, deleteForm, getMyAllForm } from "@/apis/forms";
 import { safeRequest } from "@/utils/safeRequest";
 import { create } from "zustand";
 
@@ -11,7 +11,7 @@ export const useFormManageStore = create((set, get) => ({
   getMyFormListAction : async (force=false) => {
     if (!force && get().isFetched) return
 
-    const { result } = await safeRequest(getMyFormList(), {
+    const { result } = await safeRequest(getMyAllForm(), {
       loadingMessage: '설문지 불러오는 중...'
     })
     if(result) {
