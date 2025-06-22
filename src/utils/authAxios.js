@@ -11,9 +11,6 @@ const ensureToken = async (token) => {
 const axiosWithAuth = (method) => {
   return async (url, data = {}) => {
     const token = useAuthStore.getState().token
-    const hasToken = await ensureToken(token)
-
-    if(!hasToken) return
 
     const headers = {
       Authorization: `Bearer ${token}`
