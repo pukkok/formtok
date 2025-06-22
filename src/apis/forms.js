@@ -1,6 +1,11 @@
 import authAxios from "@/utils/authAxios"
 
-export const getMyFormList = async () => {
+export const getMyForm = async (url) => {
+  const { data } = await authAxios.post('/api/form/my-form/one', {url})
+  return data
+}
+
+export const getMyAllForm = async () => {
   const { data } = await authAxios.post('/api/form/my-form/load')
   return data
 }
