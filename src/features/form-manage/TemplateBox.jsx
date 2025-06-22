@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from "react"
 import CardWrapper from "./components/CardWrapper"
 import CreateCard from "./components/CreateCard"
 import { useFormManageStore } from "@/stores/useFormManageStore"
@@ -9,6 +8,7 @@ import dayjs from "dayjs"
 import Light from "./components/Light"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useRouter } from "next/navigation"
+import { useTokenFetch } from "@/utils/useTokenFetch"
 
 const TemplateBox = () => {
   const router = useRouter()
@@ -18,10 +18,7 @@ const TemplateBox = () => {
   const copyFormAction = useFormManageStore(s => s.copyFormAction)
   const deleteFormAction = useFormManageStore(s => s.deleteFormAction)
   const loadForm = useFormEditStore(s => s.loadForm)
-  
-  useEffect(() => {
-    getMyFormListAction()
-  }, [getMyFormListAction])
+  useTokenFetch(getMyFormListAction)
 
   const goToEdit = ({title, url, pages, endingMent, listStyle, options}) => {
     loadForm({title, pages, endingMent, listStyle, options})
