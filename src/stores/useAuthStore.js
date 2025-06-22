@@ -56,7 +56,8 @@ export const useAuthStore = create((set, get) => ({
     if(newToken) {
       toast.success('로그인 시간이 연장되었습니다.', {duration : 1000})
       localStorage.setItem("token", newToken)
-      set({token : newToken})
+      const { exp } = jwtDecode(newToken)
+      set({token : newToken, exp})
     }
   }
 }))
