@@ -34,10 +34,6 @@ const PageCard = ({pi}) => {
       })
       setPages(modifiedPages)
     }
-
-    useEffect(() => {
-      console.log(pages)
-    }, [pages])
     
     return (
       <div 
