@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from "react"
 import CardWrapper from "./components/CardWrapper"
 import CreateCard from "./components/CreateCard"
 import { useFormManageStore } from "@/stores/useFormManageStore"
@@ -9,25 +10,41 @@ import Light from "./components/Light"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useRouter } from "next/navigation"
 import { useTokenFetch } from "@/utils/useTokenFetch"
+import CreateFormModal from "@/features/form-manage/CreateFormModal"
 
 const TemplateBox = () => {
+  const [isOpenCreateFormModal, setIsOpenCreateFormModal] = useState(false)
+
   const router = useRouter()
 
+  const setTitle = useFormEditStore(s => s.setTitle)
   const searchedForms = useFormManageStore(s => s.searchedForms)
   const getMyFormListAction = useFormManageStore(s => s.getMyFormListAction)
   const copyFormAction = useFormManageStore(s => s.copyFormAction)
   const deleteFormAction = useFormManageStore(s => s.deleteFormAction)
-  const loadForm = useFormEditStore(s => s.loadForm)
+  const settingForm = useFormEditStore(s => s.settingForm)
+  const setIsLoaded = useFormEditStore(s => s.setIsLoaded)
   useTokenFetch(getMyFormListAction)
 
   const goToEdit = ({title, url, pages, endingMent, listStyle, options}) => {
-    loadForm({title, pages, endingMent, listStyle, options})
+    settingForm({title, pages, endingMent, listStyle, options})
+    setIsLoaded(true)
     router.push(`/my-form/edit/${url}`)
+  }
+
+  const toggleModal = () => {
+    setIsOpenCreateFormModal(prev => !prev)
+    setTitle('')
   }
 
   return (
     <div className="mt-7.5 grid grid-cols-[repeat(auto-fit,_minmax(260px,_280px))] flex-wrap gap-y-4 gap-x-3">
-      <CreateCard />
+      <CreateCard onClick={toggleModal}/>
+      <CreateFormModal 
+        isOpen={isOpenCreateFormModal}
+        onClose={toggleModal}
+      />
+
       {searchedForms.length > 0 && 
         searchedForms.map(form => {
           const { title, url, pages, endingMent, listStyle, options, createdAt, lastModifiedAt} = form
