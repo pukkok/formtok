@@ -77,3 +77,24 @@
   pointer-events: none;
   height: 0;
 }
+
+.edit-box p.center, 
+.edit-box li.center, 
+.edit-box img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.edit-box p.right, 
+.edit-box li.right, 
+.edit-box img.right {
+  text-align: right;
+  margin-left: auto;
+}
+.edit-box p.left,
+.edit-box li.left,
+.edit-box img.left {
+  text-align: left;
+  margin-right: auto;
+}
