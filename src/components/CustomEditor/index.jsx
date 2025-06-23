@@ -21,7 +21,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
 
   const EDITOR_CLASS = [
     'edit-box',
-    'min-h-[30px] text-[15px] p-1 mt-3 bg-bright-a relative z-100',
+    'min-h-[30px] text-[15px] p-1 mt-3 bg-bright-a relative z-10',
     `${isEditorFocused ? 'border-b border-b-point border-b-2' : 'border-b border-b-transparent hover:border-b-gray-300'}` ,
     'focus:outline-none'
   ].join(' ')
@@ -74,8 +74,8 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
   return (
     <div 
       ref={wrapperRef}
-      className={`relative transition-all duration-150 ${isEditorFocused ? 'mb-10': 'mb-8'}`}
-      tabIndex={0}
+      className={`relative transition-all outline-none duration-150 ${isEditorFocused ? 'mb-10': 'mb-8'}`}
+      tabIndex={-1}
       onFocus={() => setIsEditorFocused(true)}
       onBlur={e => {
         // 내부 요소 클릭 시 blur 방지
