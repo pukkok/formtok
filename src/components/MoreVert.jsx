@@ -7,7 +7,7 @@ const MoreVert = ({ children, autoClose = true, addOptionClass }) => {
   return (
     <div
       ref={ref}
-      className="relative z-10 flex items-center"
+      className="relative z-50 flex items-center"
     >
       <button onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-center cursor-pointer">
         <span className={`flex items-center justify-center w-7 h-6 text-lg p-1
