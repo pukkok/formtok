@@ -3,6 +3,7 @@ import { randomKey, randomUrl } from '@/utils/generateKey'
 import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
 import { create } from 'zustand'
+import { updatePageField, updateQuestionField, updateOptionField } from './helpers/updateHelper'
 
 export const useFormEditStore = create((set, get) => ({
   isLoaded: false,
@@ -22,6 +23,64 @@ export const useFormEditStore = create((set, get) => ({
 
   listStyle : null,
   setListStyle: (listStyle) => set({listStyle}),
+  getListStylePreview: () => {
+    const style = get().listStyle
+    switch (style) {
+      case 'N': return '1. 2. 3.'
+      case 'Q': return 'Q. Q. Q.'
+      case 'QN': return 'Q1. Q2. Q3.'
+      default: return '없음'
+    }
+  },
+
+  getListStyleForIndex: (qi) => {
+    const style = get().listStyle
+    switch (style) {
+      case 'N': return `${qi + 1}.`
+      case 'Q': return 'Q.'
+      case 'QN': return `Q${qi + 1}.`
+      default: return ''
+    }
+  },
+
+  
+
+  updateQuestion: (pi, qi, updateData) => {
+    const pages = get().pages
+    const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
+      ...question,
+      ...updateData
+    }))
+    set({ pages: updatedPages })
+  },
+
+  addOption: (pi, qi) => {
+    const id = 'O' + randomKey()
+    const pages = get().pages
+    const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
+      ...question,
+      options: [...question.options, { id, answer: '' }]
+    }))
+    set({ pages: updatedPages })
+  },
+
+  updateOption: (pi, qi, oi, updateData) => {
+    const pages = get().pages
+    const updatedPages = updateOptionField(pages, pi, qi, oi, (opt) => ({
+      ...opt,
+      ...updateData
+    }))
+    set({ pages: updatedPages })
+  },
+
+  deleteOption: (pi, qi, oi) => {
+    const pages = get().pages
+    const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
+      ...question,
+      options: question.options.filter((_, i) => i !== oi)
+    }))
+    set({ pages: updatedPages })
+  },
 
   options: {
     isOpen: false,
@@ -77,7 +136,7 @@ export const useFormEditStore = create((set, get) => ({
             hasDescription : false,
             period: {start: '', end: null},
             setPeriod : false, // 날짜 타입일때 사용
-            essentail : false, // 필수 질문
+            essential : false, // 필수 질문
             setNextToPage : false, // 답변별 페이지 이동
             next : null // 다음 페이지 설정
           }
