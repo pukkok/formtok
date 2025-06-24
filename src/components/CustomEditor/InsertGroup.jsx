@@ -1,14 +1,16 @@
 'use client'
 
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { InsertImageIcon, InsertLinkIcon } from '../icons/EditorInsertIcons'
 import IconButton from "./IconButton"
 import LinkModal from "./LinkModal"
 import ImageModal from "./ImageModal"
+import ModalContainer from "../ModalContainer"
 
 const InsertGroup = ({ editor }) => {
-  const [isLinkOpen, setIsLinkOpen] = useState(false)
-  const [isImageOpen, setIsImageOpen] = useState(false)
+  
+  const linkModalRef = useRef(null)
+  const imageModalRef = useRef(null)
 
   const handleImageConfirm = (file, width, height) => {
     const reader = new FileReader()
@@ -29,31 +31,30 @@ const InsertGroup = ({ editor }) => {
   return (
     <>
       <div className="flex gap-1 items-center">
-        <IconButton onClick={() => setIsImageOpen(true)}>
+        <IconButton onClick={() => imageModalRef.current?.open()}>
           <InsertImageIcon />
         </IconButton>
-        <IconButton onClick={() => setIsLinkOpen(true)}>
+        <IconButton onClick={() => linkModalRef.current?.open()}>
           <InsertLinkIcon />
         </IconButton>
       </div>
 
-      <ImageModal 
-        isOpen={isImageOpen}
-        onClose={() => setIsImageOpen(false)}
-        onConfirm={(file, width, height) => {
-          handleImageConfirm(file, width, height)
-          setIsImageOpen(false)
-        }}
-      />
+      <ModalContainer ref={imageModalRef}>
+        <ImageModal 
+          onConfirm={(file, width, height) => {
+            handleImageConfirm(file, width, height)
+          }}
+        />
+      </ModalContainer>
 
-      <LinkModal
-        isOpen={isLinkOpen}
-        onClose={() => setIsLinkOpen(false)}
-        onConfirm={(url) => {
-          handleLinkConfirm(url)
-          setIsLinkOpen(false)
-        }}
-      />
+      <ModalContainer ref={linkModalRef}>
+        <LinkModal
+          onConfirm={(url) => {
+            handleLinkConfirm(url)
+          }}
+        />
+      </ModalContainer>
+
     </>
   )
 }

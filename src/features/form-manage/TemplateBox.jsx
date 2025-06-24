@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useRef } from "react"
 import CardWrapper from "./components/CardWrapper"
 import CreateCard from "./components/CreateCard"
 import { useFormManageStore } from "@/stores/useFormManageStore"
@@ -11,9 +11,10 @@ import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useRouter } from "next/navigation"
 import { useTokenFetch } from "@/utils/useTokenFetch"
 import CreateFormModal from "@/features/form-manage/CreateFormModal"
+import ModalContainer from "@/components/ModalContainer"
 
 const TemplateBox = () => {
-  const [isOpenCreateFormModal, setIsOpenCreateFormModal] = useState(false)
+  const createFormModalRef = useRef(null)
 
   const router = useRouter()
 
@@ -33,17 +34,15 @@ const TemplateBox = () => {
   }
 
   const toggleModal = () => {
-    setIsOpenCreateFormModal(prev => !prev)
     setTitle('')
   }
 
   return (
     <div className="mt-7.5 grid grid-cols-[repeat(auto-fit,_minmax(260px,_280px))] flex-wrap gap-y-4 gap-x-3">
-      <CreateCard onClick={toggleModal}/>
-      <CreateFormModal 
-        isOpen={isOpenCreateFormModal}
-        onClose={toggleModal}
-      />
+      <CreateCard onClick={() => createFormModalRef.current?.open()}/>
+      <ModalContainer ref={createFormModalRef}>
+        <CreateFormModal />
+      </ModalContainer>
 
       {searchedForms.length > 0 && 
         searchedForms.map(form => {
