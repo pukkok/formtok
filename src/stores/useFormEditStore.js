@@ -3,7 +3,7 @@ import { randomKey, randomUrl } from '@/utils/generateKey'
 import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
 import { create } from 'zustand'
-import { updatePageField, updateQuestionField, updateOptionField } from './helpers/updateHelper'
+import { updatePageField, updateQuestionField, updateOptionField, updateTableColField, updateTableRowField } from './helpers/updateHelper'
 
 export const useFormEditStore = create((set, get) => ({
   isLoaded: false,
@@ -78,6 +78,95 @@ export const useFormEditStore = create((set, get) => ({
     const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
       ...question,
       options: question.options.filter((_, i) => i !== oi)
+    }))
+    set({ pages: updatedPages })
+  },
+
+  initialTable: (pi, qi) => {
+    const pages = get().pages
+    const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
+      ...question,
+      tableRows: [
+        { id: 'R' + randomKey(), value: '' },
+        { id: 'R' + randomKey(), value: '' },
+      ],
+      tableCols: [
+        { id: 'C' + randomKey(), value: '' },
+        { id: 'C' + randomKey(), value: '' },
+      ],
+    }))
+    set({ pages: updatedPages })
+  },
+
+  addTableRowOrCol: (pi, qi, rowOrCol) => {
+    const pages = get().pages
+    const updatedPages = updateQuestionField(pages, pi, qi, (question) => {
+      if (rowOrCol === 'row') {
+        return {
+          ...question,
+          tableRows: [...question.tableRows, { id: 'R' + randomKey(), value: '' }],
+        }
+      } else if (rowOrCol === 'col') {
+        return {
+          ...question,
+          tableCols: [...question.tableCols, { id: 'C' + randomKey(), value: '' }],
+        }
+      }
+      return question
+    })
+    set({ pages: updatedPages })
+  },
+
+  deleteTableRowOrCol: (pi, qi, id, rowOrCol) => {
+    const pages = get().pages
+    let updatedPages
+    if (rowOrCol === 'row') {
+      updatedPages = updateQuestionField(pages, pi, qi, (question) => {
+        // 최소 2개 미만으로 삭제 방지
+        if (question.tableRows.length <= 2) return question 
+        return {
+          ...question,
+          tableRows: question.tableRows.filter((row) => row.id !== id),
+        }
+      })
+    } else if (rowOrCol === 'col') {
+      updatedPages = updateQuestionField(pages, pi, qi, (question) => {
+        // 최소 2개 미만으로 삭제 방지
+        if (question.tableCols.length <= 2) return question 
+        return {
+          ...question,
+          tableCols: question.tableCols.filter((col) => col.id !== id),
+        }
+      })
+    }
+    set({ pages: updatedPages })
+  },
+
+  // 테이블 행/열 값 업데이트
+  updateTableValue: (pi, qi, id, value, rowOrCol) => {
+    const pages = get().pages
+    let updatedPages
+    if (rowOrCol === 'row') {
+      updatedPages = updateTableRowField(pages, pi, qi, id, (row) => ({
+        ...row,
+        value: value,
+      }))
+    } else if (rowOrCol === 'col') {
+      updatedPages = updateTableColField(pages, pi, qi, id, (col) => ({
+        ...col,
+        value: value,
+      }))
+    }
+    set({ pages: updatedPages })
+  },
+
+  // 테이블 초기화 (데이터 비우기)
+  resetTable: (pi, qi) => {
+    const pages = get().pages
+    const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
+      ...question,
+      tableCols: [],
+      tableRows: [],
     }))
     set({ pages: updatedPages })
   },
