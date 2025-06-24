@@ -74,7 +74,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
   return (
     <div 
       ref={wrapperRef}
-      className={`relative transition-all outline-none duration-150 ${isEditorFocused ? 'mb-10': 'mb-8'}`}
+      className={`relative transition-all outline-none duration-150 ${isEditorFocused ? 'mb-12': 'mb-4'}`}
       tabIndex={-1}
       onFocus={() => setIsEditorFocused(true)}
       onBlur={e => {
