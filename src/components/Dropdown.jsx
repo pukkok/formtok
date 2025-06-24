@@ -29,7 +29,7 @@ const Dropdown = ({ initialItem, children, initialState = false, style }) => {
 
       <ul
         className={`
-          absolute top-[50px] w-full z-10 border rounded-[12px] bg-bright-a px-2 py-3
+          absolute top-[50px] w-full z-50 border rounded-[12px] bg-bright-a px-2 py-3
           border-silver
           ${isOpen ? "block" : "hidden"}
         `}
