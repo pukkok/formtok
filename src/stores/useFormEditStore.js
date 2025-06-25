@@ -1,4 +1,4 @@
-import { getMyForm, saveForm } from '@/apis/forms'
+import { getMyForm, saveForm, saveQuestion } from '@/apis/forms'
 import { randomKey, randomUrl } from '@/utils/generateKey'
 import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
@@ -44,6 +44,36 @@ export const useFormEditStore = create((set, get) => ({
     }
   },
 
+  // INFO: ------------ Pages 관리 ---------------
+  addPage: (pi, isCopy=false) => {
+    const id = 'P' + randomKey()
+    const { pages } = get()
+
+    let updatedPage = {}
+    if(isCopy) {
+      updatedPage = {
+        ...pages[pi], id, 
+        title: pages[pi].title ? pages[pi].title+'(사본)' : '',
+        questions: pages[pi].questions.map((question, qi) => {
+          const id = 'Q' + randomKey() + qi
+          return question = {...question, id}
+        })
+      }
+    } else {
+      updatedPage = {
+        id, title: '', description: '', questions: []
+      }
+    }    
+
+    const updatedPages = [
+      ...pages.slice(0, pi + 1),
+      updatedPage,
+      ...pages.slice(pi + 1)
+    ]
+
+    set({ pages: updatedPages })
+  },
+
   updatePage: (pi, updateData) => {
     const pages = get().pages
     const updatedPages = updatePageField(pages, pi, (page) => ({
@@ -51,7 +81,45 @@ export const useFormEditStore = create((set, get) => ({
       ...updateData
     }))
     set({ pages: updatedPages })
-  }, 
+  },
+
+  deletePage: (pi) => {
+    const pages = get().pages
+    const updatedPages = pages.filter((_, idx) => pi !== idx)
+    set({ pages: updatedPages})
+  },
+
+  // INFO : -------------- Question 관리 -----------------
+  addQuestion: (pi, qi, isCopy=false) => {
+    const { pages, createQuestion } = get()
+    const page = pages[pi]
+
+    let updatedQuestion = {}
+    if(isCopy) {
+      const id = 'Q' + randomKey()
+      updatedQuestion = {
+        ...page.questions[qi], id,
+        q: page.questions[qi].q ? page.questions[qi].q + '(사본)' : page.questions[qi].q,
+        d: page.questions[qi].d
+      }
+    } else {
+      updatedQuestion = createQuestion()
+    }
+
+    const updatedQuestions = [
+      ...page.questions.slice(0, qi + 1),
+      updatedQuestion,
+      ...page.questions.slice(qi + 1)
+    ]
+
+    const updatedPages = [
+      ...pages.slice(0, pi),
+      { ...page, questions: updatedQuestions },
+      ...pages.slice(pi + 1)
+    ]
+
+    set({ pages: updatedPages })
+  },
 
   updateQuestion: (pi, qi, updateData) => {
     const pages = get().pages
@@ -62,6 +130,19 @@ export const useFormEditStore = create((set, get) => ({
     set({ pages: updatedPages })
   },
 
+  deleteQuestion: (pi, qi) => {
+    const pages = get().pages
+    const updatedPages = pages.map((page, idx) => {
+      if(idx === pi) {
+        const updatedQuestions = page.questions.filter((_, idx2) => qi !== idx2)
+        return page = {...page, questions: updatedQuestions}
+      }
+      return page
+    })
+    set({ pages: updatedPages})
+  },
+
+  // INFO: --------------- 옵션 관리 -----------------
   addOption: (pi, qi) => {
     const id = 'O' + randomKey()
     const pages = get().pages
@@ -90,6 +171,7 @@ export const useFormEditStore = create((set, get) => ({
     set({ pages: updatedPages })
   },
 
+  // INFO: ------------ 테이블(문한) 관리 ---------------
   initialTable: (pi, qi) => {
     const pages = get().pages
     const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
@@ -150,7 +232,7 @@ export const useFormEditStore = create((set, get) => ({
     set({ pages: updatedPages })
   },
 
-  // 테이블 행/열 값 업데이트
+  // INFO: 테이블 행/열 값 업데이트
   updateTableValue: (pi, qi, id, value, rowOrCol) => {
     const pages = get().pages
     let updatedPages
@@ -168,7 +250,7 @@ export const useFormEditStore = create((set, get) => ({
     set({ pages: updatedPages })
   },
 
-  // 테이블 초기화 (데이터 비우기)
+  // INFO: 테이블 초기화 (데이터 비우기)
   resetTable: (pi, qi) => {
     const pages = get().pages
     const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
@@ -177,6 +259,49 @@ export const useFormEditStore = create((set, get) => ({
       tableRows: [],
     }))
     set({ pages: updatedPages })
+  },
+
+  // INFO: ------------- 위치 변경 (드래그 앤 드롭) --------------
+  reorderPage: (dragPi, dropPi) => {
+    const pages = get().pages
+    let copyPages = [...pages] 
+    const [targetPage] = copyPages.splice(dragPi, 1)
+    copyPages.splice(dropPi, 0, targetPage)
+    set({ pages: copyPages })
+  },
+  
+  reorderQuestion: (p1, q1, p2, q2) => {
+    const pages = get().pages
+    let copyPages = [...pages]
+    const dragQuestion = copyPages[p1].questions[q1]
+
+    if(p1 !== p2) { // TODO: 다른 페이지로 넘긴다.
+      copyPages = copyPages.map((page, idx) => {
+        if (p1 === idx) {
+          const filteredQuestions = page.questions.filter((_, idx2) => q1 !== idx2)
+          return { ...page, questions: filteredQuestions }
+        }
+        if (p2 === idx) {
+          const updatedQuestions = [...page.questions]
+          updatedQuestions.splice(q2, 0, dragQuestion)
+          return { ...page, questions: updatedQuestions }
+        }
+        return page
+      })
+    } else { // TODO: 같은 페이지에서 이동한다.
+      const updatedQuestions = [...copyPages[p1].questions]
+      updatedQuestions.splice(q1, 1)
+      updatedQuestions.splice(q2, 0, dragQuestion)
+
+      copyPages = copyPages.map((page, idx) => {
+        if (p1 === idx) {
+          return { ...page, questions: updatedQuestions }
+        }
+        return page
+      })
+    }
+
+    set({pages: copyPages})
   },
 
   options: {
@@ -211,26 +336,29 @@ export const useFormEditStore = create((set, get) => ({
         id: 'P'+randomKey(), 
         title: '', 
         description : '',
-        questions: [
-          {id: 'Q'+randomKey(), 
-            type: '객관식', q: '', d: '', 
-            options: [{id : 'O'+randomKey(), answer: ''}],
-            hasExtraOption: false,
-            scoreRanges : {min:1, max:5, minText: '', maxText: ''},
-            tableRows: [],
-            tableCols: [],
-            hasDescription : false,
-            period: {start: '', end: null},
-            setPeriod : false, // 날짜 타입일때 사용
-            essential : false, // 필수 질문
-            setNextToPage : false, // 답변별 페이지 이동
-            next : null // 다음 페이지 설정
-          }
-        ],
+        questions: [ get().createQuestion() ],
         next : null
       }]
     })
   },
+
+  createQuestion: () => (
+    {
+      id: 'Q'+randomKey(), 
+      type: '객관식', q: '', d: '', 
+      options: [{id : 'O'+randomKey(), answer: ''}],
+      hasExtraOption: false,
+      scoreRanges : {min:1, max:5, minText: '', maxText: ''},
+      tableRows: [],
+      tableCols: [],
+      hasDescription : false,
+      period: {start: '', end: null},
+      setPeriod : false, // 날짜 타입일때 사용
+      essential : false, // 필수 질문
+      setNextToPage : false, // 답변별 페이지 이동
+      next : null // 다음 페이지 설정
+    }
+  ),
 
   createOption: () => {
     set({
@@ -292,6 +420,7 @@ export const useFormEditStore = create((set, get) => ({
   },
   resetOriginData: () => set({originData: null}),
   
+
   // INFO: ---------- API 정리 -----------
   loadForm: async (url, force=false) => {
     if(!force && get().isLoaded) return
@@ -302,7 +431,8 @@ export const useFormEditStore = create((set, get) => ({
 
     if (result) {
       const {title, pages, endingMent, listStyle, options} = result.form
-      set({ title, pages, endingMent, listStyle, options })
+      await set({ title, pages, endingMent, listStyle, options })
+      get().settingOriginData()
     }
     return true // 종료 체크
   },
@@ -317,5 +447,18 @@ export const useFormEditStore = create((set, get) => ({
       get().settingOriginData()
     }
   },
+
+  saveQuestionAction: async (pi, qi) => {
+    const pages = get().pages
+    const id = randomKey()
+    const question = pages[pi].questions[qi]
+
+    const { q, d: description, type, options, hasExtraOption } = question
+
+    await safeRequest(saveQuestion(id, q, description, type, options, hasExtraOption), {
+      successMessage: '문항이 저장되었습니다.',
+      onError: () => toast.error('문항 저장에 실패하였습니다.')
+    })
+  }
 
 }))
