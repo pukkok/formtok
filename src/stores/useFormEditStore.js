@@ -1,9 +1,10 @@
-import { getMyForm } from '@/apis/forms'
+import { getMyForm, saveForm } from '@/apis/forms'
 import { randomKey, randomUrl } from '@/utils/generateKey'
 import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
 import { create } from 'zustand'
 import { updatePageField, updateQuestionField, updateOptionField, updateTableColField, updateTableRowField } from './helpers/updateHelper'
+import _ from 'lodash'
 
 export const useFormEditStore = create((set, get) => ({
   isLoaded: false,
@@ -43,7 +44,14 @@ export const useFormEditStore = create((set, get) => ({
     }
   },
 
-  
+  updatePage: (pi, updateData) => {
+    const pages = get().pages
+    const updatedPages = updatePageField(pages, pi, (page) => ({
+      ...page,
+      ...updateData
+    }))
+    set({ pages: updatedPages })
+  }, 
 
   updateQuestion: (pi, qi, updateData) => {
     const pages = get().pages
@@ -191,18 +199,7 @@ export const useFormEditStore = create((set, get) => ({
     set({title, pages, endingMent, listStyle, options})
   },
 
-  loadForm: async (url, force=false) => {
-    if(!force && get().isLoaded) return
-
-    const { result } = await safeRequest(getMyForm(url), {
-      onError: () => toast.error('설문지 불러오기 실패')
-    })
-
-    if (result) {
-      const {title, pages, endingMent, listStyle, options} = result.form
-      set({ title, pages, endingMent, listStyle, options })
-    }
-  },
+  
 
   createUrl: () => {
     set({ url : randomUrl() })
@@ -265,7 +262,11 @@ export const useFormEditStore = create((set, get) => ({
   },
 
   
-  originData: {},
+  
+
+  // INFO: ---------- 오리진 체크 ----------- 
+  // TODO : 변한 값이 있다면 탭을 벗어날 때 경고한다
+  originData: null,
   settingOriginData:() => {
     set({originData : {
         title: get().title, 
@@ -275,5 +276,46 @@ export const useFormEditStore = create((set, get) => ({
         options: get().options
       }
     })
-  }
+  },
+  isModified: () => {// INFO: 가장 많이 변할것 같은 데이터 우선순위로 비교
+    const {pages, title, endingMent, listStyle, options, originData} = get()
+
+    if(originData === null) return false // 들어가기 전
+    // 변경된 경우 바로 true 리턴
+    if (!_.isEqual(pages, originData.pages)) return true // pages 비교
+    if (!_.isEqual(title, originData.title)) return true // title 비교
+    if (!_.isEqual(endingMent, originData.endingMent)) return true // endingMent 비교
+    if (!_.isEqual(listStyle, originData.listStyle)) return true // listStyle 비교
+    if (!_.isEqual(options, originData.options)) return true // options 비교
+    // 모든 항목이 동일한 경우 false 리턴
+    return false
+  },
+  resetOriginData: () => set({originData: null}),
+  
+  // INFO: ---------- API 정리 -----------
+  loadForm: async (url, force=false) => {
+    if(!force && get().isLoaded) return
+
+    const { result } = await safeRequest(getMyForm(url), {
+      onError: () => toast.error('설문지 불러오기 실패')
+    })
+
+    if (result) {
+      const {title, pages, endingMent, listStyle, options} = result.form
+      set({ title, pages, endingMent, listStyle, options })
+    }
+    return true // 종료 체크
+  },
+
+  saveFormAction: async (url) => {
+    const { title, pages, endingMent, listStyle, options } = get()
+    const { result } = await safeRequest(saveForm(url, title, pages, endingMent, listStyle, options), {
+      successMessage: '성공적으로 저장 되었습니다.',
+      onError: () => toast.error('설문지 저장 실패')
+    })
+    if(result) {
+      get().settingOriginData()
+    }
+  },
+
 }))
