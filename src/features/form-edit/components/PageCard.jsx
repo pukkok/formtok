@@ -5,7 +5,7 @@ import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 
 const PageCard = ({pi}) => {
     const pages = useFormEditStore(s => s.pages)
-    const setPages = useFormEditStore(s => s.setPages)
+    const updatePage = useFormEditStore(s => s.updatePage)
 
     const activeCard = useFormEditUiStore(s => s.activeCard)
     const setActiveCard = useFormEditUiStore(s => s.setActiveCard)
@@ -14,26 +14,6 @@ const PageCard = ({pi}) => {
     useEffect(() => {
       setPageCnt(`${pi+1}/${pages.length}`)
     }, [pages, pi])
-
-    const changePageTitle = (e, pi) => {
-      const modifiedPages = pages.map((page, idx) => {
-        if(idx === pi) {
-          page = {...page, title: e.target.value}
-        }
-        return page
-      })
-      setPages(modifiedPages)
-    }
-
-    const changePageDescription = (html) => {
-      const modifiedPages = pages.map((page, idx) => {
-        if(idx === pi) {
-          page = {...page, description: html}
-        }
-        return page
-      })
-      setPages(modifiedPages)
-    }
     
     return (
       <div 
@@ -51,12 +31,12 @@ const PageCard = ({pi}) => {
             border-b border-b-transparent hover:border-b-silver 
           focus:border-b-point-hover focus:border-b-2" 
             placeholder="페이지 제목" 
-            onChange={e=>changePageTitle(e, pi)} value={pages[pi].title}/>
+            onChange={(e)=>updatePage(pi, {title: e.target.value})} value={pages[pi].title}/>
             
             <CustomEditor
               content={pages[pi].description}
               placeholder={'페이지 설명'}
-              onChange={changePageDescription}
+              onChange={(html) => updatePage(pi, {description : html})}
             />
           </div>
       </div>
