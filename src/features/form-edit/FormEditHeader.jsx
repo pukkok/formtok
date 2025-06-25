@@ -7,7 +7,7 @@ import MoveToLoginPageModal from "./components/MoveToLoginPageModal"
 import ModalContainer from "@/components/ModalContainer"
 import { useAuthStore } from "@/stores/useAuthStore"
 
-const EditHeader = () => {
+const FormEditHeader = () => {
     const { id } = useParams()
     const router = useRouter()
     
@@ -57,4 +57,4 @@ const EditHeader = () => {
     )
 }
 
-export default EditHeader
+export default FormEditHeader

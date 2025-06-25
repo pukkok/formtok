@@ -1,7 +1,7 @@
 'use client'
 
-import EditHeader from "@/features/form-edit/EditHeader"
-import EditSidebar from "@/features/form-edit/EditSidebar"
+import FormEditHeader from "@/features/form-edit/FormEditHeader"
+import FormEditSidebar from "@/features/form-edit/FormEditSidebar"
 import FormEditor from "@/features/form-edit/FormEditor"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 import { useEffect } from "react"
@@ -18,13 +18,13 @@ const EditPage = () => {
   return (
     <div className="flex justify-start">
       <div className="flex-1">
-        <EditHeader />
+        <FormEditHeader />
         <div className="overflow-scroll h-[calc(100vh-60px)] mx-1">
           <FormEditor />
         </div>
       </div>
       <div className="shrink-0 ml-auto">
-        <EditSidebar />
+        <FormEditSidebar />
       </div>
     </div>
   )
