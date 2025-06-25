@@ -19,3 +19,17 @@ export const deleteForm = async (url) => {
   const { data } = await authAxios.post('/api/form/my-form/delete', {url})
   return data
 }
+
+export const saveForm = async (url, title, pages, endingMent, listStyle, options) => {
+  const { data } = await authAxios.post('/api/form/edit', 
+    {url, title, pages, endingMent, listStyle, options}
+  )
+  return data
+}
+
+export const saveQuestion = async (id, q, description, type, options, hasExtraOption) => {
+  const { data } = await authAxios.post('/api/form/question/save', 
+    {id, q, description, type, options, hasExtraOption }
+  )
+  return data
+}
