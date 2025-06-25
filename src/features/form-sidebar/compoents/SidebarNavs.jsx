@@ -16,12 +16,12 @@ const sidebarNavs = [
   { text: '설정', icon: <SettingIcon />, path: '/setting' },
 ]
 
-const SidebarNavs = () => {
+const SidebarNavs = ({ handleRouteChange }) => {
 
   return (
     <ul className="flex flex-col">
       {sidebarNavs.map((node, idx) => {
-        return <TreeNode key={idx} node={node}/>
+        return <TreeNode key={idx} handleRouteChange={handleRouteChange} node={node}/>
       })}
     </ul>
   )

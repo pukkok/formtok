@@ -1,11 +1,11 @@
 'use client'
 
-import { useScreenStore } from "@/stores/useScreenStore";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
+import { useScreenStore } from "@/stores/useScreenStore"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { FaAngleDown } from "react-icons/fa"
 
-const TreeNode = ({node}) => {
+const TreeNode = ({node, handleRouteChange }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const router = useRouter()
   
@@ -17,8 +17,8 @@ const TreeNode = ({node}) => {
   }
 
   const goToTab = (node) => {
-    router.push(node.path)
-    setActiveTab(node.path)
+    const isChanged = handleRouteChange(node.path)
+    if(!isChanged) setActiveTab(node.path)
   }
 
   const hasChildren = node?.children && node.children.length > 0
@@ -52,7 +52,7 @@ const TreeNode = ({node}) => {
         <ul className={`mx-3 
         ${isExpanded ? 'h-40' : 'h-0'} max-h-fit overflow-hidden transition-all duration-300`}>
           {node.children.map(item => {
-            return <TreeNode key={item.text} node={item} />
+            return <TreeNode key={item.text} handleRouteChange={handleRouteChange} node={item} />
           })}
         </ul>
       )}
