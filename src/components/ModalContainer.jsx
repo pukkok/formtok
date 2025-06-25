@@ -1,24 +1,41 @@
-import React, { useEffect, useCallback, useImperativeHandle } from 'react'
+'use client'
+
+import React, { useEffect, useState, useCallback, useImperativeHandle } from 'react'
+import ReactDOM from 'react-dom'
 import useOutsideClick from '@/hooks/useOutsideClick'
 
-// React 19에서는 ref가 일반 prop처럼 전달됩니다.
-const ModalContainer = ({ children, ref }) => { // ref를 일반 prop으로 받음
-  const { isOpen, setIsOpen, ref: modalContentRefInternal } = useOutsideClick(false) // useOutsideClick 내부용 ref
+const ModalContainer = ({ children, ref }) => {
+  const [mounted, setMounted] = useState(false)
+  const [modalRoot, setModalRoot] = useState(null)
+  const [enableEscapeClose, setEnableEscapeClose] = useState(true) // INFO: Escape 사용 여부 제어
+  // useOutsideClick 훅에서 내부 ref와 열림 상태, 닫기 함수 가져오기
+  const { isOpen, setIsOpen, ref: modalContentRefInternal } = useOutsideClick(false)
 
-  // 부모 컴포넌트가 모달을 열고 닫을 수 있도록 open/close 메서드를 노출
-  useImperativeHandle(ref, () => ({ // 전달받은 ref prop을 사용
+  // 포탈용 루트 div 생성 및 상태 세팅
+  useEffect(() => {
+    setMounted(true)
+    let modalRootEl = document.getElementById('modal-root')
+
+    if (!modalRootEl) {
+      modalRootEl = document.createElement('div')
+      modalRootEl.setAttribute('id', 'modal-root')
+      document.body.appendChild(modalRootEl)
+    }
+    setModalRoot(modalRootEl)
+  }, [])
+
+  // 부모가 ref로 모달 열고 닫기 가능하도록 메서드 노출
+  useImperativeHandle(ref, () => ({
     open: () => setIsOpen(true),
     close: () => setIsOpen(false),
+    setEscapeEnabled: (enabled) => setEnableEscapeClose(enabled)
   }), [setIsOpen])
 
-  // Escape 키를 눌러 모달을 닫는 로직
-  const handleEscapeKey = useCallback((e) => {
-    if (e.key === 'Escape' && isOpen) {
-      setIsOpen(false)
-    }
+  // ESC 키 눌렀을 때 모달 닫기
+  const handleEscapeKey = useCallback(e => {
+    if (e.key === 'Escape' && isOpen && enableEscapeClose) setIsOpen(false)
   }, [isOpen, setIsOpen])
 
-  // 모달이 열리거나 닫힐 때 Escape 키 이벤트 리스너를 추가/제거
   useEffect(() => {
     if (isOpen) {
       window.addEventListener('keydown', handleEscapeKey)
@@ -31,30 +48,29 @@ const ModalContainer = ({ children, ref }) => { // ref를 일반 prop으로 받�
     }
   }, [isOpen, handleEscapeKey, modalContentRefInternal])
 
-  // 모달이 닫혀있으면 아무것도 렌더링하지 않음
-  if (!isOpen) return null
+  if (!mounted || !modalRoot || !isOpen) return null
 
-  // 자식 컴포넌트에게 onClose prop을 주입합니다.
-  const childrenWithProps = React.Children.map(children, child => {
-    // React 요소인 경우에만 prop을 추가합니다.
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child, { onClose: () => setIsOpen(false) })
-    }
-    return child
-  })
+  // 자식들에게 onClose prop 주입 (닫기 함수)
+  const childrenWithProps = React.Children.map(children, child =>
+    React.isValidElement(child)
+      ? React.cloneElement(child, { onClose: () => setIsOpen(false) })
+      : child
+  )
 
-
-  return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black/20 z-1000">
+  // 모달 내용
+  const modalContent = (
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black/20 z-[1000]">
       <div
-        ref={modalContentRefInternal} // useOutsideClick의 내부 ref를 여기에 연결
-        tabIndex={-1} // div가 키보드 포커스를 받을 수 있도록 설정
+        ref={modalContentRefInternal}
+        tabIndex={-1}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 outline-none"
       >
-        {childrenWithProps} {/* onClose prop이 주입된 자식들을 렌더링 */}
+        {childrenWithProps}
       </div>
     </div>
   )
+
+  return ReactDOM.createPortal(modalContent, modalRoot)
 }
 
 export default ModalContainer
