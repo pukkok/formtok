@@ -20,8 +20,8 @@ const DashboardLayout = ({children}) => {
     <main className="flex">
       <Sidebar />
       <div className={`dark:bg-deep-dark dark:text-light-w bg-[#F1F1F1] 
-      flex-1 max-h-screen overflow-y-auto
-      ${isEditPage ? '' : 'px-10 py-5'}
+      flex-1 max-h-screen 
+      ${isEditPage ? '' : 'px-10 py-5 overflow-y-auto'}
       `}>
         {children}
       </div>
