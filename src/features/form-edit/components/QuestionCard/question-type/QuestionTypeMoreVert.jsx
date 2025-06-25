@@ -9,7 +9,7 @@ const QuestionMoreVert = ({ selectedQuestion, pi, qi }) => {
   return (
     <MoreVert 
       autoClose={false}
-      addOptionClass={'w-[210px] gap-2'}
+      addOptionClass={'p-3 w-[220px] gap-2'}
     >
       <p className="flex items-center justify-between">설명추가 
         <ToggleButton 
