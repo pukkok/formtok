@@ -3,7 +3,7 @@ import CustomEditor from "@/components/CustomEditor"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 
-const PageCard = ({pi}) => {
+const PageCard = ({pi, ref}) => {
     const pages = useFormEditStore(s => s.pages)
     const updatePage = useFormEditStore(s => s.updatePage)
 
@@ -17,6 +17,7 @@ const PageCard = ({pi}) => {
     
     return (
       <div 
+        ref={ref}
         onClick={()=>setActiveCard(`P-${pi}`)}
         className={`
           border-2 border-lgiht-w bg-bright-a rounded-xl min-h-45 mb-4 text-black

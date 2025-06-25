@@ -5,7 +5,7 @@ import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 import CustomEditor from "../../../components/CustomEditor"
 
-const EndingCard = () => {
+const EndingCard = ({ref}) => {
   const endingMent = useFormEditStore(s => s.endingMent)
   const setEndingMent = useFormEditStore(s => s.setEndingMent)
 
@@ -22,6 +22,7 @@ const EndingCard = () => {
 
   return (
     <div
+      ref={ref}
       onClick={() => setActiveCard("end")}
       className={`
         border-2 border-lgiht-w bg-bright-a rounded-xl min-h-45 mb-4 text-black 

@@ -5,13 +5,14 @@ import QuestionForm from "./QuestionForm"
 import QuestionOptionPanel from "./QuestionOptionPanel"
 import QuestionTitleDescription from "./QuestionTitleDescription"
 
-const QuestionCard = ({pi, qi}) => {
+const QuestionCard = ({pi, qi, ref}) => {
 
   const activeCard = useFormEditUiStore(s => s.activeCard)
   const setActiveCard = useFormEditUiStore(s => s.setActiveCard)
 
   return (
     <div 
+      ref={ref}
       onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}
       className={`
       border-2 p-2.5 border-light-w rounded-xl bg-bright-a min-h-45 mb-4 text-black
