@@ -1,8 +1,8 @@
-import PageSwitcher from "@/components/page-switch/PageSwitcher";
+import PageSwitcher from "@/components/page-switch/PageSwitcher"
 import "./index.css"
-import { Toaster } from "sonner";
-import ThemeObserver from "./ThemeObserver";
-import InitailWork from "./InitailWork";
+import { Toaster } from "sonner"
+import ThemeObserver from "./ThemeObserver"
+import InitailWork from "./InitailWork"
 
 export const metadata = {
   title: "폼톡"
