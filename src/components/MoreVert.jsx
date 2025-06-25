@@ -1,7 +1,7 @@
 import useOutsideClick from "@/hooks/useOutsideClick"
 import { MoreVerticalIcon } from "@/components/icons/CommonIcons"
 
-const MoreVert = ({ children, autoClose = true, addOptionClass }) => {
+const MoreVert = ({ children, autoClose = true, addOptionClass, addButtonClass, addIsOpenClass }) => {
   const { isOpen, setIsOpen, ref } = useOutsideClick(false)
 
   return (
@@ -10,9 +10,9 @@ const MoreVert = ({ children, autoClose = true, addOptionClass }) => {
       className="relative z-50 flex items-center"
     >
       <button onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-center cursor-pointer">
-        <span className={`flex items-center justify-center w-7 h-6 text-lg p-1
-        ${isOpen ? 'bg-light-w' : ''}
-        hover:bg-light-w rounded-sm`}>
+        <span className={`flex items-center justify-center w-7 h-6 text-lg p-1 rounded-sm
+        ${isOpen ? addIsOpenClass ? `${addIsOpenClass}` : 'bg-light-w' : ''}
+        ${addButtonClass || "hover:bg-light-w"}`}>
           <MoreVerticalIcon />
         </span>
       </button>
@@ -20,8 +20,8 @@ const MoreVert = ({ children, autoClose = true, addOptionClass }) => {
       <div
         onClick={() => autoClose && setIsOpen(false)}
         className={`absolute right-5 top-0 z-10 flex flex-col text-sm bg-bright-a shadow-md rounded-xl overflow-hidden ${
-          isOpen ? "h-auto p-3" : "h-0 overflow-hidden"
-        } ${addOptionClass || ""}`}
+          isOpen ? `h-auto p-2 ${addOptionClass || ""}` : "h-0 overflow-hidden"
+        }`}
       >
         {children}
       </div>
