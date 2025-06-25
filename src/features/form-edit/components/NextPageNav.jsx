@@ -10,7 +10,7 @@ const NextPageNav = ({ pages, pi }) => {
     let result = ''
     
     if(title) result = title 
-    if(title.length > 8) result = title.slice(0, 8) + '...' 
+    if(title.length > 12) result = title.slice(0, 12) + '...' 
     else result = unTitled
     
     return result
@@ -27,7 +27,7 @@ const NextPageNav = ({ pages, pi }) => {
   return (
     <nav className="flex items-center gap-2 ml-2 mb-10">
       <p className="font-bold">답변 후</p>
-      <div className="min-w-xs shrink-0">
+      <div className="min-w-2xs w-40 shrink-0">
         <Dropdown initialItem={nextPageText(pages[pi]) || '다음페이지로 이동'}>
           <button 
             className="w-full text-left py-2"
