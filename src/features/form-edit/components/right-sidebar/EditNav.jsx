@@ -1,9 +1,4 @@
-'use client'
-
-import { useState } from "react"
-
-const EditNav = ({navs}) => {
-  const [active, setActive] = useState(navs[0].id)
+const EditNav = ({navs, selected, setSelected}) => {
 
   return (
     <nav className="h-15 border-b-gray-300 border-b">
@@ -11,10 +6,10 @@ const EditNav = ({navs}) => {
         navs.map((item) => (
         <button key={item.id}
           className={`
-            ${active === item.id ? 'text-point border-b-3 border-b-point' : 'border-b-1 border-b-transparent'}
-            font-[800] h-full px-3.5 pt-2.5 
+            ${selected === item.id ? 'text-point border-b-3 border-b-point' : 'border-b-1 border-b-transparent'}
+            font-[800] h-full px-3.5 pt-1
           `}
-          onClick={() => setActive(item.id)}
+          onClick={() => setSelected(item.id)}
           >
             {item.title}
         </button>
