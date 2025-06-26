@@ -1,6 +1,7 @@
 import { useState } from "react"
 import EditNav from "./components/right-sidebar/EditNav"
 import FormSummary from "./components/right-sidebar/FormSummary"
+import FormOption from "./components/right-sidebar/FormOption"
 
 const EDIT_NAVS = [
   {id: 'tab-a', title: '전체문항', items: []},
@@ -17,9 +18,9 @@ const FormEditSidebar = () => {
         selected={selected}
         setSelected={setSelected}
       />
-      <div className="flex-1">
+      <div>
         {selected === 'tab-a' && <FormSummary />}
-        {selected === 'tab-b' && <></>}
+        {selected === 'tab-b' && <FormOption />}
       </div>
     </div>
   )
