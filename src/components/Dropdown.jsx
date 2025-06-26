@@ -36,7 +36,7 @@ const Dropdown = ({ initialItem, children, initialState = false, style }) => {
         onClick={() => setIsOpen(false)}
       >
         {React.Children.map(children, (child) => (
-          <li className="w-full px-2 
+          <li className="w-full px-1
           hover:bg-light-w hover:text-light-purple hover:rounded-lg">
             {child}
           </li>
