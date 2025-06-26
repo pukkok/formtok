@@ -1,0 +1,12 @@
+.move-to-high {
+  animation: move-to-high 1s 1s forwards; 
+}
+
+@keyframes move-to-high {
+  0%{
+    top: 100vh;
+  }
+  100%{
+    top: -15vh;
+  }
+}

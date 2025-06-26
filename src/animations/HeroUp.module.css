@@ -1,0 +1,18 @@
+.hero-up { 
+  animation: hero-up 1s .9s forwards;
+}
+
+@keyframes hero-up {
+0%{
+  top: 100vh;
+  transform: translateY(-50%);
+}
+70%{
+  top: 25%;
+  transform: translateY(-50%);
+}
+100%{
+  top: 30%;
+  transform: translateY(-50%);
+}
+}

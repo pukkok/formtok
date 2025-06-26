@@ -1,0 +1,33 @@
+.contract-sidebar {
+  animation: fade-in .2s ease-in forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0px;
+  }
+  100%{
+    opacity: 1;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.expand-sidebar {
+  animation: expanding .3s forwards;
+}
+
+@keyframes expanding {
+  0% {
+    overflow: hidden;
+  }
+  99% {
+    overflow: hidden;
+  }
+  100% {
+    overflow: visible;
+  }
+}

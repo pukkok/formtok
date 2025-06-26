@@ -5,59 +5,10 @@ import { useCallback } from "react"
 function usePageActions () {
     const [pages, setPages] = useRecoilState(pagesAtom)
     const [activeCard, setActiveCard] = useRecoilState(activeCardAtom)
-    const setEndingMent = useSetRecoilState(endingMentAtom)
-
-    const createPage = () => {
-        const newPages = [ // 초기 모델링
-            {
-            id: 'P'+randomKey(), 
-            title: '', 
-            description : '',
-            questions: [
-                {id: 'Q'+randomKey(), 
-                    type: '객관식', q: '', d: '', 
-                    options: [{id : 'O'+randomKey(), answer: ''}],
-                    hasExtraOption: false,
-                    scoreRanges : {min:1, max:5, minText: '', maxText: ''},
-                    tableRows: [],
-                    tableCols: [],
-                    hasDescription : false,
-                    period: {start: '', end: null},
-                    setPeriod : false, // 날짜 타입일때 사용
-                    essentail : false, // 필수 질문
-                    setNextToPage : false, // 답변별 페이지 이동
-                    next : null // 다음 페이지 설정
-                }
-            ],
-            next : null
-            }
-        ]
-        return newPages
-    }
-
-    const createQuestion = () => {
-        const newQuestion = { 
-            id : 'Q'+randomKey(), type: '객관식', q: '', d: '', 
-            options: [{id:'O' + randomKey(), answer:''}], 
-            hasExtraOption: false,
-            scoreRanges : {min:1, max:5, minText: '', maxText: ''},
-            tableRows: [],
-            tableCols: [],
-            hasDescription : false,
-            period: {start: '', end: null},
-            setPeriod : false, // 날짜 타입일때 사용
-            essentail : false, // 필수 질문
-            setNextToPage : false, // 답변별 페이지 이동
-            next : null // 다음 페이지 설정
-        }
-        return newQuestion
-    }
+    const setEndingMent = useSetRecoilState(endingMentAtom)    
     
-
-    const loadPages = (pages) => {
-        setPages(pages)
-    }
     
+<<<<<<< HEAD
     // 페이지 위치변경
     const changePageLocation = (dragPi, dropPi) => {
         let newPages = [...pages]
@@ -260,89 +211,9 @@ function usePageActions () {
             })
         })
     }
+=======
+>>>>>>> my-form/edit
     
-    // 옵션 추가하기(객관식, 복수선택, 드롭다운일때)
-    const addOption = (pi, qi) => {
-        const id = 'O' + randomKey()
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if (idx === pi) {
-                    const updateQuestions = page.questions.map((question, idx2) => {
-                        if (idx2 === qi) {
-                            const updateOptions = [
-                                ...question.options,
-                                { id, answer: '' } // 문항 옵션 추가
-                            ]
-                            return { ...question, options: updateOptions }
-                        }
-                        return question
-                    })
-                    return { ...page, questions: updateQuestions }
-                }
-                return page
-            })
-        })
-    }
-    /** 옵션 설정하기 */
-    const changeOption = (e, pi, qi, oi) => {
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if (idx === pi) {
-                    const updateQuestions = page.questions.map((question, idx2) => {
-                        if (idx2 === qi) {
-                            const updateOptions = question.options.map((option, idx3) => {
-                                if(idx3 === oi){
-                                    return option = {...option, answer : e.target.value }
-                                }
-                                return option
-                            })
-                            return { ...question, options: updateOptions }
-                        }
-                        return question
-                    })
-                    return { ...page, questions: updateQuestions }
-                }
-                return page
-            })
-        })
-    }
-    /** 옵션삭제 page, question, option 인덱스 */
-    const deleteOption = (pi, qi, oi) => {
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if(idx === pi){
-                    const updateQuestions = page.questions.map((question, idx2) => {
-                        if(idx2 === qi){
-                            const updateOptions = question.options.filter((_, idx3) => {
-                                return idx3 !== oi
-                            })
-                            return question = {...question, options : updateOptions}
-                        }
-                        return question
-                    })
-                    return page = {...page, questions : updateQuestions}
-                }
-                return page
-            })
-        })
-    }
-    /** '기타' 항목 추가/제거 */ 
-    const toggleEXtraOption = (pi, qi, has) => {
-        setPages(pages => {
-            return pages.map((page, idx) => {
-                if (idx === pi) {
-                    const updateQuestions = page.questions.map((question, idx2) => {
-                        if (idx2 === qi) {
-                            return { ...question, hasExtraOption : has }
-                        }
-                        return question
-                    })
-                    return { ...page, questions: updateQuestions }
-                }
-                return page
-            })
-        })
-    }
 
     // 테이블타입으로 진입시 생성
     const initialTable = useCallback((pi, qi) => {
@@ -547,6 +418,7 @@ function usePageActions () {
     }
 
     return { 
+<<<<<<< HEAD
         createPage,
         loadPages, // 설문지 불러오기
         changePageLocation, changeQuestionLocation, // 위치변경 드래그앤드롭
@@ -554,6 +426,8 @@ function usePageActions () {
         addQuestion, addPage, addOption, toggleEXtraOption,
         changeQTitle, changeQDescription, changeQType, changeOption,
         copyP, deleteP, copyQ, deleteQ, deleteOption,
+=======
+>>>>>>> my-form/edit
         usedOptionCheck, // 부가옵션 설정
         periodSetting, // 날짜 타입 기간으로 설정할 경우
         whereIsNextPage,

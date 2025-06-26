@@ -1,0 +1,100 @@
+/* 공통 스타일 */
+.bullet-disc,
+.bullet-hollow,
+.bullet-square,
+.text-1,
+.text-a,
+.text-A,
+.text-i,
+.text-I {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.bullet-disc {
+  list-style-type: disc;
+}
+
+.bullet-hollow {
+  list-style-type: circle;
+}
+
+.bullet-square {
+  list-style-type: square;
+}
+
+.text-1 {
+  list-style-type: decimal;
+}
+
+.text-a {
+  list-style-type: lower-alpha;
+}
+
+.text-A {
+  list-style-type: upper-alpha;
+}
+
+.text-i {
+  list-style-type: lower-roman;
+}
+
+.text-I {
+  list-style-type: upper-roman;
+}
+
+.edit-box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.edit-box td, th {
+  border: 1px solid #aaa;
+}
+
+.edit-box li {
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.edit-box a {
+  color: #2563eb; /* Tailwind 기준: text-blue-600 */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.edit-box a:hover {
+  color: #1d4ed8; /* text-blue-700 */
+  cursor: pointer;
+}
+
+.ProseMirror p:nth-child(1).is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #aaa;
+  pointer-events: none;
+  height: 0;
+}
+
+.edit-box p.center, 
+.edit-box li.center, 
+.edit-box img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.edit-box p.right, 
+.edit-box li.right, 
+.edit-box img.right {
+  text-align: right;
+  margin-left: auto;
+}
+.edit-box p.left,
+.edit-box li.left,
+.edit-box img.left {
+  text-align: left;
+  margin-right: auto;
+}

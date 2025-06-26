@@ -1,0 +1,143 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
+@import 'tailwindcss';
+
+@theme {
+  --color-deep-dark: #1E1E2E;
+  --color-dark: #2A2A40;
+  --color-charcoal: #444466;
+
+  --color-point: #7E37ED;
+  --color-point-hover: #9A5BFF;
+
+  --color-light-purple: #AF7EFF;
+  --color-silver: #B0B0B0;
+
+  --color-fold-point: #F06292;
+  --color-light-w: #EDEDED;
+  --color-bright-a: #FAFBFC;
+  --color-bright-b: #F6F6F6;
+  --color-bright-c: #F0F2F5;
+
+  --color-work-draft: #779ECB;
+  --color-work-ready: #FFD700;
+  --color-work-active: #77DD77;
+  --color-work-finish: #ff6961;
+
+  --container-main-wrap: 1300px;
+  --container-board-wrap: 2100px;
+
+  --shadow-card-shadow: rgba(0,0,0,0.1) 2px 4px 10px; 
+  
+}
+
+.pk-slider::-webkit-slider-thumb { 
+  -webkit-appearance: none;
+  appearance: none;
+  border-top: 20px solid var(--pk-point);
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 12px solid transparent;
+  background: transparent;
+  width: 0;
+  height: 0;
+  margin-top: -8px; /* vertical align */
+  cursor: pointer;
+}
+
+.pk-slider::-moz-range-thumb {
+  border-top: 20px solid var(--pk-point);
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 12px solid transparent;
+  background: transparent;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+
+
+
+
+
+:root{
+  --pk-imsi-no-use: #c30928;
+
+  --pk-lightest-white: #fafbfc;
+  --pk-lighter-white: #f6f6f6;
+  --pk-grey-line: #d7d7d7;
+  --pk-weak-purple: #af7eff;
+
+  --white-font-color: #111;
+  --white-first-background: #7E37ED;
+  --white-second-background:#f1f1f1;
+  --white-third-background: #e1e1e1;
+
+  --white-side-border-right: #9A5BFF;
+  --white-side-active: #9A5BFF;
+  --white-side-button-hover: #af7eff;
+  --white-side-depth2-opened-depth1: #af7eff;
+  --white-user-info-border-top: #af7eff;
+  --white-loginout: #222;
+
+  --white-survey-card: #fafbfc;
+  --white-create-survey-btn: #f6f6f6;
+  --white-create-survey-btn-hover: #f0f2f5;
+
+  --white-modal-background: #fafbfc;
+  --white-modal-border-top: #ddd;
+  --white-modal-font: #222;
+
+  --white-myquestion-card: #fafbfc;
+  --white-myquestion-checkbox: #ddd;
+  --white-myquestion-typetext-border: #f0f2f5;
+  --white-myquestion-answer-box: #ddd;
+  --white-myquestion-detail-btn: #bbb;
+
+  --white-search-from-background: #ddd;
+
+  --white-form-border: #ededed;
+  --white-form-card-bg : #fafbfc;
+
+  --white-form-editor-nav: #fafbfc;
+  --white-form-editor-nav-border: #bbb;
+  --white-form-editor-question-summary-bg: #af7eff;
+
+  --pk-light-grey: #EDEDED;
+  --pk-silver: #B0B0B0;
+
+  --pk-yellow: #ffd54f;
+  --pk-mint: #4dd0e1 ;
+
+  --pk-deep-dark: #1E1E2E;
+  --pk-dark: #2A2A40;
+  --pk-charcoal: #444466;
+  --pk-point: #7E37ED;
+  --pk-purple-font: #af7eff;
+  --pk-point-hover: #9A5BFF;
+  --pk-fold-point: #f06292 ;
+
+  --pk-board-container: 2100px;
+  --pk-container: 1300px;
+}
+  
+body{
+  font-family: 'NanumSquare', sans-serif;
+}
+
+input::placeholder{
+  color: #aaa;
+}
+
+input{
+  outline: none;
+}
+
+/* img{
+  width: 100%;
+  height: 100%;
+} */
+
+.pd-box{
+  padding: 10px 20px;
+}
