@@ -26,8 +26,13 @@
   --container-main-wrap: 1300px;
   --container-board-wrap: 2100px;
 
-  --shadow-card-shadow: rgba(0,0,0,0.1) 2px 4px 10px; 
+  --shadow-card-shadow: rgba(0,0,0,0.1) 2px 4px 10px;
   
+}
+
+input[type="datetime-local"].calendar-indicator-filter::-webkit-calendar-picker-indicator {
+  filter: invert(.8);
+  cursor: pointer;
 }
 
 .pk-slider::-webkit-slider-thumb { 
