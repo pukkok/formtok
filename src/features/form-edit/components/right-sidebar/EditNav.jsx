@@ -1,7 +1,7 @@
 const EditNav = ({navs, selected, setSelected}) => {
 
   return (
-    <nav className="h-15 border-b-gray-300 border-b">
+    <nav className="h-15 dark:border-b-dark-line-hover border-b-gray-300 border-b">
       {navs.length > 0 && 
         navs.map((item) => (
         <button key={item.id}

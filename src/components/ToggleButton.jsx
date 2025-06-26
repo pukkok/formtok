@@ -3,7 +3,7 @@ const ToggleButton = ({ onClick, isOn = false }) => {
     <button
       onClick={onClick}
       className={`relative w-11 h-6 rounded-full border-2 cursor-pointer transition-colors duration-300 ${
-        isOn ? "bg-point border-point" : "bg-silver border-silver"
+        isOn ? "bg-point border-point" : "dark:bg-dark-line-hover dark:border-dark-elevated bg-silver border-silver"
       }`}
     >
       <span

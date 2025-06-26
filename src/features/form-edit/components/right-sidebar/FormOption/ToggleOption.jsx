@@ -30,7 +30,7 @@ const ToggleOption = ({label, option, useUp, script}) => {
   }
 
   return (
-    <div className="flex items-center relative mt-2 mb-1 text-gray-600">
+    <div className="flex items-center relative mt-2 mb-1 dark:text-gray-300 text-gray-600">
       <p className="cursor-help group">
         {label}
       

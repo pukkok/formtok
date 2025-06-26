@@ -8,12 +8,12 @@ const EndingMentSummary = ({ isActive }) => {
 
   return (
     <div 
-      className={`mt-3 p-2 rounded-xl border-2 ${isActive ? 'border-point' : 'border-gray-300'}`}
+      className={`mt-3 p-2 rounded-xl border-2 ${isActive ? 'border-point' : 'dark:border-dark-elevated border-gray-300'}`}
       onClick={()=>setActiveCard('end')}
     >
       <h4 className={`text-sm text-center px-2.5 font-bold
         relative top-[-18px] w-fit left-1/2 -translate-x-1/2
-        bg-bright-a ${isActive ? 'text-point' : 'text-gray-300'}`}
+        dark:bg-dark-surface bg-bright-a ${isActive ? 'text-point' : 'text-gray-300'}`}
       >엔딩</h4>
       
       {endingMent?.title ? 

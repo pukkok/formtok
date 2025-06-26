@@ -15,8 +15,12 @@ const QuestionCard = ({pi, qi, ref}) => {
       ref={ref}
       onClick={()=>setActiveCard(`Q-${pi}-${qi}`)}
       className={`
-      border-2 p-2.5 border-light-w rounded-xl bg-bright-a min-h-45 mb-4 text-black
-      ${activeCard === `Q-${pi}-${qi}` ? 'border-point-hover' : 'border-light-w'}
+      border-2 p-2.5 
+      dark:border-dark-hover border-light-w dark:bg-dark-surface bg-bright-a
+      dark:text-bright-a text-black
+      rounded-xl 
+       min-h-45 mb-4 
+      ${activeCard === `Q-${pi}-${qi}` ? 'dark:border-point border-point-hover' : 'dark:border-dark-line-base border-light-w'}
       `}>
       <QuestionOptionPanel pi={pi} qi={qi}/>
       <article className="px-4">

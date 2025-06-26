@@ -11,7 +11,7 @@ const PageSummary = ({pageMark, page, pi, isFold, isActive = false, isDragging})
   const deletePage = useFormEditStore(s => s.deletePage)
 
   const borderCover = (isDragging, isFold, isActive) => {
-    if (isDragging) return 'border-none'
+    if (isDragging) return 'border-2 border-transparent'
     if (isFold & isActive) return 'border-2 rounded-xl border-fold-point'
     if (isFold) return 'border-2 border-transparent border-t-fold-point hover:rounded-xl hover:border-fold-point'
     if (isActive) return 'border-2 border-point rounded-xl'
@@ -20,12 +20,12 @@ const PageSummary = ({pageMark, page, pi, isFold, isActive = false, isDragging})
 
   return (
     <div 
-      className={`${borderCover(isDragging, isFold, isActive)} mt-2 p-2`}
+      className={`${borderCover(isDragging, isFold, isActive)} p-2`}
       onClick={() => setActiveCard(`P-${pi}`)}
     >
       <h4 className={`text-sm text-center px-2.5 font-bold
         relative top-[-15px] w-fit left-1/2 -translate-x-1/2 
-        bg-bright-a ${isFold ? 'text-fold-point' : 'text-point'}`}>{pageMark} 페이지</h4>
+        dark:bg-dark-surface bg-bright-a ${isFold ? 'text-fold-point' : 'text-point'}`}>{pageMark} 페이지</h4>
       <div className="flex">
         {page?.title ? 
         <p className="font-bold mb-1 truncate">{page.title}</p> : 

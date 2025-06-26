@@ -29,14 +29,14 @@ const ListStyleSelector = ({ editor, type = 'bulletList', onSelect }) => {
         </IconButton>
         <button onClick={() => setIsOpen(prev => !prev)} 
           className={`flex items-center w-4
-            ${isOpen ? 'bg-light-purple hover:bg-light-purple text-bright-a' : 'hover:bg-gray-300 '} 
+            ${isOpen ? 'dark:bg-point dark:hover:bg-point bg-light-purple hover:bg-light-purple text-bright-a' : 'dark:hover:bg-charcoal hover:bg-gray-300 '} 
             border-l border-l-transparent rounded-r-sm rounded-b-sm
           `}>
           <DropdownArrowIcon />
         </button>
       </div>
       {isOpen && (
-        <div className="absolute z-10 flex bg-white border border-light-w rounded shadow-md p-1 mt-1">
+        <div className="absolute z-10 flex dark:bg-dark bg-white border border-light-w rounded shadow-md p-1 mt-1">
           {options.slice(1).map(({ iconRender, className }) => (
             <button
               key={className}
@@ -44,7 +44,7 @@ const ListStyleSelector = ({ editor, type = 'bulletList', onSelect }) => {
                 onSelect(className)
                 setIsOpen(false)
               }}
-              className="w-full flex items-center justify-start gap-2 px-1 py-1 hover:bg-light-purple hover:text-bright-a rounded-sm"
+              className="w-full flex items-center justify-start gap-2 px-1 py-1 dark:hover:bg-point hover:bg-light-purple hover:text-bright-a rounded-sm"
             >
               {iconRender(32)}
             </button>

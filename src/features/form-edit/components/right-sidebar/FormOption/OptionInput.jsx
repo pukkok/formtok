@@ -21,7 +21,7 @@ const OptionInput = ({ option, type='datetime-local', placeholder='' }) => {
   }
 
   return (
-    <div className="w-full h-10 rounded-xl px-2.5 py-2 dark:bg-charcoal bg-light-w mb-5">
+    <div className="w-full h-10 rounded-xl px-2.5 py-2 dark:bg-dark-hover bg-light-w mb-5">
       <input type={type}
         className={`w-full
           ${(type === 'datetime-local' && mode === 'dark') ? 'calendar-indicator-filter' : ''}

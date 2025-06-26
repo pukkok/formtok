@@ -14,7 +14,7 @@ function PageSwitcher () {
 				fixed bottom-[-100vh] 
 				flex justify-center items-center
 				w-full h-screen
-				bg-[#fafbfc] dark:bg-deep-dark
+				bg-[#fafbfc] dark:bg-dark-base
 				text-7xl z-[1000] 
 				${switchTheScreen === 'go' ? ani['switching-screen'] : ''}
 			`}

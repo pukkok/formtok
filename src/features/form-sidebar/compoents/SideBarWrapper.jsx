@@ -13,7 +13,7 @@ const SidebarWrapper = ({ children }) => {
       ${sidebarWidth === EXPAND_WIDTH ? ani['expand-sidebar'] : ''}
       w-full max-h-screen h-screen sticky top-0 bottom-0 
     text-light-w border-r bg-point 
-    dark:bg-dark dark:border-charcoal
+    dark:bg-dark-base dark:border-dark-line-base
       duration-300 `}
       style={{width: `${sidebarWidth}px`}}
     >

@@ -13,7 +13,7 @@ const UserInfoBox = () => {
   }
 
   return (
-    <div className={`border-t border-t-light-purple dark:border-t-charcoal pt-5 flex`}>
+    <div className={`border-t border-t-light-purple dark:border-t-dark-line-hover pt-5 flex`}>
       <div className={`flex gap-3 items-center`}>
         <VscAccount fontSize={'34px'}/>
         <div className="">

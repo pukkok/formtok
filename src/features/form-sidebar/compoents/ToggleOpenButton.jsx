@@ -28,7 +28,7 @@ const ToggleOpenButton = () => {
         absolute left-[320px] top-[100px] z-20
         -translate-x-1/2 -translate-y-1/2
         w-0 h-0 rounded-full 
-        bg-white text-deep-dark
+        bg-white text-black
         shadow-lg
         flex items-center justify-center cursor-pointer font-bold
         hover:scale-105 hover:duration-100

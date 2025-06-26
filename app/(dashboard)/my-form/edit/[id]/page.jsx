@@ -19,7 +19,7 @@ const EditPage = () => {
     <div className="flex justify-start">
       <div className="flex-1">
         <FormEditHeader />
-        <div className="overflow-scroll h-[calc(100vh-60px)] mx-1">
+        <div className="overflow-scroll h-[calc(100vh-60px)] mx-1 scroll-hidden">
           <FormEditor />
         </div>
       </div>

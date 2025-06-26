@@ -50,13 +50,13 @@ const LoginLargeBox = () => {
     <LargeBox className={`${activeForm === 'login' ? ani['show-large-box'] : ani['hide-large-box']}`}>
 			<h3 className="text-3xl pt-28 pb-18 text-point">로그인</h3>
 
-			<form className="text-light-w">
+			<form className="dark:text-light-w">
 				{LOGIN_FORMS.map(form => {
 					const {name, type} = form
 					return (
 						<p 
 							key={name}
-							className="bg-charcoal p-2.5 mb-2 border-b border-b-[#CECECE] flex items-center"
+							className="dark:bg-dark-elevated p-2.5 mb-2 border-b dark:border-b-[#CECECE] border-b-gray-500 flex items-center"
 						>
 							<LargeBoxInput 
 								className={'flex-1 w-full outline-0'}
@@ -76,7 +76,7 @@ const LoginLargeBox = () => {
 					)
 				})}
 
-				<div className="mt-10 flex itmes-center text-light-w">
+				<div className="mt-10 flex itmes-center dark:text-light-w text-black">
 					<div className="flex items-center">
 						<button type="button" className="pr-2 mr-2 border-r border-gray-400 cursor-pointer">아이디 찾기</button>
 						<button type="button" className="cursor-pointer">비밀번호 찾기</button>

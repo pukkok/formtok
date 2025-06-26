@@ -72,7 +72,7 @@ const JoinLargeBox = () => {
 				${activeForm === 'join' ? ani['show-large-box'] : ani['hide-large-box']}
 				`}>
 				<h3 className="text-3xl pt-28 pb-18 text-point">회원가입</h3>
-				<form className="text-light-w">
+				<form className="dark:text-light-w">
 					{JOIN_FORMS.map(form => {
 						const { name, optionText, type } = form
 						return (
@@ -80,7 +80,8 @@ const JoinLargeBox = () => {
 								key={name}
 								className={`
 									${(hideOtp && name === 'otp') ? 'hidden' : ''}
-									bg-charcoal p-2.5 mb-2 border-b border-b-[#CECECE] flex items-center`}
+									dark:bg-dark-elevated bg-bright-b
+									p-2.5 mb-2 border-b dark:border-b-[#CECECE] border-b-gray-500 flex items-center`}
 							>
 								<LargeBoxInput
 									className={'flex-1 w-full outline-0'}

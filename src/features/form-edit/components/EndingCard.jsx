@@ -25,18 +25,20 @@ const EndingCard = ({ref}) => {
       ref={ref}
       onClick={() => setActiveCard("end")}
       className={`
-        border-2 border-lgiht-w bg-bright-a rounded-xl min-h-45 mb-4 text-black 
-        ${activeCard === "end" ? "border-point-hover" : "border-light-w"} 
+        border-2 border-lgiht-w 
+        dark:bg-dark-surface bg-bright-a rounded-xl min-h-45 mb-4 text-black 
+        ${activeCard === "end" ? "dark:border-point border-point-hover" : "dark:border-dark-line-base border-light-w"} 
       `}
     >
       <h4 className={`px-5 py-2.5 rounded-t-lg
-        bg-light-purple text-light-w w-full font-bold mb-2.5`}>
+        dark:bg-dark-elevated bg-light-purple 
+        text-light-w w-full font-bold mb-2.5`}>
         엔딩 메세지
       </h4>
 
       <div className="px-5 py-2.5">
         <input
-          className="pl-0.5 w-full pb-1 text-lg
+          className="pl-0.5 w-full pb-1 text-lg dark:text-bright-a
           border-b border-b-transparent hover:border-b-silver 
           focus:border-b-point-hover focus:border-b-2"
           value={endingMent?.title || ""}

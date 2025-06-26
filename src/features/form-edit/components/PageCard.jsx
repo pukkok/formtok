@@ -20,16 +20,18 @@ const PageCard = ({pi, ref}) => {
         ref={ref}
         onClick={()=>setActiveCard(`P-${pi}`)}
         className={`
-          border-2 border-lgiht-w bg-bright-a rounded-xl min-h-45 mb-4 text-black
-          ${activeCard === `P-${pi}` ? 'border-point-hover' : 'border-light-w'}
+          border-2 border-lgiht-w 
+          dark:bg-dark-surface bg-bright-a rounded-xl min-h-45 mb-4 text-black
+          ${activeCard === `P-${pi}` ? 'dark:border-point border-point-hover' : 'dark:border-dark-line-base border-light-w'}
         `}
         >
           <h4 className="px-5 py-2.5 rounded-t-lg
-          bg-light-purple text-light-w w-full font-bold mb-2.5">{pageCnt} 페이지</h4>
+          dark:bg-dark-elevated bg-light-purple
+          text-light-w w-full font-bold mb-2.5">{pageCnt} 페이지</h4>
           <div className="px-5 py-2.5">
             <input 
-            className="pl-0.5 w-full pb-1 text-2xl
-            border-b border-b-transparent hover:border-b-silver 
+            className="pl-0.5 w-full pb-1 text-2xl dark:text-bright-a
+            border-b border-b-transparent hover:border-b-silver
           focus:border-b-point-hover focus:border-b-2" 
             placeholder="페이지 제목" 
             onChange={(e)=>updatePage(pi, {title: e.target.value})} value={pages[pi].title}/>

@@ -35,8 +35,8 @@ const FormEditHeader = () => {
 
     return (
       <header className={`sticky top-0 w-full flex items-center h-15 px-5 z-300
-      dark:bg-deep-dark bg-bright-a
-      border-b dark:border-b-charcoal border-b-gray-300
+      dark:bg-dark-deep bg-bright-a
+      border-b dark:border-b-dark-line-base border-b-gray-300
       `}>
           <input 
             className="w-xs text-lg mr-auto pl-2 p-1 
@@ -44,10 +44,10 @@ const FormEditHeader = () => {
             border-2 border-transparent focus:border-point rounded-xl outline-none"
             onChange={e =>setTitle(e.target.value)} placeholder="제목없는 설문지" value={title}/>
           <button 
-            className="bg-point hover:bg-point-hover ml-2.5 px-2.5 py-1.5 font-bold text-light-w rounded-md cursor-pointer"
+            className="dark:bg-dark-elevated bg-gray-300 ml-2.5 px-2.5 py-1.5 font-bold rounded-md cursor-pointer"
             onClick={()=>router.push(`/my-form/preview/${id}`)}>미리보기</button>
           <button 
-            className="bg-point hover:bg-point-hover ml-2.5 px-2.5 py-1.5 font-bold text-light-w rounded-md cursor-pointer"
+            className="bg-point hover:bg-point-hover dark:hover:bg-dark-point-hover ml-2.5 px-2.5 py-1.5 font-bold text-light-w rounded-md cursor-pointer"
             onClick={() => authCheckAndSaveForm(id)}>저장</button>        
 
           <ModalContainer ref={moveToLoginPageModalRef}>

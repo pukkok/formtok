@@ -12,7 +12,8 @@ const FormEditSidebar = () => {
   const [selected, setSelected] = useState(EDIT_NAVS[0].id)
 
   return (
-    <div className="sticky top-0 w-sm h-screen flex flex-col border-l border-l-gray-300 bg-bright-a">
+    <div className="sticky top-0 w-sm h-screen flex flex-col border-l 
+    dark:border-l-dark-line-light border-l-gray-300 dark:bg-dark-surface bg-bright-a">
       <EditNav 
         navs={EDIT_NAVS}
         selected={selected}

@@ -1,12 +1,29 @@
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
 @import 'tailwindcss';
 
+/* #282A36 */
 @theme {
-  --color-deep-dark: #1E1E2E;
-  --color-dark: #2A2A40;
-  --color-charcoal: #444466;
+  --color-dark-deep: #1B1C26;
+  --color-dark-base: #21222C;
+  --color-dark-surface: #282A36;
+  --color-dark-hover: #343547;
+  --color-dark-elevated: #3F4058;
+
+  --color-dark-line-light: #3A3B4E;
+  --color-dark-line-base: #2F303D;
+  --color-dark-line-hover: #4B4C60;
+
+  /* --color-deep: #21222C; */
+  /* --color-deep-dark: #1E1E2E; */
+  /* --color-deep-dark: #282A36; */
+  /* --color-dark: #2A2A40; */
+  /* --color-dark: #282A36; */
+  /* --color-charcoal: #444466;
+  --color-deep-gray: #2E2E3E;
+  --color-hover-dark: #3A3A55; */
 
   --color-point: #7E37ED;
+  --color-dark-point-hover: #652ED1;
   --color-point-hover: #9A5BFF;
 
   --color-light-purple: #AF7EFF;
@@ -35,10 +52,20 @@ input[type="datetime-local"].calendar-indicator-filter::-webkit-calendar-picker-
   cursor: pointer;
 }
 
+.scroll-hidden {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* * 다크모드, 라이트모드 구분 애로우 화살표 */
 .pk-slider::-webkit-slider-thumb { 
   -webkit-appearance: none;
   appearance: none;
-  border-top: 20px solid var(--pk-point);
+  border-top: 20px solid #7E37ED;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
   border-bottom: 12px solid transparent;
@@ -50,7 +77,7 @@ input[type="datetime-local"].calendar-indicator-filter::-webkit-calendar-picker-
 }
 
 .pk-slider::-moz-range-thumb {
-  border-top: 20px solid var(--pk-point);
+  border-top: 20px solid #7E37ED;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
   border-bottom: 12px solid transparent;

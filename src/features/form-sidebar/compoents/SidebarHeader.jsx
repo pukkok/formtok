@@ -50,20 +50,22 @@ const SidebarHeader = () => {
   }, [token, logoutAction, router])
 
   return (
-    <header className="
-      w-[280px] h-[70px] overflow-hidden flex gap-2.5 px-2.5 items-end relative 
-      border-b border-b-light-purple dark:border-b-charcoal pb-5 mb-4
-    ">
+    <header 
+      className={`
+        group w-[280px] h-[70px] overflow-hidden flex gap-2.5 px-2.5 items-end relative 
+        border-b border-b-light-purple dark:border-b-dark-line-hover pb-5 mb-4 cursor-pointer
+      `}
+      onClick={token ? refreshAuthTokenAction : null}
+    >
       <FormTokLogo boxSize={48}/>
       <div>
         <h1 className="text-xl">폼톡</h1>  
         <p className="text-xs">{timeLeftLabel}</p>
       </div>
       <button className={`
-        ml-2.5 p-1 flex justify-center items-center bg-charcoal font-bold rounded-md cursor-pointer
-        hover:bg-point-hover hover:rotate-180 duration-200
+        flex justify-center items-center font-bold rounded-md cursor-pointer
+        group-hover:rotate-180 duration-200
       `}
-        onClick={token ? refreshAuthTokenAction : null}
       >
         <MdOutlineCached />
       </button>

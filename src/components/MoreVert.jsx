@@ -11,15 +11,16 @@ const MoreVert = ({ children, autoClose = true, addOptionClass, addButtonClass, 
     >
       <button onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-center cursor-pointer">
         <span className={`flex items-center justify-center w-7 h-6 text-lg p-1 rounded-sm
-        ${isOpen ? addIsOpenClass ? `${addIsOpenClass}` : 'bg-light-w' : ''}
-        ${addButtonClass || "hover:bg-light-w"}`}>
+        ${isOpen ? addIsOpenClass ? `${addIsOpenClass}` : 'dark:bg-dark-surface bg-light-w' : ''}
+        ${addButtonClass || "dark:hover:bg-dark-hover hover:bg-light-w"}`}>
           <MoreVerticalIcon />
         </span>
       </button>
 
       <div
         onClick={() => autoClose && setIsOpen(false)}
-        className={`absolute right-5 top-0 z-10 flex flex-col text-sm bg-bright-a shadow-md rounded-xl overflow-hidden ${
+        className={`absolute right-5 top-0 z-10 flex flex-col text-sm 
+          dark:bg-dark-hover bg-bright-a shadow-md rounded-xl overflow-hidden ${
           isOpen ? `h-auto p-2 ${addOptionClass || ""}` : "h-0 overflow-hidden"
         }`}
       >

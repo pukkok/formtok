@@ -46,7 +46,7 @@ const TemplateBox = () => {
           return (
             <CardWrapper key={url}>
               <div className={`w-full h-full p-5 flex flex-col justify-start
-              dark:bg-dark dark:hover:bg-charcoal 
+              dark:bg-dark-surface dark:hover:bg-dark-hover 
               bg-bright-a hover:bg-bright-b
               `}
               onClick={() => goToEdit({title, url, pages, endingMent, listStyle, options})}

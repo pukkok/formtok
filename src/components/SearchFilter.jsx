@@ -9,14 +9,14 @@ const SearchFilter = ({ filters = [], filtering = null, colorMap, hoverMap, pick
         const { work, text } = filter
         const picked = pick === work
 
-        const bgColor = picked ? colorMap[work] : 'bg-white dark:bg-dark'
+        const bgColor = picked ? colorMap[work] : 'bg-white dark:bg-dark-hover'
         const hoverColor = picked ? '' : hoverMap[work]
 
         return (
           <button 
             key={text}
             className={`
-              ${picked ? 'text-white' : 'text-dark dark:text-white'} ${bgColor} ${hoverColor}
+              ${picked ? 'text-white' : 'text-dark-deep dark:text-white'} ${bgColor} ${hoverColor}
               px-4 py-2 rounded-xl
               shadow-md cursor-pointer text-sm transition-[background-color_0.3s,color_0.3s]
               hover:text-white

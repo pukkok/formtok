@@ -3,8 +3,8 @@ import { ArrowBackIcon } from "@/components/icons/ArrowBackIcon"
 import { HomeIcon } from "@/components/icons/HomeIcon"
 
 const NAVS = [
-  {to: 'back', icon: <ArrowBackIcon className="hover:text-light-w cursor-pointer"/>},
-  {to: '/', icon: <HomeIcon className="hover:text-light-w cursor-pointer"/>}
+  {to: 'back', icon: <ArrowBackIcon className="dark:hover:text-light-w hover:text-point cursor-pointer"/>},
+  {to: '/', icon: <HomeIcon className="hover:text-light-w hover:text-point cursor-pointer"/>}
 ]
 
 const LoginNav = () => {
