@@ -14,7 +14,7 @@ const CreateFormModal = ({ onClose }) => {
   const setIsLoaded = useFormEditStore(s => s.setIsLoaded)
   const setUrl = useFormEditStore(s => s.setUrl)
   const createPage = useFormEditStore(s => s.createPage)
-  const createOption = useFormEditStore(s => s.createOption)
+  const createSurveyOptions = useFormEditStore(s => s.createSurveyOptions)
   const createEndingMent = useFormEditStore(s => s.createEndingMent)
 
   const create = (e) => {
@@ -23,7 +23,7 @@ const CreateFormModal = ({ onClose }) => {
     const url = randomUrl()
     setUrl(url)
     createPage()
-    createOption()
+    createSurveyOptions()
     createEndingMent()
 
     setIsLoaded(true) // INFO: 새로 만들었기 때문에 불러온 것으로 처리
