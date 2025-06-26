@@ -22,9 +22,11 @@ const CreateFormModal = ({ onClose }) => {
 
     const url = randomUrl()
     setUrl(url)
-    createPage()
-    createSurveyOptions()
-    createEndingMent()
+    const pages = createPage()
+    const surveyOptions = createSurveyOptions()
+    const listStyle = null
+    const endingMent = createEndingMent()
+    useFormEditStore.getState().settingForm({title, pages, surveyOptions, listStyle, endingMent})
 
     setIsLoaded(true) // INFO: 새로 만들었기 때문에 불러온 것으로 처리
 
