@@ -1,3 +1,5 @@
+import React from "react"
+import OptionInput from "./OptionInput"
 import FormListStyleSelector from "./FormListStyleSelector"
 import Head4 from "./Head4.style"
 import ToggleOption from "./ToggleOption"
@@ -77,12 +79,20 @@ const FormOption = () => {
 
       <Head4>설문 기간 설정</Head4>
       {SURVEY_PERIOD_OPTIONS.map(opt => (
-        <ToggleOption key={opt.label} {...opt} />
+        <React.Fragment key={opt.label}>
+          <ToggleOption {...opt} />
+          <OptionInput option={opt.option}/>
+        </React.Fragment>
       ))}
       
       <Head4>설문 참여 설정</Head4>
       {PARTICIPATION_OPTIONS.map(opt => (
-        <ToggleOption key={opt.label} {...opt} />
+        <React.Fragment key={opt.label}>
+          <ToggleOption {...opt} />
+          {opt.option === 'isUseMaximum' && 
+            <OptionInput option={opt.option} type="number" placeholder="0"/>
+          }
+        </React.Fragment>
       ))}
 
       <Head4>참여자 권한 설정</Head4>
