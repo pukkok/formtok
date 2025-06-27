@@ -11,7 +11,7 @@ const sidebarNavs = [
       { text: '문항관리', icon: <QuestionListIcon />, path: '/my-form/questions' }
     ]
   },
-  { text: '참여하기', icon: <FormListIcon />, path: '/form-list' },
+  { text: '참여하기', icon: <FormListIcon />, path: '/participate' },
   { text: '대시보드', icon: <DashBoardIcon />, path: '/dashboard' },
   { text: '설정', icon: <SettingIcon />, path: '/setting' },
 ]
