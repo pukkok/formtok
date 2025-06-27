@@ -11,7 +11,7 @@ import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useRouter } from "next/navigation"
 import { useTokenFetch } from "@/utils/useTokenFetch"
 import CreateFormModal from "@/features/form-manage/CreateFormModal"
-import ModalContainer from "@/components/ModalContainer"
+import ModalContainer from "@/components/Modal/ModalContainer"
 
 const TemplateBox = () => {
   const createFormModalRef = useRef(null)

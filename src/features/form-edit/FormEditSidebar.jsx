@@ -9,7 +9,7 @@ const EDIT_NAVS = [
 ]
 
 const FormEditSidebar = () => {
-  const [selected, setSelected] = useState(EDIT_NAVS[0].id)
+  const [selected, setSelected] = useState('tab-a')
 
   return (
     <div className="sticky top-0 w-sm h-screen flex flex-col border-l 

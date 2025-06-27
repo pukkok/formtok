@@ -1,9 +1,11 @@
+import { useScreenStore } from "@/stores/useScreenStore"
 import { useEffect, useRef } from "react"
 
 const ScoreCanvas = ({ min = 1, max = 5, selected = null, onSelect }) => {
   const canvasRef = useRef(null)
 
   useEffect(() => {
+    const mode = useScreenStore.getState().mode
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d")
     const width = canvas.width = canvas.offsetWidth
@@ -42,8 +44,8 @@ const ScoreCanvas = ({ min = 1, max = 5, selected = null, onSelect }) => {
       // 바깥 원 (테두리)
       ctx.beginPath()
       ctx.arc(x, height / 2, radius, 0, Math.PI * 2) // x에 +3 오프셋 불필요
-      ctx.fillStyle= '#fff'
-      ctx.strokeStyle = "#AF7EFF"
+      ctx.fillStyle=  mode === 'dark' ? '#F0F2F5' : '#fff'
+      ctx.strokeStyle = mode === 'dark' ? "#7E37ED" : "#AF7EFF"
       ctx.lineWidth = circleStrokeWidth // 원 테두리 두께 적용
       ctx.fill()
       ctx.stroke()
@@ -52,14 +54,14 @@ const ScoreCanvas = ({ min = 1, max = 5, selected = null, onSelect }) => {
       ctx.beginPath()
       // 안쪽 원의 반지름을 테두리 두께만큼 줄여서 테두리와 겹치지 않도록 합니다.
       ctx.arc(x, height / 2, radius - circleStrokeWidth, 0, Math.PI * 2) 
-      ctx.fillStyle = filled ? "#AF7EFF" : "#fff"
+      ctx.fillStyle = filled ? "#7E37ED" : mode === 'dark' ? '#F0F2F5' : "#fff"
       ctx.fill()
 
       // 텍스트 그리기
-      ctx.fillStyle = "#000"
-      ctx.font = "12px sans-serif"
+      ctx.fillStyle =  mode === 'dark' ? "#fff" : "#000"
+      ctx.font = "14px sans-serif"
       ctx.textAlign = "center"
-      ctx.fillText(min + i, x, height / 2 + 30)
+      ctx.fillText(min + i, x, height / 2 + 35)
     }
   }, [min, max, selected]) // 의존성 배열에 모든 외부 변수 포함
 

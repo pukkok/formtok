@@ -23,7 +23,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
     'edit-box',
     'min-h-[30px] text-[15px] p-1 mt-3 relative z-1',
     'dark:bg-dark-surface dark:text-[#DDD] bg-bright-a',
-    `${isEditorFocused ? 'border-b border-b-point border-b-2' : 'border-b border-b-transparent hover:border-b-gray-300'}` ,
+    `${isEditorFocused ? 'border-b border-b-point border-b-2' : 'border-b border-b-transparent hover:border-b-gray-300 dark:hover:border-b-dark-line-hover'}` ,
     'focus:outline-none'
   ].join(' ')
 

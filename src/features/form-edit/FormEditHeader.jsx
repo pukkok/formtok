@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useParams, useRouter } from "next/navigation"
 import MoveToLoginPageModal from "./components/MoveToLoginPageModal"
-import ModalContainer from "@/components/ModalContainer"
+import ModalContainer from "@/components/Modal/ModalContainer"
 import { useAuthStore } from "@/stores/useAuthStore"
 
 const FormEditHeader = () => {

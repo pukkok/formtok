@@ -10,7 +10,7 @@ const TableLabelInput = ({ item, type, pi, qi, isDeletable, placeholderPrefix, i
   return (
     <div
       key={item.id}
-      className="flex w-full h-10 px-2.5 py-2.5 rounded-xl bg-light-w mt-2 relative group"
+      className="flex w-full h-10 px-2.5 py-2.5 rounded-xl dark:bg-dark-elevated bg-light-w mt-2 relative group"
     >
       <input
         className="w-full outline-none bg-transparent"

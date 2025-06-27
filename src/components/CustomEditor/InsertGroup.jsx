@@ -5,7 +5,7 @@ import { InsertImageIcon, InsertLinkIcon } from '../icons/EditorInsertIcons'
 import IconButton from "./IconButton"
 import LinkModal from "./LinkModal"
 import ImageModal from "./ImageModal"
-import ModalContainer from "../ModalContainer"
+import ModalContainer from "../Modal/ModalContainer"
 
 const InsertGroup = ({ editor }) => {
   

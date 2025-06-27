@@ -47,7 +47,9 @@
   
 }
 
-input[type="datetime-local"].calendar-indicator-filter::-webkit-calendar-picker-indicator {
+input[type="datetime-local"].calendar-indicator-filter::-webkit-calendar-picker-indicator, 
+input[type="date"].calendar-indicator-filter::-webkit-calendar-picker-indicator, 
+input[type="time"].calendar-indicator-filter::-webkit-calendar-picker-indicator {
   filter: invert(.8);
   cursor: pointer;
 }
