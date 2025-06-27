@@ -1,4 +1,4 @@
-import CardWrapper from "./CardWrapper"
+import CardWrapper from "@/components/CardWrapper"
 import { IoMdAddCircle } from "react-icons/io"
 
 const CreateCard = ({ onClick }) => {
