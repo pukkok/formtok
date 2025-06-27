@@ -305,10 +305,10 @@ export const useFormEditStore = create((set, get) => ({
     set({pages: copyPages})
   },
 
-  settingForm: ({title, pages, endingMent, listStyle, options}) => {
+  settingForm: ({title, pages, endingMent, listStyle, surveyOptions}) => {
     set({
-      title, pages, endingMent, listStyle, surveyOptions: options,
-      originData: { title, pages, endingMent, listStyle, surveyOptions: options }
+      title, pages, endingMent, listStyle, surveyOptions,
+      originData: { title, pages, endingMent, listStyle, surveyOptions }
     })
   },
 
