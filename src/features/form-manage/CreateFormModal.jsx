@@ -1,5 +1,7 @@
 'use client'
 
+import ModalCancelButton from "@/components/Modal/ModalCancelButton.style"
+import ModalConfirmButton from "@/components/Modal/ModalConfirmButton.style"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { randomUrl } from "@/utils/generateKey"
 import { useRouter } from "next/navigation"
@@ -39,8 +41,9 @@ const CreateFormModal = ({ onClose }) => {
   
   return (
     <form 
-      className="p-5 min-w-[500px] rounded-xl border-2 border-point dark:bg-deep-dark bg-light-w">
-      <header className="w-full border-b border-b-gray-300 pb-2.5">
+      onSubmit={create}
+      className="p-5 min-w-[500px] rounded-xl border-2 border-point dark:bg-dark-base bg-light-w dark:text-bright-c">
+      <header className="w-full border-b border-b-gray-300 dark:border-b-dark-line-hover pb-2.5">
         <input 
           className="text-lg w-full"
           placeholder="설문지 제목" 
@@ -58,15 +61,9 @@ const CreateFormModal = ({ onClose }) => {
         <p className="mb-1 text-[15px]">* 제목은 설문지 배포시에 사용됩니다.</p>
       </div>
 
-      <footer className="border-t border-t-gray-300 w-full pt-2.5 flex justify-end gap-3">
-        <button 
-          type="submit"
-          className="rounded-lg px-3 py-2 text-light-w font-bold bg-point hover:bg-point-hover cursor-pointer"
-          onClick={create}>생성하기</button>
-        <button 
-          className="rounded-lg px-3 py-2 text-light-w font-bold bg-gray-500 hover:bg-gray-400 cursor-pointer"
-          type="button"
-          onClick={onClose}>닫기</button>
+      <footer className="border-t border-t-gray-300 dark:border-t-dark-line-hover w-full pt-2.5 flex justify-end gap-3">
+        <ModalConfirmButton>생성하기</ModalConfirmButton>
+        <ModalCancelButton onClick={onClose}>닫기</ModalCancelButton>
       </footer>
     </form>
   )
