@@ -3,7 +3,8 @@ import { randomKey, randomUrl } from '@/utils/generateKey'
 import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
 import { create } from 'zustand'
-import { updatePageField, updateQuestionField, updateOptionField, updateTableColField, updateTableRowField, normalizePages, normalizeEndingMent } from './helpers/updateHelper'
+import { updatePageField, updateQuestionField, updateOptionField, updateTableColField, updateTableRowField } from './helpers/updateHelper'
+import { normalizePages, normalizeEndingMent, normalizeSurveyOptions } from './helpers/normalizeHelper'
 import _ from 'lodash'
 
 export const useFormEditStore = create((set, get) => ({
@@ -381,7 +382,7 @@ export const useFormEditStore = create((set, get) => ({
     if (!_.isEqual(title, originData.title)) return true // title 비교
     if (!_.isEqual(normalizeEndingMent(endingMent), normalizeEndingMent(originData.endingMent))) return true // endingMent 비교
     if (!_.isEqual(listStyle, originData.listStyle)) return true // listStyle 비교
-    if (!_.isEqual(surveyOptions, originData.surveyOptions)) return true // options 비교
+    if (!_.isEqual(normalizeSurveyOptions(surveyOptions), normalizeSurveyOptions(originData.surveyOptions))) return true // options 비교
     // 모든 항목이 동일한 경우 false 리턴
     return false
   },
