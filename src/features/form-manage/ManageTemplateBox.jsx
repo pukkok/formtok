@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from "react"
-import CardWrapper from "./components/CardWrapper"
+import CardWrapper from "../../components/CardWrapper"
 import CreateCard from "./components/CreateCard"
 import { useFormManageStore } from "@/stores/useFormManageStore"
 import { CopyIcon, DeleteIcon } from "@/A-Components/Icons/Icons"
@@ -13,7 +13,7 @@ import { useTokenFetch } from "@/utils/useTokenFetch"
 import CreateFormModal from "@/features/form-manage/CreateFormModal"
 import ModalContainer from "@/components/Modal/ModalContainer"
 
-const TemplateBox = () => {
+const ManageTemplateBox = () => {
   const createFormModalRef = useRef(null)
 
   const router = useRouter()
@@ -24,10 +24,11 @@ const TemplateBox = () => {
   const deleteFormAction = useFormManageStore(s => s.deleteFormAction)
   const settingForm = useFormEditStore(s => s.settingForm)
   const setIsLoaded = useFormEditStore(s => s.setIsLoaded)
-  useTokenFetch(getMyFormListAction)
+
+  useTokenFetch(getMyFormListAction) // INFO: API 불러오기
 
   const goToEdit = ({title, url, pages, endingMent, listStyle, options}) => {
-    settingForm({title, pages, endingMent, listStyle, options})
+    settingForm({title, pages, endingMent, listStyle, surveyOptions: options})
     setIsLoaded(true)
     router.push(`/my-form/edit/${url}`)
   }
@@ -42,7 +43,6 @@ const TemplateBox = () => {
       {searchedForms.length > 0 && 
         searchedForms.map(form => {
           const { title, url, pages, endingMent, listStyle, options, createdAt, lastModifiedAt} = form
-
           return (
             <CardWrapper key={url}>
               <div className={`w-full h-full p-5 flex flex-col justify-start
@@ -88,4 +88,4 @@ const TemplateBox = () => {
   )
 }
 
-export default TemplateBox
+export default ManageTemplateBox

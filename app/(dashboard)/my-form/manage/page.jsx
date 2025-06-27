@@ -1,12 +1,12 @@
 import ManageHeader from "@/features/form-manage/ManageHeader"
-import TemplateBox from "@/features/form-manage/TemplateBox"
+import ManageTemplateBox from "@/features/form-manage/ManageTemplateBox"
 
 const ManagePage = () => {
 
   return (
     <div> 
       <ManageHeader />
-      <TemplateBox />
+      <ManageTemplateBox />
     </div>
   )
 }

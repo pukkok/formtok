@@ -16,7 +16,7 @@ const ManageHeader = () => {
   const setSearchedForms = useFormManageStore(s => s.setSearchedForms)
 
   const search = (word) => {
-    const filteredForms = allForms.filter((form) => {
+    const filteredForms = allForms.filter((form) => { 
       const { work: pickWork } = manageWorkColorPick({ ...form.options })
       const matchesFilter = pick === 'all' || pick === pickWork
       const matchesSearch = form.title.includes(word)
@@ -41,7 +41,7 @@ const ManageHeader = () => {
     setResetKey(key => key + 1)
     if (work==='all') return setSearchedForms(allForms)
 
-    const filteredForms = allForms.filter((form) => { 
+    const filteredForms = allForms.filter((form) => {
       const { work: pickWork } = manageWorkColorPick({...form.options})
       return work === pickWork
     })
