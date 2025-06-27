@@ -10,23 +10,13 @@ import { useAuthStore } from "@/stores/useAuthStore"
 const FormEditHeader = () => {
     const { id } = useParams()
     const router = useRouter()
+    const moveToLoginPageModalRef = useRef(null)
     
     const userInfo = useAuthStore(s => s.userInfo)
 
     const title = useFormEditStore(s => s.title)
     const setTitle = useFormEditStore(s => s.setTitle)
-
-    const loadForm = useFormEditStore(s => s.loadForm)
     const saveFormAction = useFormEditStore(s => s.saveFormAction)
-
-    const moveToLoginPageModalRef = useRef(null)
-
-    const settingOriginData = useFormEditStore(s => s.settingOriginData)
-
-    useEffect(() => {
-      if(!userInfo) return settingOriginData()
-      loadForm(id)
-  }, [loadForm, userInfo, settingOriginData])
 
     const authCheckAndSaveForm = async (url) => {
       if(!userInfo) moveToLoginPageModalRef.current?.open()
