@@ -59,7 +59,7 @@ const ModalContainer = ({ children, ref }) => {
 
   // 모달 내용
   const modalContent = (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black/20 z-[1000]">
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black/20 dark:bg-black/70 z-[1000]">
       <div
         ref={modalContentRefInternal}
         tabIndex={-1}
