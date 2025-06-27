@@ -4,6 +4,7 @@ import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
 import { create } from 'zustand'
 import { updatePageField, updateQuestionField, updateOptionField, updateTableColField, updateTableRowField } from './helpers/updateHelper'
+import { normalizePages, normalizeEndingMent, normalizeSurveyOptions } from './helpers/normalizeHelper'
 import _ from 'lodash'
 
 export const useFormEditStore = create((set, get) => ({
@@ -305,29 +306,26 @@ export const useFormEditStore = create((set, get) => ({
     set({pages: copyPages})
   },
 
-  
-
-  settingForm: ({title, pages, endingMent, listStyle, options}) => {
-    set({title, pages, endingMent, listStyle, options})
+  settingForm: ({title, pages, endingMent, listStyle, surveyOptions}) => {
+    set({
+      title, pages, endingMent, listStyle, surveyOptions,
+      originData: { title, pages, endingMent, listStyle, surveyOptions }
+    })
   },
-
-  
 
   createUrl: () => {
     set({ url : randomUrl() })
   },
 
-  createPage: () => {
-    set({
-      pages: [{ // INFO: 초기 모델링
-        id: 'P'+randomKey(), 
-        title: '', 
-        description : '',
-        questions: [ get().createQuestion() ],
-        next : null
-      }]
-    })
-  },
+  createPage: () => (
+    [{ // INFO: 초기 모델링
+      id: 'P'+randomKey(), 
+      title: '', 
+      description : '',
+      questions: [ get().createQuestion() ],
+      next : null
+    }]
+  ),
 
   createQuestion: () => (
     {
@@ -347,49 +345,32 @@ export const useFormEditStore = create((set, get) => ({
     }
   ),
 
-  createSurveyOptions: () => {
-    set({
-      options: {
-        isOpen: false,
-        isEnd: false,
-        isPublic: false,
-        isUseStartPeriod : false,
-        startDate: '',
-        isUseEndPeriod : false,
-        endDate: '',
-        isNeedLogin : false,
-        isUseMaximum : false,
-        maximumCount : null,
-        isAllowConfirmation : false,
-        isAllowModify: false,
-        isRevealTheResult: false,
-      } 
-    })
-  },
+  createSurveyOptions: () => (
+    {
+      isOpen: false,
+      isEnd: false,
+      isPublic: false,
+      isUseStartPeriod : false,
+      startDate: '',
+      isUseEndPeriod : false,
+      endDate: '',
+      isNeedLogin : false,
+      isUseMaximum : false,
+      maximumCount : null,
+      isAllowConfirmation : false,
+      isAllowModify: false,
+      isRevealTheResult: false,
+    }
+  ),
 
-  createEndingMent: () => {
-    set({
-      endingMent: {
-        title: '', 
-        description: ''
-      }
-    })
-  },
-
-  
-  
+  createEndingMent: () => ({endingMent: { title: '',  description: '' }}),
 
   // INFO: ---------- 오리진 체크 ----------- 
   // TODO : 변한 값이 있다면 탭을 벗어날 때 경고한다
   originData: null,
   settingOriginData:() => {
-    set({originData : {
-        title: get().title, 
-        pages: get().pages,
-        endingMent: get().endingMent,
-        listStyle: get().listStyle,
-        surveyOptions: get().surveyOptions
-      }
+    const { title, pages, endingMent, listStyle, surveyOptions} = get()
+    set({originData : { title, pages, endingMent, listStyle, surveyOptions }
     })
   },
   isModified: () => {// INFO: 가장 많이 변할것 같은 데이터 우선순위로 비교
@@ -397,11 +378,11 @@ export const useFormEditStore = create((set, get) => ({
 
     if(originData === null) return false // 들어가기 전
     // 변경된 경우 바로 true 리턴
-    if (!_.isEqual(pages, originData.pages)) return true // pages 비교
+    if (!_.isEqual(normalizePages(pages), normalizePages(originData.pages))) return true // pages 비교
     if (!_.isEqual(title, originData.title)) return true // title 비교
-    if (!_.isEqual(endingMent, originData.endingMent)) return true // endingMent 비교
+    if (!_.isEqual(normalizeEndingMent(endingMent), normalizeEndingMent(originData.endingMent))) return true // endingMent 비교
     if (!_.isEqual(listStyle, originData.listStyle)) return true // listStyle 비교
-    if (!_.isEqual(surveyOptions, originData.surveyOptions)) return true // options 비교
+    if (!_.isEqual(normalizeSurveyOptions(surveyOptions), normalizeSurveyOptions(originData.surveyOptions))) return true // options 비교
     // 모든 항목이 동일한 경우 false 리턴
     return false
   },
@@ -418,15 +399,23 @@ export const useFormEditStore = create((set, get) => ({
 
     if (result) {
       const {title, pages, endingMent, listStyle, options} = result.form
-      await set({ title, pages, endingMent, listStyle, surveyOptions: options })
-      get().settingOriginData()
+      set({ title, pages, endingMent, listStyle, surveyOptions: options,
+        originData : { title, pages, endingMent, listStyle, surveyOptions : options }
+      })
     }
     return true // 종료 체크
   },
 
   saveFormAction: async (url) => {
     const { title, pages, endingMent, listStyle, surveyOptions } = get()
-    const { result } = await safeRequest(saveForm(url, title, pages, endingMent, listStyle, surveyOptions), {
+    const updateOption = {
+      ...surveyOptions,
+      startDate : surveyOptions.isUseStartPeriod ? surveyOptions.startDate : '',   
+      endDate : surveyOptions.isUseEndPeriod ? surveyOptions.endDate : '',   
+      maximumCount : surveyOptions.isUseMaximum ? surveyOptions.maximumCount || 0 : null,   
+    }
+
+    const { result } = await safeRequest(saveForm(url, title, pages, endingMent, listStyle, updateOption), {
       successMessage: '성공적으로 저장 되었습니다.',
       onError: () => toast.error('설문지 저장 실패')
     })

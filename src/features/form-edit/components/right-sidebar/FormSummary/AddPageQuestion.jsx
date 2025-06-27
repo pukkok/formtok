@@ -56,10 +56,10 @@ const AddPageQuestion = () => {
   }, [activeCard])
 
   return (
-    <footer className="flex border-t h-[50px] border-t-gray-300">
+    <footer className="flex border-t h-[50px] dark:border-t-dark-line-light border-t-gray-300">
       <button 
         className="w-1/2 h-full py-2 hover:cursor-pointer 
-        hover:bg-gray-300 border-r border-r-gray-300
+        dark:hover:bg-dark-hover hover:bg-gray-300 border-r dark:border-r-dark-line-light border-r-gray-300
         disabled:text-gray-300 disabled:bg-none"
         title="ctrl + ,"
         onClick={addQuestionAction} disabled={activeCard === '' || activeCard === 'end'}>
@@ -67,7 +67,8 @@ const AddPageQuestion = () => {
       </button>
       <button 
         className="w-1/2 h-full py-2 
-        hover:cursor-pointer hover:bg-gray-300 
+        hover:cursor-pointer 
+        dark:hover:bg-dark-hover hover:bg-gray-300 
         disabled:text-gray-300 disabled:bg-none"
         title="ctrl + ."
         onClick={addPageAction} disabled={activeCard === '' || activeCard === 'end'}>

@@ -29,7 +29,6 @@ export const updateOptionField = (pages, pi, qi, oi, updateFn) =>
     }
 })
 
-
 export const updateTableRowField = (pages, pi, qi, rowId, updateFn) =>
   pages.map((page, pIdx) => {
     if (pIdx !== pi) return page

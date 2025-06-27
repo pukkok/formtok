@@ -1,6 +1,9 @@
 'use client'
 
+import { useScreenStore } from "@/stores/useScreenStore"
+
 const DateInput = ({ style }) => {
+  const mode = useScreenStore(s => s.mode)
   const changeStyleToType = (style) => {
     switch (style) {
       case '날짜': return 'date'
@@ -14,9 +17,8 @@ const DateInput = ({ style }) => {
     <input type={changeStyleToType(style)} 
       className={`
         w-fit h-10 px-2.5 py-2 rounded-xl 
-      bg-light-w focus:outline-none
-        [&::-webkit-calendar-picker-indicator]:filter-none
-        [&::-webkit-calendar-picker-indicator]:cursor-pointer
+      bg-light-w focus:outline-none dark:bg-dark-elevated 
+        ${mode === 'dark' ? 'calendar-indicator-filter' : ''} 
     `}/>
   )
 }

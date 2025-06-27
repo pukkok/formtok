@@ -11,14 +11,13 @@ import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useRouter } from "next/navigation"
 import { useTokenFetch } from "@/utils/useTokenFetch"
 import CreateFormModal from "@/features/form-manage/CreateFormModal"
-import ModalContainer from "@/components/ModalContainer"
+import ModalContainer from "@/components/Modal/ModalContainer"
 
 const TemplateBox = () => {
   const createFormModalRef = useRef(null)
 
   const router = useRouter()
 
-  const setTitle = useFormEditStore(s => s.setTitle)
   const searchedForms = useFormManageStore(s => s.searchedForms)
   const getMyFormListAction = useFormManageStore(s => s.getMyFormListAction)
   const copyFormAction = useFormManageStore(s => s.copyFormAction)
@@ -31,10 +30,6 @@ const TemplateBox = () => {
     settingForm({title, pages, endingMent, listStyle, options})
     setIsLoaded(true)
     router.push(`/my-form/edit/${url}`)
-  }
-
-  const toggleModal = () => {
-    setTitle('')
   }
 
   return (
@@ -51,7 +46,7 @@ const TemplateBox = () => {
           return (
             <CardWrapper key={url}>
               <div className={`w-full h-full p-5 flex flex-col justify-start
-              dark:bg-dark dark:hover:bg-charcoal 
+              dark:bg-dark-surface dark:hover:bg-dark-hover 
               bg-bright-a hover:bg-bright-b
               `}
               onClick={() => goToEdit({title, url, pages, endingMent, listStyle, options})}

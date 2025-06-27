@@ -1,7 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd"
 import AddPageQuestion from "./AddPageQuestion"
 import { useFormEditStore } from "@/stores/useFormEditStore"
-import { useRef } from "react"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 import PageSummary from "./PageSummary"
 import QuestionSummary from "./QuestionSummary"
@@ -19,12 +18,10 @@ const FormSummary = () => {
   const reorderQuestion = useFormEditStore(s => s.reorderQuestion)
 
   const getCardStyle = (isDragging, draggableStyle, isFold) => {
-    const mode = useScreenStore.getState().mode
     return {
       border: isDragging && (isFold ? '2px solid #f06292' : '2px solid #7E37ED'),
       borderRadius: isDragging && '12px',
-      backgroundColor : mode === 'dark' ? '#2A2A40' : '#fafbfc',
-      ...draggableStyle
+      // ...draggableStyle
     }
   }
 
@@ -74,11 +71,13 @@ const FormSummary = () => {
                 {pages.map((page, pi) => (
                   <Draggable key={page.id} draggableId={`page-${page.id}`} index={pi}>
                     {(provided, snapshot) => (
-                      <div className="mt-5 first-of-type:mt-4"
+                      <div className={`mt-5 first-of-type:mt-4 dark:bg-dark-surface bg-bright-a
+                        ${snapshot.isDragging ? 'rounded-xl border-2 border-point' : ''}
+                        `}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        style={getCardStyle(snapshot.isDragging, provided.draggableProps.style, foldQuestions.includes(page.id))}
+                        // style={getCardStyle(snapshot.isDragging, provided.draggableProps.style, foldQuestions.includes(page.id))}
                       >
                         <PageSummary
                           pageMark={`${pi + 1}/${pages.length}`} 
@@ -93,15 +92,16 @@ const FormSummary = () => {
                           <div 
                             className={`py-1 ${foldQuestions.includes(page.id) ? 'hidden' : ''}`}
                             ref={provided.innerRef}
-                            {...provided.droppableProps}  
+                            {...provided.droppableProps}
                           >
                           {page.questions.length > 0 ? (
                             page.questions.map((question, qi) => (
                               <Draggable key={question.id} draggableId={`question-${question.id}`} index={qi}>
-                              {(provided) => (
+                              {(provided, snapshot) => (
                                 <QuestionSummary 
                                   question={question}
                                   pi={pi} qi={qi}
+                                  isDragging={snapshot.isDragging}
                                   isActive={activeCard === `Q-${pi}-${qi}`}
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}

@@ -11,7 +11,7 @@ function FeatureCard ({describe, headLine, content}) {
 
   return (
     <div className={`${ani['move-to-high']} relative top-[100vh] flex flex-col gap-5 max-w-sm
-      bg-charcoal bg-linear-to-r from-charcoal from-20% to-dark
+      bg-dark-hover bg-linear-to-r from-dark-elevated from-20% to-dark-hover
       p-9 rounded-xl transition-[0.3s]
       hover:translate-y-[-10px]
     `}>

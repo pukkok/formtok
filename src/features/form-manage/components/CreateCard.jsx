@@ -8,7 +8,7 @@ const CreateCard = ({ onClick }) => {
       <button className={`
       group
       flex justify-center items-center w-full h-full p-6
-      dark:bg-charcoal dark:hover:bg-charcoal
+      dark:bg-dark-hover dark:hover:bg-dark-elevated
       bg-bright-b hover:bg-bright-c cursor-pointer
       `}
       onClick={onClick}

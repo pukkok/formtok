@@ -34,7 +34,7 @@ const Multiple = ({style, pages, pi, qi}) => {
           >항목 추가</button>
           {!pages[pi].questions[qi].hasExtraOption && (
             <> 또는
-              <button className="px-2.5 py-1.5 rounded-xl font-bold bg-gray-300 text-dark ml-2.5 cursor-pointer" 
+              <button className="px-2.5 py-1.5 rounded-xl font-bold bg-gray-300 dark:bg-dark-elevated text-dark ml-2.5 cursor-pointer" 
               onClick={()=> updateQuestion(pi, qi, {hasExtraOption: true})}
               >'기타' 추가</button>
             </>)

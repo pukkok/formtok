@@ -3,7 +3,7 @@ import MoreButton from "./MoreButton"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 
-const QuestionSummary = ({question, pi, qi, isActive, ref, ...props}) => {
+const QuestionSummary = ({question, pi, qi, isActive, isDragging, ref, ...props}) => {
 
   const setActiveCard = useFormEditUiStore(s => s.setActiveCard)
 
@@ -11,8 +11,8 @@ const QuestionSummary = ({question, pi, qi, isActive, ref, ...props}) => {
   const addQuestion = useFormEditStore(s => s.addQuestion)
   const deleteQuestion = useFormEditStore(s=> s.deleteQuestion)
 
-  const textColor = (isQ, isActive) => {
-    if(isActive) return 'text-bright-a'
+  const textColor = (isQ, isActive, isDragging) => {
+    if(isActive || isDragging) return 'text-bright-a'
     if(isQ) return 'text-black'
     return 'text-[#aaa]'
   }
@@ -20,22 +20,22 @@ const QuestionSummary = ({question, pi, qi, isActive, ref, ...props}) => {
   return (
     <div 
       className={`
-        group px-2.5 my-1 h-10 rounded-xl flex items-center relative
-        ${isActive ? 'bg-point text-bright-a' : ''} hover:bg-point-hover hover:text-bright-a
+        group px-2.5 py-5 my-1 h-10 rounded-xl flex items-center relative 
+        ${isActive || isDragging ? 'bg-point text-bright-a' : ''} dark:hover:bg-point hover:bg-point hover:text-bright-a
         transition-[background-color_0.3s]
       `}
       ref={ref}
       onClick={()=> setActiveCard(`Q-${pi}-${qi}`)}
       {...props}
     >
-      <p className={`maxw-w-4/5 truncate ${textColor(question.q, isActive)} group-hover:text-bright-a`}>{question.q || `${qi +1}번 문항`}</p>
+      <p className={`maxw-w-4/5 truncate ${textColor(question.q, isActive, isDragging)} group-hover:text-bright-a dark:text-bright-a`}>{question.q || `${qi +1}번 문항`}</p>
 
       {isActive &&
       <div className="ml-auto">
         <MoreVert 
           addIsOpenClass={'bg-point'}
           addButtonClass={'hover:bg-none'}
-          addOptionClass={'w-20 text-black'}>
+          addOptionClass={'w-20'}>
           <MoreButton 
             onClick={()=> saveQuestionAction(pi, qi)}
             >저장</MoreButton>

@@ -12,8 +12,8 @@ const Dropdown = ({ initialItem, children, initialState = false, style }) => {
       <button
         className={`
           w-full flex gap-2 items-center h-[45px] px-4 py-2 rounded-xl font-bold transition border
-          bg-bright-a
-          ${isOpen ? "border-silver" : "border-zinc-900/10"}
+           dark:border-dark-line-hover bg-bright-a
+          ${isOpen ? "dark:bg-dark-hover border-silver" : "dark:bg-dark-surface border-zinc-900/10"}
           hover:border-silver
         `}
         onClick={() => setIsOpen(!isOpen)}
@@ -29,7 +29,9 @@ const Dropdown = ({ initialItem, children, initialState = false, style }) => {
 
       <ul
         className={`
-          absolute top-[50px] w-full z-50 border rounded-[12px] bg-bright-a px-2 py-3
+          absolute top-[50px] w-full z-50 border rounded-[12px] 
+          dark:bg-dark-surface dark:border-dark-line-light bg-bright-a 
+          px-2 py-3
           border-silver
           ${isOpen ? "block" : "hidden"}
         `}
@@ -37,7 +39,7 @@ const Dropdown = ({ initialItem, children, initialState = false, style }) => {
       >
         {React.Children.map(children, (child) => (
           <li className="w-full px-1
-          hover:bg-light-w hover:text-light-purple hover:rounded-lg">
+          dark:hover:bg-dark-hover hover:bg-light-w hover:text-light-purple hover:rounded-lg">
             {child}
           </li>
         ))}

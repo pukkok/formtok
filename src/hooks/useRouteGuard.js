@@ -53,7 +53,7 @@ const useRouteGuard = () => {
 
   useEffect(() => {
     const onPopState = () => {
-      if (!isModified()) return
+      if (!isModified()) return router.push('/my-form/manage')
       modalRef.current?.open()
     }
     window.addEventListener('popstate', onPopState)

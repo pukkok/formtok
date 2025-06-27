@@ -3,7 +3,7 @@ import TablePreviewModal from "./TablePreviewModal"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import TableLabelInput from "./TableLabelInput"
 import AddRowColButton from "./AddRowColButton"
-import ModalContainer from "@/components/ModalContainer"
+import ModalContainer from "@/components/Modal/ModalContainer"
 
 const TableEditor = ({ pages, pi, qi }) => {
   const [start, setStart] = useState(true)
@@ -28,7 +28,7 @@ const TableEditor = ({ pages, pi, qi }) => {
       <div className="text-center mb-5"> {/* 하단 여백 추가 */}
         <button
           onClick={() => tablePreviewModalRef.current?.open()}
-          className="px-3 py-1 rounded-lg font-bold hover:bg-charcoal hover:text-bright-c text-lg" // 버튼 크기 및 폰트 조정
+          className="px-3 py-1 rounded-lg font-bold hover:bg-dark-hover hover:text-bright-c text-lg" // 버튼 크기 및 폰트 조정
         >
           표 미리보기
         </button>

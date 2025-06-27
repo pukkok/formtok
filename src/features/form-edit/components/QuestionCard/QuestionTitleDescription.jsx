@@ -27,7 +27,9 @@ const QuestionTitleDescription = ({pi, qi}) => {
         {getListStyleForIndex(qi) && <span className="mr-2">{getListStyleForIndex(qi)}</span>}
         <input 
           placeholder="질문" 
-          className="flex-1 text-lg border-b border-b-transparent hover:border-b-gray-300 focus:border-b-point focus:border-b-2"
+          className="flex-1 text-lg pl-1 border-b border-b-transparent 
+          hover:border-b-gray-300 dark:hover:border-b-dark-line-hover 
+          focus:border-b-point focus:hover:border-b-point focus:border-b-2"
           onChange={e=> updateQuestion(pi, qi, { q: e.target.value })}
           value={pages[pi].questions[qi].q}
         />

@@ -21,8 +21,9 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
 
   const EDITOR_CLASS = [
     'edit-box',
-    'min-h-[30px] text-[15px] p-1 mt-3 bg-bright-a relative z-10',
-    `${isEditorFocused ? 'border-b border-b-point border-b-2' : 'border-b border-b-transparent hover:border-b-gray-300'}` ,
+    'min-h-[30px] text-[15px] p-1 mt-3 relative z-1',
+    'dark:bg-dark-surface dark:text-[#DDD] bg-bright-a',
+    `${isEditorFocused ? 'border-b border-b-point border-b-2' : 'border-b border-b-transparent hover:border-b-gray-300 dark:hover:border-b-dark-line-hover'}` ,
     'focus:outline-none'
   ].join(' ')
 
@@ -74,7 +75,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
   return (
     <div 
       ref={wrapperRef}
-      className={`relative transition-all outline-none duration-150 ${isEditorFocused ? 'mb-12': 'mb-4'}`}
+      className={`relative transition-all outline-none duration-150 ${isEditorFocused ? 'z-10 mb-18': 'mb-6'}`}
       tabIndex={-1}
       onFocus={() => setIsEditorFocused(true)}
       onBlur={e => {
@@ -88,8 +89,8 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
 
       {editor && // INFO : 에디터가 생성된 후에 로드
       <div className={`transition-all duration-250 absolute
-        ${isEditorFocused ? 'top-[100%]' : 'top-0 opacity-0'} 
-        flex flex-wrap gap-2 items-center rounded px-1 py-1 bg-gray-50`}>
+        ${isEditorFocused ? 'top-[100%]' : 'top-0 opacity-0'}
+        flex flex-wrap gap-2 items-center rounded px-1 py-1 dark:bg-dark-surface dark:text-bright-a bg-gray-50`}>
         {/* 텍스트 스타일 그룹 */}
         <TextStyleSelector editor={editor} />
         <div className="mx-1 border-l border-l-silver h-4" />

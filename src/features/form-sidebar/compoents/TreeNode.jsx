@@ -33,10 +33,10 @@ const TreeNode = ({node, handleRouteChange }) => {
           rounded-lg
           transition-[background-color_0.3s]
           cursor-pointer font-bold
-          ${(hasChildren && isExpanded) ? 'bg-point-hover dark:bg-charcoal' : ''}
+          ${(hasChildren && isExpanded) ? 'bg-point-hover dark:bg-dark-hover' : ''}
           ${ activeTab === node.path ? 
             'bg-light-purple hover:bg-light-purple dark:bg-point dark:hover:bg-point' : 
-            'hover:bg-point-hover dark:hover:bg-charcoal'}`}
+            'hover:bg-point-hover dark:hover:bg-dark-hover'}`}
         onClick={hasChildren ? toggleOpen : () => goToTab(node)}
         tabIndex={-1}
       >

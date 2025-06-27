@@ -6,7 +6,7 @@ const LINKS = [
 function MainFooter () {
 	
 	return (
-		<footer className='w-full px-10 py-5 bg-dark flex justify-center items-center flex-col'>
+		<footer className='w-full px-10 py-5 bg-dark-deep flex justify-center items-center flex-col'>
 			<p className='text-sm text-light-w'>&copy; {new Date().getFullYear()} FormTok. Powered By Pukkok.</p>
 			
 			<div className="mt-2.5">

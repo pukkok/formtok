@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import ModalCancelButton from "../Modal/ModalCancelButton.style"
+import ModalConfirmButton from "../Modal/ModalConfirmButton.style"
 
 const ImageModal = ({ onClose, onConfirm }) => {
   const [file, setFile] = useState(null)
@@ -21,7 +23,7 @@ const ImageModal = ({ onClose, onConfirm }) => {
 
   return (
     <form 
-      className="p-5 min-w-[500px] rounded-xl border-2 border-point dark:bg-deep-dark bg-light-w"
+      className="p-5 min-w-[500px] rounded-xl border-2 border-point dark:bg-dark-base bg-light-w dark:text-bright-a"
       onSubmit={e => {
         e.preventDefault()
         if (file && onConfirm) onConfirm(file, width)
@@ -69,20 +71,8 @@ const ImageModal = ({ onClose, onConfirm }) => {
       )}
 
       <div className="mt-4 flex justify-end gap-2">
-        <button
-          type="button"
-          onClick={onClose}
-          className="rounded-lg px-3 py-2 text-light-w font-bold bg-gray-500 hover:bg-gray-400"
-        >
-          취소
-        </button>
-        <button
-          type="submit"
-          disabled={!file}
-          className="rounded-lg px-3 py-2 text-light-w font-bold bg-point hover:bg-point-hover"
-        >
-          확인
-        </button>
+        <ModalCancelButton onClick={onClose} />
+        <ModalConfirmButton disabled={!file} />
       </div>
     </form>
   )

@@ -8,12 +8,12 @@ const ToggleOption = ({label, option, useUp, script}) => {
   const updateSurveyOptions = useFormEditStore(s => s.updateSurveyOptions)
 
   const handleToggle = () => {
+    if (!option) return
+
     if (option === 'isUseStartPeriod' && surveyOptions.isUseStartPeriod) {
       updateSurveyOptions({
         isUseStartPeriod: false,
-        startDate: '',
         isUseEndPeriod: false,
-        endDate: ''
       })
       return
     }
@@ -21,9 +21,7 @@ const ToggleOption = ({label, option, useUp, script}) => {
     if (option === 'isUseEndPeriod' && !surveyOptions.isUseEndPeriod) {
       updateSurveyOptions({
         isUseStartPeriod: true,
-        startDate: '',
         isUseEndPeriod: true,
-        endDate: ''
       })
       return
     }
@@ -32,7 +30,7 @@ const ToggleOption = ({label, option, useUp, script}) => {
   }
 
   return (
-    <div className="flex items-center relative mt-2 mb-1 text-gray-600">
+    <div className="flex items-center relative mt-2 mb-1 dark:text-gray-300 text-gray-600">
       <p className="cursor-help group">
         {label}
       
