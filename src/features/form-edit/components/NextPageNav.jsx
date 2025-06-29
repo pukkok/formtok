@@ -7,13 +7,10 @@ const NextPageNav = ({ pages, pi }) => {
 
   const displayText = (title) => {
     const unTitled = '제목 없음'
-    let result = ''
-    
-    if(title) result = title 
-    if(title.length > 12) result = title.slice(0, 12) + '...' 
-    else result = unTitled
-    
-    return result
+
+    if (!title) return unTitled
+    if (title.length > 10) return title.slice(0, 10) + '...'
+    return title
   }
 
   const nextPageText = (page) => {
@@ -36,17 +33,16 @@ const NextPageNav = ({ pages, pi }) => {
             다음페이지로 이동
           </button>
 
-          {pages.filter((_, cnt) => cnt>pi).map((page, cnt) => {
-            const { title, id } = page
-            
-            return <button
+          {pages.filter((_, cnt) => cnt>pi).map((page, cnt) => (
+            <button
               className="w-full text-left py-2" 
-              key={id} 
-              onClick={()=>updatePage(pi, {next: pi + cnt+1})}>
-                {pi+1 + cnt+1}P. ({displayText(title)})로 이동
-              </button>
-            
-          })}
+              key={page.id} 
+              onClick={()=>updatePage(pi, {next: pi + cnt+1})}
+            >
+              {pi+1 + cnt+1}P. ({displayText(page.title)})로 이동
+            </button>
+            )
+          )}
 
           <button 
             className="w-full text-left py-2"
