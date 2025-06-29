@@ -4,6 +4,11 @@ import { create } from 'zustand'
 
 export const useParticipateStore = create((set, get) => ({
   
+  surveyForms: [],
+  setSurveyForms: (form) => set({surveyForms: form}),
+  currentPageIndex: 0,
+  setCurrentPageIndex: (number) => set({currentPageIndex: number}),
+
   allForms: [],
 
   searchedForms: [],
