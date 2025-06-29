@@ -19,7 +19,7 @@ const DateTypeAnswer = ({ pId, qId, answerBox, questionType, setPeriod }) => {
       const {start, end} = answerBox[pId][qId]
       if(end === '') return
       if(start >= end){
-        toast.warning('첫 번째 날짜/시간 이후여야 합니다.')
+        toast.warning('날짜 및 시간이 다시 정렬 됩니다.')
         answerPeriodValueReset(start, pId, qId, 'end')
         return // INFO: 유효하지 않은 경우 변경하지 않음
       }
