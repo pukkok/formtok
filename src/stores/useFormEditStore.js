@@ -63,7 +63,7 @@ export const useFormEditStore = create((set, get) => ({
       }
     } else {
       updatedPage = {
-        id, title: '', description: '', questions: []
+        id, title: '', description: '', questions: [], next: null
       }
     }    
 
@@ -375,10 +375,14 @@ export const useFormEditStore = create((set, get) => ({
   },
   isModified: () => {// INFO: 가장 많이 변할것 같은 데이터 우선순위로 비교
     const {pages, title, endingMent, listStyle, surveyOptions, originData} = get()
-
+    console.log('비교 시작')
     if(originData === null) return false // 들어가기 전
     // 변경된 경우 바로 true 리턴
+    console.log('통과1')
+    console.log(normalizePages(pages))
+    console.log(normalizePages(originData.pages))
     if (!_.isEqual(normalizePages(pages), normalizePages(originData.pages))) return true // pages 비교
+    console.log('통과2')
     if (!_.isEqual(title, originData.title)) return true // title 비교
     if (!_.isEqual(normalizeEndingMent(endingMent), normalizeEndingMent(originData.endingMent))) return true // endingMent 비교
     if (!_.isEqual(listStyle, originData.listStyle)) return true // listStyle 비교
