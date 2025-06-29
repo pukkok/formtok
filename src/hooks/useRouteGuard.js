@@ -53,6 +53,9 @@ const useRouteGuard = () => {
 
   useEffect(() => {
     const onPopState = () => {
+      // TODO: 에딧페이지가 아니면 팝스테이트는 무시해야한다.
+      if(!pathname.includes('/my-form/edit')) return
+
       if (!isModified()) return router.push('/my-form/manage')
       modalRef.current?.open()
     }

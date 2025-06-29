@@ -1,15 +1,16 @@
 import dayjs from "dayjs"
 
-const colorKeys = ['point', 'sky', 'yellow', 'green', 'red']
+const MANAGE_KEYS = ['all', 'draft', 'ready', 'active', 'finish']
+const PARTICIPATE_KEYS = ['all', 'faq', 'noLogin', 'active', 'finish']
+const workColors = ['bg-point', 'bg-work-sky', 'bg-work-yellow', 'bg-work-green', 'bg-work-red']
 
-export const MANAGE_WORK_TYPES = ['all', 'draft', 'ready', 'active', 'finish']
-export const PARTICIPATE_WORK_TYPES = ['all', 'faq', 'noLogin', 'active', 'finish']
+export const MANAGE_WORK_COLOR_MAP = Object.fromEntries(
+  MANAGE_KEYS.map((key, i) => [key, workColors[i]])
+)
 
-const makeColorMap = (types, prefix = 'bg-') =>
-  Object.fromEntries(types.map((type, i) => [type, `${prefix}work-${colorKeys[i]}`.replace('work-point', 'point')]))
-
-export const MANAGE_WORK_COLOR_MAP = makeColorMap(MANAGE_WORK_TYPES, 'bg-')
-export const MANAGE_WORK_HOVER_MAP = makeColorMap(MANAGE_WORK_TYPES, 'hover:bg-')
+export const MANAGE_WORK_HOVER_MAP = Object.fromEntries(
+  MANAGE_KEYS.map((key, i) => [key, `hover:${workColors[i]}`])
+)
 
 export const manageWorkColorPick = ({isOpen, isEnd, isUseStartPeriod, startDate, endDate}) => {
 
@@ -26,5 +27,10 @@ export const manageWorkColorPick = ({isOpen, isEnd, isUseStartPeriod, startDate,
   return ''
 }
 
-export const PARTICIPATE_WORK_COLOR_MAP = makeColorMap(PARTICIPATE_WORK_TYPES, 'bg-')
-export const PARTICIPATE_WORK_HOVER_MAP = makeColorMap(PARTICIPATE_WORK_TYPES, 'hover:bg-')
+export const PARTICIPATE_WORK_COLOR_MAP = Object.fromEntries(
+  PARTICIPATE_KEYS.map((key, i) => [key, workColors[i]])
+)
+
+export const PARTICIPATE_WORK_HOVER_MAP = Object.fromEntries(
+  PARTICIPATE_KEYS.map((key, i) => [key, `hover:${workColors[i]}`])
+)

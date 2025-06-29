@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useParams, useRouter } from "next/navigation"
 import MoveToLoginPageModal from "./components/MoveToLoginPageModal"
@@ -35,7 +35,7 @@ const FormEditHeader = () => {
             onChange={e =>setTitle(e.target.value)} placeholder="제목없는 설문지" value={title}/>
           <button 
             className="dark:bg-dark-elevated bg-gray-300 ml-2.5 px-2.5 py-1.5 font-bold rounded-md cursor-pointer"
-            onClick={()=>router.push(`/my-form/preview/${id}`)}>미리보기</button>
+            onClick={()=>router.push(`/participate/${id}/preview`)}>미리보기</button>
           <button 
             className="bg-point hover:bg-point-hover dark:hover:bg-dark-point-hover ml-2.5 px-2.5 py-1.5 font-bold text-light-w rounded-md cursor-pointer"
             onClick={() => authCheckAndSaveForm(id)}>저장</button>        
