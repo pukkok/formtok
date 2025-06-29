@@ -31,7 +31,7 @@ const ScoreCanvas = ({ min = 1, max = 5, selected = null, onSelect }) => {
     // 패딩 경계 안에서 라인을 시작하고 끝냅니다.
     ctx.moveTo(padding, height / 2) 
     ctx.lineTo(width - padding, height / 2)
-    ctx.strokeStyle = "#444466"
+    ctx.strokeStyle = mode === 'dark' ? '#666' : '#99A1AF'
     ctx.lineWidth = lineWidth // 메인 라인 두께 적용
     ctx.stroke()
 
@@ -44,18 +44,20 @@ const ScoreCanvas = ({ min = 1, max = 5, selected = null, onSelect }) => {
       // 바깥 원 (테두리)
       ctx.beginPath()
       ctx.arc(x, height / 2, radius, 0, Math.PI * 2) // x에 +3 오프셋 불필요
-      ctx.fillStyle=  mode === 'dark' ? '#F0F2F5' : '#fff'
-      ctx.strokeStyle = mode === 'dark' ? "#7E37ED" : "#AF7EFF"
+      ctx.fillStyle=  mode === 'dark' ? '#282A36' : '#FAFBFC'
+      ctx.strokeStyle = mode === 'dark' ? '#666' : '#99A1AF'
       ctx.lineWidth = circleStrokeWidth // 원 테두리 두께 적용
       ctx.fill()
       ctx.stroke()
       
       // 안쪽 원 (채움)
-      ctx.beginPath()
-      // 안쪽 원의 반지름을 테두리 두께만큼 줄여서 테두리와 겹치지 않도록 합니다.
-      ctx.arc(x, height / 2, radius - circleStrokeWidth, 0, Math.PI * 2) 
-      ctx.fillStyle = filled ? "#7E37ED" : mode === 'dark' ? '#F0F2F5' : "#fff"
-      ctx.fill()
+      if(filled) {
+        ctx.beginPath()
+        // 안쪽 원의 반지름을 테두리 두께만큼 줄여서 테두리와 겹치지 않도록 합니다.
+        ctx.arc(x, height / 2, radius - circleStrokeWidth, 0, Math.PI * 2) 
+        ctx.fillStyle = "#7E37ED"
+        ctx.fill()
+      } 
 
       // 텍스트 그리기
       ctx.fillStyle =  mode === 'dark' ? "#fff" : "#000"
