@@ -54,7 +54,7 @@ const useRouteGuard = () => {
   useEffect(() => {
     const onPopState = () => {
       // TODO: edit페이지의 이전 pathname은 /my-form/manage이므로 /my-form/manage가 아니면 팝스테이트는 무시해야한다.
-      if(!pathname.includes('/my-form/manage')) return console.log('포함하지 않아')
+      if(!pathname.includes('/my-form/manage')) return
 
       if (!isModified()) return router.push('/my-form/manage')
       modalRef.current?.open()
