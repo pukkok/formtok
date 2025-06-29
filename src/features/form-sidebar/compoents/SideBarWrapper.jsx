@@ -14,7 +14,7 @@ const SidebarWrapper = ({ children }) => {
       w-full max-h-screen h-screen sticky top-0 bottom-0 
     text-light-w border-r bg-point 
     dark:bg-dark-base dark:border-dark-line-base
-      duration-300 `}
+      duration-300 overflow-hidden`}
       style={{width: `${sidebarWidth}px`}}
     >
       <ToggleOpenButton />
