@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useFormEditStore } from "@/stores/useFormEditStore"
-import ScoreCanvas from "./ScoreCanvas"
+import ScoreCanvas from "@/components/ScoreCanvas"
 import ScoreTextInput from "./ScoreTextInput"
 import ScoreRangeDropdown from "./ScoreRangeDropdown"
 
@@ -9,12 +9,11 @@ const SelectScore = ({ pages, pi, qi }) => {
   const { min, max, minText, maxText } = range
 
   const updateQuestion = useFormEditStore(s => s.updateQuestion)
+  // TODO: 제작중에 선택된 동작을 확인할수 있도록 한다
   const [selected, setSelected] = useState(null)
 
-  const handleSelect = (val) => {
-    setSelected(val)
-    // 선택한 값을 저장하고 싶으면 아래 주석 해제
-    // updateQuestion(pi, qi, { selectedScore: val })
+  const handleSelect = (value) => {
+    setSelected(value)
   }
 
   useEffect(() => {
