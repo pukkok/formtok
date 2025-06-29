@@ -4,7 +4,6 @@ import { useFormEditStore } from "@/stores/useFormEditStore"
 import { useFormEditUiStore } from "@/stores/useFormEditUiStore"
 import PageSummary from "./PageSummary"
 import QuestionSummary from "./QuestionSummary"
-import { useScreenStore } from "@/stores/useScreenStore"
 import EndingMentSummary from "./EndingMentSummary"
 
 const FormSummary = () => {
@@ -16,14 +15,6 @@ const FormSummary = () => {
   const pages = useFormEditStore(s => s.pages)
   const reorderPage = useFormEditStore(s => s.reorderPage)
   const reorderQuestion = useFormEditStore(s => s.reorderQuestion)
-
-  const getCardStyle = (isDragging, draggableStyle, isFold) => {
-    return {
-      border: isDragging && (isFold ? '2px solid #f06292' : '2px solid #7E37ED'),
-      borderRadius: isDragging && '12px',
-      // ...draggableStyle
-    }
-  }
 
   const dragStart = () => {
     setActiveCard('')
@@ -77,7 +68,6 @@ const FormSummary = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        // style={getCardStyle(snapshot.isDragging, provided.draggableProps.style, foldQuestions.includes(page.id))}
                       >
                         <PageSummary
                           pageMark={`${pi + 1}/${pages.length}`} 
