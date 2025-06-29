@@ -5,6 +5,7 @@ import SelectOneAnswer from "./answer-forms/SelectOneAnswer"
 import SelectMultipleAnswers from "./answer-forms/SelectMultipleAnswers"
 import DropDownAnswer from "./answer-forms/DropdownAnswer"
 import DateTypeAnswer from "./answer-forms/DateTypeAnswer"
+import SelectScoreAnswer from "./answer-forms/SelectSocreAnswer"
 
 const AnswerForm = ({questionType, pId, qId, options, ...rest}) => {
 
@@ -20,6 +21,7 @@ const AnswerForm = ({questionType, pId, qId, options, ...rest}) => {
       {questionType === '객관식(복수 선택)' && <SelectMultipleAnswers pId={pId} qId={qId} answerBox={answerBox} options={options} {...rest}/>}
       {questionType === '드롭다운' && <DropDownAnswer pId={pId} qId={qId} answerBox={answerBox} options={options} />}
       {['날짜', '시간', '날짜 + 시간'].includes(questionType) && <DateTypeAnswer pId={pId} qId={qId} answerBox={answerBox} questionType={questionType} {...rest}/>}
+      {questionType === '점수 선택형' && <SelectScoreAnswer pId={pId} qId={qId} answerBox={answerBox} {...rest}/>}
     </div>
   )
 }
