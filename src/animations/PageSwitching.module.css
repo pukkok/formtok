@@ -1,5 +1,5 @@
 .switching-screen {
-  animation: switching-screen 1s ease-in-out forwards;
+  animation: switching-screen 1.3s ease-in-out forwards;
 } 
 
 @keyframes switching-screen {
@@ -8,7 +8,6 @@
     bottom: -100vh;
   }
   25%{
-    
     bottom: 0;
   }
   50%{

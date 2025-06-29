@@ -5,8 +5,10 @@ import React from "react";
 import FormTokLogo from "../FormTokLogo";
 import { useScreenStore } from "@/stores/useScreenStore";
 
-function PageSwitcher () {
+const PageSwitcher = () => {
 	const switchTheScreen = useScreenStore(s => s.switchTheScreen)
+
+	if(switchTheScreen !== 'go') return null
 
 	return (
 		<section
@@ -15,8 +17,8 @@ function PageSwitcher () {
 				flex justify-center items-center
 				w-full h-screen
 				bg-[#fafbfc] dark:bg-dark-base
-				text-7xl z-[1000] 
-				${switchTheScreen === 'go' ? ani['switching-screen'] : ''}
+				text-7xl z-[1000]
+				${ani['switching-screen']}
 			`}
 		>
 			<FormTokLogo boxSize={180}/>

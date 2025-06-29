@@ -4,7 +4,7 @@ import React, { useEffect } from "react"
 import { useScreenStore } from "@/stores/useScreenStore"
 import { useRouter } from "next/navigation"
 
-function PageSwitchButton ({to, children, className}) {
+const PageSwitchButton = ({to, children, className}) => {
   const switchTheScreen = useScreenStore(s => s.switchTheScreen)
   const setSwitchTheScreen = useScreenStore(s => s.setSwitchTheScreen)
   const router = useRouter()
@@ -13,14 +13,14 @@ function PageSwitchButton ({to, children, className}) {
     setSwitchTheScreen('go')
     setTimeout(() => {
       router.push(path)
-    }, 500)
+    }, 600)
   }
 
   useEffect(() => {
     if(switchTheScreen === 'go'){
       setTimeout(() => {
         setSwitchTheScreen('')
-      }, 3000)
+      }, 2500)
     }
   }, [switchTheScreen])
 
