@@ -69,7 +69,7 @@ export const PARTICIPANT_PERMISSIONS_OPTIONS = [
 const FormOption = () => {
 
   return (
-    <div className="w-full h-[calc(100vh-60px)] overflow-scroll box-border py-2.5 pl-4 pr-6">
+    <div className="w-full h-[calc(100vh-60px)] overflow-scroll box-border pt-2.5 pl-4 pr-6 pb-8">
       <FormListStyleSelector />
 
       <Head4>설문지 관리</Head4>
