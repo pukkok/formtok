@@ -14,7 +14,7 @@ import CustomExtensionImage from './CustomExtensionImage'
 import CustomExtensionParagraph from './CustomExtensionParagraph'
 import AlignGroup from './AlignGroup'
 
-const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
+const CustomEditor = ({ content, placeholder = '추가 설명', onChange, readOnly=false }) => {
 
   const [isEditorFocused, setIsEditorFocused] = useState(false)
   const wrapperRef = useRef(null)
@@ -22,8 +22,9 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
   const EDITOR_CLASS = [
     'edit-box',
     'min-h-[30px] text-[15px] p-1 mt-3 relative z-1',
-    'dark:bg-dark-surface dark:text-[#DDD] bg-bright-a',
-    `${isEditorFocused ? 'border-b border-b-point border-b-2' : 'border-b border-b-transparent hover:border-b-gray-300 dark:hover:border-b-dark-line-hover'}` ,
+    'dark:bg-dark-surface dark:text-[#DDD] text-[#444] bg-bright-a',
+    `${readOnly ? '' : isEditorFocused ? 'border-b border-b-point border-b-2' :
+       'border-b border-b-transparent hover:border-b-gray-300 dark:hover:border-b-dark-line-hover'}` ,
     'focus:outline-none'
   ].join(' ')
 
@@ -38,7 +39,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
       }),
       Placeholder.configure({
         placeholder: placeholder,
-        showOnlyWhenEditable: true,
+        showOnlyWhenEditable: false,
         showOnlyCurrent:false
       }),
       CustomExtensionParagraph,
@@ -48,6 +49,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
       Link, Underline,
     ],
     content: content,
+    editable: !readOnly,
     editorProps: {
       attributes: {
         class: EDITOR_CLASS,
@@ -55,7 +57,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
     },
     immediatelyRender: false,
     onUpdate({ editor }) {
-      onChange(editor.getHTML())
+      onChange ? onChange(editor.getHTML()) : undefined
     }
   })
 
@@ -75,7 +77,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
   return (
     <div 
       ref={wrapperRef}
-      className={`relative transition-all outline-none duration-150 ${isEditorFocused ? 'z-10 mb-18': 'mb-6'}`}
+      className={`relative transition-all outline-none duration-150 ${readOnly ? '' : isEditorFocused ? 'z-10 mb-18': 'mb-6'}`}
       tabIndex={-1}
       onFocus={() => setIsEditorFocused(true)}
       onBlur={e => {
@@ -87,7 +89,7 @@ const CustomEditor = ({ content, placeholder = '추가 설명', onChange }) => {
       {/* 에디터 본문 */}
       <EditorContent editor={editor} /> 
 
-      {editor && // INFO : 에디터가 생성된 후에 로드
+      {(editor && editor?.isEditable) && // INFO : 에디터가 생성된 후에 로드
       <div className={`transition-all duration-250 absolute
         ${isEditorFocused ? 'top-[100%]' : 'top-0 opacity-0'}
         flex flex-wrap gap-2 items-center rounded px-1 py-1 dark:bg-dark-surface dark:text-bright-a bg-gray-50`}>
