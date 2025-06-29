@@ -14,14 +14,16 @@ const DashboardLayout = ({children}) => {
     return () => resetActiveTab()
   },[resetActiveTab])
 
-  const isEditPage = pathname.includes('/edit')
+  const noNeedPadding = 
+    pathname.includes('/edit') || 
+    (pathname !== '/participate' && pathname.includes('/participate'))
 
   return (
     <main className="flex">
       <Sidebar />
       <div className={`dark:bg-dark-deep dark:text-light-w bg-[#F1F1F1] 
       flex-1 max-h-screen 
-      ${isEditPage ? '' : 'px-10 py-5 overflow-y-auto'}
+      ${noNeedPadding ? '' : 'px-10 py-5 overflow-y-auto'}
       `}>
         {children}
       </div>
