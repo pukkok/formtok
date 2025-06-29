@@ -1,6 +1,5 @@
 'use client'
 
-
 const SearchFilter = ({ filters = [], filtering = null, colorMap, hoverMap, pick = 'all' }) => {
 
   return (
