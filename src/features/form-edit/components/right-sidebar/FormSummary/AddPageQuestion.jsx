@@ -8,22 +8,23 @@ const AddPageQuestion = () => {
   const addQuestion = useFormEditStore(s => s.addQuestion)
   const addPage = useFormEditStore(s => s.addPage)
 
-  const addPageAction = async () => {
-    const pi = activeCard.split('-')[1]
-    addPage(pi)
-    setActiveCard(`P-${Number(pi)+1}`)
+  const addPageAction = () => {
+    const [_, pi] = activeCard.split('-')
+    const numberPi = Number(pi)
+    addPage(numberPi)
+    setActiveCard(`P-${numberPi+1}`)
   }
 
   const addQuestionAction = () => {
     const [_, pi, qi] = activeCard.split('-')
-    // TODO: 페이지를 선택하고 있는 경우엔 -1로 최 상단에 질문을 생성한다.
-    let validQi = -1 
-    if(qi) validQi = qi
-    addQuestion(pi, validQi)
-    setActiveCard(`Q-${Number(pi)}-${Number(validQi)+1}`)
+    const numberPi = Number(pi)
+    const numberQi = qi ? Number(qi) : -1
+
+    addQuestion(numberPi, numberQi)
+    setActiveCard(`Q-${numberPi}-${numberQi + 1}`)
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     // INFO: 단축키 기능을 사용한다. 
     const keyState = { Control: false }
 
