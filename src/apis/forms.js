@@ -28,13 +28,6 @@ export const saveForm = async (url, title, pages, endingMent, listStyle, options
   return data
 }
 
-export const saveQuestion = async (id, q, description, type, options, hasExtraOption) => {
-  const { data } = await authAxios.post('/api/form/question/save', 
-    {id, q, description, type, options, hasExtraOption }
-  )
-  return data
-}
-
 export const getAvailableForms = async () => {
   const { data } = await axios.get('/api/form/all-forms')
   return data
