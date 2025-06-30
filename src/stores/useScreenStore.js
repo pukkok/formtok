@@ -6,6 +6,9 @@ export const useScreenStore = create((set, get) => ({
 
   sidebarWidth: 320,
 
+  previousSidebarState: true,
+  setPreviousSidebarState: (value) => set({ previousSidebarState: value }),
+
   activeTab: '/my-form/manage',
   setActiveTab: (value) => set({ activeTab : value }),
   resetActiveTab: () => set({activeTab : '/my-form/manage' }),
