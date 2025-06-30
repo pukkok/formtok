@@ -1,5 +1,6 @@
 import { submitAnswer } from '@/apis/answers'
 import { safeRequest } from '@/utils/safeRequest'
+import { toast } from 'sonner'
 import { create } from 'zustand'
 
 export const useAnswerStore = create((set, get) => ({
@@ -74,10 +75,11 @@ export const useAnswerStore = create((set, get) => ({
   // INFO: ---------- API 사용 -----------
   submitAnswerAction: async (url) => {
     const {answerBox : answers } = get()
-    const { result } = await safeRequest(submitAnswer(url, answers), {
-      successMessage: '설문지 제출 완료!'
+    const { result, error } = await safeRequest(submitAnswer(url, answers), {
+      successMessage: '설문지 제출 완료!',
+      onError: (error) => toast.error(error.msg)
     })
-
+    
     if(result) {
       set({answerBox: null})
       return true
