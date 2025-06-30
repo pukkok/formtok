@@ -8,7 +8,7 @@ const sidebarNavs = [
     children: [
       { text: '제작하기', icon: <EidtIcon />, path: '/my-form/manage' },
       { text: '결과확인', icon: <ResultIcon />, path: '/my-form/result' },
-      { text: '문항관리', icon: <QuestionListIcon />, path: '/my-form/questions' }
+      { text: '문항관리', icon: <QuestionListIcon />, path: '/my-form/question-bank' }
     ]
   },
   { text: '참여하기', icon: <FormListIcon />, path: '/participate' },
