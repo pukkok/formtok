@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormEditStore } from "@/stores/useFormEditStore"
-import { questionTypeList, questionTypeMap } from "./QuestionTypeList"
+import { questionTypeList, questionTypeMap } from "@/utils/questionTypeList"
 import Dropdown from "@/components/Dropdown"
 
 const QuestionTypeDropdown = ({ selectedQuestion, pi, qi }) => {
