@@ -28,16 +28,22 @@ const CheckBoxButton = ({ children, picks = [], onClick }) => {
       onClick={onClick}
       className="flex items-center gap-3 cursor-pointer text-base my-4 select-none"
     >
-      <div
-        className={`w-5 h-5 rounded-sm border-2 flex items-center justify-center transition-all ${
-          isChecked ? 'bg-point border-point' : 'border-gray-400'
-        }`}
-      >
-        {isChecked && <CheckIcon />}
-      </div>
+      <CustomCheckBox isChecked={isChecked}/>
       <span className="text-gray-800 dark:text-gray-200">{children}</span>
     </label>
   )
 }
 
-export {RadioButton, CheckBoxButton}
+const CustomCheckBox = ({isChecked=false}) => {
+  return (
+    <div
+      className={`w-5 h-5 rounded-sm border-2 flex items-center justify-center transition-all ${
+        isChecked ? 'bg-point border-point' : 'border-gray-400'
+      }`}
+    >
+      {isChecked && <CheckIcon />}
+    </div>
+  )
+}
+
+export {RadioButton, CheckBoxButton, CustomCheckBox}

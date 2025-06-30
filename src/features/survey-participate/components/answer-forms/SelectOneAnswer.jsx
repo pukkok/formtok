@@ -1,5 +1,5 @@
 import ExtraInput from "./ExtraInput"
-import { RadioButton } from "./MultipleButtons"
+import { RadioButton } from "@/components/MultipleButtons"
 import { useAnswerStore } from "@/stores/useAnswerStore"
 
 function SelectOneAnswer ({ pId, qId, answerBox, options, hasExtraOption }) {

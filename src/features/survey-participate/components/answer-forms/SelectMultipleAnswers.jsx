@@ -1,5 +1,5 @@
 import { useAnswerStore } from "@/stores/useAnswerStore"
-import { CheckBoxButton } from "./MultipleButtons"
+import { CheckBoxButton } from "@/components/MultipleButtons"
 import ExtraInput from "./ExtraInput"
 
 const SelectMultipleAnswers = ({ pId, qId, answerBox, options, hasExtraOption }) => {
