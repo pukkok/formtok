@@ -107,8 +107,8 @@ const SurveyParticipateSinglePage = () => {
       
     const success = await submitAnswerAction(id)
     if(success) {
-      moveLogs.current = [...moveLogs.current, currentPageIndex]
-      setCurrentPageIndex(pages[currentPageIndex].next || currentPageIndex+1)
+      moveLogs.current = [...moveLogs.current, currentPageIndex + 1]
+      setCurrentPageIndex(currentPageIndex+1)
     }
   }
 
