@@ -5,12 +5,13 @@ import QuestionCard from "./components/QuestionCard"
 import { useAnswerStore } from "@/stores/useAnswerStore"
 import SurveyPaginationButton from "./components/SurveyPaginationButton"
 import { toast } from "sonner"
-import { useParams } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import EndingCard from "./components/EndingCard"
 import SurveyFinishNavButton from "./components/SurveyFinishNavButton"
 
 const SurveyParticipateSinglePage = () => {
   const { id } = useParams()
+  const pathname = usePathname()
 
   const surveyForms = useParticipateStore(s => s.surveyForms)
   const { pages, listStyle, endingMent } = surveyForms
@@ -57,7 +58,7 @@ const SurveyParticipateSinglePage = () => {
       setAnswerBox(null)
       setCurrentPageIndex(0)
     }
-  }, [pages])
+  }, [pages, id])
 
   const moveLogs = useRef([0])
   const canMoveToNextPage = () => {
@@ -102,6 +103,12 @@ const SurveyParticipateSinglePage = () => {
   }
   
   const handleSubmitAnswer = async () => {
+    if(pathname.includes('preview')) {
+      moveLogs.current = [...moveLogs.current, currentPageIndex + 1]
+      setCurrentPageIndex(currentPageIndex+1)
+      return
+    }
+
     const essentialCheck = canMoveToNextPage()
     if(!essentialCheck) return toast.warning('필수 질문에 대한 답변을 입력해주세요.')
       
@@ -147,7 +154,10 @@ const SurveyParticipateSinglePage = () => {
       {currentPageIndex === pages.length && (
         <div className="p-4 max-w-3xl mx-auto">
           <EndingCard title={endingMent.title} description={endingMent.description}/>
-          <SurveyFinishNavButton />
+          <SurveyFinishNavButton 
+            path={pathname.includes('preview') ? `/my-form/edit/${id}` : '/participate' } 
+            msg={pathname.includes('preview') ? '미리보기 종료' : '다른설문 참여'}
+          />
         </div>
       )}      
     </div>

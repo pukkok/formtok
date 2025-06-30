@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation"
 import MoveToLoginPageModal from "./components/MoveToLoginPageModal"
 import ModalContainer from "@/components/Modal/ModalContainer"
 import { useAuthStore } from "@/stores/useAuthStore"
+import { useParticipateStore } from "@/stores/useParticipateStore"
 
 const FormEditHeader = () => {
     const { id } = useParams()
@@ -23,6 +24,12 @@ const FormEditHeader = () => {
       else await saveFormAction(url)
     }
 
+    const goToPreviewPage = () => {
+      const { pages, listStyle, endingMent } = useFormEditStore.getState()
+      useParticipateStore.getState().setSurveyForms({pages, listStyle, endingMent})
+      router.push(`/participate/${id}/preview`)
+    }
+
     return (
       <header className={`sticky top-0 w-full flex items-center h-15 px-5 z-300
       dark:bg-dark-deep bg-bright-a
@@ -35,7 +42,7 @@ const FormEditHeader = () => {
             onChange={e =>setTitle(e.target.value)} placeholder="제목없는 설문지" value={title}/>
           <button 
             className="dark:bg-dark-elevated bg-gray-300 ml-2.5 px-2.5 py-1.5 font-bold rounded-md cursor-pointer"
-            onClick={()=>router.push(`/participate/${id}/preview`)}>미리보기</button>
+            onClick={goToPreviewPage}>미리보기</button>
           <button 
             className="bg-point hover:bg-point-hover dark:hover:bg-dark-point-hover ml-2.5 px-2.5 py-1.5 font-bold text-light-w rounded-md cursor-pointer"
             onClick={() => authCheckAndSaveForm(id)}>저장</button>        
