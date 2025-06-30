@@ -3,7 +3,7 @@ import SearchFilter from "@/components/SearchFilter"
 import SearchForm from "@/components/SearchForm"
 import { PARTICIPATE_WORK_HOVER_MAP, PARTICIPATE_WORK_COLOR_MAP } from "@/utils/workColor"
 import { useParticipateStore } from "@/stores/useParticipateStore"
-import dayjs from "dayjs"
+import { filterForms } from '@/utils/participateFilter'
 
 const ParticipateHeader = () => {
 
@@ -23,55 +23,17 @@ const ParticipateHeader = () => {
   ]
 
   const search = (word) => {
-    const now = dayjs()
-    const filtered = allForms.filter(f => {
-      const matchesTitle = f.title.includes(word)
-      if (!matchesTitle) return false
-
-      const { isEnd, isUseStartPeriod, isNeedLogin, startDate, endDate } = f.options
-      const start = startDate ? dayjs(startDate) : null
-      const end = endDate ? dayjs(endDate) : null
-
-      const isFinished = isEnd || (end && end.isBefore(now))
-      const isActive = !isUseStartPeriod || (start?.isBefore(now) && (!end || end?.isAfter(now)))
-
-      switch (pick) {
-        case 'faq': return f.title === '문의하기'
-        case 'noLogin': return !isNeedLogin
-        case 'active': return !isFinished && isActive
-        case 'finish': return isFinished
-        default: return true
-      }
-    })
-
-    setSearchedForms(filtered)
+    const result = filterForms(allForms, {  keyword: word, filterType: pick })
+    setSearchedForms(result)
   }
-
 
   const filtering = (work) => {
     setPick(work)
-    setResetKey(key => key + 1)
+    setResetKey(k => k + 1)
 
-    if (work === 'all') return setSearchedForms(allForms)
-    if (work === 'faq') return setSearchedForms(allForms.filter(f => f.title === '문의하기'))
-    if (work === 'noLogin') return setSearchedForms(allForms.filter(f => !f.options.isNeedLogin))
-
-    const now = dayjs()
-    const filtered = allForms.filter(f => {
-      const { isEnd, isUseStartPeriod, startDate, endDate } = f.options
-      const start = startDate ? dayjs(startDate) : null
-      const end = endDate ? dayjs(endDate) : null
-
-      const isFinished = isEnd || (end && end.isBefore(now))
-      const isActive = !isUseStartPeriod || (start?.isBefore(now) && (!end || end?.isAfter(now)))
-
-      if (work === 'finish') return isFinished
-      if (work === 'active') return !isFinished && isActive
-
-      return false
-    })
-
-    setSearchedForms(filtered)
+    const result = filterForms(allForms, { keyword: '', filterType: work })
+    setSearchedForms(result)
+    return work
   }
 
   useEffect(() => {
@@ -82,8 +44,8 @@ const ParticipateHeader = () => {
     <header>
       <SearchForm search={search} resetKey={resetKey}/>
       <SearchFilter 
-      colorMap={PARTICIPATE_WORK_COLOR_MAP} hoverMap={PARTICIPATE_WORK_HOVER_MAP}
-      filters={filters} filtering={filtering} pick={pick}
+        colorMap={PARTICIPATE_WORK_COLOR_MAP} hoverMap={PARTICIPATE_WORK_HOVER_MAP}
+        filters={filters} filtering={filtering} pick={pick}
       />
     </header>
   )
