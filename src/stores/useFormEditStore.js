@@ -1,4 +1,5 @@
-import { getMyForm, saveForm, saveQuestion } from '@/apis/forms'
+import { getMyForm, saveForm } from '@/apis/forms'
+import { saveQuestion } from '@/apis/questions'
 import { randomKey } from '@/utils/generateKey'
 import { safeRequest } from '@/utils/safeRequest'
 import { toast } from 'sonner'
@@ -365,9 +366,7 @@ export const useFormEditStore = create((set, get) => ({
     const id = randomKey()
     const question = pages[pi].questions[qi]
 
-    const { q, d: description, type, options, hasExtraOption } = question
-
-    await safeRequest(saveQuestion(id, q, description, type, options, hasExtraOption), {
+    await safeRequest(saveQuestion({id, ...question}), {
       successMessage: '문항이 저장되었습니다.',
       onError: () => toast.error('문항 저장에 실패하였습니다.')
     })
