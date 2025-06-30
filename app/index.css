@@ -46,7 +46,10 @@
   --color-work-sky: #6B8ECA; /* 톤 다운된 스카이 */
   --color-work-yellow: #D4AF37; /* 머스타드/골드 느낌 */
   --color-work-green: #6ABE77; /* 부드러운 그린 */
-  --color-work-red: #f4978e; /* 파스텔 레드 
+  --color-work-red: #f4978e; /* 파스텔 레드 */
+  --color-work-gray: #90A4AE; /* 서술형 등 차분한 색 */
+  --color-work-orange: #FF7043; /* 점수형용 생동감 있는 색 */
+
 
 
   /* --color-work-red: #f9a8a8; */
