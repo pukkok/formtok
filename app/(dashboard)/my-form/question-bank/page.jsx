@@ -1,8 +1,14 @@
+'use client'
+
+import QuestionBankTemplateBox from "@/features/question-bank/QuestionBankTemplateBox"
+import QuestionBankHeader from "@/features/question-bank/QuestionBankHeader"
+
 const QuestionsPage = () => {
 
   return (
     <div>
-      질문 페이지
+      <QuestionBankHeader />
+      <QuestionBankTemplateBox />
     </div>
   )
 }
