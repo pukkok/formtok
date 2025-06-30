@@ -199,6 +199,4 @@ function LineIcon() {
 }
 
 
-export { 
-    RowColIcon, 
-    PieIcon, BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon }
+export { RowColIcon, PieIcon, BarIcon, BarIconHorizontal, DoughnutIcon, LineIcon }

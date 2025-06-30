@@ -1,7 +1,7 @@
 // AddDimensionButton.js
 import React from 'react'
 import { useFormEditStore } from '@/stores/useFormEditStore'
-import { RowColIcon } from '@/A-Components/Icons/CustomIcons'
+import { RowColIcon } from '@/components/icons/CustomChartIcons'
 
 const AddRowColButton = ({ type, pi, qi, buttonText }) => {
   const addTableRowOrCol = useFormEditStore(s => s.addTableRowOrCol)

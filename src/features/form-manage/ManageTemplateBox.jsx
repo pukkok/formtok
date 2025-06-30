@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from "react"
-import CardWrapper from "../../components/CardWrapper"
+import CardWrapper from "@/components/CardWrapper"
 import CreateCard from "./components/CreateCard"
 import { useFormManageStore } from "@/stores/useFormManageStore"
 import { CopyIcon, DeleteIcon } from "@/A-Components/Icons/Icons"

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import ImgBox from "../../A-Components/ImgBox"
+import ImgBox from "@/components/ImgBox"
 import darkScreen from '@/assets/dark-screen.jpg'
 import whiteScreen from '@/assets/white-screen.jpg'
 
