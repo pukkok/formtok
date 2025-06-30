@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 import { useTokenFetch } from "@/utils/useTokenFetch"
 import CreateFormModal from "@/features/form-manage/CreateFormModal"
 import ModalContainer from "@/components/Modal/ModalContainer"
+import { getManageWork } from "@/utils/manageFilter"
 
 const ManageTemplateBox = () => {
   const createFormModalRef = useRef(null)
@@ -52,7 +53,7 @@ const ManageTemplateBox = () => {
               onClick={() => goToEdit({title, url, pages, endingMent, listStyle, options})}
               >
                 <div className="flex justify-end items-start mb-2.5 gap-2.5">
-                  <Light options={options}/>
+                  <Light work={getManageWork(form.options)} />
 
                   <button className="hover:text-point cursor-pointer"
                     onClick={(e) => {
