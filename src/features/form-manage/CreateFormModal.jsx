@@ -6,6 +6,7 @@ import { useFormEditStore } from "@/stores/useFormEditStore"
 import { randomUrl } from "@/utils/generateKey"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { createPage, initialSurveyOptions, initialEndingMent } from "@/stores/helpers/formFactory"
 
 const CreateFormModal = ({ onClose }) => {
   const router = useRouter()
@@ -15,19 +16,16 @@ const CreateFormModal = ({ onClose }) => {
 
   const setIsLoaded = useFormEditStore(s => s.setIsLoaded)
   const setUrl = useFormEditStore(s => s.setUrl)
-  const createPage = useFormEditStore(s => s.createPage)
-  const createSurveyOptions = useFormEditStore(s => s.createSurveyOptions)
-  const createEndingMent = useFormEditStore(s => s.createEndingMent)
 
   const create = (e) => {
     e.preventDefault()
 
     const url = randomUrl()
     setUrl(url)
-    const pages = createPage()
-    const surveyOptions = createSurveyOptions()
+    const pages = [createPage()]
+    const surveyOptions = initialSurveyOptions()
     const listStyle = null
-    const endingMent = createEndingMent()
+    const endingMent = initialEndingMent()
     useFormEditStore.getState().settingForm({title, pages, surveyOptions, listStyle, endingMent})
 
     setIsLoaded(true) // INFO: 새로 만들었기 때문에 불러온 것으로 처리
