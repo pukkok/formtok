@@ -17,7 +17,7 @@ const SearchForm = ({placeholder='검색하기', search, resetKey=0}) => {
     }, [resetKey])
 
     return (
-        <form className={`rounded-[22px] min-w-xs max-w-sm h-12.5 p-1.5 flex
+        <form className={`rounded-[22px] w-sm h-12.5 p-1.5 flex
         dark:bg-dark-hover bg-[#ddd]`}>
           <input 
             className="pl-2.5 h-full flex-1 outline-none"
