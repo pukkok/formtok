@@ -6,6 +6,7 @@ import { create } from 'zustand'
 import { updatePageField, updateQuestionField, updateOptionField, updateTableColField, updateTableRowField } from './helpers/updateHelper'
 import { normalizePages, normalizeEndingMent, normalizeSurveyOptions } from './helpers/normalizeHelper'
 import _ from 'lodash'
+import { createPage, createQuestion, initialSurveyOptions, initialEndingMent } from './helpers/formFactory'
 
 export const useFormEditStore = create((set, get) => ({
   isLoaded: false,
@@ -20,27 +21,15 @@ export const useFormEditStore = create((set, get) => ({
   pages: [],
   setPages: (pages) => set({pages}),
   
-  endingMent: { title: '', description: '' },
+  endingMent: initialEndingMent(),
   setEndingMent: (endingMent) => set({ endingMent }),
 
   listStyle : null,
   setListStyle: (listStyle) => set({listStyle}),
 
-  surveyOptions: { //INFO: 부가 옵션들
-    isOpen: false,
-    isEnd: false,
-    isPublic: false,
-    isUseStartPeriod : false,
-    startDate: '',
-    isUseEndPeriod : false,
-    endDate: '',
-    isNeedLogin : false,
-    isUseMaximum : false,
-    maximumCount : null,
-    isAllowConfirmation : false,
-    isAllowModify: false,
-    isRevealTheResult: false,
-  },
+  // INFO: ----------- 설문지 옵션 관리 -----------
+  surveyOptions: initialSurveyOptions(),
+
   updateSurveyOptions: (updated) => {
     const surveyOptions = get().surveyOptions
     set({surveyOptions : { ...surveyOptions, ...updated }})
@@ -48,11 +37,11 @@ export const useFormEditStore = create((set, get) => ({
 
   // INFO: ------------ Pages 관리 ---------------
   addPage: (pi, isCopy=false) => {
-    const id = 'P' + randomKey()
     const { pages } = get()
-
+    
     let updatedPage = {}
     if(isCopy) {
+      const id = 'P' + randomKey()
       updatedPage = {
         ...pages[pi], id, 
         title: pages[pi].title ? pages[pi].title+'(사본)' : '',
@@ -62,9 +51,7 @@ export const useFormEditStore = create((set, get) => ({
         })
       }
     } else {
-      updatedPage = {
-        id, title: '', description: '', questions: [], next: null
-      }
+      updatedPage = createPage()
     }    
 
     const updatedPages = [
@@ -79,8 +66,7 @@ export const useFormEditStore = create((set, get) => ({
   updatePage: (pi, updateData) => {
     const pages = get().pages
     const updatedPages = updatePageField(pages, pi, (page) => ({
-      ...page,
-      ...updateData
+      ...page, ...updateData
     }))
     set({ pages: updatedPages })
   },
@@ -93,7 +79,7 @@ export const useFormEditStore = create((set, get) => ({
 
   // INFO : -------------- Question 관리 -----------------
   addQuestion: (pi, qi, isCopy=false) => {
-    const { pages, createQuestion } = get()
+    const { pages } = get()
     const page = pages[pi]
 
     let updatedQuestion = {}
@@ -144,7 +130,7 @@ export const useFormEditStore = create((set, get) => ({
     set({ pages: updatedPages})
   },
 
-  // INFO: --------------- 옵션 관리 -----------------
+  // INFO: --------------- 문항 옵션 관리 -----------------
   addOption: (pi, qi) => {
     const id = 'O' + randomKey()
     const pages = get().pages
@@ -173,7 +159,7 @@ export const useFormEditStore = create((set, get) => ({
     set({ pages: updatedPages })
   },
 
-  // INFO: ------------ 테이블(문한) 관리 ---------------
+  // INFO: ------------ 테이블(문항) 관리 ---------------
   initialTable: (pi, qi) => {
     const pages = get().pages
     const updatedPages = updateQuestionField(pages, pi, qi, (question) => ({
@@ -313,58 +299,6 @@ export const useFormEditStore = create((set, get) => ({
     })
   },
 
-  createUrl: () => {
-    set({ url : randomUrl() })
-  },
-
-  createPage: () => (
-    [{ // INFO: 초기 모델링
-      id: 'P'+randomKey(), 
-      title: '', 
-      description : '',
-      questions: [ get().createQuestion() ],
-      next : null
-    }]
-  ),
-
-  createQuestion: () => (
-    {
-      id: 'Q'+randomKey(), 
-      type: '객관식', q: '', d: '', 
-      options: [{id : 'O'+randomKey(), answer: ''}],
-      hasExtraOption: false,
-      scoreRanges : {min:1, max:5, minText: '', maxText: ''},
-      tableRows: [],
-      tableCols: [],
-      hasDescription : false,
-      period: {start: '', end: null},
-      setPeriod : false, // 날짜 타입일때 사용
-      essential : false, // 필수 질문
-      setNextToPage : false, // 답변별 페이지 이동
-      next : null // 다음 페이지 설정
-    }
-  ),
-
-  createSurveyOptions: () => (
-    {
-      isOpen: false,
-      isEnd: false,
-      isPublic: false,
-      isUseStartPeriod : false,
-      startDate: '',
-      isUseEndPeriod : false,
-      endDate: '',
-      isNeedLogin : false,
-      isUseMaximum : false,
-      maximumCount : null,
-      isAllowConfirmation : false,
-      isAllowModify: false,
-      isRevealTheResult: false,
-    }
-  ),
-
-  createEndingMent: () => ({endingMent: { title: '',  description: '' }}),
-
   // INFO: ---------- 오리진 체크 ----------- 
   // TODO : 변한 값이 있다면 탭을 벗어날 때 경고한다
   originData: null,
@@ -375,14 +309,11 @@ export const useFormEditStore = create((set, get) => ({
   },
   isModified: () => {// INFO: 가장 많이 변할것 같은 데이터 우선순위로 비교
     const {pages, title, endingMent, listStyle, surveyOptions, originData} = get()
-    console.log('비교 시작')
     if(originData === null) return false // 들어가기 전
     // 변경된 경우 바로 true 리턴
-    console.log('통과1')
-    console.log(normalizePages(pages))
-    console.log(normalizePages(originData.pages))
+    // console.log('통과1')
     if (!_.isEqual(normalizePages(pages), normalizePages(originData.pages))) return true // pages 비교
-    console.log('통과2')
+    // console.log('통과2')
     if (!_.isEqual(title, originData.title)) return true // title 비교
     if (!_.isEqual(normalizeEndingMent(endingMent), normalizeEndingMent(originData.endingMent))) return true // endingMent 비교
     if (!_.isEqual(listStyle, originData.listStyle)) return true // listStyle 비교
@@ -412,6 +343,7 @@ export const useFormEditStore = create((set, get) => ({
 
   saveFormAction: async (url) => {
     const { title, pages, endingMent, listStyle, surveyOptions } = get()
+    
     const updateOption = {
       ...surveyOptions,
       startDate : surveyOptions.isUseStartPeriod ? surveyOptions.startDate : '',   
@@ -439,6 +371,6 @@ export const useFormEditStore = create((set, get) => ({
       successMessage: '문항이 저장되었습니다.',
       onError: () => toast.error('문항 저장에 실패하였습니다.')
     })
-  }
+  },
 
 }))
