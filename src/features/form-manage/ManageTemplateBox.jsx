@@ -20,13 +20,13 @@ const ManageTemplateBox = () => {
   const router = useRouter()
 
   const searchedForms = useFormManageStore(s => s.searchedForms)
-  const getMyFormListAction = useFormManageStore(s => s.getMyFormListAction)
+  const getAllMyFormsAction = useFormManageStore(s => s.getAllMyFormsAction)
   const copyFormAction = useFormManageStore(s => s.copyFormAction)
   const deleteFormAction = useFormManageStore(s => s.deleteFormAction)
   const settingForm = useFormEditStore(s => s.settingForm)
   const setIsLoaded = useFormEditStore(s => s.setIsLoaded)
 
-  useTokenFetch(getMyFormListAction) // INFO: API 불러오기
+  useTokenFetch(getAllMyFormsAction) // INFO: API 불러오기
 
   const goToEdit = ({title, url, pages, endingMent, listStyle, options}) => {
     settingForm({title, pages, endingMent, listStyle, surveyOptions: options})
