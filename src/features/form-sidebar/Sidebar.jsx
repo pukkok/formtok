@@ -7,9 +7,10 @@ import ModalContainer from "@/components/Modal/ModalContainer"
 import UnSavedAlertModal from "./compoents/UnSavedAlertModal"
 import { useScreenStore } from "@/stores/useScreenStore"
 import { useEffect } from "react"
+import { usePathname } from "next/navigation"
 
 const Sidebar = () => {
-
+  const pathname = usePathname()
   const { modalRef, handleRouteChange, confirmNavigation } = useRouteGuard()
 
   const setActiveTab = useScreenStore(s => s.setActiveTab) 
@@ -25,6 +26,9 @@ const Sidebar = () => {
     return () => modalRef.current?.setEscapeEnabled(true)
   }, [])
 
+  useEffect(() => {
+    setActiveTab(pathname)
+  },[])
 
   return (
     <SidebarWrapper>
