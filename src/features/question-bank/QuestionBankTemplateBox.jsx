@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { questionTypeList } from "../../utils/questionTypeList"
 import { getQuestionGroup } from "@/utils/questionBankFilter"
 import { QUESTION_BANK_TEXT_COLOR_MAP } from "@/utils/workColor"
@@ -7,10 +7,11 @@ import { useAuthStore } from "@/stores/useAuthStore"
 import { CustomCheckBox } from "../../components/MultipleButtons"
 import ModalContainer from "@/components/Modal/ModalContainer"
 import QuestionPreviewModal from "./QuestionPreviewModal"
+import { useTokenFetch } from "@/utils/useTokenFetch"
 
 const QuestionBankTemplateBox = () => {
 	const modalRef = useRef()
-	const [readMore, setReadMore] = useState()
+	const [previewInfo, setPreviewInfo] = useState()
 	const token = useAuthStore(s => s.token)
 	const searchedQuestions = useQuestionBankStore(s => s.searchedQuestions)
 	const loadQuestions = useQuestionBankStore(s=> s.loadQuestions)
@@ -18,12 +19,10 @@ const QuestionBankTemplateBox = () => {
 	const selectedQuestions = useQuestionBankStore(s => s.selectedQuestions)
 	const toggleSelectedQuestions = useQuestionBankStore(s => s.toggleSelectedQuestions)
 
-	useEffect(() => {
-		loadQuestions()
-	}, [loadQuestions])
+	useTokenFetch(loadQuestions)
 
-	const readMoreView = (faq, icon) => {
-		setReadMore({...faq, icon})
+	const previewModalOpen = (question) => {
+		setPreviewInfo({...question})
 		modalRef.current?.open()
 	}
 
@@ -41,7 +40,7 @@ const QuestionBankTemplateBox = () => {
 							<button onClick={()=>toggleSelectedQuestions(id)} className="cursor-pointer">
 								<CustomCheckBox isChecked={(selectedQuestions && selectedQuestions.includes(id))}/>
 							</button>
-							<p className="border px-1 pb-0.5 pt-1 text-xs dark:border-[#446] border-gray-400 text-gray-400 rounded-sm">{type}</p>
+							<p className="border px-1 pb-0.5 pt-1 text-xs dark:border-[#446] dark:text-gray-400 border-gray-400 text-gray-600 rounded-sm">{type}</p>
 						</div>
 
 						<p className={`flex justify-center mb-2 ${QUESTION_BANK_TEXT_COLOR_MAP[getQuestionGroup(type)]}`}>
@@ -50,7 +49,10 @@ const QuestionBankTemplateBox = () => {
 
 						<h4 className="text-lg text-center truncate">Q. {q}</h4>
 						
-						<div className="my-3 py-2 pl-4 text-left h-27 overflow-scroll bg-dark-base border-dark-line-hover border rounded-lg">
+						<div className="my-3 py-2 pl-4 text-left h-27 overflow-scroll 
+						dark:bg-dark-base dark:border-dark-line-hover 
+						bg-light-w border-light-w
+						border rounded-lg">
 							{options.map((option) => {
 								return <p className="not-first:pt-1" key={option.id}>{option.answer}</p>
 							})}
@@ -58,15 +60,15 @@ const QuestionBankTemplateBox = () => {
 
 						<div className="flex justify-center">
 							<button 
-								className="dark:bg-dark-elevated px-3 py-2 rounded-xl w-fit hover:bg-point cursor-pointer" 
-								onClick={() => readMoreView(question, form.icon)}>자세히 보기</button>
+								className="dark:bg-dark-elevated bg-gray-300 px-3 py-2 rounded-md w-fit hover:bg-point cursor-pointer hover:text-light-w" 
+								onClick={() => previewModalOpen(question)}>미리보기</button>
 						</div>
 					</div>
 				)
-			}) : token ? <p>검색 결과가 없습니다.</p> : <p>해당 탭은 로그인 후 사용 가능합니다.</p>}
+			}) : token ? <p className="pl-2">검색 결과가 없습니다.</p> : <p className="pl-2">해당 탭은 로그인 후 사용 가능합니다.</p>}
 
 			<ModalContainer ref={modalRef}>
-				<QuestionPreviewModal readMore={readMore}/>
+				<QuestionPreviewModal info={previewInfo}/>
 			</ModalContainer>
 		</div>
 	)

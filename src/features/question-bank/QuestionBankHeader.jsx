@@ -3,15 +3,23 @@ import SearchForm from "@/components/SearchForm"
 import { useQuestionBankStore } from "@/stores/useQuestionBankStore"
 import { filterQuestionBank } from "@/utils/questionBankFilter"
 import { QUESTION_BANK_COLOR_MAP, QUESTION_BANK_HOVER_COLOR_MAP } from "@/utils/workColor"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import HoldToDeleteButton from "@/components/DeleteButton"
+import ModalContainer from "@/components/Modal/ModalContainer"
+import QuestionMultiPreviewModal from "./QuestionPreviewModal/QuestionMultiPreviewModal"
+import { toast } from "sonner"
 
 const QuestionBankHeader = () => {
+  const modalRef = useRef(null)
 
   const [resetKey, setResetKey] = useState(0)
   const [pick, setPick] = useState('all')
 
   const questions = useQuestionBankStore(s => s.questions)
+  const selectedQuestions = useQuestionBankStore(s => s.selectedQuestions)
   const setSearchedQuestions = useQuestionBankStore(s => s.setSearchedQuestions)
+  const deleteManyQuestionsAction = useQuestionBankStore(s => s.deleteManyQuestionsAction)
+  const resetSelectedQuestions = useQuestionBankStore(s => s.resetSelectedQuestions)
 
   const filters = [
     { work: 'all', text: '전체'},
@@ -33,13 +41,27 @@ const QuestionBankHeader = () => {
     setSearchedQuestions(filterQuestionBank(questions, work))
   }
 
+  const previewModalOpen = () => {
+    if(selectedQuestions.length === 0) return toast.error('선택된 문항이 없습니다.')
+    modalRef.current?.open()
+  }
+
+  useEffect(() => { // 나갈때 리셋 시키기
+    return () => resetSelectedQuestions()
+  }, [])
+
   return (
     <header>
       <div className="flex items-center">
         <SearchForm search={search} resetKey={resetKey}/>
         <div className="ml-auto">
-          <button className="dark:bg-dark-elevated bg-gray-300 ml-2.5 px-2.5 py-1.5 font-bold rounded-md cursor-pointer">만들기</button>
-          <button className="bg-red-700 text-light-w ml-2.5 px-2.5 py-1.5 font-bold rounded-md cursor-pointer">삭제</button>
+          <button 
+            onClick={previewModalOpen}
+            className="dark:bg-dark-elevated bg-gray-300 mr-2.5 px-3 py-2 rounded-md cursor-pointer"
+          >선택 보기</button>
+          <HoldToDeleteButton 
+            onDelete={deleteManyQuestionsAction}
+            >선택 삭제</HoldToDeleteButton>
         </div>
       </div>
       
@@ -47,6 +69,10 @@ const QuestionBankHeader = () => {
         colorMap={QUESTION_BANK_COLOR_MAP} hoverMap={QUESTION_BANK_HOVER_COLOR_MAP}
         filters={filters} filtering={filtering} pick={pick}
       />
+
+      <ModalContainer ref={modalRef}>
+        <QuestionMultiPreviewModal questions={questions} selectedIds={selectedQuestions}/>
+      </ModalContainer>
     </header>
   )
 }
