@@ -365,8 +365,8 @@ export const useFormEditStore = create((set, get) => ({
     const pages = get().pages
     const id = randomKey()
     const question = pages[pi].questions[qi]
-
-    await safeRequest(saveQuestion({id, ...question}), {
+    
+    await safeRequest(saveQuestion({...question, id}), {
       successMessage: '문항이 저장되었습니다.',
       onError: () => toast.error('문항 저장에 실패하였습니다.')
     })
