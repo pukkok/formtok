@@ -1,9 +1,18 @@
-const ResultPage = () => {
+'use client'
+
+import FormResultManageHeader from "@/features/form-result-manage/FormResultManageHeader"
+import FormResultManageTableTemplate from "@/features/form-result-manage/FormResultManageTableTemplate"
+
+
+const ResultMangePage = () => {
+
+
   return (
     <div>
-      결과 페이지
+      <FormResultManageHeader />
+      <FormResultManageTableTemplate />
     </div>
   )
 }
 
-export default ResultPage
+export default ResultMangePage
