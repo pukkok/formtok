@@ -1,3 +1,4 @@
+import { getResultAnswers } from "@/apis/answers"
 import { copyForm, deleteForm, getAllMyForms } from "@/apis/forms"
 import { safeRequest } from "@/utils/safeRequest"
 import { create } from "zustand"
@@ -8,10 +9,10 @@ export const useFormManageStore = create((set, get) => ({
   isFetched: false,
   setSearchedForms: (arr) => set({ searchedForms: arr }),
 
-  getAllMyFormsAction : async (force=false) => {
+  getAllMyFormsAction : async (force=false, filter={}) => {
     if (!force && get().isFetched) return
 
-    const { result } = await safeRequest(getAllMyForms(), {
+    const { result } = await safeRequest(getAllMyForms(filter), {
       loadingMessage: '설문지 불러오는 중...'
     })
     if(result) {
@@ -29,7 +30,7 @@ export const useFormManageStore = create((set, get) => ({
     })
 
     if(result) {
-      await get().getMyFormListAction(true)
+      await get().getAllMyFormsAction(true)
       return true
     }
   },
@@ -41,8 +42,26 @@ export const useFormManageStore = create((set, get) => ({
     })
 
     if(result) {
-      await get().getMyFormListAction(true)
+      await get().getAllMyFormsAction(true)
       return true
     }
+  },
+
+  // INFO : --------------- result 단독 -----------------
+
+  resultAnswers: [],
+  resultPage: [],
+  setResultPage: (obj) => set({resultPage : obj}),
+
+  getResultAnswersAction: async (url) => {
+    const { result } = await safeRequest(getResultAnswers(url), {
+      // successMessage: '설문 결과 답변 불러오기'
+    }) 
+
+    if(result) {
+      set({ resultAnswers: result.list })
+    }
   }
+
+
 }))
