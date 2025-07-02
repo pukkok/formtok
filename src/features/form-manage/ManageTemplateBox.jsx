@@ -4,7 +4,6 @@ import { useRef } from "react"
 import CardWrapper from "@/components/CardWrapper"
 import CreateCard from "./components/CreateCard"
 import { useFormManageStore } from "@/stores/useFormManageStore"
-import { CopyIcon, DeleteIcon } from "@/A-Components/Icons/Icons"
 import dayjs from "dayjs"
 import Light from "./components/Light"
 import { useFormEditStore } from "@/stores/useFormEditStore"
@@ -13,6 +12,8 @@ import { useTokenFetch } from "@/utils/useTokenFetch"
 import CreateFormModal from "@/features/form-manage/CreateFormModal"
 import ModalContainer from "@/components/Modal/ModalContainer"
 import { getManageWork } from "@/utils/manageFilter"
+import { LuCopyPlus } from "react-icons/lu"
+import { CgRemoveR } from "react-icons/cg"
 
 const ManageTemplateBox = () => {
   const createFormModalRef = useRef(null)
@@ -61,7 +62,7 @@ const ManageTemplateBox = () => {
                       copyFormAction(url)
                     }}  
                   >
-                    <CopyIcon />
+                    <LuCopyPlus fontSize={22}/>
                   </button>
                   <button className="hover:text-point cursor-pointer"
                     onClick={(e) => {
@@ -69,7 +70,7 @@ const ManageTemplateBox = () => {
                       deleteFormAction(url)
                     }}  
                   >
-                    <DeleteIcon />
+                    <CgRemoveR fontSize={22}/>
                   </button>
                 </div>
 

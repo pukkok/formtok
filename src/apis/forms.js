@@ -6,8 +6,8 @@ export const getMyForm = async (url) => {
   return data
 }
 
-export const getAllMyForms = async () => {
-  const { data } = await authAxios.post('/api/form/my-form/load')
+export const getAllMyForms = async (filter = {}) => {
+  const { data } = await authAxios.post('/api/form/my-form/load', { filter })
   return data
 }
 

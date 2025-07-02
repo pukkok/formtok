@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { SearchIcon } from '@/A-Components/Icons/Icons'
+import { FaSearch } from "react-icons/fa"
 
 /** handleClick의 첫번째 인자로 input의 value가 전달됩니다. */
 const SearchForm = ({placeholder='검색하기', search, resetKey=0}) => {
@@ -26,7 +26,7 @@ const SearchForm = ({placeholder='검색하기', search, resetKey=0}) => {
           <button 
             className="ml-auto flex items-center justify-center w-10 h-10 rounded-full text-light-w bg-point" 
             onClick={(e) => searchAction(e, searchWord)}>
-              <SearchIcon />
+              <FaSearch />
           </button>
         </form>
     )

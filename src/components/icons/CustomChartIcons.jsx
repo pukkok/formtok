@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function RowColIcon ({width= 16, height=14, rowOrCol = 'row'}) {
+const RowColIcon = ({width= 16, height=14, rowOrCol = 'row'}) => {
     const color = '#af7eff'
     const canvasRef = useRef(null)
 
@@ -57,7 +57,7 @@ function RowColIcon ({width= 16, height=14, rowOrCol = 'row'}) {
     return <canvas ref={canvasRef}></canvas>
 }
 
-function PieIcon () {
+const PieIcon = () => {
     const canvasRef = useRef(null)
 
     useEffect(() => {
@@ -90,7 +90,7 @@ function PieIcon () {
     return <canvas ref={canvasRef} width={24} height={24} />
 }
 
-function BarIcon () {
+const BarIcon = () => {
     const canvasRef = useRef(null)
 
     useEffect(() => {
@@ -109,7 +109,7 @@ function BarIcon () {
     return <canvas ref={canvasRef} width={24} height={24} />
 }
 
-function BarIconHorizontal() {
+const BarIconHorizontal = () => {
     const canvasRef = useRef(null)
 
     useEffect(() => {
@@ -128,7 +128,7 @@ function BarIconHorizontal() {
     return <canvas ref={canvasRef} width={24} height={24} />
 }
 
-function DoughnutIcon () {
+const DoughnutIcon = () => {
     const canvasRef = useRef(null)
 
     useEffect(() => {
@@ -159,7 +159,7 @@ function DoughnutIcon () {
     return <canvas ref={canvasRef} width={24} height={24} />
 }
 
-function LineIcon() {
+const LineIcon = () => {
     const canvasRef = useRef(null)
 
     useEffect(() => {
