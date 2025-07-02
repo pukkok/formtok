@@ -16,7 +16,8 @@ const DashboardLayout = ({children}) => {
 
   const noNeedPadding = 
     pathname.includes('/edit') || 
-    (pathname !== '/participate' && pathname.includes('/participate'))
+    (pathname !== '/participate' && pathname.includes('/participate')) ||
+    (pathname !== '/my-form/result' && pathname.includes('/result'))
 
   return (
     <main className="flex">
