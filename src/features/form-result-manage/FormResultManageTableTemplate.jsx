@@ -16,10 +16,9 @@ const FormResultManageTableTemplate = () => {
 
   const getResultAnswersAction = useFormManageStore(s => s.getResultAnswersAction)
 
-  const resultOpen = async (pages, url) => {
-    useFormManageStore.getState().setResultPage(...pages)
-    await getResultAnswersAction(url)
-    router.push(`/my-form/result/${url}`)
+  const resultOpen = async (title, pages, url) => {
+    await getResultAnswersAction(url, title, pages)
+    router.push(`/my-form/result/detail`)
   }
 
   return (
@@ -40,7 +39,7 @@ const FormResultManageTableTemplate = () => {
         searchedForms.map(form => {
           const { title, url, options, numberOfResponses, pages } = form
           const { isOpen, isEnd, isPublic, isNeedLogin, startDate, endDate, maximumCount } = options
-          console.log(isOpen)
+          
           const start = startDate ? dayjs(startDate).format('YYYY-MM-DD') : '무제한'
           const end = endDate ? dayjs(endDate).format('YYYY-MM-DD') : '-'
 
@@ -49,7 +48,7 @@ const FormResultManageTableTemplate = () => {
               key={url}
               className="grid [grid-template-columns:minmax(160px,1.5fr)_repeat(6,1fr)] gap-2 px-4 py-4 mt-3 rounded-lg shadow-sm cursor-pointer text-center
                         bg-white hover:bg-gray-50 dark:bg-dark-base dark:hover:bg-dark-hover transition"
-              onClick={() => resultOpen(pages, url)}
+              onClick={() => resultOpen(title, pages, url)}
             >
               <p className="text-left">{title}</p>
               <p className={`${numberOfResponses.length === maximumCount ? 'text-work-red' : ''} flex justify-center`}>
