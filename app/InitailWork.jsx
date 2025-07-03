@@ -16,8 +16,10 @@ const InitialWork = ({ children }) => {
   
   useEffect(() => {
     // 자주 사용하는 경로 미리 프리페치
-    router.prefetch('/my-form/manage')
-    router.prefetch('/login')
+    router.refresh()
+    router.push('/my-form/manage')
+    router.push('/login')
+    router.push('/')
   }, [])
 
   if (!isHydrated) return null // 아직 초기화 안 끝났으면 아무것도 렌더 안함
