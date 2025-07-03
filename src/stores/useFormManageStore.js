@@ -48,18 +48,26 @@ export const useFormManageStore = create((set, get) => ({
   },
 
   // INFO : --------------- result 단독 -----------------
-
+  resultActiveTab: '',
+  resultTitle: [],
   resultAnswers: [],
-  resultPage: [],
-  setResultPage: (obj) => set({resultPage : obj}),
+  resultPages: [],
 
-  getResultAnswersAction: async (url) => {
+  getResultAnswersAction: async (url, title, pages) => {
+    const currentTab = get().resultActiveTab
+    if (currentTab === url) return // 이미 열려 있는 탭이면 fetch 생략
+
     const { result } = await safeRequest(getResultAnswers(url), {
       // successMessage: '설문 결과 답변 불러오기'
     }) 
 
     if(result) {
-      set({ resultAnswers: result.list })
+      set({ 
+        resultAnswers: result.list,
+        resultTitle: title,
+        resultPages: pages,
+        resultActiveTab: url
+       })
     }
   }
 
