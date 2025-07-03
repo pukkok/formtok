@@ -6,7 +6,6 @@ import FormResultManageTableTemplate from "@/features/form-result-manage/FormRes
 
 const ResultMangePage = () => {
 
-
   return (
     <div>
       <FormResultManageHeader />
