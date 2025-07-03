@@ -13,7 +13,7 @@ const ParticipateTemplateBox = () => {
   const router = useRouter()
   const searchedForms = useParticipateStore(s => s.searchedForms)
 
-  const linkOpen = (e, url) => {
+  const linkCopy = (e, url) => {
     e.stopPropagation()
     navigator.clipboard.writeText(`${origin}/participate/${url}`)
     toast.success('링크가 복사되었습니다.')
@@ -69,7 +69,7 @@ const ParticipateTemplateBox = () => {
               >
                 <div className="flex mb-2.5">
                   <Lights works={getParticipateWorks(form)}/>
-                  <button className="flex items-center mb-3 ml-auto hover:text-point cursor-pointer" onClick={e => linkOpen(e, url)}><FaLink /></button>
+                  <button className="flex items-center mb-3 ml-auto hover:text-point cursor-pointer" onClick={e => linkCopy(e, url)}><FaLink /></button>
                 </div>
                 <h5 className="mb-2.5 text-lg line-clamp-2">{title}</h5>
                 <div className="mt-auto text-sm space-y-1">

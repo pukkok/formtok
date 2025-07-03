@@ -1,7 +1,7 @@
 const SettingPage = () => {
 
   return (
-    <div>세팅 페이지</div>
+    <div>준비 중입니다.</div>
   )
 }
 

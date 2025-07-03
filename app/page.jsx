@@ -1,3 +1,5 @@
+'use client'
+
 import CTA_Section from "@/features/main/CTA_Section"
 import DetailSection from "@/features/main/DetailSection"
 import FeatureSection from "@/features/main/FeatureSection"

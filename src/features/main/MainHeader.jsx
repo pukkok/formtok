@@ -1,13 +1,12 @@
 import NavigateButton from "@/components/NavigateButton"
 import FormTokLogo from "@/components/FormTokLogo"
 import PageSwitchButton from "@/components/page-switch/PageSwitchButton"
+import { useAuthStore } from "@/stores/useAuthStore"
 
 const MainHeader = () => {
 
-  // const buttons = [
-  //   {to : '/form-list', title: '문의하기', wrap : <PageSwitchButton />},
-
-  // ]
+  const userInfo = useAuthStore(s => s.userInfo)
+  const logoutAction = useAuthStore(s => s.logoutAction)
 
   return (
     <header className={`w-full px-0 py-2.5 
@@ -25,8 +24,29 @@ const MainHeader = () => {
           <h3 className="text-2xl">폼톡</h3>
         </NavigateButton>
         <ul className="ml-auto flex items-center gap-4">
-          <li className="text-[17px] font-bold"><PageSwitchButton>문의하기</PageSwitchButton></li>
           <li className="text-[17px] font-bold">
+            <PageSwitchButton to={'/participate?query=qZyT6oNPwY4'}>
+              문의하기
+            </PageSwitchButton>
+          </li>
+          <li className="text-[17px] font-bold">
+            {userInfo ? 
+            <button 
+              onClick={logoutAction}
+              className={`
+              block
+              rounded-[50px] py-2 px-4 box-border
+              bg-gradient-to-r from-[#f06292] from-0% via-[#7E37ED] via-50% to-[#f06292]
+              bg-size-[200%_100%]
+              bg-position-[0%_0%]
+              shadow-[0px_4px_8px_rgba(0,0,0,0.2),0px_6px_20px_rgba(0,0,0,0.1)]
+              transition-[background-position] duration-400 ease-in-out
+              hover:bg-position-[100%_0%] 
+              active:scale-[0.98] active:shadow-[0px_2px_4px_rgba(0,0,0,0.2),0px_4px_10px_rgba(0,0,0,0.1)]
+              `}>
+              로그아웃
+            </button> :
+
             <PageSwitchButton 
               to={'/login'}
               className={`
@@ -41,7 +61,7 @@ const MainHeader = () => {
               active:scale-[0.98] active:shadow-[0px_2px_4px_rgba(0,0,0,0.2),0px_4px_10px_rgba(0,0,0,0.1)]
               `}>
               로그인
-            </PageSwitchButton>
+            </PageSwitchButton> }
           </li>
         </ul>
       </nav>

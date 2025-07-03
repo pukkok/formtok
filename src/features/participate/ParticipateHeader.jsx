@@ -4,8 +4,11 @@ import SearchForm from "@/components/SearchForm"
 import { PARTICIPATE_WORK_HOVER_MAP, PARTICIPATE_WORK_COLOR_MAP } from "@/utils/workColor"
 import { useParticipateStore } from "@/stores/useParticipateStore"
 import { filterForms } from '@/utils/participateFilter'
+import { useSearchParams } from "next/navigation"
 
 const ParticipateHeader = () => {
+  const searchParams = useSearchParams()
+  const query = searchParams.get('query')
 
   const [resetKey, setResetKey] = useState(0)
   const [pick, setPick] = useState('all')
@@ -35,6 +38,12 @@ const ParticipateHeader = () => {
     setSearchedForms(result)
     return work
   }
+
+  useEffect(() => {
+    if (query) {
+      filtering('faq')
+    }
+  }, [query, allForms])
 
   useEffect(() => {
     getAvailableFormsAction()
