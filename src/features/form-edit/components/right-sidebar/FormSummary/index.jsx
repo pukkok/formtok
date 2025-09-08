@@ -49,7 +49,7 @@ const FormSummary = () => {
   return (
     <div className="flex flex-col">
 
-      <section className="h-[calc(100vh-110px)] pb-4 overflow-scroll"> 
+      <section className="h-[calc(100vh-110px)] pb-4 overflow-scroll scroll-hidden"> 
         <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
           <Droppable droppableId="all-pages" type="page">
           {(provided) => (

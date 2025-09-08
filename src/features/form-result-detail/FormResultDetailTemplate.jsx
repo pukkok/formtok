@@ -15,7 +15,7 @@ const FormResultDetailTemplate = () => {
   if(resultAnswers.length === 0) return <p className="p-8">제출된 응답이 없습니다.</p>
 
   return (
-    <div className="p-4 h-[calc(100vh-60px)] overflow-scroll">
+    <div className="p-4 h-[calc(100vh-60px)] overflow-scroll scroll-hidden">
       {(resultPages.length> 0 && resultAnswers.length > 0) && resultPages.map((page, pi) => {
         const { title, id: pid, questions } = page 
 

@@ -27,7 +27,7 @@ const FormResultDetailRightSidebar = () => {
         <SearchForm width="w-full" search={search}/>
       </div>
 
-      <div className="h-[calc(100vh-80px)] overflow-scroll">
+      <div className="h-[calc(100vh-80px)] overflow-scroll scroll-hidden">
         <div className="px-4">
       {searchedForms.length > 0 ? (
         searchedForms.map(form => {

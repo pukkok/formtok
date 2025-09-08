@@ -49,7 +49,7 @@ const QuestionBankTemplateBox = () => {
 
 						<h4 className="text-lg text-center truncate">Q. {q}</h4>
 						
-						<div className="my-3 py-2 pl-4 text-left h-27 overflow-scroll 
+						<div className="my-3 py-2 pl-4 text-left h-27 overflow-scroll scroll-hidden
 						dark:bg-dark-base dark:border-dark-line-hover 
 						bg-light-w border-light-w
 						border rounded-lg">
